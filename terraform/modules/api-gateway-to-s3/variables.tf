@@ -1,3 +1,3 @@
-variable "carsBucketName" {
+variable "bucketName" {
   type    = string
 }

@@ -14,7 +14,7 @@ locals {
 }
 
 resource "aws_api_gateway_rest_api" "cars_api" {
-  name = format("%s-api", var.carsBucketName)
+  name = format("%s-api", var.bucketName)
   binary_media_types = [ # About limiting to .CAR files only: https://github.com/ipld/go-car/issues/238
     "*/*"
   ]
@@ -53,7 +53,7 @@ resource "aws_api_gateway_integration" "integration" {
   uri                     = "arn:aws:apigateway:us-east-2:s3:path/{bucket}/{key}"
   credentials             = aws_iam_role.s3_api_gateyway_role.arn
   request_parameters = {
-    "integration.request.path.bucket" = "'${var.carsBucketName}'"
+    "integration.request.path.bucket" = "'${var.bucketName}'"
     "integration.request.path.key"    = "method.request.path.object"
   }
   request_templates    = {}

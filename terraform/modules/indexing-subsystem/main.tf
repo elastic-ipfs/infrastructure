@@ -21,5 +21,5 @@ resource "aws_s3_bucket" "cars" {
 
 module "api-gateway-to-s3" {
   source = "../api-gateway-to-s3"
-  carsBucketName = var.carsBucketName
+  bucketName = var.carsBucketName
 }
