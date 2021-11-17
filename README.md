@@ -10,8 +10,15 @@
 
 This project is divided into modules, where each subsystem has its own. For example:
 
-- `Indexing Subsystem`
-- `Peer Subsystem`
-- `Publishing Subsystem`
+- `indexing-subsystem`
+- `peer-subsystem`
+- `publishing-subsystem`
 
 There are also modules with smaller scope for grouping resources that serve a specific purpose. For example: `api-gateway-to-s3`.
+
+#### Module Dependency Tree
+
+```
+Root
+└─── indexing-subsystem
+│   └─── api-gateway-to-s3
