@@ -1,0 +1,3 @@
+variable "carsBucketName" {
+  type    = string
+}
