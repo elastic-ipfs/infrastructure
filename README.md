@@ -8,8 +8,8 @@
 
 ### Prerequisites
 
-- Terraform version >= v1.x.x
-- Existing S3 bucket (For Remote State Files) and dynamodb table (For State Locking).
+- Terraform version >= v1.x.x.
+- Existing S3 bucket (For Remote State Files) and DynamoDB table (For State Locking). DynamoDB must have a partition key called `LockID` with type `string`. Remember to update these names at root module's `main.tf` file.
 
 
 ### Modules

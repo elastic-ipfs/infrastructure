@@ -1,4 +1,11 @@
 terraform {
+  backend "s3" {
+    bucket         = "test-ipfs-aws-cars-state"
+    dynamodb_table = "test-ipfs-aws-cars-state-lock"
+    region         = "us-west-2"
+    key            = "terraform.tfstate"
+    encrypt        = true
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -15,6 +22,6 @@ provider "aws" {
 }
 
 module "indexing-subsystem" {
-  source = "./modules/indexing-subsystem"
+  source         = "./modules/indexing-subsystem"
   carsBucketName = var.carsBucketName
 }
