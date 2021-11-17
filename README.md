@@ -6,6 +6,12 @@
 
 ## Terraform
 
+### Prerequisites
+
+- Terraform version >= v1.x.x
+- Existing S3 bucket (For Remote State Files) and dynamodb table (For State Locking).
+
+
 ### Modules
 
 This project is divided into modules, where each subsystem has its own. For example:

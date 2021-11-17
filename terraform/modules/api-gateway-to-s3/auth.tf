@@ -41,5 +41,3 @@ resource "aws_iam_role_policy_attachment" "s3_policy_attach" {
   role       = aws_iam_role.s3_api_gateyway_role.name
   policy_arn = aws_iam_policy.s3_policy.arn
 }
-
-
