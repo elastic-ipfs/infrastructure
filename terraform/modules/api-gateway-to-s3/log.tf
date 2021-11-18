@@ -2,6 +2,11 @@ data "aws_iam_policy" "api_gateway_loging" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
 }
 
+resource "aws_cloudwatch_log_group" "indexing_api_log_group" {
+  name              = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.cars_api.id}/${local.stage_name}"
+  retention_in_days = 14
+}
+
 resource "aws_iam_role_policy_attachment" "api_gateway_loging_attach" {
   role       = aws_iam_role.s3_api_gateyway_role.name
   policy_arn = data.aws_iam_policy.api_gateway_loging.arn

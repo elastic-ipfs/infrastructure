@@ -9,12 +9,8 @@ terraform {
   required_version = ">= 0.14.9"
 }
 
-locals {
-  stage_name = "v1"
-}
-
 resource "aws_api_gateway_rest_api" "cars_api" {
-  name = format("%s-api", var.bucketName)
+  name = local.api_name
   binary_media_types = [ # About limiting to .CAR files only: https://github.com/ipld/go-car/issues/238
     "*/*"
   ]
@@ -95,4 +91,6 @@ resource "aws_api_gateway_stage" "v1" {
   deployment_id = aws_api_gateway_deployment.cars_api_deploy.id
   rest_api_id   = aws_api_gateway_rest_api.cars_api.id
   stage_name    = local.stage_name
+
+  depends_on = [aws_cloudwatch_log_group.indexing_api_log_group]
 }
