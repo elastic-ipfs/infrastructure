@@ -9,7 +9,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.27"
+      version = "~> 3.38"
     }
   }
 
@@ -19,6 +19,13 @@ terraform {
 provider "aws" {
   profile = "default"
   region  = "us-east-2"
+  default_tags {
+    tags = {
+      Team        = "NearForm"
+      Project     = "AWS-IPFS"
+      Environment = "POC"
+    }
+  }
 }
 
 module "indexing-subsystem" {

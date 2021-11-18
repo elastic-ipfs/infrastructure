@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.27"
+      version = "~> 3.38"
     }
   }
 
@@ -12,11 +12,6 @@ terraform {
 resource "aws_s3_bucket" "cars" {
   bucket = var.carsBucketName
   acl    = "private"
-
-  tags = {
-    Name = var.carsBucketName
-    # Environment = "Dev"
-  }
 }
 
 module "api-gateway-to-s3" {
