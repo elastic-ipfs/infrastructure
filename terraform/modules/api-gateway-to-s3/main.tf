@@ -82,7 +82,7 @@ resource "aws_api_gateway_deployment" "cars_api_deploy" {
       aws_api_gateway_integration.integration.id,
       aws_api_gateway_method_response.response_200,
       aws_api_gateway_integration_response.response_200,
-      aws_api_gateway_account.demo
+      aws_api_gateway_account.api_gateway_cloudwatch_account
     ]))
   }
 

@@ -7,11 +7,11 @@ resource "aws_iam_role_policy_attachment" "api_gateway_loging_attach" {
   policy_arn = data.aws_iam_policy.api_gateway_loging.arn
 }
 
-resource "aws_api_gateway_account" "demo" {
+resource "aws_api_gateway_account" "api_gateway_cloudwatch_account" {
   cloudwatch_role_arn = aws_iam_role.s3_api_gateyway_role.arn
 }
 
-resource "aws_api_gateway_method_settings" "example" {
+resource "aws_api_gateway_method_settings" "api_gateway_enable_log" {
   rest_api_id = aws_api_gateway_rest_api.cars_api.id
   stage_name  = aws_api_gateway_stage.v1.stage_name
   method_path = "*/*"

@@ -23,3 +23,8 @@ module "api-gateway-to-s3" {
   source = "../api-gateway-to-s3"
   bucketName = var.carsBucketName
 }
+
+module "s3-to-lambda" {
+  source = "../s3-to-lambda"
+  bucket = aws_s3_bucket.cars
+}
