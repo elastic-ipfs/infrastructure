@@ -40,12 +40,23 @@ data "archive_file" "lambda_zip" {
 
 #
 
+locals {
+    indexing_lambda = {
+        name = "indexing"
+    }
+}
+
 resource "aws_lambda_function" "indexing" {
+  function_name = local.indexing_lambda.name
   filename      = "lambda_function.zip"
-  function_name = "indexing"
   role          = aws_iam_role.indexing_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"
+
+  depends_on = [
+    aws_iam_role_policy_attachment.lambda_logs,
+    aws_cloudwatch_log_group.indexing_log_group,
+  ]
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
@@ -54,8 +65,6 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.indexing.arn
     events              = ["s3:ObjectCreated:*"]
-    # filter_prefix       = "AWSLogs/"
-    # filter_suffix       = ".car"
   }
 
   depends_on = [aws_lambda_permission.allow_bucket]
