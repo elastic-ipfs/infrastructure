@@ -1,6 +1,5 @@
 resource "aws_iam_policy" "s3_policy" {
   name        = "s3-policy"
-  tags        = {}
   description = "Policy for allowing all S3 Actions"
   policy      = <<EOF
 {
@@ -18,8 +17,6 @@ EOF
 
 resource "aws_iam_role" "s3_api_gateyway_role" {
   name = "s3-api-gateyway-role"
-  tags = {}
-
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
