@@ -24,6 +24,7 @@ provider "aws" {
       Team        = "NearForm"
       Project     = "AWS-IPFS"
       Environment = "POC"
+      ManagedBy   = "Terraform"
     }
   }
 }

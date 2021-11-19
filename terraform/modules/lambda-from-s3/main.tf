@@ -1,7 +1,9 @@
+# TODO: Will we zip project from git clone (pipeline) or get code from bucket?
 data "archive_file" "lambda_zip" {
     type          = "zip"
-    source_file   = "index.js"
+    source_file   = "test_lambda/index.js"
     output_path   = "lambda_function.zip"
+
 }
 
 resource "aws_lambda_function" "indexing" {
