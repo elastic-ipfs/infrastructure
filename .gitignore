@@ -5,4 +5,3 @@
 **/*.terraform.lock.hcl
 **/*.terraform.tfstate.lock.info
 **/lambda_function.zip
-
