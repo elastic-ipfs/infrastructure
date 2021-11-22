@@ -41,7 +41,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bucketName"></a> [bucketName](#input\_bucketName) | n/a | `string` | n/a | yes |
+| <a name="input_bucket"></a> [bucket](#input\_bucket) | n/a | <pre>object({<br>    bucket = string<br>    region = string<br>  })</pre> | n/a | yes |
 
 ## Outputs
 

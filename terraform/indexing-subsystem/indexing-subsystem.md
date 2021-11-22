@@ -30,7 +30,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_carsBucketName"></a> [carsBucketName](#input\_carsBucketName) | Bucket for storing CAR files | `string` | `"cars-test-4"` | no |
+| <a name="input_carsBucketName"></a> [carsBucketName](#input\_carsBucketName) | Bucket for storing CAR files | `string` | `"ipfs-cars"` | no |
 
 ## Outputs
 
