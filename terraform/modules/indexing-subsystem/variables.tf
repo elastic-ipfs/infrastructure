@@ -1,3 +1,0 @@
-variable "carsBucketName" {
-  type    = string
-}
