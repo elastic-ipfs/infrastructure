@@ -1,7 +1,8 @@
 terraform {
   backend "s3" {
-    bucket         = "test-ipfs-aws-cars-state"
-    dynamodb_table = "test-ipfs-aws-cars-state-lock"
+    profile = "ipfs"
+    bucket         = "ipfs-aws-cars-state"
+    dynamodb_table = "ipfs-aws-cars-state-lock"
     region         = "us-west-2"
     key            = "terraform.indexing.tfstate"
     encrypt        = true
@@ -17,8 +18,8 @@ terraform {
 }
 
 provider "aws" {
-  profile = "default"
-  region  = "us-east-2"
+  profile = "ipfs"
+  region  = "us-west-2"
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -41,7 +42,7 @@ resource "aws_s3_bucket" "cars" {
 
 module "api-gateway-to-s3" {
   source = "../modules/api-gateway-to-s3"
-  bucketName = var.carsBucketName
+  bucket = aws_s3_bucket.cars
 }
 
 module "lambda-from-s3" {
