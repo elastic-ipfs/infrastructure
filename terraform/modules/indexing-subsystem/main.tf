@@ -12,6 +12,10 @@ terraform {
 resource "aws_s3_bucket" "cars" {
   bucket = var.carsBucketName
   acl    = "private"
+  object_lock_configuration {
+    object_lock_enabled = "Enabled"
+  }
+    
 }
 
 module "api-gateway-to-s3" {
