@@ -1,0 +1,3 @@
+variable "lambdaRoleName" {
+  type    = string
+}

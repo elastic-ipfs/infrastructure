@@ -18,3 +18,13 @@ module "api-gateway-to-s3" {
   source = "../api-gateway-to-s3"
   bucketName = var.carsBucketName
 }
+
+module "lambda-from-s3" {
+  source = "../lambda-from-s3"
+  bucket = aws_s3_bucket.cars
+}
+
+module "dynamodb" {
+  source = "../dynamodb"
+  lambdaRoleName=module.lambda-from-s3.lambdaRoleName # TODO: Will this become a list of allowed roles?
+}
