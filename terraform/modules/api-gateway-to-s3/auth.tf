@@ -8,7 +8,7 @@ resource "aws_iam_policy" "s3_policy" {
         {
             "Effect": "Allow",
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::${var.bucketName}/*"
+            "Resource": "arn:aws:s3:::${var.bucket.bucket}/*"
         }
     ]
 }
