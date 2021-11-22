@@ -23,7 +23,7 @@ resource "aws_lambda_function" "indexing" {
   role          = aws_iam_role.indexing_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"
-  memory_size = 10240
+  memory_size = 1024
 
 
   depends_on = [
