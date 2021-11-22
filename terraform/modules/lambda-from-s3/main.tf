@@ -1,3 +1,14 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.38"
+    }
+  }
+
+  required_version = ">= 1.0.0"
+}
+
 # TODO: Will we zip project from git clone (pipeline) or get code from bucket?
 data "archive_file" "lambda_zip" {
     type          = "zip"
