@@ -24,7 +24,7 @@ resource "aws_lambda_function" "indexing" {
   handler       = "index.handler"
   runtime       = "nodejs14.x"
   memory_size = 1024
-
+  timeout = 900
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
