@@ -46,10 +46,10 @@ resource "aws_api_gateway_integration" "integration" {
   http_method             = aws_api_gateway_method.putObject.http_method
   integration_http_method = "PUT"
   type                    = "AWS"
-  uri                     = "arn:aws:apigateway:us-east-2:s3:path/{bucket}/{key}"
+  uri                     = "arn:aws:apigateway:${var.bucket.region}:s3:path/{bucket}/{key}"
   credentials             = aws_iam_role.s3_api_gateyway_role.arn
   request_parameters = {
-    "integration.request.path.bucket" = "'${var.bucketName}'"
+    "integration.request.path.bucket" = "'${var.bucket.bucket}'"
     "integration.request.path.key"    = "method.request.path.object"
   }
   request_templates    = {}

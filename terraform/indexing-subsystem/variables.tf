@@ -1,5 +1,5 @@
 variable "carsBucketName" {
   type    = string
-  default = "cars-test-4"
+  default = "ipfs-cars"
   description = "Bucket for storing CAR files"
 }

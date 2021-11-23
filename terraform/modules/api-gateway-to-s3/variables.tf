@@ -1,3 +1,6 @@
-variable "bucketName" {
-  type    = string
+variable "bucket" {
+  type = object({
+    bucket = string
+    region = string
+  })
 }
