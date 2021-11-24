@@ -15,6 +15,6 @@ variable "eks-cluster" {
   })
    default = {
     name = "test-ipfs-aws-peer-subsystem-eks"
-    version = "1.20" # TODO: Upgrade to 1.21
+    version = "1.21"
   }
 }

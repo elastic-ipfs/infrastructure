@@ -75,9 +75,7 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
 
-  # You require a node group to schedule coredns which is critical for running correctly internal DNS.
-  # If you want to use only fargate you must follow docs `(Optional) Update CoreDNS`
-  # available under https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html
+  # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
   node_groups = {
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
@@ -87,15 +85,10 @@ module "eks" {
 
       instance_types = ["t3.large"]
       k8s_labels = {
-        Example    = "managed_node_groups"
-        GithubRepo = "terraform-aws-eks"
-        GithubOrg  = "terraform-aws-modules"
+        workerType = "managed_ec2_node_groups"
       }
-      # additional_tags = {
-      #   ExtraTag = "example"
-      # }
       update_config = {
-        max_unavailable_percentage = 50 # or set `max_unavailable`
+        max_unavailable_percentage = 50
       }
     }
   }
@@ -105,48 +98,16 @@ module "eks" {
       name = "default"
       selectors = [
         {
-          namespace = "kube-system"
-          labels = {
-            k8s-app = "kube-dns"
-          }
-        },
-        {
           namespace = "default"
           labels = {
-            WorkerType = "fargate"
+            workerType = "fargate"
           }
         }
       ]
-
-      tags = {
-        Owner = "default"
-      }
 
       timeouts = {
         create = "20m"
         delete = "20m"
-      }
-    }
-
-    secondary = { # TODO: Test that label selector part. What happens with deployments that don't have those labels? Later, remove labels that don't make any sense. 
-      // There is already label WorkerType = fargete at the default selector list. Do I really need this secondary?
-      name = "secondary"
-      selectors = [
-        {
-          namespace = "default"
-          labels = {
-            Environment = "test"
-            GithubRepo  = "terraform-aws-eks"
-            GithubOrg   = "terraform-aws-modules"
-          }
-        }
-      ]
-
-      # Using specific subnets instead of the ones configured in EKS (`subnets` and `fargate_subnets`)
-      subnets = [module.vpc.private_subnets[1]]
-
-      tags = {
-        Owner = "secondary"
       }
     }
   }
