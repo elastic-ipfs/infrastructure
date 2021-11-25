@@ -1,9 +1,13 @@
 provider "kubernetes" {
   config_path    = var.kubeconfig_output_path
-  config_context = "eks_test-ipfs-aws-peer-subsystem-eks" #TODO: Get this from eks module output
+  config_context = "eks_${var.eks_cluster_name}"
 }
 
 resource "kubernetes_deployment" "nginx" {
+  depends_on = [
+    var.eks_cluster_id
+  ]
+
   metadata {
     name = "nginx"
     labels = {

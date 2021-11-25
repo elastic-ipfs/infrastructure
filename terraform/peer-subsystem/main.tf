@@ -118,3 +118,10 @@ module "eks" {
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
   kubeconfig_output_path = var.kubeconfig_output_path
 }
+
+module "kube-specs" {
+  source  = "../modules/kube-specs"
+  eks_cluster_id = module.eks.cluster_id
+  eks_cluster_name = var.eks-cluster.name
+  kubeconfig_output_path = module.eks.kubeconfig_filename
+}
