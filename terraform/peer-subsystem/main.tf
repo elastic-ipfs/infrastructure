@@ -45,8 +45,8 @@ module "vpc" {
   name                 = var.vpc.name
   cidr                 = "10.0.0.0/16"
   azs                  = data.aws_availability_zones.available.names
-  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"] 
+  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"] # Worker Nodes
+  public_subnets       = ["10.0.5.0/24", "10.0.6.0/24", "10.0.7.0/24"] # LoadBalancer and NAT
   enable_nat_gateway   = true                                     
   single_nat_gateway   = true
   enable_dns_hostnames = true
@@ -69,8 +69,8 @@ module "eks" {
   cluster_version = var.eks-cluster.version
 
   vpc_id          = module.vpc.vpc_id
-  subnets         = [module.vpc.private_subnets[0], module.vpc.public_subnets[1]] 
-  fargate_subnets = [module.vpc.private_subnets[2]]
+  subnets         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]] 
+  fargate_subnets = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
@@ -112,7 +112,7 @@ module "eks" {
     }
   }
 
-  manage_aws_auth = false # https://github.com/aws/containers-roadmap/issues/654
+  manage_aws_auth = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
 
   kubeconfig_aws_authenticator_command = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
