@@ -18,3 +18,7 @@ variable "eks-cluster" {
     version = "1.21"
   }
 }
+
+variable "kubeconfig_output_path" {
+  type = string
+}

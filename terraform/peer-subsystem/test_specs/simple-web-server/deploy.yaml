@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: nginx
-        WorkerType: "fargate"
+        workerType: "fargate"
     spec:
       containers:
       - name: nginx

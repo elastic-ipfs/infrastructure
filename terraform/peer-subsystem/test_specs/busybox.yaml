@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: testdeployment
-  name: testdeployment
+    app: busybox
+  name: busybox
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testdeployment
+      app: busybox
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: testdeployment
+        app: busybox
         WorkerType: "fargate"
     spec:
       containers:
@@ -26,4 +26,3 @@ spec:
         - sleep
         - "3600"
 status: {}
-;
