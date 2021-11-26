@@ -3,6 +3,8 @@ provider "kubernetes" {
   config_context = "eks_${var.eks_cluster_name}"
 }
 
+# TODO: Replace this deployment image with Peer docker image
+# TODO: Adjust resource limits and requests
 resource "kubernetes_deployment" "nginx" {
   depends_on = [
     var.eks_cluster_id
