@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
     profile        = "default"
-    bucket         = "test-ipfs-aws-state" # TODO: Remove test prefix when moving to official account
-    dynamodb_table = "test-ipfs-aws-state-lock"
+    bucket         = "ipfs-aws-state"
+    dynamodb_table = "ipfs-aws-state-lock"
     region         = "us-west-2"
     key            = "terraform.peer.tfstate"
     encrypt        = true
