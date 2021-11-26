@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    profile        = "default"
-    bucket         = "ipfs-aws-state"
-    dynamodb_table = "ipfs-aws-state-lock"
+    profile        = "ipfs"
+    bucket         = "ipfs-aws-terraform-state"
+    dynamodb_table = "ipfs-aws-terraform-state-lock"
     region         = "us-west-2"
     key            = "terraform.peer.tfstate"
     encrypt        = true
@@ -28,7 +28,7 @@ locals {
 }
 
 provider "aws" {
-  profile = "default"
+  profile = "ipfs"
   region  = "us-west-2"
   default_tags {
     tags = local.tags
