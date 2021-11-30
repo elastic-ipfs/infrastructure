@@ -26,7 +26,7 @@ resource "aws_lambda_permission" "allow_bucket" {
 }
 
 resource "aws_iam_role_policy_attachment" "policies_attach" {
-  for_each = toset(var.aws_iam_role_policy_list)
+  for_each = { for policy in var.aws_iam_role_policy_list: policy.name => policy }
   role       = aws_iam_role.indexing_lambda_role.name
   policy_arn = each.value.arn
 }

@@ -1,6 +1,6 @@
 resource "aws_iam_policy" "s3_policy" {
   name        = "s3-policy"
-  description = "Policy for allowing all S3 Actions"
+  description = "Policy for allowing put objects at S3"
   policy      = <<EOF
 {
     "Version": "2012-10-17",
