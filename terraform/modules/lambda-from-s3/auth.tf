@@ -30,15 +30,3 @@ resource "aws_iam_role_policy_attachment" "policies_attach" {
   role       = aws_iam_role.indexing_lambda_role.name
   policy_arn = each.value.arn
 }
-
-
-## TODO: Isso vai ficar no loop das permissões que a role deve receber
-# resource "aws_iam_role_policy_attachment" "dynamodb_cid_policy_attach" {
-#   role       = var.lambdaRoleName
-#   policy_arn = aws_iam_policy.dynamodb_cid_policy.arn
-# }
-
-# resource "aws_iam_role_policy_attachment" "dynamodb_car_policy_attach" {
-#   role       = var.lambdaRoleName
-#   policy_arn = aws_iam_policy.dynamodb_car_policy.arn
-# }

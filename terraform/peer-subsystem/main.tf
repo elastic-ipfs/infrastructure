@@ -17,13 +17,12 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-locals {
-  tags = {
-    Team        = "NearForm"
-    Project     = "AWS-IPFS"
-    Environment = "POC"
-    Subsystem   = "Peer"
-    ManagedBy   = "Terraform"
+data "terraform_remote_state" "shared" {
+  backend = "s3"
+  config = {
+    bucket = "ipfs-aws-terraform-state"
+    key    = "terraform.shared.tfstate"
+    region = "us-west-2"
   }
 }
 
@@ -31,7 +30,13 @@ provider "aws" {
   profile = "ipfs"
   region  = "us-west-2"
   default_tags {
-    tags = local.tags
+    tags = {
+      Team        = "NearForm"
+      Project     = "AWS-IPFS"
+      Environment = "POC"
+      Subsystem   = "Peer"
+      ManagedBy   = "Terraform"
+    }
   }
 }
 
@@ -46,8 +51,8 @@ module "vpc" {
   cidr                 = "10.0.0.0/16"
   azs                  = data.aws_availability_zones.available.names
   private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"] # Worker Nodes
-  public_subnets       = ["10.0.5.0/24", "10.0.6.0/24", "10.0.7.0/24"] # LoadBalancer and NAT
-  enable_nat_gateway   = true                                     
+  public_subnets       = ["10.0.5.0/24", "10.0.6.0/24", "10.0.7.0/24"]                # LoadBalancer and NAT
+  enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
 
@@ -69,19 +74,21 @@ module "eks" {
   cluster_version = var.eks-cluster.version
 
   vpc_id          = module.vpc.vpc_id
-  subnets         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]] 
+  subnets         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
   fargate_subnets = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
+
+  enable_irsa = true
 
   # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
   node_groups = {
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
       desired_capacity = 2
-      min_size = 2
-      max_size = 4
+      min_size         = 2
+      max_size         = 4
 
       instance_types = ["t3.large"]
       k8s_labels = {
@@ -114,14 +121,17 @@ module "eks" {
 
   manage_aws_auth = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
 
-  kubeconfig_aws_authenticator_command = "aws"
+  kubeconfig_aws_authenticator_command      = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
-  kubeconfig_output_path = var.kubeconfig_output_path
+  kubeconfig_output_path                    = var.kubeconfig_output_path
 }
 
 module "kube-specs" {
-  source  = "../modules/kube-specs"
-  eks_cluster_id = module.eks.cluster_id
-  eks_cluster_name = var.eks-cluster.name
+  source                 = "../modules/kube-specs"
+  aws_iam_role_policy_list = [ # TODO: Add bucket policy
+    data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
+  ]
+  eks_cluster_id         = module.eks.cluster_id
+  eks_cluster_name       = var.eks-cluster.name
   kubeconfig_output_path = module.eks.kubeconfig_filename
 }
