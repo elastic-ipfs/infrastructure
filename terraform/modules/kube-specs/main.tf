@@ -37,8 +37,10 @@ resource "kubernetes_deployment" "nginx" {
       spec {
         service_account_name = kubernetes_service_account.irsa-dynamodb.metadata[0].name
         container {
-          image = "nginx:1.7.8"
-          name  = "nginx"
+          # image = "nginx:1.7.8"
+          # name  = "nginx"
+          image = "ghcr.io/francardoso93/aws-visibility-test:latest"
+          name  = "aws-visibility-test"
 
           resources {
             limits = {
