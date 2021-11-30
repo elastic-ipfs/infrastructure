@@ -45,14 +45,3 @@ resource "aws_iam_policy" "dynamodb_car_policy" {
 }
 EOF
 }
-
-resource "aws_iam_role_policy_attachment" "dynamodb_cid_policy_attach" {
-  role       = var.lambdaRoleName
-  policy_arn = aws_iam_policy.dynamodb_cid_policy.arn
-}
-
-resource "aws_iam_role_policy_attachment" "dynamodb_car_policy_attach" {
-  role       = var.lambdaRoleName
-  policy_arn = aws_iam_policy.dynamodb_car_policy.arn
-}
-
