@@ -44,7 +44,4 @@ resource "aws_s3_bucket" "cars" {
 # DynamoDB
 module "dynamodb" {
   source = "../modules/dynamodb"
-  roleName=module.lambda-from-s3.lambdaRoleName
-#   enableCidTable=true
-#   enableCarTable=true
 }
