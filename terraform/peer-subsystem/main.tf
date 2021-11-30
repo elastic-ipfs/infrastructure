@@ -131,6 +131,7 @@ module "kube-specs" {
   aws_iam_role_policy_list = [ # TODO: Add bucket policy
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
   ]
+  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id         = module.eks.cluster_id
   eks_cluster_name       = var.eks-cluster.name
   kubeconfig_output_path = module.eks.kubeconfig_filename
