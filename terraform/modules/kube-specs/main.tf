@@ -35,7 +35,7 @@ resource "kubernetes_deployment" "nginx" {
       }
 
       spec {
-        # service_account_name = kubernetes_service_account.irsa-dynamodb.metadata[0].name
+        service_account_name = kubernetes_service_account.irsa-dynamodb.metadata[0].name
         container {
           # image = "nginx:1.7.8"
           # name  = "nginx"
@@ -74,11 +74,12 @@ resource "kubernetes_service" "ngnix-service" {
   }
 }
 
-# resource "kubernetes_service_account" "irsa-dynamodb" {
-#   metadata {
-#     name = "irsa-dynamodb"
-#     annotations = {
-#       "eks.amazonaws.com/role-arn" = aws_iam_role.peer_subsystem_role.arn
-#     }
-#   }
-# }
+resource "kubernetes_service_account" "irsa-dynamodb" {
+  metadata {
+    name = local.service_account_name
+    namespace = local.service_account_namespace
+    annotations = {
+      "eks.amazonaws.com/role-arn" = module.iam_assumable_role_admin.iam_role_arn
+    }
+  }
+}
