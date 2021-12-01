@@ -1,4 +1,4 @@
 locals {
   service_account_namespace = "default"
-  service_account_name      = "irsa-dynamodb"
+  service_account_name      = "irsa"
 }
