@@ -21,6 +21,7 @@
 
 This project is divided into modules, where each subsystem has its own. For example:
 
+- `shared-modules` (Base resources used by multiple subsystems)
 - `indexing-subsystem`
 - `peer-subsystem`
 - `publishing-subsystem`
