@@ -1,20 +1,3 @@
-resource "aws_iam_policy" "s3_policy" {
-  name        = "s3-policy"
-  description = "Policy for allowing put objects at S3"
-  policy      = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::${var.bucket.bucket}/*"
-        }
-    ]
-}
-EOF
-}
-
 resource "aws_iam_role" "s3_api_gateyway_role" {
   name = "s3-api-gateyway-role"
   assume_role_policy = <<EOF
@@ -34,7 +17,9 @@ resource "aws_iam_role" "s3_api_gateyway_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "s3_policy_attach" {
+
+resource "aws_iam_role_policy_attachment" "policies_attach" {
+  for_each = { for policy in var.aws_iam_role_policy_list: policy.name => policy }
   role       = aws_iam_role.s3_api_gateyway_role.name
-  policy_arn = aws_iam_policy.s3_policy.arn
+  policy_arn = each.value.arn
 }

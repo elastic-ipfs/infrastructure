@@ -20,3 +20,17 @@ output "dynamodb_car_policy" {
     arn  = module.dynamodb.dynamodb_car_policy.arn,
   }
 }
+
+output "s3_policy_write" {
+  value = {
+    name = aws_iam_policy.s3_policy_write.name,
+    arn  = aws_iam_policy.s3_policy_write.arn,
+  }
+}
+
+output "s3_policy_read" {
+  value = {
+    name = aws_iam_policy.s3_policy_read.name,
+    arn  = aws_iam_policy.s3_policy_read.arn,
+  }
+}
