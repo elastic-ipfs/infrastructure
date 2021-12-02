@@ -28,7 +28,7 @@ data "terraform_remote_state" "shared" {
 
 provider "aws" {
   profile = "ipfs"
-  region  = "${local.region}"
+  region  = local.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -78,16 +78,14 @@ resource "aws_vpc_endpoint" "dynamodb" {
   service_name = "com.amazonaws.${local.region}.dynamodb"
 }
 
-resource "aws_vpc_endpoint_subnet_association" "s3" {
-  for_each = toset(module.vpc.private_subnets)
+resource "aws_vpc_endpoint_route_table_association" "s3" {
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  subnet_id       = each.value
+  route_table_id  = module.vpc.private_route_table_ids[0]
 }
 
-resource "aws_vpc_endpoint_subnet_association" "dynamodb" {
-  for_each = toset(module.vpc.private_subnets)
+resource "aws_vpc_endpoint_route_table_association" "dynamodb" {
   vpc_endpoint_id = aws_vpc_endpoint.dynamodb.id
-  subnet_id       = each.value
+  route_table_id  = module.vpc.private_route_table_ids[0]
 }
 
 ///
@@ -152,14 +150,14 @@ module "eks" {
 }
 
 module "kube-specs" {
-  source                 = "../modules/kube-specs"
+  source = "../modules/kube-specs"
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
-  eks_cluster_id         = module.eks.cluster_id
-  eks_cluster_name       = var.eks-cluster.name
-  kubeconfig_output_path = module.eks.kubeconfig_filename
+  eks_cluster_id          = module.eks.cluster_id
+  eks_cluster_name        = var.eks-cluster.name
+  kubeconfig_output_path  = module.eks.kubeconfig_filename
 }
