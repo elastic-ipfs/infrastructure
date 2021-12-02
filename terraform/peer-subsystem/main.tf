@@ -22,13 +22,13 @@ data "terraform_remote_state" "shared" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.shared.tfstate"
-    region = "us-west-2"
+    region = "${local.region}"
   }
 }
 
 provider "aws" {
   profile = "ipfs"
-  region  = "us-west-2"
+  region  = "${local.region}"
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -66,6 +66,31 @@ module "vpc" {
     "kubernetes.io/role/internal-elb"               = "1"
   }
 }
+
+/// TODO: Think about it: VPC Enpoint module?
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
+  service_name = "com.amazonaws.${local.region}.s3"
+}
+
+resource "aws_vpc_endpoint" "dynamodb" {
+  vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
+  service_name = "com.amazonaws.${local.region}.dynamodb"
+}
+
+resource "aws_vpc_endpoint_subnet_association" "s3" {
+  for_each = toset(module.vpc.private_subnets)
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  subnet_id       = each.value
+}
+
+resource "aws_vpc_endpoint_subnet_association" "dynamodb" {
+  for_each = toset(module.vpc.private_subnets)
+  vpc_endpoint_id = aws_vpc_endpoint.dynamodb.id
+  subnet_id       = each.value
+}
+
+///
 
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
