@@ -5,7 +5,14 @@ provider "helm" {
   }
 }
 
-module "eks-metrics-server" {
-  source  = "lablabs/eks-metrics-server/aws"
-  version = "0.7.1"
+resource "helm_release" "metric-server" {
+  name       = "metric-server-release"
+  repository = "https://charts.bitnami.com/bitnami" 
+  chart      = "metrics-server"
+  namespace = "kube-system"
+
+  set {
+    name  = "apiService.create"
+    value = "true"
+  }
 }
