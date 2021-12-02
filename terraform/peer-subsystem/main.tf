@@ -128,8 +128,10 @@ module "eks" {
 
 module "kube-specs" {
   source                 = "../modules/kube-specs"
-  aws_iam_role_policy_list = [ # TODO: Add bucket policy
+  aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
+    data.terraform_remote_state.shared.outputs.s3_policy_read,
+    data.terraform_remote_state.shared.outputs.s3_policy_write,
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id         = module.eks.cluster_id

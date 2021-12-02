@@ -43,12 +43,17 @@ provider "aws" {
 module "api-gateway-to-s3" {
   source = "../modules/api-gateway-to-s3"
   bucket = data.terraform_remote_state.shared.outputs.cars_bucket
+  aws_iam_role_policy_list = [
+     data.terraform_remote_state.shared.outputs.s3_policy_write,
+  ]
 }
 
 module "lambda-from-s3" {
   source = "../modules/lambda-from-s3"
   bucket = data.terraform_remote_state.shared.outputs.cars_bucket
   aws_iam_role_policy_list = [
+    data.terraform_remote_state.shared.outputs.s3_policy_read,
+    data.terraform_remote_state.shared.outputs.s3_policy_write,
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy
   ]
