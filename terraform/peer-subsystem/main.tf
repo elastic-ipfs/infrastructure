@@ -22,13 +22,13 @@ data "terraform_remote_state" "shared" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.shared.tfstate"
-    region = "us-west-2"
+    region = "${local.region}"
   }
 }
 
 provider "aws" {
   profile = "ipfs"
-  region  = "us-west-2"
+  region  = local.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -66,6 +66,34 @@ module "vpc" {
     "kubernetes.io/role/internal-elb"               = "1"
   }
 }
+
+resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
+  bucket = var.peerConfigBucketName
+  acl    = "private"
+}
+
+/// TODO: Think about it: VPC Enpoint module?
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
+  service_name = "com.amazonaws.${local.region}.s3"
+}
+
+resource "aws_vpc_endpoint" "dynamodb" {
+  vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
+  service_name = "com.amazonaws.${local.region}.dynamodb"
+}
+
+resource "aws_vpc_endpoint_route_table_association" "s3" {
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  route_table_id  = module.vpc.private_route_table_ids[0]
+}
+
+resource "aws_vpc_endpoint_route_table_association" "dynamodb" {
+  vpc_endpoint_id = aws_vpc_endpoint.dynamodb.id
+  route_table_id  = module.vpc.private_route_table_ids[0]
+}
+
+///
 
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
@@ -127,14 +155,16 @@ module "eks" {
 }
 
 module "kube-specs" {
-  source                 = "../modules/kube-specs"
+  source = "../modules/kube-specs"
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
+    aws_iam_policy.config_peer_s3_bucket_policy_read,
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
-  eks_cluster_id         = module.eks.cluster_id
-  eks_cluster_name       = var.eks-cluster.name
-  kubeconfig_output_path = module.eks.kubeconfig_filename
+  eks_cluster_id          = module.eks.cluster_id
+  eks_cluster_name        = var.eks-cluster.name
+  kubeconfig_output_path  = module.eks.kubeconfig_filename
+  peerConfigBucketName = var.peerConfigBucketName
 }

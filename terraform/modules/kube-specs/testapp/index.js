@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk')
+const request = require('request');
 
 const s3Client = new AWS.S3(
     {
@@ -36,6 +37,13 @@ s3Client.getObject(getParams, function (err, data) {
     // Convert Body from a Buffer to a String
     let objectData = data.Body.toString('utf-8'); // Use the encoding necessary
     console.log(objectData)
+});
+
+
+request('https://www.google.com', null, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("received answer from google website");
+    console.log(body);
 });
 
 setTimeout(function () { }, 30000);

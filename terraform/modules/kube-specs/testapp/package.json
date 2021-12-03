@@ -9,6 +9,7 @@
   "author": "Francisco F. Cardoso",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1038.0"
+    "aws-sdk": "^2.1038.0",
+    "request": "^2.88.2"
   }
 }

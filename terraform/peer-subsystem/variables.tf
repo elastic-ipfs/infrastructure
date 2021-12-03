@@ -22,3 +22,9 @@ variable "eks-cluster" {
 variable "kubeconfig_output_path" {
   type = string
 }
+
+variable "peerConfigBucketName" {
+  type    = string
+  default = "ipfs-peer-bitswap-config"
+  description = "Bucket for storing CAR files"
+}
