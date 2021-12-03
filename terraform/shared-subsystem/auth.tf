@@ -36,3 +36,37 @@ resource "aws_iam_policy" "s3_policy_read" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "sqs_policy_send" {
+  name        = "sqs-policy-send"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:SendMessage",
+            "Resource": "${aws_sqs_queue.publishing_queue.arn}"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "sqs_policy_receive" {
+  name        = "sqs-policy-receive"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:ReceiveMessage",
+            "Resource": "${aws_sqs_queue.publishing_queue.arn}"
+        }
+    ]
+}
+EOF
+}
