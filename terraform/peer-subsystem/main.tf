@@ -67,6 +67,11 @@ module "vpc" {
   }
 }
 
+resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
+  bucket = var.peerConfigBucketName
+  acl    = "private"
+}
+
 /// TODO: Think about it: VPC Enpoint module?
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
@@ -155,9 +160,11 @@ module "kube-specs" {
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
+    aws_iam_policy.config_peer_s3_bucket_policy_read,
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id          = module.eks.cluster_id
   eks_cluster_name        = var.eks-cluster.name
   kubeconfig_output_path  = module.eks.kubeconfig_filename
+  peerConfigBucketName = var.peerConfigBucketName
 }
