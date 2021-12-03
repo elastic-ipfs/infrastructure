@@ -12,9 +12,9 @@ terraform {
 resource "aws_dynamodb_table" "blocks_table" {
   name        = "blocks"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key       = "cid"
+  hash_key       = "multihash"
   attribute {
-    name = "cid"
+    name = "multihash"
     type = "S"
   }
 }

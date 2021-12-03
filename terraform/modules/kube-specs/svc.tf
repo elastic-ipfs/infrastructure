@@ -7,8 +7,8 @@ resource "kubernetes_service" "service" {
       app = kubernetes_deployment.deploy.metadata[0].name
     }
     port {
-      port        = 80
-      target_port = 80
+      port        = 3000
+      target_port = 3000
     }
     type = "LoadBalancer"
   }
