@@ -1,0 +1,15 @@
+{
+  "name": "testapp",
+  "version": "1.0.0",
+  "description": "test access to dynamodb and s3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Francisco F. Cardoso",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1038.0",
+    "request": "^2.88.2"
+  }
+}

@@ -5,3 +5,5 @@
 **/*.terraform.lock.hcl
 **/*.terraform.tfstate.lock.info
 **/lambda_function.zip
+terraform/modules/kube-specs/testapp/node_modules
+

@@ -13,6 +13,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.38 |
 
+- AWS CLI 
 - Configured AWS Credentials
 - Existing S3 bucket (For Remote State Files) and DynamoDB table (For State Locking). DynamoDB must have a partition key called `LockID` with type `string`.
 
@@ -20,6 +21,7 @@
 
 This project is divided into modules, where each subsystem has its own. For example:
 
+- `shared-modules` (Base resources used by multiple subsystems)
 - `indexing-subsystem`
 - `peer-subsystem`
 - `publishing-subsystem`
