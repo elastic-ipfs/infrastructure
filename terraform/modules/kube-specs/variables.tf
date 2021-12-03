@@ -21,3 +21,8 @@ variable "aws_iam_role_policy_list" {
 variable "cluster_oidc_issuer_url" {
   type = string
 }
+
+variable "peerConfigBucketName" {
+  type    = string
+  description = "Bucket for storing CAR files"
+}

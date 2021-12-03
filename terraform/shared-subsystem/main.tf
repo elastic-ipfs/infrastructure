@@ -31,7 +31,6 @@ provider "aws" {
   }
 }
 
-# S3 Bucket
 resource "aws_s3_bucket" "cars" {
   bucket = var.carsBucketName
   acl    = "private"
@@ -40,8 +39,6 @@ resource "aws_s3_bucket" "cars" {
   }  
 }
 
-
-# DynamoDB
 module "dynamodb" {
   source = "../modules/dynamodb"
 }
