@@ -1,6 +1,6 @@
-resource "aws_iam_policy" "dynamodb_cid_policy" {
-  name        = "dynamodb-cid-policy"
-  description = "Policy for allowing all Dynamodb Actions for CID table"
+resource "aws_iam_policy" "dynamodb_blocks_policy" {
+  name        = "dynamodb-blocks-policy"
+  description = "Policy for allowing all Dynamodb Actions for blocks table"
   policy      = <<EOF
 {  
   "Version": "2012-10-17",
@@ -13,7 +13,8 @@ resource "aws_iam_policy" "dynamodb_cid_policy" {
      "dynamodb:Scan",
      "dynamodb:BatchWriteItem",
      "dynamodb:PutItem",
-     "dynamodb:UpdateItem"
+     "dynamodb:UpdateItem",
+     "dynamodb:DeleteItem"
     ],
     "Resource": "${aws_dynamodb_table.blocks_table.arn}"
    }

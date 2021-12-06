@@ -11,10 +11,10 @@ output "sqs_publishing_queue_url" {
   value = aws_sqs_queue.publishing_queue.url
 }
 
-output "dynamodb_cid_policy" {
+output "dynamodb_blocks_policy" {
   value = {
-    name = module.dynamodb.dynamodb_cid_policy.name,
-    arn  = module.dynamodb.dynamodb_cid_policy.arn,
+    name = module.dynamodb.dynamodb_blocks_policy.name,
+    arn  = module.dynamodb.dynamodb_blocks_policy.arn,
   }
 }
 

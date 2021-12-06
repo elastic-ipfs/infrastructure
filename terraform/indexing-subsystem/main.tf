@@ -55,7 +55,7 @@ module "lambda-from-s3" {
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
-    data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
+    data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
     data.terraform_remote_state.shared.outputs.sqs_policy_send
   ]

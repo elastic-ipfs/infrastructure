@@ -141,7 +141,7 @@ module "eks" {
 module "kube-specs" {
   source = "../modules/kube-specs"
   aws_iam_role_policy_list = [
-    data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
+    data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
     aws_iam_policy.config_peer_s3_bucket_policy_read, # Remember to manually add this file after infra is up running (403 error otherwise)
