@@ -17,6 +17,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       KUBECONFIG: $HOME/.kube/config
       KUBE_CONFIG_CONTENT: ${{ secrets.KUBE_CONFIG_CONTENT }}
+      AWS_REGION: us-west-2
 
     defaults:
       run:
@@ -42,16 +43,23 @@ jobs:
     # - name: Read Kubeconfig
     #   run: cat $KUBECONFIG
 
-    - name: Install AWS CLI
-      id: install-aws-cli
-      uses: unfor19/install-aws-cli-action@v1
-      with:
-        version: 2     # default
-        verbose: false # default
-        arch: amd64    # allowed values: amd64, arm64
+    # - name: Install AWS CLI
+    #   id: install-aws-cli
+    #   uses: unfor19/install-aws-cli-action@v1
+    #   with:
+    #     version: 2     # default
+    #     verbose: false # default
+    #     arch: amd64    # allowed values: amd64, arm64
 
-    - name: Test AWS CLI Installation 
-      run: aws --version
+    # - name: Test AWS CLI Installation 
+    #   run: aws --version
+
+    - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
     # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
