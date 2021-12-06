@@ -26,6 +26,14 @@ data "terraform_remote_state" "shared" {
   }
 }
 
+data "aws_eks_cluster" "eks" {
+  name = module.eks.cluster_id
+}
+
+data "aws_eks_cluster_auth" "eks" {
+  name = module.eks.cluster_id
+}
+
 provider "aws" {
   profile = "ipfs"
   region  = local.region
@@ -151,4 +159,8 @@ module "kube-specs" {
   eks_cluster_name        = var.eks-cluster.name
   kubeconfig_output_path  = module.eks.kubeconfig_filename
   peerConfigBucketName = var.peerConfigBucketName
+  host = data.aws_eks_cluster.eks.endpoint
+  token = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+
 }

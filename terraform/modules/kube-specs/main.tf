@@ -1,7 +1,10 @@
 provider "kubernetes" {
-  config_path    = var.kubeconfig_output_path
-  config_context = local.config_context
-}
+    # config_path            = var.kubeconfig_output_path
+    # config_context         = local.config_context
+    host                   = var.host
+    token                  = var.token
+    cluster_ca_certificate = var.cluster_ca_certificate
+  }
 
 resource "kubernetes_service_account" "irsa" {
   metadata {
