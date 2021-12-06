@@ -7,10 +7,6 @@ on:
   pull_request:
 
 jobs:
-  defaults:
-    run:
-      working-directory: ./terraform/peer-subsystem
-
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
@@ -20,6 +16,8 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: ./terraform/peer-subsystem
+
 
     steps:
     # Checkout the repository to the GitHub Actions runner
