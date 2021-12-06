@@ -42,10 +42,20 @@ jobs:
     # - name: Read Kubeconfig
     #   run: cat $KUBECONFIG
 
+    - name: Install AWS CLI
+      id: install-aws-cli
+      uses: unfor19/install-aws-cli-action@v1
+      with:
+        version: 2     # default
+        verbose: false # default
+        arch: amd64    # allowed values: amd64, arm64
+
+    - name: Test AWS CLI Installation 
+      run: aws --version
 
     # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    # - name: Setup Terraform
-    #   uses: hashicorp/setup-terraform@v1
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
     #   # with:
     #   #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
@@ -57,8 +67,8 @@ jobs:
     # - name: Terraform Format
     #   run: terraform fmt -var kubeconfig_output_path=$KUBECONFIG -check
 
-    - name: Terraform Refresh
-      run: terraform refresh -var kubeconfig_output_path=$KUBECONFIG
+    # - name: Terraform Refresh
+    #   run: terraform refresh -var kubeconfig_output_path=$KUBECONFIG
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
