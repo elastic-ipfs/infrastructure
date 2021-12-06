@@ -6,6 +6,10 @@ variable "bucket" {
   })
 }
 
+variable "sqs_publishing_queue_url" {
+  type = string
+}
+
 variable "aws_iam_role_policy_list" {
   type =  list(object({
     name = string,
