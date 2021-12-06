@@ -15,7 +15,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      KUBE_CONFIG_CONTENT: ${{ secrets.KUBE_CONFIG_CONTENT }}
 
     defaults:
       run:
@@ -34,9 +34,9 @@ jobs:
       run: mkdir $HOME/.kube
 
     - name: Save kubeconfig
-      run: echo "$KUBE_CONFIG" | base64 -d > $HOME/.kube/config
-      # run: echo "$KUBE_CONFIG" > $HOME/.kube/config
-      # run: echo "$KUBE_CONFIG"
+      run: echo "$KUBE_CONFIG_CONTENT" | base64 -d > $HOME/.kube/config
+      # run: echo "$KUBE_CONFIG_CONTENT" > $HOME/.kube/config
+      # run: echo "$KUBE_CONFIG_CONTENT"
 
     - name: Read Kubeconfig
       run: cat $HOME/.kube/config
