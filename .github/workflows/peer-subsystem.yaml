@@ -18,23 +18,19 @@ jobs:
         shell: bash
         working-directory: ./terraform/peer-subsystem
 
-
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Hello world
-      run: echo hello
-
     - name: List files
       run: ls -l
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    # - name: Setup Terraform
-    #   uses: hashicorp/setup-terraform@v1
-    #   with:
-    #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      # with:
+      #   cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     # - name: Terraform Init
