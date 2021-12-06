@@ -1,3 +1,7 @@
+variable "container_image" {
+  type = string
+}
+
 variable "eks_cluster_id" {
   type = string
 }
