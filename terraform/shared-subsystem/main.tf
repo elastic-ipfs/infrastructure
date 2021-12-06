@@ -39,6 +39,11 @@ resource "aws_s3_bucket" "cars" {
   }  
 }
 
+resource "aws_sqs_queue" "publishing_queue" {
+  name                      = "publishing"
+  receive_wait_time_seconds = 10
+}
+
 module "dynamodb" {
   source = "../modules/dynamodb"
 }

@@ -26,6 +26,14 @@ resource "aws_lambda_function" "indexing" {
   memory_size = 1024
   timeout = 900
 
+  environment {
+    variables = {
+        "CONCURRENCY"     = "32"
+        "NODE_ENV"        = "production"
+        "SKIP_PUBLISHING" = "false"
+      } 
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
     aws_cloudwatch_log_group.indexing_log_group,
