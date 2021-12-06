@@ -141,8 +141,8 @@ module "eks" {
 
   manage_aws_auth = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
 
-  kubeconfig_aws_authenticator_command      = "aws"
-  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
+  # kubeconfig_aws_authenticator_command      = "aws"
+  # kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
   kubeconfig_output_path                    = var.kubeconfig_output_path
 }
 
