@@ -34,12 +34,12 @@ jobs:
       # run: echo ${{ secrets.KUBE_CONFIG }} | base64 -d > .env.production
       run: mkdir $HOME/.kube
 
-    - name: save kubeconfig
-      # run: echo ${{ secrets.KUBE_CONFIG }} | base64 -d > .env.production
-      run: echo $KUBE_CONFIG > $HOME/.kube/config
+      # TODO: If creating dir works, remove this
+    # - name: save kubeconfig
+    #   # run: echo ${{ secrets.KUBE_CONFIG }} | base64 -d > .env.production
+    #   run: echo $KUBE_CONFIG > $HOME/.kube/config
 
-    - name: read kubeconfig test
-      run: cat $HOME/.kube/config
+
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -65,5 +65,6 @@ jobs:
     #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -var kubeconfig_output_path=$HOME/.kube/config -auto-approve
     
-    
+    - name: read kubeconfig test
+      run: cat $HOME/.kube/config
     # TODO: Save kubeconfig as github secret
