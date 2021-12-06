@@ -31,16 +31,16 @@ jobs:
     - name: List files
       run: ls -l
 
-    - name: Create .kube dir
-      run: mkdir $HOME/.kube
+    # - name: Create .kube dir
+    #   run: mkdir $HOME/.kube
 
-    - name: Save kubeconfig
-      run: echo "$KUBE_CONFIG_CONTENT" | base64 -d > $KUBECONFIG
-      # run: echo "$KUBE_CONFIG_CONTENT" > $KUBECONFIG
-      # run: echo "$KUBE_CONFIG_CONTENT"
+    # - name: Save kubeconfig
+    #   run: echo "$KUBE_CONFIG_CONTENT" | base64 -d > $KUBECONFIG
+    #   # run: echo "$KUBE_CONFIG_CONTENT" > $KUBECONFIG
+    #   # run: echo "$KUBE_CONFIG_CONTENT"
 
-    - name: Read Kubeconfig
-      run: cat $KUBECONFIG
+    # - name: Read Kubeconfig
+    #   run: cat $KUBECONFIG
 
 
     # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
