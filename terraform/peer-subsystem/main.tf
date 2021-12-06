@@ -160,7 +160,7 @@ module "kube-specs" {
     data.terraform_remote_state.shared.outputs.dynamodb_cid_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
-    aws_iam_policy.config_peer_s3_bucket_policy_read,
+    aws_iam_policy.config_peer_s3_bucket_policy_read, # Remember to manually add this file after infra is up running (403 error otherwise)
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id          = module.eks.cluster_id
