@@ -37,7 +37,7 @@ jobs:
     - name: save kubeconfig
       # run: echo ${{ secrets.KUBE_CONFIG }} | base64 -d > .env.production
       # run: echo $KUBE_CONFIG > $HOME/.kube/config
-      run: echo $KUBE_CONFIG 
+      run: echo "$KUBE_CONFIG"
 
     - name: read kubeconfig test
       run: cat $HOME/.kube/config
