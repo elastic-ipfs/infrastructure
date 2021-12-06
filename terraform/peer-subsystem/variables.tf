@@ -1,3 +1,8 @@
+variable "container_image" {
+  type = string
+  default = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest"
+}
+
 variable "vpc" {
   type = object({
     name = string
@@ -5,7 +10,6 @@ variable "vpc" {
   default = {
     name = "test-ipfs-aws-peer-subsystem-vpc"
   }
-  
 }
 
 variable "eks-cluster" {

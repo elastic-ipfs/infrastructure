@@ -157,8 +157,9 @@ module "kube-specs" {
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id          = module.eks.cluster_id
   eks_cluster_name        = var.eks-cluster.name
-  kubeconfig_output_path  = module.eks.kubeconfig_filename
+  container_image = var.container_image
   peerConfigBucketName = var.peerConfigBucketName
+  kubeconfig_output_path  = module.eks.kubeconfig_filename
   host = data.aws_eks_cluster.eks.endpoint
   token = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
