@@ -31,6 +31,7 @@ resource "aws_lambda_function" "indexing" {
         "CONCURRENCY"     = "32"
         "NODE_ENV"        = "production"
         "SKIP_PUBLISHING" = "false"
+        "SQS_PUBLISHING_QUEUE_URL" = var.sqs_publishing_queue_url
       } 
   }
 
