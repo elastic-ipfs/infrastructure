@@ -29,6 +29,13 @@ jobs:
     - name: List files
       run: ls -l
 
+    - name: save kubeconfig
+      # run: echo ${{ secrets.KUBE_CONFIG }} | base64 -d > .env.production
+      run: echo ${{ secrets.KUBE_CONFIG }} > $HOME/.kube/config
+
+    - name: read kubeconfig test
+      run: cat $HOME/.kube/config
+
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -52,3 +59,4 @@ jobs:
     - name: Terraform Apply
     #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -var kubeconfig_output_path=$HOME/.kube/config -auto-approve
+    # 
