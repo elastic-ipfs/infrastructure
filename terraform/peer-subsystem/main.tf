@@ -72,28 +72,12 @@ resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
   acl    = "private"
 }
 
-/// TODO: Think about it: VPC Enpoint module?
-resource "aws_vpc_endpoint" "s3" {
-  vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
-  service_name = "com.amazonaws.${local.region}.s3"
+module "gateway-endpoint-to-s3-dynamo" {
+  source = "../modules/gateway-endpoint-to-s3-dynamo"
+  vpc_id = module.vpc.vpc_id
+  region = local.region
+  route_table_id = module.vpc.private_route_table_ids[0]
 }
-
-resource "aws_vpc_endpoint" "dynamodb" {
-  vpc_id       = module.vpc.vpc_id # TODO: Is that really the output I am looking for?
-  service_name = "com.amazonaws.${local.region}.dynamodb"
-}
-
-resource "aws_vpc_endpoint_route_table_association" "s3" {
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id  = module.vpc.private_route_table_ids[0]
-}
-
-resource "aws_vpc_endpoint_route_table_association" "dynamodb" {
-  vpc_endpoint_id = aws_vpc_endpoint.dynamodb.id
-  route_table_id  = module.vpc.private_route_table_ids[0]
-}
-
-///
 
 module "eks" {
   source = "terraform-aws-modules/eks/aws"

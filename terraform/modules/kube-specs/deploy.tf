@@ -1,5 +1,3 @@
-# TODO: Replace this deployment image with Peer docker image
-# TODO: Adjust resource limits and requests
 resource "kubernetes_deployment" "deploy" {
   depends_on = [
     var.eks_cluster_id
