@@ -57,6 +57,9 @@ jobs:
     # - name: Terraform Format
     #   run: terraform fmt -var kubeconfig_output_path=$KUBECONFIG -check
 
+    - name: Terraform Refresh
+      run: terraform refresh
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -var kubeconfig_output_path=$KUBECONFIG
