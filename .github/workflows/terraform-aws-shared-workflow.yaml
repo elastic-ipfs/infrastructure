@@ -40,6 +40,6 @@ jobs:
     - name: Terraform Plan
       run: terraform plan ${{ inputs.options }}
     - name: Terraform Apply
-      if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/app-testing') && github.event_name == 'push' # TODO: Delete app-testing from this
-      # if: github.ref == 'refs/heads/main' && github.event_name == 'push' # TODO: Check if that second if will be captured event inside shared workflow
+      if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/app-testing')' # TODO: remove app-testing
+      # if: github.ref == 'refs/heads/main' 
       run: terraform apply ${{ inputs.options }} -auto-approve
