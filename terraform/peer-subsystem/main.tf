@@ -132,8 +132,8 @@ module "eks" {
         }
       ]
       timeouts = {
-        create = "5m"
-        delete = "5m"
+        create = "20m"
+        delete = "20m"
       }
     }
   }
