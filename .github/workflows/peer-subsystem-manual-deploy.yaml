@@ -1,0 +1,13 @@
+name: 'Peer Subsystem Manual Deploy'
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+jobs:
+  terraform:
+    uses: ./terraform-aws-shared-workflow.yaml
+    options: | 
+      -var kubeconfig_output_path=$HOME/.kube/config 
+      -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:${{ github.event.inputs.tag }}
+    aws_region: us-west-2
