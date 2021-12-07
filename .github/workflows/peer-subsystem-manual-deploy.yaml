@@ -10,7 +10,8 @@ jobs:
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
     # uses: ./.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
-    options: | 
-      -var kubeconfig_output_path=$HOME/.kube/config 
-      -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:${{ github.event.inputs.tag }}
-    aws_region: us-west-2
+    with:
+      options: | 
+        -var kubeconfig_output_path=$HOME/.kube/config 
+        -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:${{ github.event.inputs.tag }}
+      aws_region: us-west-2
