@@ -3,7 +3,7 @@ on:
   push:
     branches:
     - main
-    - app-testing
+    - app-testing # TODO: Remove
   pull_request:
 jobs:
   terraform:
