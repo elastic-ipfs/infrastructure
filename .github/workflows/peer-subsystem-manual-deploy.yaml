@@ -16,5 +16,5 @@ jobs:
         -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:${{ github.event.inputs.tag }}
       aws_region: us-west-2
     secrets:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
