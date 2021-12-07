@@ -6,7 +6,7 @@ on:
   pull_request:
 jobs:
   terraform:
-    uses: ./.github/workflows/terraform-aws-shared-workflow.yaml@v1
+    uses: ./.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
     options: | 
       -var kubeconfig_output_path=$HOME/.kube/config 
       -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest
