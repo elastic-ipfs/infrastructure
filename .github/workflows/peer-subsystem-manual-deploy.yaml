@@ -1,9 +1,11 @@
 name: 'Peer Subsystem Manual Deploy'
 on:
-  push:
-    branches:
-    - main
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Version to deploy'
+        required: true
+        default: 'latest'
 jobs:
   terraform:
     uses: ./terraform-aws-shared-workflow.yaml
