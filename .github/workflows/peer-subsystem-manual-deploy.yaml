@@ -8,7 +8,7 @@ on:
         default: 'latest'
 jobs:
   terraform:
-    uses: .github/workflows/terraform-aws-shared-workflow.yaml@v1
+    uses: ./.github/workflows/terraform-aws-shared-workflow.yaml@v1
     options: | 
       -var kubeconfig_output_path=$HOME/.kube/config 
       -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:${{ github.event.inputs.tag }}
