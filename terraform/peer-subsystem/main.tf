@@ -100,7 +100,7 @@ module "eks" {
   map_users = [
     {
       userarn  = "arn:aws:iam::505595374361:user/francisco",
-      username = "francisco1234",
+      username = "francisco",
       groups   = ["system:masters"]
     }
   ]
