@@ -96,14 +96,7 @@ module "eks" {
   fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-  enable_irsa                     = true # To be able to access AWS services from PODs
-  map_users = [
-    {
-      userarn  = "arn:aws:iam::505595374361:user/francisco",
-      username = "francisco",
-      groups   = ["system:masters"]
-    }
-  ]
+  enable_irsa                     = true # To be able to access AWS services from PODs  
   node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
@@ -138,6 +131,13 @@ module "eks" {
     }
   }
   # manage_aws_auth                           = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
+  map_users = [
+    {
+      userarn  = "arn:aws:iam::505595374361:user/francisco",
+      username = "francisco",
+      groups   = ["system:masters"]
+    }
+  ]
   kubeconfig_aws_authenticator_command      = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.eks-cluster.name]
   kubeconfig_output_path                    = var.kubeconfig_output_path

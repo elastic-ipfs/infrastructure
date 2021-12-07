@@ -29,12 +29,14 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ github.event.inputs.aws_region }}
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-    - name: Terraform Init
-      run: terraform init
-    - name: Terraform Plan
-      run: terraform plan ${{ github.event.inputs.options }}
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push' # TODO: Check if that second if will be captured event inside shared workflow
-      run: terraform apply ${{ github.event.inputs.options }} -auto-approve
+    - name: test echo
+      run: hi I am working
+    # - name: Setup Terraform
+    #   uses: hashicorp/setup-terraform@v1
+    # - name: Terraform Init
+    #   run: terraform init
+    # - name: Terraform Plan
+    #   run: terraform plan ${{ github.event.inputs.options }}
+    # - name: Terraform Apply
+    #   if: github.ref == 'refs/heads/main' && github.event_name == 'push' # TODO: Check if that second if will be captured event inside shared workflow
+    #   run: terraform apply ${{ github.event.inputs.options }} -auto-approve
