@@ -8,7 +8,7 @@ on:
         default: 'latest'
 jobs:
   terraform:
-    uses: ${{ env.GITHUB_REPOSITORY }}/.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
+    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
     with:
       options: -var kubeconfig_output_path=$HOME/.kube/config -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest
       aws_region: us-west-2
