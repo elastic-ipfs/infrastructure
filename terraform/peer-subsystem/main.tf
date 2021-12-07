@@ -81,27 +81,29 @@ resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
 }
 
 module "gateway-endpoint-to-s3-dynamo" {
-  source = "../modules/gateway-endpoint-to-s3-dynamo"
-  vpc_id = module.vpc.vpc_id
-  region = local.region
+  source         = "../modules/gateway-endpoint-to-s3-dynamo"
+  vpc_id         = module.vpc.vpc_id
+  region         = local.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
 module "eks" {
-  source = "terraform-aws-modules/eks/aws"
-  cluster_name    = var.eks-cluster.name
-  cluster_version = var.eks-cluster.version
-  vpc_id          = module.vpc.vpc_id
-  subnets         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
-  fargate_subnets = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
+  source                          = "terraform-aws-modules/eks/aws"
+  cluster_name                    = var.eks-cluster.name
+  cluster_version                 = var.eks-cluster.version
+  vpc_id                          = module.vpc.vpc_id
+  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
+  fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-  enable_irsa = true # To be able to access AWS services from PODs
-  map_users = [ {
-    userarn  = "arn:aws:iam::505595374361:user/francisco",
-    username = "francisco",
-    groups = ["system:masters"]
-  } ] 
+  enable_irsa                     = true # To be able to access AWS services from PODs
+  map_users = [
+    {
+      userarn  = "arn:aws:iam::505595374361:user/francisco",
+      username = "francisco1234",
+      groups   = ["system:masters"]
+    }
+  ]
   node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
@@ -135,9 +137,9 @@ module "eks" {
       }
     }
   }
-  manage_aws_auth = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
+  # manage_aws_auth                           = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
   kubeconfig_aws_authenticator_command      = "aws"
-  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
+  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.eks-cluster.name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
 }
 
@@ -151,10 +153,10 @@ module "kube-specs" {
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id          = module.eks.cluster_id
-  container_image = var.container_image
-  peerConfigBucketName = var.peerConfigBucketName
+  container_image         = var.container_image
+  peerConfigBucketName    = var.peerConfigBucketName
   kubeconfig_output_path  = module.eks.kubeconfig_filename
-  host = data.aws_eks_cluster.eks.endpoint
-  token = data.aws_eks_cluster_auth.eks.token
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  host                    = data.aws_eks_cluster.eks.endpoint
+  token                   = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
 }
