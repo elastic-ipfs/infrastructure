@@ -1,5 +1,4 @@
 provider "helm" {
-  # TODO: Read from the same object that configures Kubernetes
   kubernetes {
     host                   = var.host
     token                  = var.token

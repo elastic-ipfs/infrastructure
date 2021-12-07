@@ -6,10 +6,6 @@ variable "eks_cluster_id" {
   type = string
 }
 
-variable "eks_cluster_name" {
-  type = string
-}
-
 variable "kubeconfig_output_path" {
   type = string
 }
@@ -40,9 +36,5 @@ variable "token" {
 }
 
 variable "cluster_ca_certificate" {
-  type = string
-}
-
-variable "cluster_name" {
   type = string
 }
