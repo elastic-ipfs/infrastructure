@@ -35,7 +35,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
         aws-region: ${{ inputs.aws_region }}
     - name: test terraform command options
-      run: echo ${{ inputs.options }}
+      run: echo "${{ inputs.options }}"
     # - name: Setup Terraform
     #   uses: hashicorp/setup-terraform@v1
     # - name: Terraform Init

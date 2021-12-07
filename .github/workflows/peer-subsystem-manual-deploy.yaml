@@ -8,6 +8,7 @@ on:
         default: 'latest'
 jobs:
   terraform:
+   # TODO: I seems that complete value has worked. Try to change the beginning with a predefined variable
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
     # uses: ./.github/workflows/terraform-aws-shared-workflow.yaml@app-testing
     with:
