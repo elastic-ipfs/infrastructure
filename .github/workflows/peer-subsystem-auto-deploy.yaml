@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - main
+    - app-testing
   pull_request:
 jobs:
   terraform:
