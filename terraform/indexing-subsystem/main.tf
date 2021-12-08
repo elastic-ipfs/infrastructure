@@ -40,7 +40,6 @@ provider "aws" {
   }
 }
 
-# TODO: Create lambda and send this as param to the module below
 resource "aws_lambda_function" "uploader" {
   function_name = local.uploader_lambda.name
   filename      = "lambda_function.zip"
@@ -48,7 +47,6 @@ resource "aws_lambda_function" "uploader" {
   handler       = "index.handler"
   runtime       = "nodejs14.x"
 
-  # TODO: Ver se tem outras envs
   environment {
     variables = {
         S3_BUCKET =	"ipfs-cars"
