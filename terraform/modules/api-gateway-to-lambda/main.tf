@@ -11,7 +11,7 @@ terraform {
 
 resource "aws_api_gateway_rest_api" "upload_cars_api" {
   name = local.api_name
-  binary_media_types = [ # TODO: Accept what kind of binary media types? None?
+  binary_media_types = [ # TODO: Accept what kind of binary media types? None? Remove this property?
     "*/*"
   ]
 }
@@ -72,8 +72,8 @@ resource "aws_api_gateway_deployment" "upload_cars_api_deploy" {
       aws_api_gateway_resource.object.id,
       aws_api_gateway_method.postObject.id,
       aws_api_gateway_integration.integration.id,
-      # aws_api_gateway_method_response.response_proxy,
-      # aws_api_gateway_integration_response.response_proxy,
+      aws_api_gateway_method_response.response_proxy,
+      aws_api_gateway_integration_response.response_proxy,
       aws_api_gateway_account.api_gateway_cloudwatch_account
     ]))
   }
