@@ -141,7 +141,7 @@ module "eks" {
   kubeconfig_aws_authenticator_command      = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.eks-cluster.name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
-  cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 }
 
 module "kube-specs" {
