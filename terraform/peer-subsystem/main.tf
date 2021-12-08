@@ -136,7 +136,7 @@ module "eks" {
       }
     }
   }
-  manage_aws_auth                           = true 
+  manage_aws_auth                           = false 
   # map_users = [
   #   {
   #     userarn  = "arn:aws:iam::505595374361:user/francisco",
