@@ -136,14 +136,14 @@ module "eks" {
       }
     }
   }
-  # manage_aws_auth                           = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
-  map_users = [
-    {
-      userarn  = "arn:aws:iam::505595374361:user/francisco",
-      username = "francisco",
-      groups   = ["system:masters"]
-    }
-  ]
+  manage_aws_auth                           = false 
+  # map_users = [
+  #   {
+  #     userarn  = "arn:aws:iam::505595374361:user/francisco",
+  #     username = "francisco",
+  #     groups   = ["system:masters"]
+  #   }
+  # ]
   kubeconfig_aws_authenticator_command      = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.eks-cluster.name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
