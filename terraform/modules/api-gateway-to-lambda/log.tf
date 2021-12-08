@@ -8,12 +8,12 @@ resource "aws_cloudwatch_log_group" "indexing_api_log_group" {
 }
 
 resource "aws_iam_role_policy_attachment" "api_gateway_loging_attach" {
-  role       = aws_iam_role.s3_api_gateyway_role.name
+  role       = aws_iam_role.uploader_api_gateyway_role.name
   policy_arn = data.aws_iam_policy.api_gateway_loging.arn
 }
 
 resource "aws_api_gateway_account" "api_gateway_cloudwatch_account" {
-  cloudwatch_role_arn = aws_iam_role.s3_api_gateyway_role.arn
+  cloudwatch_role_arn = aws_iam_role.uploader_api_gateyway_role.arn
 }
 
 resource "aws_api_gateway_method_settings" "api_gateway_enable_log" {

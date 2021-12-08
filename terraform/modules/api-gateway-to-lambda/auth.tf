@@ -1,5 +1,5 @@
-resource "aws_iam_role" "s3_api_gateyway_role" {
-  name = "s3-api-gateyway-role"
+resource "aws_iam_role" "uploader_api_gateyway_role" {
+  name = "uploader_api_gateyway_role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -15,11 +15,4 @@ resource "aws_iam_role" "s3_api_gateyway_role" {
   ]
 } 
 EOF
-}
-
-
-resource "aws_iam_role_policy_attachment" "policies_attach" {
-  for_each = { for policy in var.aws_iam_role_policy_list: policy.name => policy }
-  role       = aws_iam_role.s3_api_gateyway_role.name
-  policy_arn = each.value.arn
 }

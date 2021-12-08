@@ -62,9 +62,6 @@ resource "aws_lambda_function" "uploader" {
 module "api-gateway-to-lambda" {
   source = "../modules/api-gateway-to-lambda"
   lambda = aws_lambda_function.uploader
-  aws_iam_role_policy_list = [
-    #  data.terraform_remote_state.shared.outputs.s3_policy_write,
-  ]
 }
 
 module "lambda-from-s3" {
