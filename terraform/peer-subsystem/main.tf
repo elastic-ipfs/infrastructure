@@ -136,7 +136,8 @@ module "eks" {
       }
     }
   }
-  manage_aws_auth                           = true 
+  # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
+  manage_aws_auth                           = false 
   # map_users = [
   #   {
   #     userarn  = "arn:aws:iam::505595374361:user/francisco",
