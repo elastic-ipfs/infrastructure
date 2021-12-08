@@ -33,13 +33,15 @@ resource "aws_api_gateway_method" "postObject" {
   }
 }
 
-# resource "aws_api_gateway_method_response" "response_200" {
-#   rest_api_id = aws_api_gateway_rest_api.upload_cars_api.id
-#   resource_id = aws_api_gateway_resource.object.id
-#   http_method = aws_api_gateway_method.putObject.http_method
-#   status_code = "200"
-# }
-
+resource "aws_api_gateway_method_response" "response_proxy" {
+  rest_api_id = aws_api_gateway_rest_api.upload_cars_api.id
+  resource_id = aws_api_gateway_resource.object.id
+  http_method = aws_api_gateway_method.postObject.http_method
+  status_code = "200"
+  response_models = {
+    "application/json" = "Empty"
+  }
+}
 
 resource "aws_api_gateway_integration" "integration" {
   rest_api_id             = aws_api_gateway_rest_api.upload_cars_api.id
@@ -50,16 +52,16 @@ resource "aws_api_gateway_integration" "integration" {
   uri                     = var.lambda.invoke_arn
 }
 
-# resource "aws_api_gateway_integration_response" "response_200" {
-#   rest_api_id = aws_api_gateway_rest_api.upload_cars_api.id
-#   resource_id = aws_api_gateway_resource.object.id
-#   http_method = aws_api_gateway_method.putObject.http_method
-#   status_code = aws_api_gateway_method_response.response_200.status_code
+resource "aws_api_gateway_integration_response" "response_proxy" {
+  rest_api_id = aws_api_gateway_rest_api.upload_cars_api.id
+  resource_id = aws_api_gateway_resource.object.id
+  http_method = aws_api_gateway_method.postObject.http_method
+  status_code = aws_api_gateway_method_response.response_proxy.status_code
 
-#   depends_on = [
-#     aws_api_gateway_method.putObject
-#   ]
-# }
+  depends_on = [
+    aws_api_gateway_method.postObject
+  ]
+}
 
 ## Deployment
 resource "aws_api_gateway_deployment" "upload_cars_api_deploy" {
@@ -70,8 +72,8 @@ resource "aws_api_gateway_deployment" "upload_cars_api_deploy" {
       aws_api_gateway_resource.object.id,
       aws_api_gateway_method.postObject.id,
       aws_api_gateway_integration.integration.id,
-      # aws_api_gateway_method_response.response_200,
-      # aws_api_gateway_integration_response.response_200,
+      # aws_api_gateway_method_response.response_proxy,
+      # aws_api_gateway_integration_response.response_proxy,
       aws_api_gateway_account.api_gateway_cloudwatch_account
     ]))
   }
