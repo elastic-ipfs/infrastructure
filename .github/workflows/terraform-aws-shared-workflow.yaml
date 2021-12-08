@@ -1,0 +1,44 @@
+name: 'Terraform AWS Workflow'
+
+on:
+  workflow_call:
+    inputs:
+      options:
+        required: false
+        type: string
+        default: ""
+      aws_region:
+        required: true
+        type: string
+    secrets:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
+        required: true
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production # TODO: Input
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform/peer-subsystem # TODO: Input
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.aws_access_key_id }}
+        aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
+        aws-region: ${{ inputs.aws_region }}
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+    - name: Terraform Init
+      run: terraform init
+    - name: Terraform Plan
+      run: terraform plan ${{ inputs.options }}
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' 
+      run: terraform apply ${{ inputs.options }} -auto-approve

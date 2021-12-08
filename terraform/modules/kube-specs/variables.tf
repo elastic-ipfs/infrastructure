@@ -1,8 +1,8 @@
-variable "eks_cluster_id" {
+variable "container_image" {
   type = string
 }
 
-variable "eks_cluster_name" {
+variable "eks_cluster_id" {
   type = string
 }
 
@@ -25,4 +25,16 @@ variable "cluster_oidc_issuer_url" {
 variable "peerConfigBucketName" {
   type    = string
   description = "Bucket for storing CAR files"
+}
+
+variable "host" {
+  type = string
+}
+
+variable "token" {
+  type = string
+}
+
+variable "cluster_ca_certificate" {
+  type = string
 }

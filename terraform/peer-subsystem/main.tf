@@ -11,6 +11,12 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.38"
+    }    
+    
+
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.4.1"
     }
   }
 
@@ -24,6 +30,14 @@ data "terraform_remote_state" "shared" {
     key    = "terraform.shared.tfstate"
     region = "${local.region}"
   }
+}
+
+data "aws_eks_cluster" "eks" {
+  name = module.eks.cluster_id
+}
+
+data "aws_eks_cluster_auth" "eks" {
+  name = module.eks.cluster_id
 }
 
 provider "aws" {
@@ -73,29 +87,23 @@ resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
 }
 
 module "gateway-endpoint-to-s3-dynamo" {
-  source = "../modules/gateway-endpoint-to-s3-dynamo"
-  vpc_id = module.vpc.vpc_id
-  region = local.region
+  source         = "../modules/gateway-endpoint-to-s3-dynamo"
+  vpc_id         = module.vpc.vpc_id
+  region         = local.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
 module "eks" {
-  source = "terraform-aws-modules/eks/aws"
-
-  cluster_name    = var.eks-cluster.name
-  cluster_version = var.eks-cluster.version
-
-  vpc_id          = module.vpc.vpc_id
-  subnets         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
-  fargate_subnets = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
-
+  source                          = "terraform-aws-modules/eks/aws"
+  cluster_name                    = var.eks-cluster.name
+  cluster_version                 = var.eks-cluster.version
+  vpc_id                          = module.vpc.vpc_id
+  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
+  fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-
-  enable_irsa = true
-
-  # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
-  node_groups = {
+  enable_irsa                     = true # To be able to access AWS services from PODs  
+  node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
       desired_capacity = 2
@@ -111,7 +119,6 @@ module "eks" {
       }
     }
   }
-
   fargate_profiles = {
     default = {
       name = "default"
@@ -123,19 +130,25 @@ module "eks" {
           }
         }
       ]
-
       timeouts = {
-        create = "20m"
-        delete = "20m"
+        create = "5m"
+        delete = "5m"
       }
     }
   }
-
-  manage_aws_auth = false # Set to true (default) if ever find this error: https://github.com/aws/containers-roadmap/issues/654
-
+  # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
+  manage_aws_auth                           = false 
+  # map_users = [
+  #   {
+  #     userarn  = "arn:aws:iam::505595374361:user/francisco",
+  #     username = "francisco",
+  #     groups   = ["system:masters"]
+  #   }
+  # ]
   kubeconfig_aws_authenticator_command      = "aws"
-  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", "test-ipfs-aws-peer-subsystem-eks"]
+  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.eks-cluster.name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
+  # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
 }
 
 module "kube-specs" {
@@ -148,7 +161,10 @@ module "kube-specs" {
   ]
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   eks_cluster_id          = module.eks.cluster_id
-  eks_cluster_name        = var.eks-cluster.name
+  container_image         = var.container_image
+  peerConfigBucketName    = var.peerConfigBucketName
   kubeconfig_output_path  = module.eks.kubeconfig_filename
-  peerConfigBucketName = var.peerConfigBucketName
+  host                    = data.aws_eks_cluster.eks.endpoint
+  token                   = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
 }
