@@ -34,9 +34,6 @@ provider "aws" {
 resource "aws_s3_bucket" "cars" {
   bucket = var.carsBucketName
   acl    = "private"
-  object_lock_configuration {
-    object_lock_enabled = "Enabled"
-  }  
 }
 
 resource "aws_sqs_queue" "publishing_queue" {
