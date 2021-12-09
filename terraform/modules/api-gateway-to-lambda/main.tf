@@ -11,9 +11,6 @@ terraform {
 
 resource "aws_api_gateway_rest_api" "upload_cars_api" {
   name = local.api_name
-  binary_media_types = [ # TODO: Accept what kind of binary media types? None? Remove this property?
-    "*/*"
-  ]
 }
 
 resource "aws_api_gateway_resource" "object" {
