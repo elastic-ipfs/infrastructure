@@ -24,6 +24,11 @@ resource "aws_iam_policy" "s3_policy_read" {
     "Statement": [
         {
             "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "${aws_s3_bucket.cars.arn}"
+        },
+        {
+            "Effect": "Allow",
             "Action": "s3:GetObject",
             "Resource": "${aws_s3_bucket.cars.arn}/*"
         },

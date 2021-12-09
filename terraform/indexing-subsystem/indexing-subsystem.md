@@ -36,5 +36,5 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cars_api_invoke_url"></a> [cars\_api\_invoke\_url](#output\_cars\_api\_invoke\_url) | Use this URL to PUT CAR files |
+| <a name="output_upload_cars_api_invoke_url"></a> [cars\_api\_invoke\_url](#output\_cars\_api\_invoke\_url) | Use this URL to PUT CAR files |
 <!-- END_TF_DOCS -->

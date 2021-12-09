@@ -40,12 +40,29 @@ provider "aws" {
   }
 }
 
-module "api-gateway-to-s3" {
-  source = "../modules/api-gateway-to-s3"
-  bucket = data.terraform_remote_state.shared.outputs.cars_bucket
-  aws_iam_role_policy_list = [
-     data.terraform_remote_state.shared.outputs.s3_policy_write,
+resource "aws_lambda_function" "uploader" {
+  function_name = local.uploader_lambda.name
+  filename      = "lambda_function.zip"
+  role          = aws_iam_role.uploader_lambda_role.arn
+  # role          = "arn:aws:iam::505595374361:role/indexing_lambda_role"
+  handler       = "index.handler"
+  runtime       = "nodejs14.x"
+
+  environment {
+    variables = {
+        S3_BUCKET =	"ipfs-cars"
+      } 
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.uploader_lambda_logs,
+    aws_cloudwatch_log_group.uploader_log_group,
   ]
+}
+
+module "api-gateway-to-lambda" {
+  source = "../modules/api-gateway-to-lambda"
+  lambda = aws_lambda_function.uploader
 }
 
 module "lambda-from-s3" {
