@@ -44,6 +44,7 @@ resource "aws_lambda_function" "uploader" {
   function_name = local.uploader_lambda.name
   filename      = "lambda_function.zip"
   role          = aws_iam_role.uploader_lambda_role.arn
+  # role          = "arn:aws:iam::505595374361:role/indexing_lambda_role"
   handler       = "index.handler"
   runtime       = "nodejs14.x"
 
