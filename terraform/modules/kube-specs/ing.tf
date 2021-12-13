@@ -17,7 +17,7 @@ resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
 resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
   # wait_for_load_balancer = true
   metadata {
-    name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata.name
+    name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
   }
 
   spec {
