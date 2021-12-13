@@ -39,7 +39,7 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
             }
           }
           path = "/peer/*"
-          path_type = "prefix"
+          path_type = "Prefix"
         }
       }
     }
