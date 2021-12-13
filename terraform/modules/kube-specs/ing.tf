@@ -1,20 +1,21 @@
-resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
-  metadata {
-    name = "aws-ipfs-ingress-class"
-    # annotations = { # https://github.com/kubernetes/ingress-nginx/issues/7600
-    #   "ingressclass.kubernetes.io/is-default-class" : "true"
-    # }
-  }
+# resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
+#   metadata {
+#     name = "aws-ipfs-ingress-class"
+#     # annotations = { # https://github.com/kubernetes/ingress-nginx/issues/7600
+#     #   "ingressclass.kubernetes.io/is-default-class" : "true"
+#     # }
+#   }
 
-  spec {
-    # controller = "example.com/ingress-controller"
-    controller = helm_release.ingress.name
-    # parameters { # TODO: O que são esses parametros manoo??? Aperantaly optional..
-    #   kind      = "IngressParameters"
-    #   name      = "external-lb"
-    # }
-  }
-}
+#   spec {
+#     # controller = "example.com/ingress-controller"
+#     controller = helm_release.ingress.name
+#     controller = "nginx.org/ingress-controller"
+#     # parameters { # TODO: O que são esses parametros manoo??? Aperantaly optional..
+#     #   kind      = "IngressParameters"
+#     #   name      = "external-lb"
+#     # }
+#   }
+# }
 
 
 resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
@@ -24,8 +25,8 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
   }
 
   spec {
-    ingress_class_name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
-    # ingress_class_name = "nginx"
+    # ingress_class_name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
+    ingress_class_name = "nginx"
     rule {
       http {
         path {

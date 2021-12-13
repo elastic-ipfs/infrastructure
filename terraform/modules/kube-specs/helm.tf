@@ -23,4 +23,14 @@ resource "helm_release" "ingress" {
   repository = local.bitnami_repo    
   chart     = "nginx"
   namespace = "kube-system"
+
+  set {
+    name  = "ingressClassResource.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "ingressClassResource.default"
+    value = "true"
+  }
 }
