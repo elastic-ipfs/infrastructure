@@ -1,17 +1,21 @@
-# resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
-#   metadata {
-#     name = "aws-ipfs-ingress-class"
-#   }
+resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
+  metadata {
+    name = "doesnotexist"
+    # name = "aws-ipfs-ingress-class"
+    annotations = {
+      ingressclass.kubernetes.io / is-default-class : "true"
+    }
+  }
 
-#   spec {
-#     # controller = "example.com/ingress-controller"
-#     controller = helm_release.ingress.name
-#     # parameters { # TODO: O que são esses parametros manoo??? Aperantaly optional..
-#     #   kind      = "IngressParameters"
-#     #   name      = "external-lb"
-#     # }
-#   }
-# }
+  spec {
+    # controller = "example.com/ingress-controller"
+    controller = helm_release.ingress.name
+    # parameters { # TODO: O que são esses parametros manoo??? Aperantaly optional..
+    #   kind      = "IngressParameters"
+    #   name      = "external-lb"
+    # }
+  }
+}
 
 
 resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
