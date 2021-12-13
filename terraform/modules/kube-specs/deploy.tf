@@ -28,8 +28,8 @@ resource "kubernetes_deployment" "deploy" {
       spec {
         service_account_name = kubernetes_service_account.irsa.metadata[0].name
         container {
-          image = var.container_image
-          # image = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest"
+          image = "nginx"
+          # image = var.container_image
           name  = "aws-ipfs-bitswap-peer"
           env {
             name = "NODE_ENV"

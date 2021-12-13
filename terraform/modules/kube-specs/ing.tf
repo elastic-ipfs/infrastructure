@@ -1,16 +1,37 @@
-resource "kubernetes_ingress" "aws_ipfs_ingress" {
-  # wait_for_load_balancer = true
+resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
   metadata {
-    name = "aws-ipfs-ingress"
+    name = "aws_ipfs_ingress_class"
   }
 
   spec {
+    # controller = "example.com/ingress-controller"
+    controller = helm_release.ingress.name
+    # parameters { # TODO: O que são esses parametros manoo??? Aperantaly optional..
+    #   kind      = "IngressParameters"
+    #   name      = "external-lb"
+    # }
+  }
+}
+
+
+resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
+  # wait_for_load_balancer = true
+  metadata {
+    name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata.name
+  }
+
+  spec {
+    ingress_class_name = "external-lb"
     rule {
       http {
         path {
           backend {
-            service_name = local.service_name
-            service_port = local.service_port
+            service {
+              name = local.service_name
+              port {
+                number = local.service_port
+              }
+            }
           }
           path = "/peer/*"
         }

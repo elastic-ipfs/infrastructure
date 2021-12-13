@@ -18,8 +18,8 @@ resource "helm_release" "metric-server" {
   }
 }
 
-resource "helm_release" "nginix-ingress" {
-  name      = "nginix-ingress"    
+resource "helm_release" "ingress" {
+  name      = "ingress"    
   repository = local.bitnami_repo    
   chart     = "nginx"
   namespace = "kube-system"
