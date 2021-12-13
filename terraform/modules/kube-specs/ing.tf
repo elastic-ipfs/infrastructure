@@ -1,6 +1,6 @@
 resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
   metadata {
-    name = "aws_ipfs_ingress_class"
+    name = "aws-ipfs-ingress-class"
   }
 
   spec {
