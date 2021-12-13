@@ -7,7 +7,8 @@ resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
   }
 
   spec {
-    controller = "k8s.io/ingress-nginx"
+    # controller = "k8s.io/ingress-nginx"
+    controller = "nginx.org/ingress-controller"
   }
 }
 
