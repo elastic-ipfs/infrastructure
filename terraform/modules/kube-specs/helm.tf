@@ -25,6 +25,7 @@ resource "helm_release" "nginix_ingress" {
     repository = " https://charts.bitnami.com/bitnami"
     # chart     = "nginx-stable/nginx-ingress"
     # chart     = "stable/nginx-ingress"
-    chart     = "bitnami/nginx"
+    # chart     = "bitnami/nginx"
+    chart     = "nginx"
     namespace = "kube-system"
 }
