@@ -33,4 +33,9 @@ resource "helm_release" "ingress" {
     name  = "ingressClassResource.default"
     value = "true"
   }
+
+  set {
+    name  = "watchIngressWithoutClass"
+    value = "true"
+  }
 }
