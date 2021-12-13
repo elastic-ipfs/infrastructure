@@ -21,8 +21,10 @@ resource "helm_release" "metric-server" {
 resource "helm_release" "nginix_ingress" {
     name      = "nginix_ingress"
     # repository = "https://kubernetes-charts.storage.googleapis.com"
-    repository = "https://helm.nginx.com/stable"
+    # repository = "https://helm.nginx.com/stable"
+    repository = " https://charts.bitnami.com/bitnami"
     # chart     = "nginx-stable/nginx-ingress"
-    chart     = "stable/nginx-ingress"
+    # chart     = "stable/nginx-ingress"
+    chart     = "bitnami/nginx"
     namespace = "kube-system"
 }
