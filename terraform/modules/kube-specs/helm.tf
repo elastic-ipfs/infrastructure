@@ -18,7 +18,7 @@ resource "helm_release" "metric-server" {
   }
 }
 
-resource "helm_release" "ingress" {
+resource "helm_release" "nginx_ingress" {
   name      = "ingress"    
   repository = "https://helm.nginx.com/stable"
   chart     = "nginx-ingress"
