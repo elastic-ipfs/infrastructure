@@ -33,10 +33,17 @@ resource "helm_release" "metric-server" {
 #   namespace = "kube-system"
 # }
 
+# Stable: It does not look like this repo is here
+# resource "helm_release" "nginix-ingress" {
+#   name      = "nginix-ingress"    
+#   repository = "https://charts.helm.sh/stable"    
+#   chart     = "bitnami/nginx"
+#   namespace = "kube-system"
+# }
 
 resource "helm_release" "nginix-ingress" {
   name      = "nginix-ingress"    
-  repository = "https://charts.helm.sh/stable"    
-  chart     = "bitnami/nginx"
+  repository = "https://charts.bitnami.com/bitnami"    
+  chart     = "nginx"
   namespace = "kube-system"
 }
