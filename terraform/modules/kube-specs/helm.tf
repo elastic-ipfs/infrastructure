@@ -18,9 +18,16 @@ resource "helm_release" "metric-server" {
   }
 }
 
+# resource "helm_release" "nginix-ingress" {
+#   name      = "nginix-ingress"    
+#   repository = "https://kubernetes.github.io/ingress-nginx"    
+#   chart     = "ingress-nginx"
+#   namespace = "kube-system"
+# }
+
 resource "helm_release" "nginix-ingress" {
   name      = "nginix-ingress"    
-  repository = " https://kubernetes.github.io/ingress-nginx"    
-  chart     = "ingress-nginx"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart     = "stable/nginx-ingress"
   namespace = "kube-system"
 }
