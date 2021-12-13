@@ -25,9 +25,18 @@ resource "helm_release" "metric-server" {
 #   namespace = "kube-system"
 # }
 
+#  looks like "https://kubernetes-charts.storage.googleapis.com" is not a valid chart repository or cannot be reached:
+# resource "helm_release" "nginix-ingress" {
+#   name      = "nginix-ingress"    
+#   repository = "https://kubernetes-charts.storage.googleapis.com"
+#   chart     = "stable/nginx-ingress"
+#   namespace = "kube-system"
+# }
+
+
 resource "helm_release" "nginix-ingress" {
   name      = "nginix-ingress"    
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart     = "stable/nginx-ingress"
+  repository = "https://charts.helm.sh/stable"    
+  chart     = "bitnami/nginx"
   namespace = "kube-system"
 }
