@@ -28,7 +28,7 @@ resource "kubernetes_deployment" "deploy" {
       spec {
         service_account_name = kubernetes_service_account.irsa.metadata[0].name
         container {
-          # image = "nginx"
+          image = "nginx"
           # image = var.container_image
           name  = "aws-ipfs-bitswap-peer"
           env {
