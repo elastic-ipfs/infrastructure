@@ -1,19 +1,13 @@
 resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
   metadata {
     name = "aws-ipfs-ingress-class"
-    # annotations = { # https://github.com/kubernetes/ingress-nginx/issues/7600
-    #   "ingressclass.kubernetes.io/is-default-class" : "true"
-    # }
+    annotations = { # https://github.com/kubernetes/ingress-nginx/issues/7600
+      "ingressclass.kubernetes.io/is-default-class" : "true"
+    }
   }
 
   spec {
-    # controller = "example.com/ingress-controller"
-    # controller = helm_release.ingress.name
     controller = "k8s.io/ingress-nginx"
-    # parameters { # TODO: O que são esses parametros manoo??? Aperantaly optional..
-    #   kind      = "IngressParameters"
-    #   name      = "external-lb"
-    # }
   }
 }
 
