@@ -1,4 +1,5 @@
-resource "kubernetes_ingress" "aws-ipfs-ingress" {
+resource "kubernetes_ingress" "aws_ipfs_ingress" {
+  wait_for_load_balancer = true
   metadata {
     name = "aws-ipfs-ingress"
   }
