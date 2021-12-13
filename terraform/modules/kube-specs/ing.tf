@@ -1,5 +1,5 @@
 resource "kubernetes_ingress" "aws_ipfs_ingress" {
-  wait_for_load_balancer = true
+  # wait_for_load_balancer = true
   metadata {
     name = "aws-ipfs-ingress"
   }
@@ -13,6 +13,7 @@ resource "kubernetes_ingress" "aws_ipfs_ingress" {
             service_port = local.service_port
           }
           path = "/peer/*"
+          pathType = "Prefix"
         }
       }
     }
