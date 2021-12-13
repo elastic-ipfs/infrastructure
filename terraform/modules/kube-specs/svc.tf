@@ -7,8 +7,8 @@ resource "kubernetes_service" "service" {
       app = kubernetes_deployment.deploy.metadata[0].name
     }
     port {
-      port        = 3000
-      target_port = 3000
+      port        = local.service_port
+      target_port = local.service_target_port
     }
     type = "ClusterIP"
   }

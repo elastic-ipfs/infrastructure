@@ -5,4 +5,5 @@ locals {
   service_name = "${kubernetes_deployment.deploy.metadata[0].name}"
   # service_port = 3000
   service_port = 80
+  service_target_port = 80
 }
