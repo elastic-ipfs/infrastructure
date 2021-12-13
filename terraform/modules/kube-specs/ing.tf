@@ -13,7 +13,6 @@ resource "kubernetes_ingress" "aws_ipfs_ingress" {
             service_port = local.service_port
           }
           path = "/peer/*"
-          pathType = "Prefix"
         }
       }
     }
