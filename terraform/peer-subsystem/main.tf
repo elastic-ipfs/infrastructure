@@ -11,11 +11,11 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.38"
-    }    
-    
+    }
+
 
     helm = {
-      source = "hashicorp/helm"
+      source  = "hashicorp/helm"
       version = "2.4.1"
     }
   }
@@ -103,7 +103,7 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
   enable_irsa                     = true # To be able to access AWS services from PODs  
-  node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
+  node_groups = {                        # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
       desired_capacity = 2
@@ -137,7 +137,7 @@ module "eks" {
     }
   }
   # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
-  manage_aws_auth                           = false 
+  manage_aws_auth = false
   # map_users = [
   #   {
   #     userarn  = "arn:aws:iam::505595374361:user/francisco",
@@ -159,13 +159,14 @@ module "kube-specs" {
     data.terraform_remote_state.shared.outputs.s3_policy_write,
     aws_iam_policy.config_peer_s3_bucket_policy_read, # Remember to manually add this file after infra is up running (403 error otherwise)
   ]
-  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
-  eks_cluster_id          = module.eks.cluster_id
-  container_image         = var.container_image
-  peerConfigBucketName    = var.peerConfigBucketName
-  kubeconfig_output_path  = module.eks.kubeconfig_filename
-  host                    = data.aws_eks_cluster.eks.endpoint
-  token                   = data.aws_eks_cluster_auth.eks.token
-  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-  eks-cluster = var.eks-cluster
+  cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
+  cluster_oidc_provider_arn = module.eks.oidc_provider_arn
+  eks_cluster_id            = module.eks.cluster_id
+  container_image           = var.container_image
+  peerConfigBucketName      = var.peerConfigBucketName
+  kubeconfig_output_path    = module.eks.kubeconfig_filename
+  host                      = data.aws_eks_cluster.eks.endpoint
+  token                     = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  eks-cluster               = var.eks-cluster
 }

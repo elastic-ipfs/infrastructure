@@ -18,74 +18,74 @@ resource "helm_release" "metric-server" {
   }
 }
 
-resource "helm_release" "aws_load_balancer" {
-  name      = "aws-load-balancer"    
-  repository = "https://aws.github.io/eks-charts"
-  chart     = "aws-load-balancer-controller"
-  namespace = "kube-system"
-
-  set {
-    name  = "clusterName"
-    value = var.eks-cluster.name
-  }
-
-  set {
-    name  = "createIngressClassResource"
-    value = "true"
-  }
-
-  set { # TODO: Is that necessary?
-    name  = "rbac.create"
-    value = "true"
-  }
-
-  set {
-    name  = "serviceAccount.create"
-    value = "true"
-  }
-
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.lb_controller.arn
-  }
-
-  # set {
-  #   name  = "serviceAccount.create"
-  #   value = "false"
-  # }
-
-  # set {
-  #   name  = "serviceAccount.name"
-  #   value = kubernetes_service_account.irsa.metadata[0].name
-  # }
-}
-
-# resource "helm_release" "nginx_ingress" {
-#   name      = "nginx-ingress"    
-#   repository = "https://helm.nginx.com/stable"
-#   chart     = "nginx-ingress"
-#   namespace = "kube-system"
-# }
-
-
-# resource "helm_release" "ingress" {
-#   name      = "ingress"    
-#   repository = local.bitnami_repo    
-#   chart     = "nginx"
+# resource "helm_release" "aws_load_balancer" {
+#   name      = "aws-load-balancer"    
+#   repository = "https://aws.github.io/eks-charts"
+#   chart     = "aws-load-balancer-controller"
 #   namespace = "kube-system"
 
 #   set {
-#     name  = "ingressClassResource.enabled"
+#     name  = "clusterName"
+#     value = var.eks-cluster.name
+#   }
+
+#   set {
+#     name  = "createIngressClassResource"
+#     value = "true"
+#   }
+
+#   set { # TODO: Is that necessary?
+#     name  = "rbac.create"
 #     value = "true"
 #   }
 
 #   set {
-#     name  = "ingressClassResource.default"
+#     name  = "serviceAccount.create"
 #     value = "true"
 #   }
 
 #   set {
-#     name  = "watchIngressWithoutClass"
-#     value = "true"
+#     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+#     value = aws_iam_role.lb_controller.arn
 #   }
+
+#   # set {
+#   #   name  = "serviceAccount.create"
+#   #   value = "false"
+#   # }
+
+#   # set {
+#   #   name  = "serviceAccount.name"
+#   #   value = kubernetes_service_account.irsa.metadata[0].name
+#   # }
 # }
+
+# # resource "helm_release" "nginx_ingress" {
+# #   name      = "nginx-ingress"    
+# #   repository = "https://helm.nginx.com/stable"
+# #   chart     = "nginx-ingress"
+# #   namespace = "kube-system"
+# # }
+
+
+# # resource "helm_release" "ingress" {
+# #   name      = "ingress"    
+# #   repository = local.bitnami_repo    
+# #   chart     = "nginx"
+# #   namespace = "kube-system"
+
+# #   set {
+# #     name  = "ingressClassResource.enabled"
+# #     value = "true"
+# #   }
+
+# #   set {
+# #     name  = "ingressClassResource.default"
+# #     value = "true"
+# #   }
+
+# #   set {
+# #     name  = "watchIngressWithoutClass"
+# #     value = "true"
+# #   }
+# # }

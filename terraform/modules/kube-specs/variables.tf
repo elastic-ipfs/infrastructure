@@ -6,6 +6,14 @@ variable "eks_cluster_id" {
   type = string
 }
 
+variable "cluster_oidc_issuer_url" {
+  type = string
+}
+
+variable "cluster_oidc_provider_arn" {
+  type = string
+}
+
 variable "kubeconfig_output_path" {
   type = string
 }
@@ -18,9 +26,7 @@ variable "aws_iam_role_policy_list" {
   description = "This list contains policies that will be attached to the current role"
 }
 
-variable "cluster_oidc_issuer_url" {
-  type = string
-}
+
 
 variable "peerConfigBucketName" {
   type    = string
