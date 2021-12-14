@@ -34,15 +34,15 @@ resource "helm_release" "aws_load_balancer" {
     value = "true"
   }
 
-  set {
-    name  = "serviceAccount.create"
-    value = "false"
-  }
+  # set {
+  #   name  = "serviceAccount.create"
+  #   value = "false"
+  # }
 
-  set {
-    name  = "serviceAccount.name"
-    value = kubernetes_service_account.irsa.metadata[0].name
-  }
+  # set {
+  #   name  = "serviceAccount.name"
+  #   value = kubernetes_service_account.irsa.metadata[0].name
+  # }
 }
 
 # resource "helm_release" "nginx_ingress" {
