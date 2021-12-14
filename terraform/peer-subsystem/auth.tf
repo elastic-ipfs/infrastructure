@@ -29,7 +29,7 @@ resource "aws_iam_policy" "load_balancer_admin" {
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": "elasticloadbalancing:*",
+            "Action": "*",
             "Resource": "*"
         }
     ]

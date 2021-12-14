@@ -30,8 +30,6 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
     # ingress_class_name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
     # ingress_class_name = "nginx"
     ingress_class_name = "alb"
-    service_account_name = kubernetes_service_account.irsa.metadata[0].name
-
     
     rule {
       host = "test.clederson.com"
