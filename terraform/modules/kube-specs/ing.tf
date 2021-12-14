@@ -18,7 +18,8 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
     name = "aws-ipfs-ingress"
     annotations = {
       "alb.ingress.kubernetes.io/target-type" = "ip"
-      "kubernetes.io/ingress.class" = "nginx"
+      # "kubernetes.io/ingress.class" = "nginx"
+      "kubernetes.io/ingress.class" = "alb"
       "ingress.kubernetes.io/rewrite-target" = "/"
       # "kubernetes.io/ingress.class" = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
     }
@@ -26,7 +27,8 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
 
   spec {
     # ingress_class_name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
-    ingress_class_name = "nginx"
+    # ingress_class_name = "nginx"
+    ingress_class_name = "alb"
     
     rule {
       host = "test.clederson.com"
