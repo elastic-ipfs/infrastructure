@@ -2,7 +2,7 @@ resource "kubernetes_ingress_class_v1" "aws_ipfs_ingress_class" {
   metadata {
     name = "aws-ipfs-ingress-class"
     annotations = { # https://github.com/kubernetes/ingress-nginx/issues/7600
-      "ingressclass.kubernetes.io/is-default-class" : "true"
+      "ingressclass.kubernetes.io/is-default-class" = "true"
     }
   }
 
@@ -17,7 +17,9 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
   metadata {
     name = "aws-ipfs-ingress"
     annotations = {
-      "ingress.kubernetes.io/rewrite-target" : "/"
+      "ingress.kubernetes.io/rewrite-target" = "/"
+      "kubernetes.io/ingress.class" = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
+      # "kubernetes.io/ingress.class" = "nginx"
     }
   }
 
