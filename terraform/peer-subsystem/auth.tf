@@ -31,7 +31,7 @@ resource "aws_iam_policy" "load_balancer_admin" {
             "Effect": "Allow",
             "Action": "elasticloadbalancing:*",
             "Resource": "*"
-        },
+        }
     ]
 }
 EOF
