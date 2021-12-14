@@ -17,6 +17,9 @@ module "load_balancer_controller" {
   cluster_identity_oidc_issuer     = var.cluster_oidc_issuer_url # TODO: Put that on the same EKS object? Remove the object idea?
   cluster_identity_oidc_issuer_arn = var.cluster_oidc_provider_arn 
   cluster_name                     = var.eks_cluster_id # TODO: Put that on the same EKS object? Remove the object idea?
+  settings = {
+    createIngressClassResource = "true"
+  }
 }
 
 
