@@ -27,15 +27,9 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
   spec {
     # ingress_class_name = kubernetes_ingress_class_v1.aws_ipfs_ingress_class.metadata[0].name
     ingress_class_name = "nginx"
-    default_backend {
-      service {
-        name = local.service_name
-        port {
-          number = local.service_port
-        }
-      }
-    }
+    
     rule {
+      host = "test.clederson.com"
       http {
         path {
           backend {
