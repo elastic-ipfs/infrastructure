@@ -53,10 +53,9 @@ resource "aws_route53_zone" "hosted_zone" {
   name = var.domain_name
 }
 
-
 resource "aws_route53_record" "load_balancer" {
   zone_id = aws_route53_zone.hosted_zone.zone_id
-  name    = "${var.subdomain_loadbalancer}.${var.domain_name}"
+  name    = "${var.subdomain_loadbalancer}.${var.domain_name}" # TODO: Get that from ingress host
   type    = "CNAME"
   ttl     = "300"
   records = [data.terraform_remote_state.peer.outputs.load_balancer_hostname]

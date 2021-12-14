@@ -1,11 +1,12 @@
 variable "domain_name" {
   type = string
-  default = "aws-ipfs.com"
+  # default = "aws-ipfs.com"
+  default = "franciscocardosotest.com"
 }
 
 variable "subdomain_loadbalancer" {
   type = string
-  default = "peer"
+  default = "cluster"
   description = "Name for a load balancer subdomain"
 }
 

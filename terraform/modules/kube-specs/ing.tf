@@ -23,7 +23,7 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
   spec {
     ingress_class_name = "alb"
     rule {
-      host = "test.franciscocardosotest.com"
+      host = "cluster.franciscocardosotest.com"
       http {
         path {
           backend {
