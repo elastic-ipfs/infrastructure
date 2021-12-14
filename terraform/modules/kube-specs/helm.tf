@@ -18,32 +18,32 @@ resource "helm_release" "metric-server" {
   }
 }
 
-# resource "helm_release" "nginx_ingress" {
-#   name      = "nginx-ingress"    
-#   repository = "https://helm.nginx.com/stable"
-#   chart     = "nginx-ingress"
-#   namespace = "kube-system"
-# }
-
-
-resource "helm_release" "ingress" {
-  name      = "ingress"    
-  repository = local.bitnami_repo    
-  chart     = "nginx"
+resource "helm_release" "nginx_ingress" {
+  name      = "nginx-ingress"    
+  repository = "https://helm.nginx.com/stable"
+  chart     = "nginx-ingress"
   namespace = "kube-system"
-
-  set {
-    name  = "ingressClassResource.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "ingressClassResource.default"
-    value = "true"
-  }
-
-  set {
-    name  = "watchIngressWithoutClass"
-    value = "true"
-  }
 }
+
+
+# resource "helm_release" "ingress" {
+#   name      = "ingress"    
+#   repository = local.bitnami_repo    
+#   chart     = "nginx"
+#   namespace = "kube-system"
+
+#   set {
+#     name  = "ingressClassResource.enabled"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "ingressClassResource.default"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "watchIngressWithoutClass"
+#     value = "true"
+#   }
+# }
