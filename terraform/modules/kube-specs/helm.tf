@@ -18,12 +18,19 @@ resource "helm_release" "metric-server" {
   }
 }
 
-resource "helm_release" "nginx_ingress" {
-  name      = "nginx-ingress"    
-  repository = "https://helm.nginx.com/stable"
-  chart     = "nginx-ingress"
+resource "helm_release" "aws_load_balancer" {
+  name      = "aws-load-balancer"    
+  repository = "https://aws.github.io/eks-charts"
+  chart     = "aws-load-balancer-controller"
   namespace = "kube-system"
 }
+
+# resource "helm_release" "nginx_ingress" {
+#   name      = "nginx-ingress"    
+#   repository = "https://helm.nginx.com/stable"
+#   chart     = "nginx-ingress"
+#   namespace = "kube-system"
+# }
 
 
 # resource "helm_release" "ingress" {
