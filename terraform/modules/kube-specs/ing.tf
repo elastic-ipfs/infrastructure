@@ -78,6 +78,24 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
       }
     }
 
+    rule {
+      host = "k8s-default-awsipfsi-d841fbaae6-1237762585.us-west-2.elb.amazonaws.com"
+      http {
+        path {
+          backend {
+            service {
+              name = local.service_name
+              port {
+                number = local.service_port
+              }
+            }
+          }
+          path      = "/peer"
+          path_type = "Prefix"
+        }
+      }
+    }
+
     # tls { # Termination
     #   secret_name = "tls-secret"
     # }
