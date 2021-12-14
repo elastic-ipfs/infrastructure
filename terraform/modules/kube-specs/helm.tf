@@ -8,7 +8,7 @@ provider "helm" {
 
 resource "helm_release" "metric-server" {
   name       = "metric-server-release"
-  repository = "https://charts.bitnami.com/bitnami"
+  repository = local.bitnami_repo 
   chart      = "metrics-server"
   namespace  = "kube-system"
 

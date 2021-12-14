@@ -12,15 +12,14 @@ variable "vpc" {
   }
 }
 
-variable "eks-cluster" {
-  type = object({
-    name = string
-    version = string
-  })
-   default = {
-    name = "test-ipfs-aws-peer-subsystem-eks"
-    version = "1.21"
-  }
+variable "cluster_name" {
+  type = string
+  default = "test-ipfs-aws-peer-subsystem-eks"
+}
+
+variable "cluster_version" {
+  type = string
+  default = "1.21"
 }
 
 variable "kubeconfig_output_path" {

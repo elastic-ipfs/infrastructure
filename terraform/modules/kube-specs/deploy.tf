@@ -1,6 +1,6 @@
 resource "kubernetes_deployment" "deploy" {
   depends_on = [
-    var.eks_cluster_id
+    var.cluster_id
   ]
 
   metadata {
@@ -28,8 +28,9 @@ resource "kubernetes_deployment" "deploy" {
       spec {
         service_account_name = kubernetes_service_account.irsa.metadata[0].name
         container {
-          image = var.container_image
-          # image = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest"
+          image = "nginxdemos/hello"
+          # image = "nginx"
+          # image = var.container_image
           name  = "aws-ipfs-bitswap-peer"
           env {
             name = "NODE_ENV"

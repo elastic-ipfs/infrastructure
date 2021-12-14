@@ -1,15 +1,15 @@
 resource "kubernetes_service" "service" {
   metadata {
-    name = "${kubernetes_deployment.deploy.metadata[0].name}"
+    name = local.service_name
   }
   spec {
     selector = {
       app = kubernetes_deployment.deploy.metadata[0].name
     }
     port {
-      port        = 3000
-      target_port = 3000
+      port        = local.service_port
+      target_port = local.service_target_port
     }
-    type = "LoadBalancer"
+    type = "ClusterIP"
   }
 }
