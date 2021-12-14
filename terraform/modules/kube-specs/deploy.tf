@@ -1,6 +1,6 @@
 resource "kubernetes_deployment" "deploy" {
   depends_on = [
-    var.eks_cluster_id
+    var.cluster_id
   ]
 
   metadata {

@@ -2,7 +2,7 @@ variable "container_image" {
   type = string
 }
 
-variable "eks_cluster_id" {
+variable "cluster_id" {
   type = string
 }
 
@@ -27,7 +27,6 @@ variable "aws_iam_role_policy_list" {
 }
 
 
-
 variable "peerConfigBucketName" {
   type    = string
   description = "Bucket for storing CAR files"
@@ -43,10 +42,4 @@ variable "token" {
 
 variable "cluster_ca_certificate" {
   type = string
-}
-
-variable "eks-cluster" {
-  type = object({
-    name = string
-  })
 }

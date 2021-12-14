@@ -71,12 +71,12 @@ module "vpc" {
   enable_dns_hostnames = true
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${var.eks-cluster.name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                        = "1"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${var.eks-cluster.name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"               = "1"
   }
 }
@@ -95,8 +95,8 @@ module "gateway-endpoint-to-s3-dynamo" {
 
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
-  cluster_name                    = var.eks-cluster.name
-  cluster_version                 = var.eks-cluster.version
+  cluster_name                    = var.cluster_name
+  cluster_version                 = var.cluster_version
   vpc_id                          = module.vpc.vpc_id
   subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
   fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
@@ -146,7 +146,7 @@ module "eks" {
   #   }
   # ]
   kubeconfig_aws_authenticator_command      = "aws"
-  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.eks-cluster.name]
+  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.cluster_name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
   # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
 }
@@ -161,12 +161,11 @@ module "kube-specs" {
   ]
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
   cluster_oidc_provider_arn = module.eks.oidc_provider_arn
-  eks_cluster_id            = module.eks.cluster_id
+  cluster_id            = module.eks.cluster_id
   container_image           = var.container_image
   peerConfigBucketName      = var.peerConfigBucketName
   kubeconfig_output_path    = module.eks.kubeconfig_filename
   host                      = data.aws_eks_cluster.eks.endpoint
   token                     = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-  eks-cluster               = var.eks-cluster
 }
