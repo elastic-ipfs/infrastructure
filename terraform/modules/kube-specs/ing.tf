@@ -17,7 +17,7 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
   metadata {
     name = "aws-ipfs-ingress"
     annotations = {
-      "kubernetes.io/ingress.class" = "alb"
+      # "kubernetes.io/ingress.class" = "alb"
       "alb.ingress.kubernetes.io/target-type" = "ip"
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
       "ingress.kubernetes.io/rewrite-target" = "/"
