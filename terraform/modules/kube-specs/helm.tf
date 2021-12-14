@@ -34,6 +34,21 @@ resource "helm_release" "aws_load_balancer" {
     value = "true"
   }
 
+  set { # TODO: Is that necessary?
+    name  = "rbac.create"
+    value = "true"
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = "true"
+  }
+
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = aws_iam_role.lb_controller.arn
+  }
+
   # set {
   #   name  = "serviceAccount.create"
   #   value = "false"
