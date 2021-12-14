@@ -49,6 +49,24 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
       }
     }
 
+    rule {
+      host = "test.franciscocardosotest.com"
+      http {
+        path {
+          backend {
+            service {
+              name = local.service_name
+              port {
+                number = local.service_port
+              }
+            }
+          }
+          path      = "/peer"
+          path_type = "Prefix"
+        }
+      }
+    }
+
     # tls { # Termination
     #   secret_name = "tls-secret"
     # }

@@ -19,3 +19,20 @@ resource "aws_iam_policy" "config_peer_s3_bucket_policy_read" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "load_balancer_admin" {
+  name        = "load-balancer-admin"
+  description = "Policy for administrating load balancers"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "elasticloadbalancing:*",
+            "Resource": "*"
+        },
+    ]
+}
+EOF
+}
