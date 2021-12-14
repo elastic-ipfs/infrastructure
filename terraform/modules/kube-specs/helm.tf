@@ -28,6 +28,11 @@ resource "helm_release" "aws_load_balancer" {
     name  = "clusterName"
     value = var.eks-cluster.name
   }
+
+  set {
+    name  = "createIngressClassResource"
+    value = "true"
+  }
 }
 
 # resource "helm_release" "nginx_ingress" {
