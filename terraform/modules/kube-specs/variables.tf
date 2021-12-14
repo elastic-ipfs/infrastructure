@@ -38,3 +38,9 @@ variable "token" {
 variable "cluster_ca_certificate" {
   type = string
 }
+
+variable "eks-cluster" {
+  type = object({
+    name = string
+  })
+}

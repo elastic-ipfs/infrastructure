@@ -23,6 +23,11 @@ resource "helm_release" "aws_load_balancer" {
   repository = "https://aws.github.io/eks-charts"
   chart     = "aws-load-balancer-controller"
   namespace = "kube-system"
+
+  set {
+    name  = "clusterName"
+    value = var.eks-cluster.name
+  }
 }
 
 # resource "helm_release" "nginx_ingress" {
