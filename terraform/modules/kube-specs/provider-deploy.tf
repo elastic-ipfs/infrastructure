@@ -47,7 +47,7 @@ resource "kubernetes_deployment" "provider_deploy" {
           #   name = "PEER_ID_FILE"
           #   value = "peerId.json"
           # }
-          resources {
+          resources { // TODO: Increase resources. This is going to be a single running instance
             limits = {
               cpu    = "1"
               memory = "1Gi"
