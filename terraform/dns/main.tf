@@ -70,7 +70,13 @@ resource "aws_route53_record" "peer_bitswap_load_balancer" {
   records = [data.terraform_remote_state.peer.outputs.bitswap_load_balancer_hostname]
 }
 
-# TODO:Provider record
+resource "aws_route53_record" "provider_load_balancer" {
+  zone_id = aws_route53_zone.hosted_zone.zone_id
+  name    = "${var.subdomains_provider_loadbalancer}.${var.domain_name}" 
+  type    = "CNAME"
+  ttl     = "300"
+  records = [data.terraform_remote_state.peer.outputs.provider_load_balancer_hostname]
+}
 
 ### API Gateway
 resource "aws_api_gateway_domain_name" "api" { 
