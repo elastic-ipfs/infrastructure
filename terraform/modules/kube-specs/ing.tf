@@ -16,6 +16,7 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
     annotations = {
       "alb.ingress.kubernetes.io/target-type" = "ip"
       "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+      "alb.ingress.kubernetes.io/load-balancer-attributes": "access_logs.s3.enabled=true,access_logs.s3.bucket=ipfs-ilb-logs,access_logs.s3.prefix=lb"
       # "ingress.kubernetes.io/rewrite-target" = "/"  # Does not work with AWS ALB Ingress (https://github.com/kubernetes-sigs/aws-load-balancer-controller/issues/1571)
     }
   }
