@@ -53,14 +53,24 @@ resource "aws_route53_zone" "hosted_zone" {
   name = var.domain_name
 }
 
-resource "aws_route53_record" "load_balancer_subdomains" {
-  for_each = toset(var.subdomains_loadbalancer) # TODO: Get those from ingress host list?
+# resource "aws_route53_record" "ingress_load_balancer_subdomains" {
+#   for_each = toset(var.subdomains_loadbalancer) # TODO: Get those from ingress host list?
+#   zone_id = aws_route53_zone.hosted_zone.zone_id
+#   name    = "${each.key}.${var.domain_name}" 
+#   type    = "CNAME"
+#   ttl     = "300"
+#   records = [data.terraform_remote_state.peer.outputs.ingress_load_balancer_hostname]
+# }
+
+resource "aws_route53_record" "peer_bitswap_load_balancer" {
   zone_id = aws_route53_zone.hosted_zone.zone_id
-  name    = "${each.key}.${var.domain_name}" 
+  name    = "${var.subdomains_bitwsap_loadbalancer}.${var.domain_name}" 
   type    = "CNAME"
   ttl     = "300"
-  records = [data.terraform_remote_state.peer.outputs.load_balancer_hostname]
+  records = [data.terraform_remote_state.peer.outputs.bitswap_load_balancer_hostname]
 }
+
+# TODO:Provider record
 
 ### API Gateway
 resource "aws_api_gateway_domain_name" "api" { 

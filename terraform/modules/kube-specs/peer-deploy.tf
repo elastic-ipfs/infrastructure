@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "deploy" {
+resource "kubernetes_deployment" "peer_deploy" {
   depends_on = [
     var.cluster_id
   ]
@@ -36,7 +36,7 @@ resource "kubernetes_deployment" "deploy" {
           }
           env {
             name = "PORT"
-            value = local.service_target_port
+            value = local.peer_service_target_port
           }
            env {
             name = "PEER_ID_S3_BUCKET"

@@ -3,10 +3,11 @@ on:
   push:
     branches:
     - main
+    - no-ingress
   pull_request:
 jobs:
   terraform:
-    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main
+    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@no-ingress
     with:
       options: -var kubeconfig_output_path=$HOME/.kube/config -var container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest
       aws_region: us-west-2
