@@ -1,8 +1,8 @@
 module "load_balancer_controller" {
   source = "git::https://github.com/DNXLabs/terraform-aws-eks-lb-controller.git"
 
-  cluster_identity_oidc_issuer     = var.cluster_oidc_issuer_url 
-  cluster_identity_oidc_issuer_arn = var.cluster_oidc_provider_arn 
+  cluster_identity_oidc_issuer     = var.cluster_oidc_issuer_url
+  cluster_identity_oidc_issuer_arn = var.cluster_oidc_provider_arn
   cluster_name                     = var.cluster_id
   settings = {
     createIngressClassResource = "true"
@@ -15,15 +15,15 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
     name = "aws-ipfs-ingress"
     annotations = {
       "alb.ingress.kubernetes.io/target-type" = "ip"
-      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
-      "ingress.kubernetes.io/rewrite-target" = "/"      
+      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+      # "ingress.kubernetes.io/rewrite-target" = "/"  # Does not work with AWS ALB Ingress (https://github.com/kubernetes-sigs/aws-load-balancer-controller/issues/1571)
     }
   }
 
   spec {
     ingress_class_name = "alb"
     rule {
-      host = "cluster.franciscocardosotest.com"
+      host = "peer.franciscocardosotest.com"
       http {
         path {
           backend {
@@ -34,14 +34,28 @@ resource "kubernetes_ingress_v1" "aws_ipfs_ingress" {
               }
             }
           }
-          path      = "/peer"
+          path      = "/"
           path_type = "Prefix"
         }
       }
     }
 
-    # tls { # Termination
-    #   secret_name = "tls-secret"
-    # }
+    rule {
+      host = "provider.franciscocardosotest.com"
+      http {
+        path {
+          backend {
+            service {
+              name = local.service_name
+              port {
+                number = local.service_port
+              }
+            }
+          }
+          path      = "/"
+          path_type = "Prefix"
+        }
+      }
+    }
   }
 }
