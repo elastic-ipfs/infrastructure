@@ -1,26 +1,26 @@
-resource "kubernetes_deployment" "deploy" {
+resource "kubernetes_deployment" "peer_deploy" {
   depends_on = [
     var.cluster_id
   ]
 
   metadata {
-    name = "aws-ipfs-bitswap-peer"
+    name = local.peer_service_name
     labels = {
-      app = "aws-ipfs-bitswap-peer"
+      app = local.peer_service_name
     }
   }
 
   spec {
     selector {
       match_labels = {
-        app = "aws-ipfs-bitswap-peer"
+        app = local.peer_service_name
       }
     }
 
     template {
       metadata {
         labels = {
-          app        = "aws-ipfs-bitswap-peer"
+          app        = local.peer_service_name
           workerType = "fargate"
         }
       }
@@ -28,15 +28,15 @@ resource "kubernetes_deployment" "deploy" {
       spec {
         service_account_name = kubernetes_service_account.irsa.metadata[0].name
         container {
-          image = var.container_image
-          name  = "aws-ipfs-bitswap-peer"
+          image = var.peer_container_image
+          name  = local.peer_service_name
           env {
             name = "NODE_ENV"
             value = "production"
           }
           env {
             name = "PORT"
-            value = local.service_target_port
+            value = local.peer_service_target_port
           }
            env {
             name = "PEER_ID_S3_BUCKET"

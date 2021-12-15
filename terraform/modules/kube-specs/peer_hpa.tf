@@ -1,6 +1,6 @@
 resource "kubernetes_horizontal_pod_autoscaler" "hpa" {
   metadata {
-    name = "${kubernetes_deployment.deploy.metadata[0].name}-hpa"
+    name = "${kubernetes_deployment.peer_deploy.metadata[0].name}-hpa"
   }
 
   spec {
@@ -10,7 +10,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "hpa" {
     scale_target_ref {
       api_version = "apps/v1"
       kind = "Deployment"
-      name = kubernetes_deployment.deploy.metadata[0].name
+      name = kubernetes_deployment.peer_deploy.metadata[0].name
     }
 
     metric {
