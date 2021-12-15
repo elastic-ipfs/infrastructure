@@ -55,55 +55,15 @@ resource "aws_route53_zone" "hosted_zone" {
 
 resource "aws_route53_record" "load_balancer" {
   zone_id = aws_route53_zone.hosted_zone.zone_id
-  name    = "${var.subdomain_loadbalancer}.${var.domain_name}" # TODO: Get that from ingress host
+  name    = "${var.subdomain_loadbalancer}.${var.domain_name}" # TODO: Get that from ingress host?
   type    = "CNAME"
   ttl     = "300"
   records = [data.terraform_remote_state.peer.outputs.load_balancer_hostname]
 }
 
 ### API Gateway
-
-##### CERT
-resource "aws_acm_certificate" "cert" {
-  domain_name       = var.domain_name
-  validation_method = "DNS"
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-
-# TODO: It seems that I really need to bring a record that is all records or something like that to be able to do validation step
-resource "aws_route53_record" "cert_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
-  }
-
-  allow_overwrite = true
-  name            = each.value.name
-  records         = [each.value.record]
-  ttl             = 60
-  type            = each.value.type
-  zone_id         = aws_route53_zone.hosted_zone.zone_id
-}
-
-
-resource "aws_acm_certificate_validation" "cert_validation" {
-  certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
-
-  timeouts {
-    create = "45m"
-  }
-}
-
-#####
 resource "aws_api_gateway_domain_name" "api" { 
-  domain_name              = "${var.subdomain_apis}.${var.domain_name}"
+  domain_name              = local.api_domain
   regional_certificate_arn = aws_acm_certificate_validation.cert_validation.certificate_arn
 
   endpoint_configuration {
@@ -114,6 +74,7 @@ resource "aws_api_gateway_domain_name" "api" {
 resource "aws_api_gateway_base_path_mapping" "api" {
   api_id      = data.terraform_remote_state.indexing.outputs.api_id
   stage_name  = data.terraform_remote_state.indexing.outputs.stage_name
+  base_path = data.terraform_remote_state.indexing.outputs.stage_name
   domain_name = aws_api_gateway_domain_name.api.domain_name
 }
 
