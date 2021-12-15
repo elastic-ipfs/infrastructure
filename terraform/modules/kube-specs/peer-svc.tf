@@ -1,4 +1,4 @@
-resource "kubernetes_service" "bitswap_service" {
+resource "kubernetes_service" "peer_service" {
   metadata {
     name = local.peer_service_name
   }

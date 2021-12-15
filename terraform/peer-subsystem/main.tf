@@ -162,7 +162,7 @@ module "kube-specs" {
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
   cluster_oidc_provider_arn = module.eks.oidc_provider_arn
   cluster_id            = module.eks.cluster_id
-  container_image           = var.container_image
+  peer_container_image      = var.peer_container_image
   peerConfigBucketName      = var.peerConfigBucketName
   kubeconfig_output_path    = module.eks.kubeconfig_filename
   host                      = data.aws_eks_cluster.eks.endpoint

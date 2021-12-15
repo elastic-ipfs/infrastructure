@@ -1,4 +1,4 @@
-variable "container_image" {
+variable "peer_container_image" {
   type = string
   default = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest"
 }
