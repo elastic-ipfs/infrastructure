@@ -31,3 +31,9 @@ variable "peerConfigBucketName" {
   default = "ipfs-peer-bitswap-config"
   description = "Bucket for storing CAR files"
 }
+
+variable "ipfsProviderAds" {
+  type    = string
+  default = "ipfs-provider-ads"
+  description = "Bucket for storing provider files"
+}
