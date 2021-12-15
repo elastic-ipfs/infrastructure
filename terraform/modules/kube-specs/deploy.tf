@@ -28,9 +28,7 @@ resource "kubernetes_deployment" "deploy" {
       spec {
         service_account_name = kubernetes_service_account.irsa.metadata[0].name
         container {
-          image = "nginxdemos/hello"
-          # image = "nginx"
-          # image = var.container_image
+          image = var.container_image
           name  = "aws-ipfs-bitswap-peer"
           env {
             name = "NODE_ENV"
@@ -38,7 +36,7 @@ resource "kubernetes_deployment" "deploy" {
           }
           env {
             name = "PORT"
-            value = "3000"
+            value = local.service_target_port
           }
            env {
             name = "PEER_ID_S3_BUCKET"
