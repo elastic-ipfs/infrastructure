@@ -4,10 +4,10 @@ variable "domain_name" {
   default = "franciscocardosotest.com"
 }
 
-variable "subdomain_loadbalancer" {
-  type = string
-  default = "cluster"
-  description = "Name for a load balancer subdomain"
+variable "subdomains_loadbalancer" {
+  type = list(string)
+  default = ["peer", "provider"]
+  description = "List of subdomains that will be handled by ingress"
 }
 
 variable "subdomain_apis" {
