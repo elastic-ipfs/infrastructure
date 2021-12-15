@@ -11,6 +11,7 @@ resource "kubernetes_deployment" "provider_deploy" {
   }
 
   spec {
+    replicas = 1
     selector {
       match_labels = {
         app = local.provider_service_name
