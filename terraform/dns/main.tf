@@ -66,7 +66,7 @@ resource "aws_route53_record" "load_balancer" {
 ##### CERT
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.domain_name
-  subject_alternative_names = [ "*.${var.domain_name}"] # TODO: Replace wildcard with real subdomains
+  subject_alternative_names = [local.api_domain] 
   validation_method = "DNS"
   lifecycle {
     create_before_destroy = true
@@ -102,7 +102,7 @@ resource "aws_acm_certificate_validation" "cert_validation" {
 
 #####
 resource "aws_api_gateway_domain_name" "api" { 
-  domain_name              = "${var.subdomain_apis}.${var.domain_name}"
+  domain_name              = local.api_domain
   regional_certificate_arn = aws_acm_certificate_validation.cert_validation.certificate_arn
 
   endpoint_configuration {
@@ -113,6 +113,7 @@ resource "aws_api_gateway_domain_name" "api" {
 resource "aws_api_gateway_base_path_mapping" "api" {
   api_id      = data.terraform_remote_state.indexing.outputs.api_id
   stage_name  = data.terraform_remote_state.indexing.outputs.stage_name
+  base_path = data.terraform_remote_state.indexing.outputs.stage_name
   domain_name = aws_api_gateway_domain_name.api.domain_name
 }
 
