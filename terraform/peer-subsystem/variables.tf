@@ -3,9 +3,9 @@ variable "peer_container_image" {
   default = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest"
 }
 
-variable "provider_container_image" { # TODO: Change when available
+variable "provider_container_image" { 
   type = string
-  default = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:latest"
+  default = "ghcr.io/web3-storage/aws-ipfs-index-provider/app:latest"
 }
 
 variable "vpc" {
@@ -31,7 +31,7 @@ variable "kubeconfig_output_path" {
   type = string
 }
 
-variable "peerConfigBucketName" {
+variable "configBucketName" {
   type    = string
   default = "ipfs-peer-bitswap-config"
   description = "Bucket for storing CAR files"

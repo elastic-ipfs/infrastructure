@@ -1,3 +1,4 @@
+
 resource "kubernetes_deployment" "provider_deploy" {
   depends_on = [
     var.cluster_id
@@ -36,25 +37,31 @@ resource "kubernetes_deployment" "provider_deploy" {
             value = "production"
           }
           env {
-            name = "PORT"
-            value = local.provider_service_target_port
+            name = "PEER_ID_S3_BUCKET"
+            value = var.configBucketName 
           }
-          # env {
-          #   name = "PEER_ID_S3_BUCKET"
-          #   value = var.peerConfigBucketName 
-          # }
-          # env {
-          #   name = "PEER_ID_FILE"
-          #   value = "peerId.json"
-          # }
+          env {
+            name = "PEER_ID_FILE"
+            value = "peerId.json" 
+          }
+          env {
+            name = "BITSWAP_PEER_MULTIADDR"
+            value = "/ip4/127.0.0.1/tcp/3000/ws"
+          }
+
+          env {
+            name = "SQS_PUBLISHING_QUEUE_URL"
+            value = var.sqs_queue
+            # value = "https://sqs.eu-west-1.amazonaws.com/505595374361/paolo-e2e-queue"
+          }
           resources { // TODO: Increase resources. This is going to be a single running instance
             limits = {
-              cpu    = "1"
-              memory = "1Gi"
+              cpu    = "3"
+              memory = "3Gi"
             }
             requests = {
-              cpu    = "0.5"
-              memory = "256Mi"
+              cpu    = "1"
+              memory = "1Gi"
             }
           }
         }

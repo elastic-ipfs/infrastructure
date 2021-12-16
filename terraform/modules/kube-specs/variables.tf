@@ -30,8 +30,7 @@ variable "aws_iam_role_policy_list" {
   description = "This list contains policies that will be attached to the current role"
 }
 
-
-variable "peerConfigBucketName" {
+variable "configBucketName" {
   type    = string
   description = "Bucket for storing CAR files"
 }
@@ -46,4 +45,8 @@ variable "token" {
 
 variable "cluster_ca_certificate" {
   type = string
+}
+
+variable "sqs_queue" {
+  type=string
 }

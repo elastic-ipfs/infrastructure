@@ -72,17 +72,17 @@ module "vpc" {
 
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                        = "1"
+    "kubernetes.io/role/elb"                    = "1"
   }
 
   private_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"               = "1"
+    "kubernetes.io/role/internal-elb"           = "1"
   }
 }
 
 resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
-  bucket = var.peerConfigBucketName
+  bucket = var.configBucketName
   acl    = "private"
 }
 
@@ -158,20 +158,25 @@ module "eks" {
 
 module "kube-specs" {
   source = "../modules/kube-specs"
-  aws_iam_role_policy_list = [
+  aws_iam_role_policy_list = [ # TODO: Use different roles for Provider and Peer
     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
+    data.terraform_remote_state.shared.outputs.sqs_policy_receive,
+    data.terraform_remote_state.shared.outputs.sqs_policy_send,
     aws_iam_policy.config_peer_s3_bucket_policy_read, # Remember to manually add this file after infra is up running (403 error otherwise)
+    aws_iam_policy.ads_s3_bucket_policy_read,
+    aws_iam_policy.ads_s3_bucket_policy_write
   ]
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
   cluster_oidc_provider_arn = module.eks.oidc_provider_arn
-  cluster_id            = module.eks.cluster_id
+  cluster_id                = module.eks.cluster_id
   peer_container_image      = var.peer_container_image
-  provider_container_image      = var.provider_container_image
-  peerConfigBucketName      = var.peerConfigBucketName
+  provider_container_image  = var.provider_container_image
+  configBucketName          = var.configBucketName
   kubeconfig_output_path    = module.eks.kubeconfig_filename
   host                      = data.aws_eks_cluster.eks.endpoint
   token                     = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  sqs_queue = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
 }
