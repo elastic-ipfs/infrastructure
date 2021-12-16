@@ -59,7 +59,7 @@ resource "kubernetes_deployment" "provider_deploy" {
             value = var.sqs_queue
             # value = "https://sqs.eu-west-1.amazonaws.com/505595374361/paolo-e2e-queue"
           }
-          resources { // TODO: Increase resources. This is going to be a single running instance
+          resources { 
             limits = {
               cpu    = "3"
               memory = "3Gi"
