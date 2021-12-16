@@ -51,6 +51,7 @@ resource "aws_lambda_function" "uploader" {
   environment {
     variables = {
         S3_BUCKET =	"ipfs-cars"
+        NODE_ENV= "production"
       } 
   }
 

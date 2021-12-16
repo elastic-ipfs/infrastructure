@@ -33,12 +33,13 @@ variable "kubeconfig_output_path" {
 
 variable "configBucketName" {
   type    = string
+  # default = "ipfs-peer-bitswap-config"
   default = "ipfs-peer-bitswap-config"
-  description = "Bucket for storing CAR files"
 }
 
 variable "ipfsProviderAds" {
   type    = string
+  # default = "ipfs-provider-ads"
   default = "ipfs-provider-ads"
   description = "Bucket for storing provider files"
 }

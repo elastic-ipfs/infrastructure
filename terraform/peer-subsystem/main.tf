@@ -83,12 +83,12 @@ module "vpc" {
 
 resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
   bucket = var.configBucketName
-  acl    = "private"
+  acl    = "public"  # TODO: Private
 }
 
 resource "aws_s3_bucket" "ipfs-peer-ads" {
   bucket = var.ipfsProviderAds
-  acl    = "private"
+  acl    = "public"  # TODO: Private
 }
 
 module "gateway-endpoint-to-s3-dynamo" {
