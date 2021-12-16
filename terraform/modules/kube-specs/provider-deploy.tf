@@ -56,12 +56,12 @@ resource "kubernetes_deployment" "provider_deploy" {
           }
           resources { // TODO: Increase resources. This is going to be a single running instance
             limits = {
-              cpu    = "1"
-              memory = "1Gi"
+              cpu    = "3"
+              memory = "3Gi"
             }
             requests = {
-              cpu    = "0.5"
-              memory = "256Mi"
+              cpu    = "1"
+              memory = "1Gi"
             }
           }
         }
