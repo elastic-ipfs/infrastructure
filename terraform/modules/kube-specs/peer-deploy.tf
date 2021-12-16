@@ -40,7 +40,7 @@ resource "kubernetes_deployment" "peer_deploy" {
           }
            env {
             name = "PEER_ID_S3_BUCKET"
-            value = var.peerConfigBucketName 
+            value = var.configBucketName 
           }
           env {
             name = "PEER_ID_FILE"

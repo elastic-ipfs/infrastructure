@@ -11,6 +11,14 @@ output "sqs_publishing_queue_url" {
   value = aws_sqs_queue.publishing_queue.url
 }
 
+output "sqs_policy_receive" {
+  value = aws_iam_policy.sqs_policy_receive
+}
+
+output "sqs_policy_send" {
+  value = aws_iam_policy.sqs_policy_send
+}
+
 output "dynamodb_blocks_policy" {
   value = {
     name = module.dynamodb.dynamodb_blocks_policy.name,

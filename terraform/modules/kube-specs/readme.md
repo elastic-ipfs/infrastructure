@@ -1,6 +1,6 @@
 # Readme
 
-This whole module must be reviewed. Specs should be applied when some service has changes: Their own individual workflows.
+TODO: This whole module must be reviewed. Specs should be applied when some service has changes: Their own individual workflows.
 
 These are the only things it should be doing:
 - Install metric services
