@@ -36,6 +36,11 @@ resource "kubernetes_deployment" "provider_deploy" {
             name = "NODE_ENV"
             value = "production"
           }
+
+           env {
+            name = "ADS_S3_BUCKET"
+            value = "ipfs-provider-ads" # TODO: Get from variable
+          }
           env {
             name = "PEER_ID_S3_BUCKET"
             value = var.configBucketName 

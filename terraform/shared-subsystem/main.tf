@@ -33,7 +33,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "cars" {
   bucket = var.carsBucketName
-  acl    = "private"
+  acl    = "public-read-write" # TODO: Private
 }
 
 resource "aws_sqs_queue" "publishing_queue" {
