@@ -1,11 +1,9 @@
 variable "peer_container_image" {
   type = string
-  default = "ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:20211217.0933"
 }
 
 variable "provider_container_image" { 
   type = string
-  default = "ghcr.io/web3-storage/aws-ipfs-index-provider/app:20211217.1021"
 }
 
 variable "vpc" {
