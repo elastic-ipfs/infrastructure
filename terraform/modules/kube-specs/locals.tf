@@ -6,6 +6,6 @@ locals {
   peer_service_port            = 3000
   peer_service_target_port     = 3000
   provider_service_name        = "aws-ipfs-index-provider"
-  provider_service_port        = 3000
-  provider_service_target_port = 3000
+  provider_service_port        = 3103
+  provider_service_target_port = 3103
 }

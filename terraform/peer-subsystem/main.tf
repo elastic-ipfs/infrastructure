@@ -83,12 +83,12 @@ module "vpc" {
 
 resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
   bucket = var.configBucketName
-  acl    = "public-read-write"  # TODO: Private
+  acl    = "private"  # TODO: Private
 }
 
 resource "aws_s3_bucket" "ipfs-peer-ads" {
   bucket = var.ipfsProviderAds
-  acl    = "public-read-write"  # TODO: Must be public read
+  acl    = "public-read"  # Must be public read so Hydra Nodes are capable of reading
 }
 
 module "gateway-endpoint-to-s3-dynamo" {
