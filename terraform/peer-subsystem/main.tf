@@ -164,6 +164,7 @@ module "kube-specs" {
     data.terraform_remote_state.shared.outputs.s3_policy_write,
     data.terraform_remote_state.shared.outputs.sqs_policy_receive,
     data.terraform_remote_state.shared.outputs.sqs_policy_send,
+    data.terraform_remote_state.shared.outputs.sqs_policy_delete,
     aws_iam_policy.config_peer_s3_bucket_policy_read, # Remember to manually add this file after infra is up running (403 error otherwise)
     aws_iam_policy.ads_s3_bucket_policy_read,
     aws_iam_policy.ads_s3_bucket_policy_write
