@@ -8,7 +8,7 @@ jobs:
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main
     with:
-      options: -var kubeconfig_output_path=$HOME/.kube/config -var peer_container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:20211217.0933  -var provider_container_image=ghcr.io/web3-storage/aws-ipfs-index-provider/app:20211217.1021
+      options: -var kubeconfig_output_path=$HOME/.kube/config -var peer_container_image=ghcr.io/web3-storage/aws-ipfs-bitswap-peer/app:whatever  -var provider_container_image=ghcr.io/web3-storage/aws-ipfs-index-provider/app:whatever
       aws_region: us-west-2
     secrets:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
