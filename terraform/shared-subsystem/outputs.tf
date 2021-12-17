@@ -52,3 +52,11 @@ output "sqs_policy_receive" {
     arn  = aws_iam_policy.sqs_policy_receive.arn,
   }
 }
+
+
+output "sqs_policy_delete" {
+  value = {
+    name = aws_iam_policy.sqs_policy_delete.name,
+    arn  = aws_iam_policy.sqs_policy_delete.arn,
+  }
+}

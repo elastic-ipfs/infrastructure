@@ -75,3 +75,20 @@ resource "aws_iam_policy" "sqs_policy_receive" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "sqs_policy_delete" {
+  name        = "sqs-policy-delete"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:DeleteMessage",
+            "Resource": "${aws_sqs_queue.publishing_queue.arn}"
+        }
+    ]
+}
+EOF
+}
