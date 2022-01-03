@@ -38,6 +38,7 @@ provider "aws" {
       ManagedBy   = "Terraform"
       Test = "Removethis"
       AnotherTest = "Removethis"
+      AnotherTest2 = "Removethis"
     }
   }
 }
