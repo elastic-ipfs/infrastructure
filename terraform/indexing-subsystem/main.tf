@@ -36,10 +36,6 @@ provider "aws" {
       Environment = "POC"
       Subsystem   = "Indexing"
       ManagedBy   = "Terraform"
-      Test = "Removethis"
-      AnotherTest = "Removethis"
-      AnotherTest2 = "Removethis"
-      AnotherTest3 = "Removethis"
     }
   }
 }
