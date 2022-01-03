@@ -7,7 +7,7 @@ on:
     - './terraform/peer-subsystem'
   pull_request:
     paths: 
-    - './terraform/peer-subsystem'
+    - './terraform/peer-subsystem/**'
 jobs:
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@terratest # TODO: Return to main
