@@ -9,6 +9,7 @@ on:
     paths: 
     - 'terraform/shared-subsystem/**'
 jobs:
+# TODO: If shared was changed, should we also run apply to all its dependencies?
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@terratest # TODO: Return to main
     with:
