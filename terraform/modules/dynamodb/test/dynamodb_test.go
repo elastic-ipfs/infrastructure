@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+
 func TestTerraformAwsDynamoDBExample(t *testing.T) {
 	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
 	terraformOptions := &terraform.Options{
@@ -23,13 +24,12 @@ func TestTerraformAwsDynamoDBExample(t *testing.T) {
 			},
 		},
 	}
-	defer terraform.Destroy(t, terraformOptions)
-
-	// dynamodb_blocks_policy := terraform.Output(t, terraformOptions, "dynamodb_blocks_policy")
-	// dynamodb_car_policy := terraform.Output(t, terraformOptions, "dynamodb_car_policy")
+	defer terraform.Destroy(t, terraformOptions)	
 	terraform.InitAndApply(t, terraformOptions)
+	dynamodb_blocks_policy := terraform.OutputMap(t, terraformOptions, "dynamodb_blocks_policy")
+	dynamodb_car_policy := terraform.OutputMap(t, terraformOptions, "dynamodb_car_policy")
 	// TODO: What should I be validating here? That make sense, should I also check something else? Probably if the table is actually there (Table output)
-	assert.Equal(t, "a", "a")
-	// assert.Equal(t, "dynamodb-blocks-policy", dynamodb_blocks_policy)
-	// assert.Equal(t, "dynamodb-car-policy", dynamodb_car_policy)
+	// assert.Equal(t, "dynamodb-blocks-policy", dynamodb_blocks_policy.name)
+	assert.Equal(t, "dynamodb-blocks-policy", dynamodb_blocks_policy["name"])
+	assert.Equal(t, "dynamodb-car-policy", dynamodb_car_policy["name"])
 }
