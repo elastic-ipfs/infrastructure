@@ -10,6 +10,8 @@ import (
 
 
 func TestTerraformAwsDynamoDBExample(t *testing.T) {
+	blocksTableName := "blocks_test"
+	carsTableName := "cars_test"
 	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
@@ -17,19 +19,24 @@ func TestTerraformAwsDynamoDBExample(t *testing.T) {
 			"region": awsRegion,
 			"profile": "nearform", // TODO: Change to oficial sandbox account
 			"blocks_table": map[string]string {
-				"name": "blocks_test",
+				"name": blocksTableName,
 			},
 			"cars_table": map[string]string {
-				"name": "cars_test",
+				"name": carsTableName,
 			},
 		},
 	}
-	defer terraform.Destroy(t, terraformOptions)	
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
-	dynamodb_blocks_policy := terraform.OutputMap(t, terraformOptions, "dynamodb_blocks_policy")
-	dynamodb_car_policy := terraform.OutputMap(t, terraformOptions, "dynamodb_car_policy")
-	// TODO: What should I be validating here? That make sense, should I also check something else? Probably if the table is actually there (Table output)
-	// assert.Equal(t, "dynamodb-blocks-policy", dynamodb_blocks_policy.name)
-	assert.Equal(t, "dynamodb-blocks-policy", dynamodb_blocks_policy["name"])
-	assert.Equal(t, "dynamodb-car-policy", dynamodb_car_policy["name"])
+	blocksTable := terraform.OutputMap(t, terraformOptions, "blocks_table")
+	carsTable := terraform.OutputMap(t, terraformOptions, "cars_table")
+	dynamodbBlocksPolicy := terraform.OutputMap(t, terraformOptions, "dynamodb_blocks_policy")
+	dynamodbCarPolicy := terraform.OutputMap(t, terraformOptions, "dynamodb_car_policy")
+
+	assert.Equal(t, blocksTableName, blocksTable["name"])
+	assert.Equal(t, carsTableName, carsTable["name"])
+	assert.Equal(t, "dynamodb-blocks-policy", dynamodbBlocksPolicy["name"])
+	assert.Equal(t, "dynamodb-car-policy", dynamodbCarPolicy["name"])
+	assert.Contains(t, dynamodbBlocksPolicy["policy"], blocksTable["arn"]) // Policy applies to resource
+	assert.Contains(t, dynamodbCarPolicy["policy"], carsTable["arn"]) // Policy applies to resource
 }
