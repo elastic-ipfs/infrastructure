@@ -43,4 +43,11 @@ resource "aws_sqs_queue" "publishing_queue" {
 
 module "dynamodb" {
   source = "../modules/dynamodb"
+  blocks_table = {
+    name = "blocks"
+  }
+
+  cars_table {
+    name = "cars"
+  }
 }
