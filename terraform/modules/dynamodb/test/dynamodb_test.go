@@ -9,7 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestTerraformAwsDynamoDBExample(t *testing.T) {
 	blocksTableName := "blocks_test"
 	carsTableName := "cars_test"
