@@ -27,3 +27,12 @@ This project is divided into modules, where each subsystem has its own. For exam
 - `publishing-subsystem`
 
 There are also modules with smaller scope for grouping resources that serve a specific purpose. For example: `api-gateway-to-s3`.
+
+## Terratest
+
+From root folder:
+``` sh
+go mod init github.com/web3-storage/AWS-IPFS-Infrastructure
+go mod tidy
+go test
+```

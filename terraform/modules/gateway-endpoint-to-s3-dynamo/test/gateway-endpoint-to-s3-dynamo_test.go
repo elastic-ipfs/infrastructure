@@ -28,13 +28,16 @@ func TestTerraformAwsDynamoDBExample(t *testing.T) {
 		
 	vpcEndpointS3 := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_s3")
 	vpcEndpointDynamodb := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_dynamodb")
-	// vpcEndpointRouteAssociationS3 := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_route_table_association_s3")
-	// vpcEndpointRouteAssociationDynamodb := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_route_table_association_dynamodb")
+	vpcEndpointRouteAssociationS3 := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_route_table_association_s3")
+	vpcEndpointRouteAssociationDynamodb := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_route_table_association_dynamodb")
 	
+	// TODO: Validate from AWS SDK
+
 	assert.Equal(t,fmt.Sprintf("com.amazonaws.%s.s3", awsRegion), vpcEndpointS3["service_name"])
 	assert.Equal(t,fmt.Sprintf("com.amazonaws.%s.dynamodb", awsRegion), vpcEndpointDynamodb["service_name"])
 	assert.Equal(t,"available", vpcEndpointS3["state"])
 	assert.Equal(t,"available", vpcEndpointDynamodb["state"])
+	assert.Equal(t,vpcEndpointS3["id"], vpcEndpointRouteAssociationS3["vpc_endpoint_id"])
+	assert.Equal(t,vpcEndpointDynamodb["id"], vpcEndpointRouteAssociationDynamodb["vpc_endpoint_id"])
 
-	// TODO: Validate that association is pointing to the correct route_table_id and endpoint? AT LEAST THE CORRECT ENDPOINT
 }
