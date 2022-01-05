@@ -23,7 +23,7 @@ func TestTerraformAwsDynamoDBExample(t *testing.T) {
 			},
 		},
 	}
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 		
 	vpcEndpointS3 := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_s3")

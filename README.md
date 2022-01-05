@@ -34,5 +34,6 @@ From root folder:
 ``` sh
 go mod init github.com/web3-storage/AWS-IPFS-Infrastructure
 go mod tidy
+cd <test-folder>
 go test
 ```
