@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTerraformAwsDynamoDBExample(t *testing.T) {
+func TestTerraformAwsEndpointToS3AndDynamoExample(t *testing.T) {
 	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
