@@ -10,8 +10,8 @@ import (
 )
 
 func TestTerraformAwsDynamoDBExample(t *testing.T) {
-	blocksTableName := "blocks_test"
-	carsTableName := "cars_test"
+	blocksTableName := "blocks_terratest"
+	carsTableName := "cars_terratest"
 	awsRegion := "us-west-2"
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
