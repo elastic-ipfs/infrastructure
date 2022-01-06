@@ -11,7 +11,7 @@ import (
 )
 
 func TestTerraformAwsApiGatewayLambdaExample(t *testing.T) {
-	functionName := "terratest_uploader"
+	functionName := "terratest_uploader_2"
 	awsRegion := "us-west-2"
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",

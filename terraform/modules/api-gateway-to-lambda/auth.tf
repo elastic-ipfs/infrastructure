@@ -16,3 +16,11 @@ resource "aws_iam_role" "uploader_api_gateyway_role" {
 } 
 EOF
 }
+
+resource "aws_lambda_permission" "apigw_example_uploader_lambda" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = var.lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn = "${aws_api_gateway_rest_api.upload_cars_api.execution_arn}/*" 
+}

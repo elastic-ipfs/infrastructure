@@ -56,6 +56,7 @@ resource "aws_api_gateway_integration_response" "response_proxy" {
   status_code = aws_api_gateway_method_response.response_proxy.status_code
 
   depends_on = [
+    aws_api_gateway_integration.integration,
     aws_api_gateway_method.postObject
   ]
 }

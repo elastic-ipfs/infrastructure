@@ -16,12 +16,3 @@ resource "aws_iam_role" "example_uploader_lambda_role" {
 }
 EOF
 }
-
-
-resource "aws_lambda_permission" "apigw_example_uploader_lambda" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.example_uploader.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn = "${module.api-gateway-to-lambda.execution_arn}/*" 
-}
