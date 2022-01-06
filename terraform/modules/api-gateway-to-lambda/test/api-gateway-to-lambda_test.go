@@ -1,6 +1,8 @@
 package test
 
 import (
+	"log"
+	"net/http"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/aws"
@@ -10,7 +12,7 @@ import (
 
 func TestTerraformAwsApiGatewayLambdaExample(t *testing.T) {
 	functionName := "terratest_uploader"
-	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
+	awsRegion := "us-west-2"
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
 		Vars: map[string]interface{}{
@@ -21,16 +23,16 @@ func TestTerraformAwsApiGatewayLambdaExample(t *testing.T) {
 			},
 		},
 	}
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
+	invokeUrl := terraform.Output(t, terraformOptions, "upload_cars_api_invoke_url")
 	lambdaResponse := aws.InvokeFunction(t, awsRegion, functionName, nil)
 
-	// TODO: I think that the best test here will be the simplest possible: CURL OUTPUT and get response.
-	// TODO: This should be a PUT method
-	// apiGatewayResponse, err := http.Get(invokeUrl) 
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
+	apiGatewayResponse, err := http.Post(invokeUrl, "text/plain", nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-	assert.Equal(t, `"great success"`, string(lambdaResponse))
+	assert.Contains(t, string(lambdaResponse), `"great success"`)
+	assert.Equal(t, 200, apiGatewayResponse.StatusCode)
 }

@@ -8,13 +8,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/gruntwork-io/terratest/modules/aws"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestTerraformAwsEndpointToS3AndDynamoExample(t *testing.T) {
-	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
+	awsRegion := "us-west-2"
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
 	cfg.Region = awsRegion

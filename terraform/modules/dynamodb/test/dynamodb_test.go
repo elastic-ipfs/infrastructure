@@ -12,7 +12,7 @@ import (
 func TestTerraformAwsDynamoDBExample(t *testing.T) {
 	blocksTableName := "blocks_test"
 	carsTableName := "cars_test"
-	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
+	awsRegion := "us-west-2"
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
 		Vars: map[string]interface{} {
