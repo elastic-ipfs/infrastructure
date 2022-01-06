@@ -42,7 +42,6 @@ func TestTerraformAwsDynamoDBExample(t *testing.T) {
 	vpcEndpointRouteAssociationS3 := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_route_table_association_s3")
 	vpcEndpointRouteAssociationDynamodb := terraform.OutputMap(t, terraformOptions, "aws_vpc_endpoint_route_table_association_dynamodb")
 
-
 	input := &ec2.DescribeVpcEndpointsInput{
 		VpcEndpointIds: []string{
 			vpcEndpointS3["id"],
