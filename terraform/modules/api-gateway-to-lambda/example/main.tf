@@ -18,7 +18,7 @@ provider "aws" {
 
 resource "aws_lambda_function" "example_uploader" {
   function_name = var.lambda.name
-  filename      = "lambda_function.zip"
+  filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.example_uploader_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"

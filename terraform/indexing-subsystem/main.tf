@@ -42,7 +42,7 @@ provider "aws" {
 
 resource "aws_lambda_function" "uploader" {
   function_name = local.uploader_lambda.name
-  filename      = "lambda_function.zip"
+  filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.uploader_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"
@@ -58,6 +58,12 @@ resource "aws_lambda_function" "uploader" {
     aws_iam_role_policy_attachment.uploader_lambda_logs,
     aws_cloudwatch_log_group.uploader_log_group,
   ]
+}
+
+data "archive_file" "lambda_zip" {
+    type          = "zip"
+    source_file   = "lambda_base_code/index.js"
+    output_path   = "lambda_function_base_code.zip"
 }
 
 module "api-gateway-to-lambda" {
