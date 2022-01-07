@@ -3,8 +3,12 @@
 package test
 
 import (
+	"fmt"
 	"testing"
 
+	awsSDK "github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
@@ -20,22 +24,43 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 			"testQueueName": "terratest-lambda-from-s3-publishing-queue",
 		},
 	}
-	defer terraform.Destroy(t, terraformOptions)
+	// defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
-	assert.Equal(t, "true", "true")
+	
+	sess := session.Must(session.NewSessionWithOptions(session.Options{
+        SharedConfigState: session.SharedConfigEnable,
+    }))
 
-	// blocksTableOutput := terraform.OutputMap(t, terraformOptions, "blocks_table")
-	// carsTableOutput := terraform.OutputMap(t, terraformOptions, "cars_table")
-	// dynamodbBlocksPolicy := terraform.OutputMap(t, terraformOptions, "dynamodb_blocks_policy")
-	// dynamodbCarPolicy := terraform.OutputMap(t, terraformOptions, "dynamodb_car_policy")
-	// awsBlocksTable := aws.GetDynamoDBTable(t, awsRegion, blocksTableName)
-	// awsCarsTable := aws.GetDynamoDBTable(t, awsRegion, carsTableName)
-	// assert.Equal(t, "ACTIVE", awsSDK.StringValue(awsBlocksTable.TableStatus))
-	// assert.Equal(t, "ACTIVE", awsSDK.StringValue(awsCarsTable.TableStatus))
-	// assert.Equal(t, blocksTableName, blocksTableOutput["name"])
-	// assert.Equal(t, carsTableName, carsTableOutput["name"])
-	// assert.Equal(t, "dynamodb-blocks-policy", dynamodbBlocksPolicy["name"])
-	// assert.Equal(t, "dynamodb-car-policy", dynamodbCarPolicy["name"])
-	// assert.Contains(t, dynamodbBlocksPolicy["policy"], blocksTableOutput["arn"]) // Policy applies to resource
-	// assert.Contains(t, dynamodbCarPolicy["policy"], carsTableOutput["arn"]) // Policy applies to resource
+    // Create CloudWatch client
+    svc := cloudwatch.New(sess)
+
+    // Get the list of metrics matching your criteria
+    result, err := svc.ListMetrics(&cloudwatch.ListMetricsInput{
+        MetricName: awsSDK.String("Invocations"),
+        Namespace:  awsSDK.String("AWS/Lambda"),
+        Dimensions: []*cloudwatch.DimensionFilter{
+            {
+                Name: awsSDK.String("FunctionName"),
+				Value: awsSDK.String("indexing"),
+            },
+        },
+    })
+    if err != nil {
+        fmt.Println("Error", err)
+        return
+    }
+
+	// TODO: Cool, I got the metric here but not the it's value...
+    fmt.Println("Metrics", result.Metrics)
+
+	// TODO: This is going to bring the value, but is all histogram. Must get an interval (Maybe 10 min?) and find out if there was any invocation at all during that time
+	// StartTime, EndTime
+	// How to write a metricDataQuery? Is that what I will need
+	svc.GetMetricData(&cloudwatch.GetMetricDataInput{
+
+	})
+
+	assert.Equal(t, "true", "true")
+	// (awsSdk). // TODO: Get Metric about how many times function was invoked. Should be non existing at first (Metric doesn't exist yet when never invoked), and then after uploading a file should be one.
+	// It will probably have to wait/retry the assert a few times so we make sure the metric is updated
 }
