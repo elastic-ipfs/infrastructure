@@ -73,6 +73,7 @@ module "api-gateway-to-lambda" {
 
 module "lambda-from-s3" {
   source = "../modules/lambda-from-s3"
+  indexingLambdaName = "indexing"
   bucket = data.terraform_remote_state.shared.outputs.cars_bucket
   sqs_publishing_queue_url = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
   aws_iam_role_policy_list = [

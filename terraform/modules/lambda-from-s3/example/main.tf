@@ -28,6 +28,7 @@ resource "aws_sqs_queue" "terratest_lambda_from_s3_publishing_queue" {
 
 module "lambda-from-s3" {
   source = "../"
+  indexingLambdaName = var.indexingLambdaName
   bucket = aws_s3_bucket.terratest_lambda_from_s3_cars
   sqs_publishing_queue_url = aws_sqs_queue.terratest_lambda_from_s3_publishing_queue.url
   aws_iam_role_policy_list = [

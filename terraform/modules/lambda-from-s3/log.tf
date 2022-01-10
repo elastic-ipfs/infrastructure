@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "indexing_log_group" {
-  name              = "/aws/lambda/${local.indexing_lambda.name}"
+  name              = "/aws/lambda/${var.indexingLambdaName}"
   retention_in_days = 14
 }
 

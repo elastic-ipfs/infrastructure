@@ -10,7 +10,7 @@ terraform {
 }
 
 resource "aws_lambda_function" "indexing" {
-  function_name = local.indexing_lambda.name
+  function_name = var.indexingLambdaName
   filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.indexing_lambda_role.arn
   handler       = "index.handler"

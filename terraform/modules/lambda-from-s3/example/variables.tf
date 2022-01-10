@@ -12,3 +12,7 @@ variable "testBucketName" {
 variable "testQueueName" {
   type = string
 }
+
+variable "indexingLambdaName" {
+  type = string
+}
