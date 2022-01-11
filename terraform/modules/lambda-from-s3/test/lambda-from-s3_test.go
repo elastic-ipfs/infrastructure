@@ -4,7 +4,7 @@ package test
 
 import (
 	"context"
-	"fmt"
+	"strings"
 	"testing"
 
 	awsSDK "github.com/aws/aws-sdk-go-v2/aws"
@@ -31,7 +31,7 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 			"testQueueName":  "terratest-lambda-from-s3-publishing-queue",
 		},
 	}
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
@@ -46,10 +46,9 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 	if err != nil {
 		panic("error getting bucket notifications, " + err.Error())
 	}
-	fmt.Println(bucketNotifications.LambdaFunctionConfigurations[0].LambdaFunctionArn)
 	lambdaResponse := aws.InvokeFunction(t, awsRegion, lambdaName, nil)
-	assert.NotEmpty(t, bucketNotifications.LambdaFunctionConfigurations);
-	// Error:
-	// assert.Contains(t, bucketNotifications.LambdaFunctionConfigurations[0].LambdaFunctionArn, lambdaName)
 	assert.Contains(t, string(lambdaResponse), `"great success"`)
+	assert.NotEmpty(t, bucketNotifications.LambdaFunctionConfigurations);
+	splitedLambdaFunctionArnFromBucketNotification := strings.SplitAfter(*bucketNotifications.LambdaFunctionConfigurations[0].LambdaFunctionArn, ":")
+	assert.Equal(t, splitedLambdaFunctionArnFromBucketNotification[len(splitedLambdaFunctionArnFromBucketNotification) - 1], lambdaName)
 }
