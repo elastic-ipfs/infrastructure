@@ -19,7 +19,6 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 
 	awsRegion := "us-west-2"
 	bucketName := "terratest-lambda-from-s3-cars"
-	lambdaName := "terratest_indexing"
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
@@ -27,7 +26,7 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 			"region":         awsRegion,
 			"profile":        "nearform", // TODO: Change to oficial sandbox account
 			"testBucketName": bucketName,
-			"indexingLambdaName": lambdaName,
+			"indexingLambdaName": "terratest_indexing",
 			"testQueueName":  "terratest-lambda-from-s3-publishing-queue",
 		},
 	}
@@ -46,9 +45,10 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 	if err != nil {
 		panic("error getting bucket notifications, " + err.Error())
 	}
-	lambdaResponse := aws.InvokeFunction(t, awsRegion, lambdaName, nil)
+	lambdaNameOutput := terraform.Output(t, terraformOptions, "lambda_function_name")
+	lambdaResponse := aws.InvokeFunction(t, awsRegion, lambdaNameOutput, nil)
 	assert.Contains(t, string(lambdaResponse), `"great success"`)
 	assert.NotEmpty(t, bucketNotifications.LambdaFunctionConfigurations);
 	splitedLambdaFunctionArnFromBucketNotification := strings.SplitAfter(*bucketNotifications.LambdaFunctionConfigurations[0].LambdaFunctionArn, ":")
-	assert.Equal(t, splitedLambdaFunctionArnFromBucketNotification[len(splitedLambdaFunctionArnFromBucketNotification) - 1], lambdaName)
+	assert.Equal(t, splitedLambdaFunctionArnFromBucketNotification[len(splitedLambdaFunctionArnFromBucketNotification) - 1], lambdaNameOutput)
 }
