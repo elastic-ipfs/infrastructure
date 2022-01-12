@@ -21,13 +21,13 @@ variable "kubeconfig_output_path" {
   type = string
 }
 
-variable "configBucketName" {
+variable "config_bucket_name" {
   type    = string
   # default = "ipfs-peer-bitswap-config"
   default = "ipfs-peer-bitswap-config"
 }
 
-variable "ipfsProviderAds" {
+variable "ipfs_provider_ads" {
   type    = string
   # default = "ipfs-provider-ads"
   default = "ipfs-provider-ads"

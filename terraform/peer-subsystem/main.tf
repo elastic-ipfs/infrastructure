@@ -82,12 +82,12 @@ module "vpc" {
 }
 
 resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
-  bucket = var.configBucketName
+  bucket = var.config_bucket_name
   acl    = "private"  # TODO: Private
 }
 
 resource "aws_s3_bucket" "ipfs-peer-ads" {
-  bucket = var.ipfsProviderAds
+  bucket = var.ipfs_provider_ads
   acl    = "public-read"  # Must be public read so Hydra Nodes are capable of reading
 }
 
@@ -100,10 +100,11 @@ module "gateway-endpoint-to-s3-dynamo" {
 
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
+  version = "17.24.0" # TODO: Upgrade
   cluster_name                    = var.cluster_name
   cluster_version                 = var.cluster_version
   vpc_id                          = module.vpc.vpc_id
-  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
+  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
   fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
@@ -143,6 +144,7 @@ module "eks" {
   }
   # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
   manage_aws_auth = false
+  ## TODO: Use operator to map users
   # map_users = [
   #   {
   #     userarn  = "arn:aws:iam::505595374361:user/francisco",
@@ -150,6 +152,7 @@ module "eks" {
   #     groups   = ["system:masters"]
   #   }
   # ]
+  ## TODO: Remove Kubeconfig generation. Admin user should write it's own based on AWS console information
   kubeconfig_aws_authenticator_command      = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.cluster_name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
@@ -172,7 +175,7 @@ module "kube-specs" {
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
   cluster_oidc_provider_arn = module.eks.oidc_provider_arn
   cluster_id                = module.eks.cluster_id  
-  configBucketName          = var.configBucketName
+  config_bucket_name          = var.config_bucket_name
   kubeconfig_output_path    = module.eks.kubeconfig_filename
   host                      = data.aws_eks_cluster.eks.endpoint
   token                     = data.aws_eks_cluster_auth.eks.token
