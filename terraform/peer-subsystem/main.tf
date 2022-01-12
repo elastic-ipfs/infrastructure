@@ -157,7 +157,7 @@ module "eks" {
 }
 
 module "kube-specs" {
-  source = "../modules/kube-specs"
+  source = "../modules/kube-base-components"
   aws_iam_role_policy_list = [ # TODO: Use different roles for Provider and Peer
     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.s3_policy_read,
@@ -171,13 +171,10 @@ module "kube-specs" {
   ]
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
   cluster_oidc_provider_arn = module.eks.oidc_provider_arn
-  cluster_id                = module.eks.cluster_id
-  peer_container_image      = var.peer_container_image
-  provider_container_image  = var.provider_container_image
+  cluster_id                = module.eks.cluster_id  
   configBucketName          = var.configBucketName
   kubeconfig_output_path    = module.eks.kubeconfig_filename
   host                      = data.aws_eks_cluster.eks.endpoint
   token                     = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-  sqs_queue = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
 }

@@ -1,11 +1,3 @@
-variable "peer_container_image" {
-  type = string
-}
-
-variable "provider_container_image" {
-  type = string
-}
-
 variable "cluster_id" {
   type = string
 }
@@ -45,8 +37,4 @@ variable "token" {
 
 variable "cluster_ca_certificate" {
   type = string
-}
-
-variable "sqs_queue" {
-  type=string
 }
