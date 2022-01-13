@@ -17,3 +17,6 @@ resource "helm_release" "metric-server" {
     value = "true"
   }
 }
+
+# TODO: Install Operator for managing admin users (Required to work properly with workflows)
+# TODO: Install Prometheus
