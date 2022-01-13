@@ -33,23 +33,19 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 			"cluster_version":    "1.21",
 			"cluster_name":       "terratest-ipfs-peer-subsystem",
 		},
-	}
+	}	
 
-	sensitiveTerraformOptions := terraformOptions
+	sensitiveTerraformOptions := *terraformOptions
 	sensitiveTerraformOptions.Logger = logger.Discard // https://github.com/gruntwork-io/terratest/issues/358
 
 	// defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
-
+	
 	config := &rest.Config{
-		Host:        terraform.Output(t, sensitiveTerraformOptions, "eks_host"),
-		BearerToken: terraform.Output(t, sensitiveTerraformOptions, "eks_token"),
-		TLSClientConfig: rest.TLSClientConfig{
-			// Insecure: true,
-			// TODO: Test if that will work:
-			// CertData: []byte(terraform.Output(t, terraformOptions, "eks_cluster_ca_certificate")),
-			// CertFile: terraform.Output(t, terraformOptions, "eks_cluster_ca_certificate"),
-			CAData: []byte(terraform.Output(t, sensitiveTerraformOptions, "eks_cluster_ca_certificate")),
+		Host:        terraform.Output(t, &sensitiveTerraformOptions, "eks_host"),
+		BearerToken: terraform.Output(t, &sensitiveTerraformOptions, "eks_token"),
+		TLSClientConfig: rest.TLSClientConfig{			
+			CAData: []byte(terraform.Output(t, &sensitiveTerraformOptions, "eks_cluster_ca_certificate")),
 		},
 	}
 

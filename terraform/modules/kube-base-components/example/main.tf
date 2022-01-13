@@ -86,17 +86,29 @@ module "eks" {
 }
 
 module "kube-base-components" {
-  source = "../"
-  aws_iam_role_policy_list = [ # TODO: These are IAM Roles that services will need.. Here I could create the serviceAccounts (Separated) and then at App specs they point to those (service_account_name)
-                               # TODO: Should I create two iam_assumable_role_admin? keep static inside the module that these are two apps. OR outside here I could keep a "list of lists", each generates a different service account.. Cool stuff..
-  ]
+  source = "../"  
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
-  cluster_oidc_provider_arn = module.eks.oidc_provider_arn
   cluster_id                = module.eks.cluster_id  
   config_bucket_name          = var.config_bucket_name
   kubeconfig_output_path    = module.eks.kubeconfig_filename
   host                      = data.aws_eks_cluster.eks.endpoint
   token                     = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  service_account_roles = {
+    "bitwsap_peer_subsystem_role" =  {
+      service_account_name = "bitswap-irsa",
+      service_account_namespace = "default",
+      role_name = "bitwsap_peer_subsystem_role",
+      policies_list = [ 
+      ]
+    },
+    provider_peer_subsystem_role = {
+      service_account_name = "provider-irsa",
+      service_account_namespace = "default",
+      role_name = "provider_peer_subsystem_role",
+      policies_list = [ 
+      ]
+    },
+  }
 }
 

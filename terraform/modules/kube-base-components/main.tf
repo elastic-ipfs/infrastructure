@@ -20,11 +20,12 @@ provider "kubernetes" {
 }
 
 resource "kubernetes_service_account" "irsa" {
+  for_each = var.service_account_roles
   metadata {
-    name      = local.service_account_name
-    namespace = local.service_account_namespace
+    name      = each.value.service_account_name
+    namespace = each.value.service_account_namespace
     annotations = {
-      "eks.amazonaws.com/role-arn" = module.iam_assumable_role_admin.iam_role_arn
+      "eks.amazonaws.com/role-arn" = module.iam_assumable_role_admin[each.key].iam_role_arn
     }
   }
 }

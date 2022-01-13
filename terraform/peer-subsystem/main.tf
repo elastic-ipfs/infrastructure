@@ -173,7 +173,6 @@ module "kube-specs" {
     aws_iam_policy.ads_s3_bucket_policy_write
   ]
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
-  cluster_oidc_provider_arn = module.eks.oidc_provider_arn
   cluster_id                = module.eks.cluster_id  
   config_bucket_name          = var.config_bucket_name
   kubeconfig_output_path    = module.eks.kubeconfig_filename
