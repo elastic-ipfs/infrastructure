@@ -64,10 +64,25 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
   enable_irsa                     = true # To be able to access AWS services from PODs  
+
+  node_groups = {
+    test-ipfs-aws-peer-subsystem = {
+      name             = "testerrates-ipfs-peer-subsystem-node-group"
+      desired_capacity = 2
+      min_size         = 2
+      max_size         = 4
+
+      instance_types = ["t3.large"]
+      k8s_labels = {
+        workerType = "managed_ec2_node_groups"
+      }
+      update_config = {
+        max_unavailable_percentage = 50
+      }
+    }
+  }
   
-  # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
   manage_aws_auth = false
-  # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
 }
 
 module "kube-base-components" {
