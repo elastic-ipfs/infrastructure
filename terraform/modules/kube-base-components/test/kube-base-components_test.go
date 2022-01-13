@@ -11,6 +11,7 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
@@ -23,6 +24,15 @@ import (
 // Run this increasing timeout, ex: "go test -timeout 30m"
 func TestTerraformKubeComponetsExample(t *testing.T) {
 	awsRegion := "us-west-2"
+	ctx := context.TODO()
+	cfg, err := config.LoadDefaultConfig(ctx)
+	cfg.Region = awsRegion
+	if err != nil {
+		panic("configuration error, " + err.Error())
+	}
+	// client := iam.
+	// roles, err := client.cl
+
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
 		Vars: map[string]interface{}{
@@ -42,6 +52,11 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 
 	// defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
+
+	if err != nil {
+		panic("DescribeVpcEndpoints error, " + err.Error())
+	}
+
 
 	config := &rest.Config{
 		Host:        terraform.Output(t, &sensitiveTerraformOptions, "eks_host"),
@@ -78,12 +93,15 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	})
 
 	// TODO: Validate if roles exist in AWS with the correct policies
+	// TODO: Aqui acho que também da para validar algo relacionado ao OIDC do cluster
+
+	iam_roles := terraform.OutputMap(t, &sensitiveTerraformOptions, "iam_roles")
 
 	assert.Equal(t, 3, len(serviceAccounts.Items)) // There is also a "default" sa
 	assert.Equal(t, "bitswap-irsa", serviceAccounts.Items[1].Name)
 	assert.Equal(t, "default", serviceAccounts.Items[1].Namespace)
-	assert.Contains(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], "bitwsap_peer_subsystem_role")
+	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles["bitwsap_peer_subsystem_role"])
 	assert.Equal(t, "provider-irsa", serviceAccounts.Items[2].Name)
 	assert.Equal(t, "default", serviceAccounts.Items[2].Namespace)
-	assert.Contains(t, serviceAccounts.Items[2].Annotations["eks.amazonaws.com/role-arn"], "provider_peer_subsystem_role")
+	assert.Equal(t, serviceAccounts.Items[2].Annotations["eks.amazonaws.com/role-arn"], iam_roles["provider_peer_subsystem_role"])
 }

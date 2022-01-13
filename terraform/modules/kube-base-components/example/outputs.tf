@@ -11,3 +11,7 @@ output "eks_cluster_ca_certificate" {
   value = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   sensitive = true
 }
+
+output "iam_roles" {
+  value = module.kube-base-components.iam_roles
+}
