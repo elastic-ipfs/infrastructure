@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/iam"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
@@ -24,9 +25,13 @@ import (
 // Run this increasing timeout, ex: "go test -timeout 30m"
 func TestTerraformKubeComponetsExample(t *testing.T) {
 	awsRegion := "us-west-2"
+	bitswapRoleName := "bitwsap_peer_subsystem_role"
+	providerRoleName := "provider_peer_subsystem_role"
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
 	cfg.Region = awsRegion
+	IAMClient := iam.NewFromConfig(cfg)
+
 	if err != nil {
 		panic("configuration error, " + err.Error())
 	}
@@ -41,9 +46,10 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 			"vpc": map[string]string{
 				"name": "terratest-kube-ipfs-aws-peer-subsystem-vpc",
 			},
-			"config_bucket_name": "terratest-configBucket",
-			"cluster_version":    "1.21",
-			"cluster_name":       "terratest-ipfs-peer-subsystem",
+			"cluster_version":          "1.21",
+			"cluster_name":             "terratest-ipfs-peer-subsystem",
+			"provider_ads_bucket_name": "terratest-ipfs-provider-ads",
+			"config_bucket_name":       "terratest-config-bucket",
 		},
 	}
 
@@ -53,10 +59,14 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	// defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
+	roleFromIAM, err := IAMClient.GetRole(ctx, &iam.GetRoleInput{
+		RoleName: &bitswapRoleName,
+	})
+	// TODO: Onde pega as policies? Vem no obj ou tem que chamar tipo um GetPoliciesFromRole (Acho que é essa opção)
+	fmt.Println(roleFromIAM)
 	if err != nil {
-		panic("DescribeVpcEndpoints error, " + err.Error())
+		panic("GetRole error, " + err.Error())
 	}
-
 
 	config := &rest.Config{
 		Host:        terraform.Output(t, &sensitiveTerraformOptions, "eks_host"),
@@ -100,8 +110,8 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	assert.Equal(t, 3, len(serviceAccounts.Items)) // There is also a "default" sa
 	assert.Equal(t, "bitswap-irsa", serviceAccounts.Items[1].Name)
 	assert.Equal(t, "default", serviceAccounts.Items[1].Namespace)
-	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles["bitwsap_peer_subsystem_role"])
+	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles[bitswapRoleName])
 	assert.Equal(t, "provider-irsa", serviceAccounts.Items[2].Name)
 	assert.Equal(t, "default", serviceAccounts.Items[2].Namespace)
-	assert.Equal(t, serviceAccounts.Items[2].Annotations["eks.amazonaws.com/role-arn"], iam_roles["provider_peer_subsystem_role"])
+	assert.Equal(t, serviceAccounts.Items[2].Annotations["eks.amazonaws.com/role-arn"], iam_roles[providerRoleName])
 }

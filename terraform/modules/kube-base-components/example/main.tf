@@ -56,7 +56,7 @@ module "vpc" {
 
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
-  version = "17.24.0" # TODO: Upgrade
+  version                         = "17.24.0" # TODO: Upgrade
   cluster_name                    = var.cluster_name
   cluster_version                 = var.cluster_version
   vpc_id                          = module.vpc.vpc_id
@@ -81,32 +81,45 @@ module "eks" {
       }
     }
   }
-  
+
   manage_aws_auth = false
 }
 
+resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
+  bucket = var.config_bucket_name
+  acl    = "private"
+}
+
+resource "aws_s3_bucket" "ipfs-peer-ads" {
+  bucket = var.provider_ads_bucket_name
+  acl    = "public-read"
+}
+
 module "kube-base-components" {
-  source = "../"  
-  cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
-  cluster_id                = module.eks.cluster_id  
-  config_bucket_name          = var.config_bucket_name
-  kubeconfig_output_path    = module.eks.kubeconfig_filename
-  host                      = data.aws_eks_cluster.eks.endpoint
-  token                     = data.aws_eks_cluster_auth.eks.token
-  cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  source                  = "../"
+  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+  cluster_id              = module.eks.cluster_id
+  config_bucket_name      = var.config_bucket_name
+  kubeconfig_output_path  = module.eks.kubeconfig_filename
+  host                    = data.aws_eks_cluster.eks.endpoint
+  token                   = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   service_account_roles = {
-    "bitwsap_peer_subsystem_role" =  {
-      service_account_name = "bitswap-irsa",
+    "bitwsap_peer_subsystem_role" = {
+      service_account_name      = "bitswap-irsa",
       service_account_namespace = "default",
-      role_name = "bitwsap_peer_subsystem_role",
-      policies_list = [ 
+      role_name                 = "bitwsap_peer_subsystem_role",
+      policies_list = [
+        aws_iam_policy.config_peer_s3_bucket_policy_read
       ]
     },
     provider_peer_subsystem_role = {
-      service_account_name = "provider-irsa",
+      service_account_name      = "provider-irsa",
       service_account_namespace = "default",
-      role_name = "provider_peer_subsystem_role",
-      policies_list = [ 
+      role_name                 = "provider_peer_subsystem_role",
+      policies_list = [
+        aws_iam_policy.ads_s3_bucket_policy_read,
+        aws_iam_policy.ads_s3_bucket_policy_write
       ]
     },
   }

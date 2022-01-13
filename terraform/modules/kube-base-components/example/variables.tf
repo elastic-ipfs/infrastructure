@@ -23,3 +23,8 @@ variable "cluster_name" {
 variable "cluster_version" {
   type = string
 }
+
+variable "provider_ads_bucket_name" {
+  type    = string
+  description = "Bucket for storing provider files"
+}

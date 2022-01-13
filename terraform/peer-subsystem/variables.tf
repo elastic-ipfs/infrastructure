@@ -27,9 +27,8 @@ variable "config_bucket_name" {
   default = "ipfs-peer-bitswap-config"
 }
 
-variable "ipfs_provider_ads" {
+variable "provider_ads_bucket_name" {
   type    = string
-  # default = "ipfs-provider-ads"
   default = "ipfs-provider-ads"
   description = "Bucket for storing provider files"
 }

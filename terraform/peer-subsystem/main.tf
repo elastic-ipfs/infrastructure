@@ -87,7 +87,7 @@ resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
 }
 
 resource "aws_s3_bucket" "ipfs-peer-ads" {
-  bucket = var.ipfs_provider_ads
+  bucket = var.provider_ads_bucket_name
   acl    = "public-read"  # Must be public read so Hydra Nodes are capable of reading
 }
 
