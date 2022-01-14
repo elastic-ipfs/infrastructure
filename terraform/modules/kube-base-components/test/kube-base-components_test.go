@@ -2,7 +2,9 @@ package test
 
 import (
 	"context"
+	"fmt"
 	"sort"
+	"strings"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -47,7 +49,7 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	sensitiveTerraformOptions := *terraformOptions
 	sensitiveTerraformOptions.Logger = logger.Discard // https://github.com/gruntwork-io/terratest/issues/358
 
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
 	config := &rest.Config{
@@ -59,7 +61,7 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	}
 
 	assertMetrics(config, t)
-	assertRolesAndPolicies(t, IAMClient, ctx, bitswapRoleName)
+	assertRolesAndPolicies(t, terraformOptions, IAMClient, ctx, bitswapRoleName, awsRegion)
 	assertServiceConnections(config, t, sensitiveTerraformOptions, bitswapRoleName)
 
 }
@@ -101,14 +103,27 @@ func assertMetrics(config *rest.Config, t *testing.T,) {
 	assert.Equal(t, err, nil)
 }
 
-func assertRolesAndPolicies(t *testing.T, IAMClient *iam.Client, ctx context.Context, bitswapRoleName string) {
-	// TODO: Aqui acho que também da para validar algo relacionado ao OIDC do cluster
+func assertRolesAndPolicies(t *testing.T, terraformOptions *terraform.Options, IAMClient *iam.Client, ctx context.Context, bitswapRoleName string, awsRegion string) {
+	role, err := IAMClient.GetRole(ctx, &iam.GetRoleInput{
+		RoleName: &bitswapRoleName,
+
+	})
+	if err != nil {
+		panic("GetRole error, " + err.Error())
+	}
+
 	bitswapRolePoliciesFromIAM, err := IAMClient.ListAttachedRolePolicies(ctx, &iam.ListAttachedRolePoliciesInput{
 		RoleName: &bitswapRoleName,
 	})
 	if err != nil {
-		panic("bitswapRolePoliciesFromIAM error, " + err.Error())
+		panic("ListAttachedRolePolicies error, " + err.Error())
 	}
+	
+	cluster_oidc_issuer_url := terraform.Output(t, terraformOptions, "cluster_oidc_issuer_url")
+	splited_cluster_oidc_issuer_url := strings.SplitAfter(cluster_oidc_issuer_url, "/")
 
 	assert.Equal(t, "example-config-peer-s3-bucket-policy-read", *bitswapRolePoliciesFromIAM.AttachedPolicies[0].PolicyName)
+	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, fmt.Sprintf("oidc.eks.%s.amazonaws.com", awsRegion))
+	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, "AssumeRoleWithWebIdentity")
+	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, splited_cluster_oidc_issuer_url[len(splited_cluster_oidc_issuer_url) - 1]) // Just the OIDC ID numeric code
 }
