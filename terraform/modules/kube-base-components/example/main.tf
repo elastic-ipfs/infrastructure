@@ -105,23 +105,13 @@ module "kube-base-components" {
   token                   = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   service_account_roles = {
-    "bitwsap_peer_subsystem_role" = {
+    "bitswap_peer_subsystem_role" = {
       service_account_name      = "bitswap-irsa",
       service_account_namespace = "default",
-      role_name                 = "bitwsap_peer_subsystem_role",
+      role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         aws_iam_policy.config_peer_s3_bucket_policy_read
       ]
-    },
-    provider_peer_subsystem_role = {
-      service_account_name      = "provider-irsa",
-      service_account_namespace = "default",
-      role_name                 = "provider_peer_subsystem_role",
-      policies_list = [
-        aws_iam_policy.ads_s3_bucket_policy_read,
-        aws_iam_policy.ads_s3_bucket_policy_write
-      ]
-    },
+    },    
   }
 }
-

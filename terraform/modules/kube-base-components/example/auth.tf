@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "config_peer_s3_bucket_policy_read" {
-  name        = "config-peer-s3-bucket-policy-read"
+  name        = "example-config-peer-s3-bucket-policy-read"
   description = "Policy for allowing reading objects from S3"
   policy      = <<EOF
 {
@@ -21,7 +21,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ads_s3_bucket_policy_read" {
-  name        = "ads-s3-bucket-policy-read"
+  name        = "example-ads-s3-bucket-policy-read"
   description = "Policy for allowing reading objects from S3"
   policy      = <<EOF
 {
@@ -48,7 +48,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ads_s3_bucket_policy_write" {
-  name        = "ads-s3-bucket-policy-write"
+  name        = "example-ads-s3-bucket-policy-write"
   description = "Policy for write reading objects from S3"
   policy      = <<EOF
 {

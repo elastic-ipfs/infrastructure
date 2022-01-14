@@ -1,13 +1,7 @@
-// Test cases:
-// - kubectl top (Make sure metrics server is installed)
-//// error: Metrics API not available
-// - Make sure we have a properly configured IRSA with OIDC provider
-
 package test
 
 import (
 	"context"
-	"fmt"
 	"sort"
 	"testing"
 
@@ -25,8 +19,7 @@ import (
 // Run this increasing timeout, ex: "go test -timeout 30m"
 func TestTerraformKubeComponetsExample(t *testing.T) {
 	awsRegion := "us-west-2"
-	bitswapRoleName := "bitwsap_peer_subsystem_role"
-	providerRoleName := "provider_peer_subsystem_role"
+	bitswapRoleName := "bitswap_peer_subsystem_role"
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
 	cfg.Region = awsRegion
@@ -35,8 +28,6 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	if err != nil {
 		panic("configuration error, " + err.Error())
 	}
-	// client := iam.
-	// roles, err := client.cl
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
@@ -59,15 +50,6 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	// defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
-	roleFromIAM, err := IAMClient.GetRole(ctx, &iam.GetRoleInput{
-		RoleName: &bitswapRoleName,
-	})
-	// TODO: Onde pega as policies? Vem no obj ou tem que chamar tipo um GetPoliciesFromRole (Acho que é essa opção)
-	fmt.Println(roleFromIAM)
-	if err != nil {
-		panic("GetRole error, " + err.Error())
-	}
-
 	config := &rest.Config{
 		Host:        terraform.Output(t, &sensitiveTerraformOptions, "eks_host"),
 		BearerToken: terraform.Output(t, &sensitiveTerraformOptions, "eks_token"),
@@ -76,21 +58,16 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 		},
 	}
 
-	metrics, err := metrics.NewForConfig(config)
-	if err != nil {
-		panic(err)
-	}
+	assertMetrics(config, t)
+	assertRolesAndPolicies(t, IAMClient, ctx, bitswapRoleName)
+	assertServiceConnections(config, t, sensitiveTerraformOptions, bitswapRoleName)
 
+}
+
+func assertServiceConnections(config *rest.Config, t *testing.T, sensitiveTerraformOptions terraform.Options, bitswapRoleName string) {
 	kubeclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err)
-	}
-
-	_, err = metrics.MetricsV1beta1().PodMetricses(metav1.NamespaceAll).List(context.TODO(), metav1.ListOptions{})
-	if err != nil { // This error will happen when metrics server is not properly installed
-		// "Error: the server could not find the requested resource (get pods.metrics.k8s.io)" when there isn't Metrics Server available
-		fmt.Println("Error:", err)
-		return
 	}
 
 	serviceAccounts, err := kubeclient.CoreV1().ServiceAccounts(metav1.NamespaceDefault).List(context.TODO(), metav1.ListOptions{})
@@ -102,16 +79,36 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 		return serviceAccounts.Items[i].CreationTimestamp.Before(&serviceAccounts.Items[j].CreationTimestamp)
 	})
 
-	// TODO: Validate if roles exist in AWS with the correct policies
-	// TODO: Aqui acho que também da para validar algo relacionado ao OIDC do cluster
-
 	iam_roles := terraform.OutputMap(t, &sensitiveTerraformOptions, "iam_roles")
 
-	assert.Equal(t, 3, len(serviceAccounts.Items)) // There is also a "default" sa
+	assert.Equal(t, 2, len(serviceAccounts.Items)) // 2 because there is also a "default" sa
 	assert.Equal(t, "bitswap-irsa", serviceAccounts.Items[1].Name)
 	assert.Equal(t, "default", serviceAccounts.Items[1].Namespace)
-	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles[bitswapRoleName])
-	assert.Equal(t, "provider-irsa", serviceAccounts.Items[2].Name)
-	assert.Equal(t, "default", serviceAccounts.Items[2].Namespace)
-	assert.Equal(t, serviceAccounts.Items[2].Annotations["eks.amazonaws.com/role-arn"], iam_roles[providerRoleName])
+	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles[bitswapRoleName])	
+}
+
+func assertMetrics(config *rest.Config, t *testing.T,) {
+	metrics, err := metrics.NewForConfig(config)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = metrics.MetricsV1beta1().PodMetricses(metav1.NamespaceAll).List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		// Usually: "Error: the server could not find the requested resource (get pods.metrics.k8s.io)" when there isn't Metrics Server available
+		panic("Metric server error" + err.Error())
+	}
+	assert.Equal(t, err, nil)
+}
+
+func assertRolesAndPolicies(t *testing.T, IAMClient *iam.Client, ctx context.Context, bitswapRoleName string) {
+	// TODO: Aqui acho que também da para validar algo relacionado ao OIDC do cluster
+	bitswapRolePoliciesFromIAM, err := IAMClient.ListAttachedRolePolicies(ctx, &iam.ListAttachedRolePoliciesInput{
+		RoleName: &bitswapRoleName,
+	})
+	if err != nil {
+		panic("bitswapRolePoliciesFromIAM error, " + err.Error())
+	}
+
+	assert.Equal(t, "example-config-peer-s3-bucket-policy-read", *bitswapRolePoliciesFromIAM.AttachedPolicies[0].PolicyName)
 }
