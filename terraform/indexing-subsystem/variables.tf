@@ -1,0 +1,3 @@
+variable "profile" {
+  type = string
+}

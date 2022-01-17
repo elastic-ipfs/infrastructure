@@ -41,7 +41,7 @@ data "aws_eks_cluster_auth" "eks" {
 }
 
 provider "aws" {
-  profile = "ipfs"
+  profile = var.profile
   region  = local.region
   default_tags {
     tags = {
@@ -159,7 +159,7 @@ module "eks" {
   # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
 }
 
-module "kube-specs" {
+module "kube-base-components" {
   source                  = "../modules/kube-base-components"
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   cluster_id              = module.eks.cluster_id

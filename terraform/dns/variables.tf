@@ -1,3 +1,7 @@
+variable "profile" {
+  type = string
+}
+
 variable "domain_name" {
   type = string
   # default = "aws-ipfs.com"
@@ -18,4 +22,14 @@ variable "subdomain_apis" {
   type = string
   default = "api.uploader"
   description = "Name for a API Gateway subdomain"
+}
+
+variable "bitswap_load_balancer_hostname" {
+  type = string
+  description = "Bitswap LoadBalancer URL"
+}
+
+variable "provider_load_balancer_hostname" {
+  type = string
+  description = "Provider LoadBalancer URL"
 }

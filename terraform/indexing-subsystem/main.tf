@@ -27,7 +27,7 @@ data "terraform_remote_state" "shared" {
 }
 
 provider "aws" {
-  profile = "ipfs"
+  profile =  var.profile
   region  = "us-west-2"
   default_tags {
     tags = {

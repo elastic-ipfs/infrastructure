@@ -32,3 +32,7 @@ variable "provider_ads_bucket_name" {
   default = "ipfs-provider-ads"
   description = "Bucket for storing provider files"
 }
+
+variable "profile" {
+  type = string
+}

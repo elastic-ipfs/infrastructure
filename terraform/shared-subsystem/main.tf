@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    profile = "ipfs"
+    profile        = "ipfs"
     bucket         = "ipfs-aws-terraform-state"
     dynamodb_table = "ipfs-aws-terraform-state-lock"
     region         = "us-west-2"
@@ -18,7 +18,7 @@ terraform {
 }
 
 provider "aws" {
-  profile = "ipfs"
+  profile = var.profile
   region  = "us-west-2"
   default_tags {
     tags = {
@@ -47,7 +47,7 @@ module "dynamodb" {
     name = "blocks"
   }
 
-  cars_table {
+  cars_table = {
     name = "cars"
   }
 }
