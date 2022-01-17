@@ -2,7 +2,7 @@ name: 'Shared Subsystem Auto Deploy'
 on:
   push:
     branches:
-    - terratest # TODO: Return to main
+    - main 
     paths: 
     - 'terraform/shared-subsystem/**'
   pull_request:
@@ -11,8 +11,9 @@ on:
 jobs:
 # TODO: If shared was changed, should we also run apply to all its dependencies?
   terraform:
-    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@terratest # TODO: Return to main
+    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
+      options: -var profile=ipfs
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/shared-subsystem'

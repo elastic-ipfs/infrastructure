@@ -2,7 +2,7 @@ name: 'Indexing Subsystem Auto Deploy'
 on:
   push:
     branches:
-    - terratest # TODO: Return to main
+    - main 
     paths: 
     - 'terraform/indexing-subsystem/**'
   pull_request:
@@ -10,8 +10,9 @@ on:
     - 'terraform/indexing-subsystem/**'
 jobs:
   terraform:
-    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@terratest # TODO: Return to main
+    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
+      options: -var profile=ipfs
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/indexing-subsystem'
