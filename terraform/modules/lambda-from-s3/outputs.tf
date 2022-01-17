@@ -1,4 +1,3 @@
-output "lambdaRoleName" {
-    value = aws_iam_role.indexing_lambda_role.name
-    description = "The name of the Indexing Lambda"
+output "lambda_function_name" {
+    value = aws_lambda_function.indexing.function_name
 }

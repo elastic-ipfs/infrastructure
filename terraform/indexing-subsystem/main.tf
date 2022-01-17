@@ -27,7 +27,7 @@ data "terraform_remote_state" "shared" {
 }
 
 provider "aws" {
-  profile = "ipfs"
+  profile =  var.profile
   region  = "us-west-2"
   default_tags {
     tags = {
@@ -42,9 +42,8 @@ provider "aws" {
 
 resource "aws_lambda_function" "uploader" {
   function_name = local.uploader_lambda.name
-  filename      = "lambda_function.zip"
+  filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.uploader_lambda_role.arn
-  # role          = "arn:aws:iam::505595374361:role/indexing_lambda_role"
   handler       = "index.handler"
   runtime       = "nodejs14.x"
 
@@ -61,6 +60,12 @@ resource "aws_lambda_function" "uploader" {
   ]
 }
 
+data "archive_file" "lambda_zip" {
+    type          = "zip"
+    source_file   = "lambda_base_code/index.js"
+    output_path   = "lambda_function_base_code.zip"
+}
+
 module "api-gateway-to-lambda" {
   source = "../modules/api-gateway-to-lambda"
   lambda = aws_lambda_function.uploader
@@ -68,6 +73,7 @@ module "api-gateway-to-lambda" {
 
 module "lambda-from-s3" {
   source = "../modules/lambda-from-s3"
+  indexingLambdaName = "indexing"
   bucket = data.terraform_remote_state.shared.outputs.cars_bucket
   sqs_publishing_queue_url = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
   aws_iam_role_policy_list = [

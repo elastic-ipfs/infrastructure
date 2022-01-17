@@ -1,21 +1,22 @@
-name: 'Peer Subsystem Auto Deploy'
+name: 'Shared Subsystem Auto Deploy'
 on:
   push:
     branches:
     - main 
     paths: 
-    - 'terraform/peer-subsystem/**'
+    - 'terraform/shared-subsystem/**'
   pull_request:
     paths: 
-    - 'terraform/peer-subsystem/**'
+    - 'terraform/shared-subsystem/**'
 jobs:
+# TODO: If shared was changed, should we also run apply to all its dependencies?
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
-      options: -var profile=ipfs -var kubeconfig_output_path=$HOME/.kube/config
+      options: -var profile=ipfs
       aws_region: us-west-2
       environment: production
-      working_directory: './terraform/peer-subsystem'
+      working_directory: './terraform/shared-subsystem'
     secrets:
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

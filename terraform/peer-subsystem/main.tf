@@ -41,7 +41,7 @@ data "aws_eks_cluster_auth" "eks" {
 }
 
 provider "aws" {
-  profile = "ipfs"
+  profile = var.profile
   region  = local.region
   default_tags {
     tags = {
@@ -82,13 +82,13 @@ module "vpc" {
 }
 
 resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
-  bucket = var.configBucketName
-  acl    = "private"  # TODO: Private
+  bucket = var.config_bucket_name
+  acl    = "private" # TODO: Private
 }
 
 resource "aws_s3_bucket" "ipfs-peer-ads" {
-  bucket = var.ipfsProviderAds
-  acl    = "public-read"  # Must be public read so Hydra Nodes are capable of reading
+  bucket = var.provider_ads_bucket_name
+  acl    = "public-read" # Must be public read so Hydra Nodes are capable of reading
 }
 
 module "gateway-endpoint-to-s3-dynamo" {
@@ -100,10 +100,11 @@ module "gateway-endpoint-to-s3-dynamo" {
 
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
+  version                         = "17.24.0" # TODO: Upgrade
   cluster_name                    = var.cluster_name
   cluster_version                 = var.cluster_version
   vpc_id                          = module.vpc.vpc_id
-  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
+  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
   fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
@@ -143,6 +144,7 @@ module "eks" {
   }
   # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
   manage_aws_auth = false
+  ## TODO: Use operator to map users
   # map_users = [
   #   {
   #     userarn  = "arn:aws:iam::505595374361:user/francisco",
@@ -150,34 +152,45 @@ module "eks" {
   #     groups   = ["system:masters"]
   #   }
   # ]
+  ## TODO: Remove Kubeconfig generation. Admin user should write it's own based on AWS console information
   kubeconfig_aws_authenticator_command      = "aws"
   kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.cluster_name]
   kubeconfig_output_path                    = var.kubeconfig_output_path
   # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
 }
 
-module "kube-specs" {
-  source = "../modules/kube-specs"
-  aws_iam_role_policy_list = [ # TODO: Use different roles for Provider and Peer
-    data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-    data.terraform_remote_state.shared.outputs.s3_policy_read,
-    data.terraform_remote_state.shared.outputs.s3_policy_write,
-    data.terraform_remote_state.shared.outputs.sqs_policy_receive,
-    data.terraform_remote_state.shared.outputs.sqs_policy_send,
-    data.terraform_remote_state.shared.outputs.sqs_policy_delete,
-    aws_iam_policy.config_peer_s3_bucket_policy_read, # Remember to manually add this file after infra is up running (403 error otherwise)
-    aws_iam_policy.ads_s3_bucket_policy_read,
-    aws_iam_policy.ads_s3_bucket_policy_write
-  ]
-  cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
-  cluster_oidc_provider_arn = module.eks.oidc_provider_arn
-  cluster_id                = module.eks.cluster_id
-  peer_container_image      = var.peer_container_image
-  provider_container_image  = var.provider_container_image
-  configBucketName          = var.configBucketName
-  kubeconfig_output_path    = module.eks.kubeconfig_filename
-  host                      = data.aws_eks_cluster.eks.endpoint
-  token                     = data.aws_eks_cluster_auth.eks.token
-  cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-  sqs_queue = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
+module "kube-base-components" {
+  source                  = "../modules/kube-base-components"
+  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+  cluster_id              = module.eks.cluster_id
+  config_bucket_name      = var.config_bucket_name
+  kubeconfig_output_path  = module.eks.kubeconfig_filename
+  host                    = data.aws_eks_cluster.eks.endpoint
+  token                   = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  service_account_roles = {
+    "bitswap_peer_subsystem_role" = {
+      service_account_name      = "bitswap-irsa",
+      service_account_namespace = "default",
+      role_name                 = "bitswap_peer_subsystem_role",
+      policies_list = [
+        data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
+        data.terraform_remote_state.shared.outputs.s3_policy_read,
+        data.terraform_remote_state.shared.outputs.s3_policy_write,
+        data.terraform_remote_state.shared.outputs.sqs_policy_send,
+        aws_iam_policy.config_peer_s3_bucket_policy_read,
+      ]
+    },
+    "provider_peer_subsystem_role" = {
+      service_account_name      = "provider-irsa",
+      service_account_namespace = "default",
+      role_name                 = "provider_peer_subsystem_role",
+      policies_list = [
+        data.terraform_remote_state.shared.outputs.sqs_policy_receive,
+        data.terraform_remote_state.shared.outputs.sqs_policy_delete,
+        aws_iam_policy.ads_s3_bucket_policy_read,
+        aws_iam_policy.ads_s3_bucket_policy_write,
+      ]
+    },
+  }
 }

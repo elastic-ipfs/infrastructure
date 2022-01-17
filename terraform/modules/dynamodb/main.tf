@@ -10,7 +10,7 @@ terraform {
 }
 
 resource "aws_dynamodb_table" "blocks_table" {
-  name        = "blocks"
+  name        = var.blocks_table.name
   billing_mode = "PAY_PER_REQUEST"
   hash_key       = "multihash"
   attribute {
@@ -20,7 +20,7 @@ resource "aws_dynamodb_table" "blocks_table" {
 }
 
 resource "aws_dynamodb_table" "cars_table" {
-  name        = "cars"
+  name        = var.cars_table.name
   billing_mode = "PAY_PER_REQUEST" 
   hash_key       = "path"
   attribute {

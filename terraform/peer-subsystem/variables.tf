@@ -1,11 +1,3 @@
-variable "peer_container_image" {
-  type = string
-}
-
-variable "provider_container_image" { 
-  type = string
-}
-
 variable "vpc" {
   type = object({
     name = string
@@ -29,15 +21,18 @@ variable "kubeconfig_output_path" {
   type = string
 }
 
-variable "configBucketName" {
+variable "config_bucket_name" {
   type    = string
   # default = "ipfs-peer-bitswap-config"
   default = "ipfs-peer-bitswap-config"
 }
 
-variable "ipfsProviderAds" {
+variable "provider_ads_bucket_name" {
   type    = string
-  # default = "ipfs-provider-ads"
   default = "ipfs-provider-ads"
   description = "Bucket for storing provider files"
+}
+
+variable "profile" {
+  type = string
 }

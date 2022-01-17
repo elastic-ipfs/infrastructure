@@ -9,17 +9,9 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-# TODO: Will we zip project from git clone (pipeline) or get code from bucket?
-data "archive_file" "lambda_zip" {
-    type          = "zip"
-    source_file   = "test_lambda/index.js"
-    output_path   = "lambda_function.zip"
-
-}
-
 resource "aws_lambda_function" "indexing" {
-  function_name = local.indexing_lambda.name
-  filename      = "lambda_function.zip"
+  function_name = var.indexingLambdaName
+  filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.indexing_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"

@@ -18,7 +18,7 @@ terraform {
 }
 
 provider "aws" {
-  profile = "ipfs"
+  profile =  var.profile
   region  = "us-west-2"
   default_tags {
     tags = {
@@ -53,21 +53,12 @@ resource "aws_route53_zone" "hosted_zone" {
   name = var.domain_name
 }
 
-# resource "aws_route53_record" "ingress_load_balancer_subdomains" {
-#   for_each = toset(var.subdomains_loadbalancer) # TODO: Get those from ingress host list?
-#   zone_id = aws_route53_zone.hosted_zone.zone_id
-#   name    = "${each.key}.${var.domain_name}" 
-#   type    = "CNAME"
-#   ttl     = "300"
-#   records = [data.terraform_remote_state.peer.outputs.ingress_load_balancer_hostname]
-# }
-
 resource "aws_route53_record" "peer_bitswap_load_balancer" {
   zone_id = aws_route53_zone.hosted_zone.zone_id
   name    = "${var.subdomains_bitwsap_loadbalancer}.${var.domain_name}" 
   type    = "CNAME"
   ttl     = "300"
-  records = [data.terraform_remote_state.peer.outputs.bitswap_load_balancer_hostname]
+  records = [var.bitswap_load_balancer_hostname]
 }
 
 resource "aws_route53_record" "provider_load_balancer" {
@@ -75,7 +66,7 @@ resource "aws_route53_record" "provider_load_balancer" {
   name    = "${var.subdomains_provider_loadbalancer}.${var.domain_name}" 
   type    = "CNAME"
   ttl     = "300"
-  records = [data.terraform_remote_state.peer.outputs.provider_load_balancer_hostname]
+  records = [var.provider_load_balancer_hostname]
 }
 
 ### API Gateway

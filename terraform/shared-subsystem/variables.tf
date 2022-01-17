@@ -3,3 +3,7 @@ variable "carsBucketName" {
   default = "ipfs-cars"
   description = "Bucket for storing CAR files"
 }
+
+variable "profile" {
+  type = string
+}
