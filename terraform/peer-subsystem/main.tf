@@ -144,19 +144,7 @@ module "eks" {
   }
   # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
   manage_aws_auth = false
-  ## TODO: Use operator to map users
-  # map_users = [
-  #   {
-  #     userarn  = "arn:aws:iam::505595374361:user/francisco",
-  #     username = "francisco",
-  #     groups   = ["system:masters"]
-  #   }
-  # ]
-  ## TODO: Remove Kubeconfig generation. Admin user should write it's own based on AWS console information
-  kubeconfig_aws_authenticator_command      = "aws"
-  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.cluster_name]
-  kubeconfig_output_path                    = var.kubeconfig_output_path
-  # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
+  write_kubeconfig = false
 }
 
 module "kube-base-components" {
@@ -164,7 +152,6 @@ module "kube-base-components" {
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   cluster_id              = module.eks.cluster_id
   config_bucket_name      = var.config_bucket_name
-  kubeconfig_output_path  = module.eks.kubeconfig_filename
   host                    = data.aws_eks_cluster.eks.endpoint
   token                   = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)

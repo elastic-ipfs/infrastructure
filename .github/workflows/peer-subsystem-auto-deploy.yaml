@@ -12,7 +12,7 @@ jobs:
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
-      options: -var profile=ipfs -var kubeconfig_output_path=$HOME/.kube/config
+      options: -var profile=ipfs 
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/peer-subsystem'

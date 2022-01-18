@@ -5,12 +5,6 @@ variable "cluster_id" {
 variable "cluster_oidc_issuer_url" {
   type = string
 }
-
-variable "kubeconfig_output_path" {
-  type = string
-}
-
-
 variable "config_bucket_name" {
   type        = string
   description = "Bucket for storing CAR files"

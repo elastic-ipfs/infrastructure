@@ -17,10 +17,6 @@ variable "cluster_version" {
   default = "1.21"
 }
 
-variable "kubeconfig_output_path" {
-  type = string
-}
-
 variable "config_bucket_name" {
   type    = string
   # default = "ipfs-peer-bitswap-config"

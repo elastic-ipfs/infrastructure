@@ -100,7 +100,6 @@ module "kube-base-components" {
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   cluster_id              = module.eks.cluster_id
   config_bucket_name      = var.config_bucket_name
-  kubeconfig_output_path  = module.eks.kubeconfig_filename
   host                    = data.aws_eks_cluster.eks.endpoint
   token                   = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)

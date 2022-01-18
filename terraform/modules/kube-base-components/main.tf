@@ -29,3 +29,14 @@ resource "kubernetes_service_account" "irsa" {
     }
   }
 }
+
+##### EKS-AUTH-SYNC
+resource "kubernetes_service_account" "eks-auth-sync" {
+  metadata {
+    name      = "eks-auth-sync"
+    namespace = "kube-system"
+    annotations = {
+      "eks.amazonaws.com/role-arn" = module.iam_oidc_eks_auth_sync.iam_role_arn
+    }
+  }
+}
