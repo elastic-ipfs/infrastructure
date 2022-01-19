@@ -16,7 +16,7 @@ terraform {
 
     helm = {
       source  = "hashicorp/helm"
-      version = "2.4.1"
+      version = "~> 2.4.1"
     }
   }
 
@@ -100,7 +100,7 @@ module "gateway-endpoint-to-s3-dynamo" {
 
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
-  version                         = "17.24.0" # TODO: Upgrade
+  version                         = "~> 17.24.0" # TODO: Upgrade
   cluster_name                    = var.cluster_name
   cluster_version                 = var.cluster_version
   vpc_id                          = module.vpc.vpc_id
