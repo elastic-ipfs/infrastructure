@@ -33,3 +33,7 @@ variable "provider_load_balancer_hostname" {
   type = string
   description = "Provider LoadBalancer URL"
 }
+
+variable "region" {
+  type = string
+}

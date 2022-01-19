@@ -28,7 +28,7 @@ data "terraform_remote_state" "shared" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.shared.tfstate"
-    region = "${local.region}"
+    region = "${var.region}"
   }
 }
 
@@ -42,7 +42,7 @@ data "aws_eks_cluster_auth" "eks" {
 
 provider "aws" {
   profile = var.profile
-  region  = local.region
+  region  = var.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -94,7 +94,7 @@ resource "aws_s3_bucket" "ipfs-peer-ads" {
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
   vpc_id         = module.vpc.vpc_id
-  region         = local.region
+  region         = var.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
@@ -143,7 +143,7 @@ module "eks" {
     }
   }
   # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
-  manage_aws_auth = false
+  manage_aws_auth  = false
   write_kubeconfig = false
 }
 
@@ -151,6 +151,7 @@ module "kube-base-components" {
   source                  = "../modules/kube-base-components"
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   cluster_id              = module.eks.cluster_id
+  region                  = var.region
   config_bucket_name      = var.config_bucket_name
   host                    = data.aws_eks_cluster.eks.endpoint
   token                   = data.aws_eks_cluster_auth.eks.token

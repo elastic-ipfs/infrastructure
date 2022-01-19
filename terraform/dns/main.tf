@@ -36,7 +36,7 @@ data "terraform_remote_state" "peer" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.peer.tfstate"
-    region = "${local.region}"
+    region = "${var.region}"
   }
 }
 
@@ -45,7 +45,7 @@ data "terraform_remote_state" "indexing" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.indexing.tfstate"
-    region = "${local.region}"
+    region = "${var.region}"
   }
 }
 

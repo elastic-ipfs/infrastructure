@@ -32,3 +32,7 @@ variable "provider_ads_bucket_name" {
 variable "profile" {
   type = string
 }
+
+variable "region" {
+  type = string
+}
