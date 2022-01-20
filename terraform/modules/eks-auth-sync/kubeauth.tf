@@ -17,7 +17,7 @@ resource "kubernetes_role" "eksauth" {
 }
 
 resource "kubernetes_role" "eksauth-system" {
-  count = var.deploy_eks_auth_sync ? 1 : 0
+  count = var.deploy_eks_auth_sync && var.namespace != "kube-system" ? 1 : 0
   metadata {
     name = "aws-auth-editor"
     namespace = "kube-system"
@@ -55,7 +55,7 @@ resource "kubernetes_role_binding" "eksauth" {
 }
 
 resource "kubernetes_role_binding" "eksauth-system" {
-  count = var.deploy_eks_auth_sync ? 1 : 0
+  count = var.deploy_eks_auth_sync && var.namespace != "kube-system" ? 1 : 0
   metadata {
     name      = "eks-auth-sync"
     namespace = "kube-system"

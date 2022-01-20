@@ -6,3 +6,4 @@ scanners:
     clusterName: ${cluster_name}
     clusterAccountID: "${account_id}"
     pathPrefix: /
+    groupSeparator: ";;"

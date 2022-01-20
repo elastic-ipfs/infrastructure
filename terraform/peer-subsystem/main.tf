@@ -108,8 +108,7 @@ module "eks" {
   fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-  enable_irsa                     = true # To be able to access AWS services from PODs  
-  node_groups = {                        # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
+  node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-aws-peer-subsystem = {
       name             = "test-ipfs-aws-peer-subsystem-node-group"
       desired_capacity = 2
@@ -143,6 +142,7 @@ module "eks" {
     }
   }
   # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
+  enable_irsa      = true # To be able to access AWS services from PODs  
   manage_aws_auth  = false
   write_kubeconfig = false
 }

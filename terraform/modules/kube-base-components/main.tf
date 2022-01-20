@@ -19,10 +19,9 @@ provider "kubernetes" {
   cluster_ca_certificate = var.cluster_ca_certificate
 }
 
-# TODO: Enable
-# module "eks_auth_sync" {
-#   source = "../eks-auth-sync"
-#   region = var.region
-#   cluster_name = var.cluster_id
-#   cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
-# }
+module "eks_auth_sync" {
+  source = "../eks-auth-sync"
+  region = var.region
+  cluster_name = var.cluster_id
+  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
+}

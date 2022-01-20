@@ -48,5 +48,3 @@ module "iam_oidc_eks_auth_sync" { # https://registry.terraform.io/modules/terraf
   role_policy_arns              = [aws_iam_policy.eks_auth_sync_policy.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${local.serviceAccountName}"]
 }
-
-# TODO: Can I already try to add tags to the nodeWorker/Fargate stuff?
