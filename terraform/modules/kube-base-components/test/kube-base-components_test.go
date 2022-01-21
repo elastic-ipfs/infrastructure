@@ -40,7 +40,7 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 				"name": "terratest-kube-ipfs-aws-peer-subsystem-vpc",
 			},
 			"cluster_version":          "1.21",
-			"cluster_name":             "terratest-ipfs-peer-subsystem",
+			"cluster_name":             "terratest-ipfs-peer-subsys",
 			"provider_ads_bucket_name": "terratest-ipfs-provider-ads",
 			"config_bucket_name":       "terratest-config-bucket",
 		},

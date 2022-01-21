@@ -13,7 +13,6 @@ terraform {
       version = "~> 3.38"
     }
 
-
     helm = {
       source  = "hashicorp/helm"
       version = "~> 2.4.1"
@@ -100,20 +99,22 @@ module "gateway-endpoint-to-s3-dynamo" {
 
 module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
-  version                         = "~> 17.24.0" # TODO: Upgrade
+  version                         = "~> 18.2.0"
   cluster_name                    = var.cluster_name
   cluster_version                 = var.cluster_version
-  vpc_id                          = module.vpc.vpc_id
-  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
-  fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-  node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
-    test-ipfs-aws-peer-subsystem = {
-      name             = "test-ipfs-aws-peer-subsystem-node-group"
-      desired_capacity = 2
-      min_size         = 2
-      max_size         = 4
+  vpc_id                          = module.vpc.vpc_id
+  subnet_ids                      = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
+  # TODO: There is no more segragated fargate_subnets.Will that be a problem?
+
+  # TODO: Tag users/groups here!
+  eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
+    test-ipfs-peer-subsys = {
+      name         = "test-ipfs-peer-subsys"
+      desired_size = 2
+      min_size     = 2
+      max_size     = 4
 
       instance_types = ["t3.large"]
       k8s_labels = {
@@ -122,11 +123,16 @@ module "eks" {
       update_config = {
         max_unavailable_percentage = 50
       }
+
+      tags = { # This is also applied to IAM role.
+        "eks/505595374361/${var.cluster_name}/groups" : "system:bootstrappers++system:nodes"
+        "eks/505595374361/${var.cluster_name}/username" : "eks-managed-worker-node"
+      }
     }
   }
   fargate_profiles = {
     default = {
-      name = "default"
+      name = "default" 
       selectors = [
         {
           namespace = "default"
@@ -135,16 +141,18 @@ module "eks" {
           }
         }
       ]
+
+      tags = { # This is also applied to IAM role
+        "eks/505595374361/${var.cluster_name}/groups" : "system:bootstrappers++system:nodes++system:node-proxier"
+        "eks/505595374361/${var.cluster_name}/username" : "eks-fargate"
+      }
       timeouts = {
         create = "5m"
         delete = "5m"
       }
     }
   }
-  # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
-  enable_irsa      = true # To be able to access AWS services from PODs  
-  manage_aws_auth  = false
-  write_kubeconfig = false
+  enable_irsa = true # To be able to access AWS services from PODs  
 }
 
 module "kube-base-components" {

@@ -3,13 +3,13 @@ variable "vpc" {
     name = string
   })
   default = {
-    name = "test-ipfs-aws-peer-subsystem-vpc"
+    name = "test-ipfs-peer-subsys"
   }
 }
 
 variable "cluster_name" {
   type = string
-  default = "test-ipfs-aws-peer-subsystem-eks"
+  default = "test-ipfs-peer-subsys"
 }
 
 variable "cluster_version" {
