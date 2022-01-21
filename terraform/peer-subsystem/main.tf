@@ -105,7 +105,7 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
   vpc_id                          = module.vpc.vpc_id
-  subnet_ids                      = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
+  subnet_ids                      = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
   # TODO: There is no more segragated fargate_subnets.Will that be a problem?
 
   # TODO: Tag users/groups here!
@@ -125,14 +125,14 @@ module "eks" {
       }
 
       tags = { # This is also applied to IAM role.
-        "eks/505595374361/${var.cluster_name}/groups" : "system:bootstrappers++system:nodes"
-        "eks/505595374361/${var.cluster_name}/username" : "eks-managed-worker-node"
+        "eks/505595374361/${var.cluster_name}/type" : "node"
       }
     }
   }
   fargate_profiles = {
     default = {
       name = "default" 
+      subnet_ids = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
       selectors = [
         {
           namespace = "default"
@@ -142,9 +142,8 @@ module "eks" {
         }
       ]
 
-      tags = { # This is also applied to IAM role
-        "eks/505595374361/${var.cluster_name}/groups" : "system:bootstrappers++system:nodes++system:node-proxier"
-        "eks/505595374361/${var.cluster_name}/username" : "eks-fargate"
+       tags = { # This is also applied to IAM role.
+        "eks/505595374361/${var.cluster_name}/type" : "fargateNode"
       }
       timeouts = {
         create = "5m"

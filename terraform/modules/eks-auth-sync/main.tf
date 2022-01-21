@@ -31,7 +31,8 @@ resource "kubernetes_cron_job" "eksauth" {
           spec {
             container {
               name    = "eks-auth-sync"
-              image   = "registry.gitlab.com/polarsquad/eks-auth-sync"
+              # image   = "registry.gitlab.com/polarsquad/eks-auth-sync" # TODO: Return when fork PR is accepted
+              image   = "ghcr.io/francardoso93/eks-auth-sync"
               image_pull_policy = "Always"
               args = ["-config", "/etc/eks-auth-sync/config.yaml", "-commit"]
               env {
