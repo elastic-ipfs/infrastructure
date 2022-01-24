@@ -98,22 +98,113 @@ module "gateway-endpoint-to-s3-dynamo" {
 }
 
 module "eks" {
-  source                          = "terraform-aws-modules/eks/aws"
-  version                         = "~> 18.2.0"
-  cluster_name                    = var.cluster_name
-  cluster_version                 = var.cluster_version
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
-  vpc_id                          = module.vpc.vpc_id
-  subnet_ids                      = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
-  # TODO: There is no more segragated fargate_subnets.Will that be a problem?
+  source                             = "terraform-aws-modules/eks/aws"
+  version                            = "~> 18.2.0"
+  cluster_name                       = var.cluster_name
+  cluster_version                    = var.cluster_version
+  cluster_endpoint_private_access    = true
+  cluster_endpoint_public_access     = true
+  vpc_id                             = module.vpc.vpc_id
+  subnet_ids                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
+  enable_irsa                        = true # To be able to access AWS services from PODs  
+  cluster_security_group_description = "EKS cluster security group - Control Plane"
 
-  # TODO: Tag users/groups here!
+  node_security_group_additional_rules = {
+    metrics_server_8443_ing = {
+      description                = "8443 ingress"
+      protocol                   = "tcp"
+      from_port                  = 8443
+      to_port                    = 8443
+      type                       = "ingress"
+      source_cluster_security_group = true
+    }
+    # ALREADY EXISTS
+    # metrics_server_443_eg = {
+    #   description                   = "443 egress"
+    #   protocol                      = "tcp"
+    #   from_port                     = 443
+    #   to_port                       = 443
+    #   type                          = "egress"
+    #   source_cluster_security_group = true    
+    # },
+    # metrics_server_443_ing = {
+    #   description                   = "443 ingress"
+    #   protocol                      = "tcp"
+    #   from_port                     = 443
+    #   to_port                       = 443
+    #   type                          = "ingress"
+    #   source_cluster_security_group = true    
+    # },
+    metrics_server_4443_eg = {
+      description                   = "4443 egress"
+      protocol                      = "tcp"
+      from_port                     = 4443
+      to_port                       = 4443
+      type                          = "egress"
+      source_cluster_security_group = true
+    },
+    metrics_server_4443_ing = {
+      description                   = "4443 ingress"
+      protocol                      = "tcp"
+      from_port                     = 4443
+      to_port                       = 4443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    },
+  }
+
+  cluster_security_group_additional_rules = {
+    metrics_server_8443_eg = {
+      description                   = "8443 egress"
+      protocol                      = "tcp"
+      from_port                     = 8443
+      to_port                       = 8443
+      type                          = "egress"
+      source_node_security_group = true
+    }
+    # ALREADY EXISTS
+    # metrics_server_443_eg = {
+    #   description                   = "443 egress"
+    #   protocol                      = "tcp"
+    #   from_port                     = 443
+    #   to_port                       = 443
+    #   type                          = "egress"
+    #   source_node_security_group = true    
+    # },
+    # metrics_server_443_ing = {
+    #   description                   = "443 ingress"
+    #   protocol                      = "tcp"
+    #   from_port                     = 443
+    #   to_port                       = 443
+    #   type                          = "ingress"
+    #   source_node_security_group = true    
+    # },
+    metrics_server_4443_eg = {
+      description                = "4443 egress"
+      protocol                   = "tcp"
+      from_port                  = 4443
+      to_port                    = 4443
+      type                       = "egress"
+      source_node_security_group = true
+    },
+    metrics_server_4443_ing = {
+      description                = "4443 ingress"
+      protocol                   = "tcp"
+      from_port                  = 4443
+      to_port                    = 4443
+      type                       = "ingress"
+      source_node_security_group = true
+    }
+
+
+  }
+
+
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-peer-subsys = {
       name         = "test-ipfs-peer-subsys"
       desired_size = 2
-      min_size     = 2
+      min_size     = 1
       max_size     = 4
 
       instance_types = ["t3.large"]
@@ -131,7 +222,7 @@ module "eks" {
   }
   fargate_profiles = {
     default = {
-      name = "default" 
+      name       = "default"
       subnet_ids = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
       selectors = [
         {
@@ -142,7 +233,7 @@ module "eks" {
         }
       ]
 
-       tags = { # This is also applied to IAM role.
+      tags = { # This is also applied to IAM role.
         "eks/505595374361/${var.cluster_name}/type" : "fargateNode"
       }
       timeouts = {
@@ -151,7 +242,6 @@ module "eks" {
       }
     }
   }
-  enable_irsa = true # To be able to access AWS services from PODs  
 }
 
 module "kube-base-components" {

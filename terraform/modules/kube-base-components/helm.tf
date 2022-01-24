@@ -11,6 +11,7 @@ resource "helm_release" "metric-server" {
   repository = local.bitnami_repo 
   chart      = "metrics-server"
   namespace  = "kube-system"
+  version = "~> 5.10"
 
   set {
     name  = "apiService.create"
