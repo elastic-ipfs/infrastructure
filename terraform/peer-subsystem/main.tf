@@ -109,62 +109,6 @@ module "eks" {
   enable_irsa                        = true # To be able to access AWS services from PODs  
   cluster_security_group_description = "EKS cluster security group - Control Plane"
 
-  node_security_group_additional_rules = {
-    metrics_server_10250_ing = {
-      description = "10250 ingress"
-      protocol    = "tcp"
-      from_port   = 10250
-      to_port     = 10250
-      type        = "ingress"
-      self        = true
-    }
-
-    metrics_server_8443_ing = {
-      description                   = "8443 ingress"
-      protocol                      = "tcp"
-      from_port                     = 8443
-      to_port                       = 8443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-    # metrics_server_4443_eg = {
-    #   description                   = "4443 egress"
-    #   protocol                      = "tcp"
-    #   from_port                     = 4443
-    #   to_port                       = 4443
-    #   type                          = "egress"
-    #   source_cluster_security_group = true
-    # },
-    # metrics_server_4443_ing = {
-    #   description = "4443 ingress"
-    #   protocol    = "tcp"
-    #   from_port   = 4443
-    #   to_port     = 4443
-    #   type        = "ingress"
-    #   self        = true
-    # },
-  }
-
-  cluster_security_group_additional_rules = {
-    # metrics_server_4443_eg = {
-    #   description                = "4443 egress"
-    #   protocol                   = "tcp"
-    #   from_port                  = 4443
-    #   to_port                    = 4443
-    #   type                       = "egress"
-    #   source_node_security_group = true
-    # },
-    # metrics_server_4443_ing = {
-    #   description                = "4443 ingress"
-    #   protocol                   = "tcp"
-    #   from_port                  = 4443
-    #   to_port                    = 4443
-    #   type                       = "ingress"
-    #   source_node_security_group = true
-    # }
-  }
-
-
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-peer-subsys = {
       name         = "test-ipfs-peer-subsys"
@@ -185,6 +129,35 @@ module "eks" {
       }
     }
   }
+
+  node_security_group_additional_rules = {
+    metrics_server_8443_ing = {
+      description                   = "Cluster API to metrics server 8443 ingress port"
+      protocol                      = "tcp"
+      from_port                     = 8443
+      to_port                       = 8443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+    metrics_server_10250_ing = {
+      description = "Node to node metrics server 10250 ingress port"
+      protocol    = "tcp"
+      from_port   = 10250
+      to_port     = 10250
+      type        = "ingress"
+      self        = true
+    }
+    metrics_server_10250_eg = {
+      description = "Node to node metrics server 10250 egress port"
+      protocol    = "tcp"
+      from_port   = 10250
+      to_port     = 10250
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"] # Includes fargate nodes
+      # self        = true # Does not work for fargate
+    }
+  }
+
   fargate_profiles = {
     default = {
       name       = "default"
