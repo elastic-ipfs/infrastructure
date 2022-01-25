@@ -182,18 +182,18 @@ module "eks" {
 }
 
 resource "aws_security_group_rule" "fargate_ingress" {
+  description = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
   type      = "ingress"
   from_port = 10250
   to_port   = 10250
   protocol  = "tcp"
-  # cidr_blocks       = ["0.0.0.0/0"] # TODO: Try to limit access. Will it work if setted only from node SG?
   source_security_group_id = module.eks.node_security_group_id
   security_group_id        = module.eks.cluster_primary_security_group_id
 }
 
 
 resource "aws_security_group_rule" "fargate_egress" {
-  description              = "Node to cluster (Fargate Nodes) metrics server 10250 egress port"
+  description              = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
   protocol                 = "tcp"
   from_port                = 10250
   to_port                  = 10250
