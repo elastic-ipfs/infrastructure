@@ -153,11 +153,11 @@ module "eks" {
       from_port   = 10250
       to_port     = 10250
       type        = "egress"
-      cidr_blocks = ["0.0.0.0/0"] # Includes fargate nodes
+      cidr_blocks = ["0.0.0.0/0"] # Includes fargate nodes # TODO: Check if I can use primary_cluster sg here
       # self        = true # Does not work for fargate
     }
   }
-
+  
   fargate_profiles = {
     default = {
       name       = "default"
@@ -180,6 +180,15 @@ module "eks" {
       }
     }
   }
+}
+
+resource "aws_security_group_rule" "example" {
+  type              = "ingress"
+  from_port         = 10250
+  to_port           = 10250
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"] # TODO: Try to limit access. Will it work if setted only from node sg?
+  security_group_id = module.eks.cluster_primary_security_group_id
 }
 
 module "kube-base-components" {
