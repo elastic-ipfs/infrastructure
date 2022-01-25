@@ -110,93 +110,58 @@ module "eks" {
   cluster_security_group_description = "EKS cluster security group - Control Plane"
 
   node_security_group_additional_rules = {
-    metrics_server_8443_ing = {
-      description                = "8443 ingress"
-      protocol                   = "tcp"
-      from_port                  = 8443
-      to_port                    = 8443
-      type                       = "ingress"
-      source_cluster_security_group = true
+    metrics_server_10250_ing = {
+      description = "10250 ingress"
+      protocol    = "tcp"
+      from_port   = 10250
+      to_port     = 10250
+      type        = "ingress"
+      self        = true
     }
-    # ALREADY EXISTS
-    # metrics_server_443_eg = {
-    #   description                   = "443 egress"
-    #   protocol                      = "tcp"
-    #   from_port                     = 443
-    #   to_port                       = 443
-    #   type                          = "egress"
-    #   source_cluster_security_group = true    
-    # },
-    # metrics_server_443_ing = {
-    #   description                   = "443 ingress"
-    #   protocol                      = "tcp"
-    #   from_port                     = 443
-    #   to_port                       = 443
-    #   type                          = "ingress"
-    #   source_cluster_security_group = true    
-    # },
-    metrics_server_4443_eg = {
-      description                   = "4443 egress"
-      protocol                      = "tcp"
-      from_port                     = 4443
-      to_port                       = 4443
-      type                          = "egress"
-      source_cluster_security_group = true
-    },
-    metrics_server_4443_ing = {
-      description                   = "4443 ingress"
-      protocol                      = "tcp"
-      from_port                     = 4443
-      to_port                       = 4443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    },
-  }
 
-  cluster_security_group_additional_rules = {
-    metrics_server_8443_eg = {
-      description                   = "8443 egress"
+    metrics_server_8443_ing = {
+      description                   = "8443 ingress"
       protocol                      = "tcp"
       from_port                     = 8443
       to_port                       = 8443
-      type                          = "egress"
-      source_node_security_group = true
+      type                          = "ingress"
+      source_cluster_security_group = true
     }
-    # ALREADY EXISTS
-    # metrics_server_443_eg = {
-    #   description                   = "443 egress"
+    # metrics_server_4443_eg = {
+    #   description                   = "4443 egress"
     #   protocol                      = "tcp"
-    #   from_port                     = 443
-    #   to_port                       = 443
+    #   from_port                     = 4443
+    #   to_port                       = 4443
     #   type                          = "egress"
-    #   source_node_security_group = true    
+    #   source_cluster_security_group = true
     # },
-    # metrics_server_443_ing = {
-    #   description                   = "443 ingress"
-    #   protocol                      = "tcp"
-    #   from_port                     = 443
-    #   to_port                       = 443
-    #   type                          = "ingress"
-    #   source_node_security_group = true    
+    # metrics_server_4443_ing = {
+    #   description = "4443 ingress"
+    #   protocol    = "tcp"
+    #   from_port   = 4443
+    #   to_port     = 4443
+    #   type        = "ingress"
+    #   self        = true
     # },
-    metrics_server_4443_eg = {
-      description                = "4443 egress"
-      protocol                   = "tcp"
-      from_port                  = 4443
-      to_port                    = 4443
-      type                       = "egress"
-      source_node_security_group = true
-    },
-    metrics_server_4443_ing = {
-      description                = "4443 ingress"
-      protocol                   = "tcp"
-      from_port                  = 4443
-      to_port                    = 4443
-      type                       = "ingress"
-      source_node_security_group = true
-    }
+  }
 
-
+  cluster_security_group_additional_rules = {
+    # metrics_server_4443_eg = {
+    #   description                = "4443 egress"
+    #   protocol                   = "tcp"
+    #   from_port                  = 4443
+    #   to_port                    = 4443
+    #   type                       = "egress"
+    #   source_node_security_group = true
+    # },
+    # metrics_server_4443_ing = {
+    #   description                = "4443 ingress"
+    #   protocol                   = "tcp"
+    #   from_port                  = 4443
+    #   to_port                    = 4443
+    #   type                       = "ingress"
+    #   source_node_security_group = true
+    # }
   }
 
 
