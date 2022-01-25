@@ -132,7 +132,7 @@ module "eks" {
 
   node_security_group_additional_rules = {
     metrics_server_8443_ing = {
-      description                   = "Cluster API to metrics server 8443 ingress port"
+      description                   = "Cluster API to node metrics server"
       protocol                      = "tcp"
       from_port                     = 8443
       to_port                       = 8443
@@ -140,24 +140,23 @@ module "eks" {
       source_cluster_security_group = true
     }
     metrics_server_10250_ing = {
-      description = "Node to node metrics server 10250 ingress port"
+      description = "Node to node kubelets (Required for metrics server)"
       protocol    = "tcp"
       from_port   = 10250
       to_port     = 10250
       type        = "ingress"
       self        = true
     }
-    metrics_server_10250_eg = {
-      description = "Node to node metrics server 10250 egress port"
+    metrics_server_10250_eg_node = {
+      description = "Node to node metrics server"
       protocol    = "tcp"
       from_port   = 10250
       to_port     = 10250
       type        = "egress"
-      cidr_blocks = ["0.0.0.0/0"] # Includes fargate nodes # TODO: Check if I can use primary_cluster sg here
-      # self        = true # Does not work for fargate
+      self        = true 
     }
   }
-  
+
   fargate_profiles = {
     default = {
       name       = "default"
@@ -182,14 +181,27 @@ module "eks" {
   }
 }
 
-resource "aws_security_group_rule" "example" {
-  type              = "ingress"
-  from_port         = 10250
-  to_port           = 10250
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"] # TODO: Try to limit access. Will it work if setted only from node sg?
-  security_group_id = module.eks.cluster_primary_security_group_id
+resource "aws_security_group_rule" "fargate_ingress" {
+  type      = "ingress"
+  from_port = 10250
+  to_port   = 10250
+  protocol  = "tcp"
+  # cidr_blocks       = ["0.0.0.0/0"] # TODO: Try to limit access. Will it work if setted only from node SG?
+  source_security_group_id = module.eks.node_security_group_id
+  security_group_id        = module.eks.cluster_primary_security_group_id
 }
+
+
+resource "aws_security_group_rule" "fargate_egress" {
+  description              = "Node to cluster (Fargate Nodes) metrics server 10250 egress port"
+  protocol                 = "tcp"
+  from_port                = 10250
+  to_port                  = 10250
+  type                     = "egress"
+  source_security_group_id = module.eks.cluster_primary_security_group_id
+  security_group_id        = module.eks.node_security_group_id
+}
+
 
 module "kube-base-components" {
   source                  = "../modules/kube-base-components"
