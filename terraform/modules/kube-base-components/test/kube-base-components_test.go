@@ -21,7 +21,7 @@ import (
 // Run this increasing timeout, ex: "go test -timeout 30m"
 func TestTerraformKubeComponetsExample(t *testing.T) {
 	awsRegion := "us-west-2"
-	bitswapRoleName := "bitswap_peer_subsystem_role"
+	bitswapRoleName := "terratest-bitswap-peer-subsys"
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
 	cfg.Region = awsRegion
@@ -31,25 +31,30 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 		panic("configuration error, " + err.Error())
 	}
 
+	// TODO: Disable EKS Auth Sync during this test (it already has its own testing stuff..)
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
 		Vars: map[string]interface{}{
 			"region":  awsRegion,
 			"profile": "nearform", // TODO: Change to oficial sandbox account
+			"accountId": "740172916922", // TODO: Change to oficial sandbox account
 			"vpc": map[string]string{
-				"name": "terratest-kube-ipfs-aws-peer-subsystem-vpc",
+				"name": "terratest-ipfs",
 			},
-			"cluster_version":          "1.21",
-			"cluster_name":             "terratest-ipfs-peer-subsys",
-			"provider_ads_bucket_name": "terratest-ipfs-provider-ads",
-			"config_bucket_name":       "terratest-config-bucket",
+			"cluster_version":           "1.21",
+			"cluster_name":              "terratest-ipfs",
+			"provider_ads_bucket_name":  "terratest-ipfs-provider-ads",
+			"config_bucket_name":        "terratest-config-bucket",
+			"eks_auth_sync_policy_name": "terratest-base-components",
+			"eks_auth_sync_role_name":   "terratest-base-components",
+			"bitswap_role_name":         bitswapRoleName,
 		},
 	}
 
 	sensitiveTerraformOptions := *terraformOptions
 	sensitiveTerraformOptions.Logger = logger.Discard // https://github.com/gruntwork-io/terratest/issues/358
 
-	defer terraform.Destroy(t, terraformOptions)
+	// defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
 	config := &rest.Config{
@@ -86,10 +91,10 @@ func assertServiceConnections(config *rest.Config, t *testing.T, sensitiveTerraf
 	assert.Equal(t, 2, len(serviceAccounts.Items)) // 2 because there is also a "default" sa
 	assert.Equal(t, "bitswap-irsa", serviceAccounts.Items[1].Name)
 	assert.Equal(t, "default", serviceAccounts.Items[1].Namespace)
-	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles[bitswapRoleName])	
+	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles[bitswapRoleName])
 }
 
-func assertMetrics(config *rest.Config, t *testing.T,) {
+func assertMetrics(config *rest.Config, t *testing.T) {
 	metrics, err := metrics.NewForConfig(config)
 	if err != nil {
 		panic(err)
@@ -106,7 +111,6 @@ func assertMetrics(config *rest.Config, t *testing.T,) {
 func assertRolesAndPolicies(t *testing.T, terraformOptions *terraform.Options, IAMClient *iam.Client, ctx context.Context, bitswapRoleName string, awsRegion string) {
 	role, err := IAMClient.GetRole(ctx, &iam.GetRoleInput{
 		RoleName: &bitswapRoleName,
-
 	})
 	if err != nil {
 		panic("GetRole error, " + err.Error())
@@ -118,12 +122,12 @@ func assertRolesAndPolicies(t *testing.T, terraformOptions *terraform.Options, I
 	if err != nil {
 		panic("ListAttachedRolePolicies error, " + err.Error())
 	}
-	
+
 	cluster_oidc_issuer_url := terraform.Output(t, terraformOptions, "cluster_oidc_issuer_url")
 	splited_cluster_oidc_issuer_url := strings.SplitAfter(cluster_oidc_issuer_url, "/")
 
 	assert.Equal(t, "example-config-peer-s3-bucket-policy-read", *bitswapRolePoliciesFromIAM.AttachedPolicies[0].PolicyName)
 	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, fmt.Sprintf("oidc.eks.%s.amazonaws.com", awsRegion))
 	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, "AssumeRoleWithWebIdentity")
-	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, splited_cluster_oidc_issuer_url[len(splited_cluster_oidc_issuer_url) - 1]) // Just the OIDC ID numeric code
+	assert.Contains(t, *role.Role.AssumeRolePolicyDocument, splited_cluster_oidc_issuer_url[len(splited_cluster_oidc_issuer_url)-1]) // Just the OIDC ID numeric code
 }
