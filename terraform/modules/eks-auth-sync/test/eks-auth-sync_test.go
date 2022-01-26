@@ -17,10 +17,10 @@ import (
 // Run this increasing timeout, ex: "go test -timeout 30m"
 func TestTerraformEksAuthSyncExample(t *testing.T) {
 	awsRegion := "us-west-2"
+	adminUserName := "terratestkubeadminuser"
 	ctx := context.TODO()
 	cfg, err := config.LoadDefaultConfig(ctx)
 	cfg.Region = awsRegion
-	// IAMClient := iam.NewFromConfig(cfg)
 
 	if err != nil {
 		panic("configuration error, " + err.Error())
@@ -40,6 +40,7 @@ func TestTerraformEksAuthSyncExample(t *testing.T) {
 			"cronjob_schedule":          "*/1 * * * *",
 			"eks_auth_sync_policy_name": "terratest-eks-auth-sync",
 			"eks_auth_sync_role_name":   "terratest-eks-auth-sync",
+			"eks_admin_user_name":           adminUserName,
 		},
 	}
 
@@ -57,10 +58,10 @@ func TestTerraformEksAuthSyncExample(t *testing.T) {
 		},
 	}
 
-	assertAwsAuthConfigMap(config, t, terraformOptions)
+	assertAwsAuthConfigMap(config, t, terraformOptions, adminUserName)
 }
 
-func assertAwsAuthConfigMap(config *rest.Config, t *testing.T, terraformOptions *terraform.Options) {
+func assertAwsAuthConfigMap(config *rest.Config, t *testing.T, terraformOptions *terraform.Options, adminUserName string) {
 	kubeclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err)
@@ -76,7 +77,7 @@ func assertAwsAuthConfigMap(config *rest.Config, t *testing.T, terraformOptions 
 	managedNodeGroupIam := terraform.Output(t, terraformOptions, "managed_node_group_iam_role")
 	fargateIamRole := terraform.Output(t, terraformOptions, "fargate_iam_role")
 
-	assert.Equal(t, true, true)
+	// Node Roles
 	assert.Contains(t, awsAuthConfigClient.Data["mapRoles"], managedNodeGroupIam)
 	assert.Contains(t, awsAuthConfigClient.Data["mapRoles"], fargateIamRole)
 	assert.Contains(t, awsAuthConfigClient.Data["mapRoles"], "system:node:{{EC2PrivateDNSName}}")
@@ -84,5 +85,7 @@ func assertAwsAuthConfigMap(config *rest.Config, t *testing.T, terraformOptions 
 	assert.Contains(t, awsAuthConfigClient.Data["mapRoles"], "system:bootstrappers")
 	assert.Contains(t, awsAuthConfigClient.Data["mapRoles"], "system:nodes")
 	assert.Contains(t, awsAuthConfigClient.Data["mapRoles"], "system:node-proxier")
-	// assert.Contains(awsAuthConfigClient.Data["mapUsers"], )
+	// Users
+	assert.Contains(t, awsAuthConfigClient.Data["mapUsers"], adminUserName)
+	assert.Contains(t, awsAuthConfigClient.Data["mapUsers"], "system:masters")
 }

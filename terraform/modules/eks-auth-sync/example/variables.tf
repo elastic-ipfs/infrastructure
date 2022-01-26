@@ -35,3 +35,7 @@ variable "eks_auth_sync_role_name" {
 variable "cronjob_schedule" {
   type = string
 }
+
+variable "eks_admin_user_name" {
+  type = string
+}

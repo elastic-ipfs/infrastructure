@@ -36,3 +36,7 @@ variable "profile" {
 variable "region" {
   type = string
 }
+
+variable "accountId" {
+  type = string
+}

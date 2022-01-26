@@ -77,6 +77,7 @@ module "eks" {
   cluster_endpoint_public_access  = true
   vpc_id                          = module.vpc.vpc_id
   subnet_ids                      = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
+  enable_irsa                     = true
 
   eks_managed_node_groups = {
     test-ipfs-peer-subsys = {
@@ -123,11 +124,15 @@ module "eks" {
   }
 }
 
-// TODO: Do and validate:
-// - Create IAM User with the TAG
-// - Create IAM Role with the TAG
-// - Verifiy that both managed nodes and worker node exist at aws-auth
-// Will any of this require those OpenID stuff I was creating at kube-base? (Hopefully not but let's find out...)
+resource "aws_iam_user" "kubernetes_admin_user" {
+  name = var.eks_admin_user_name
+  path = "/"
+
+  tags = {
+    "eks/${var.accountId}/${var.cluster_name}/username" = var.eks_admin_user_name
+    "eks/${var.accountId}/${var.cluster_name}/groups"   = "system:masters"
+  }
+}
 
 module "eks_auth_sync" {
   source                    = "../"
