@@ -6,6 +6,10 @@ variable "profile" {
   type = string
 }
 
+variable "accountId" {
+  type = string
+}
+
 variable "config_bucket_name" {
   type    = string
 }
@@ -27,4 +31,16 @@ variable "cluster_version" {
 variable "provider_ads_bucket_name" {
   type    = string
   description = "Bucket for storing provider files"
+}
+
+variable "eks_auth_sync_policy_name" {
+  type = string
+}
+
+variable "eks_auth_sync_role_name" {
+  type = string
+}
+
+variable "bitswap_role_name" {
+  type = string
 }
