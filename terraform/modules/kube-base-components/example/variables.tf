@@ -44,3 +44,7 @@ variable "eks_auth_sync_role_name" {
 variable "bitswap_role_name" {
   type = string
 }
+
+variable "deploy_eks_auth_sync" {
+  type = bool
+}

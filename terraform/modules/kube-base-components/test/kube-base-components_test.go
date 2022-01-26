@@ -35,8 +35,8 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../example",
 		Vars: map[string]interface{}{
-			"region":  awsRegion,
-			"profile": "nearform", // TODO: Change to oficial sandbox account
+			"region":    awsRegion,
+			"profile":   "nearform",     // TODO: Change to oficial sandbox account
 			"accountId": "740172916922", // TODO: Change to oficial sandbox account
 			"vpc": map[string]string{
 				"name": "terratest-ipfs",
@@ -48,13 +48,14 @@ func TestTerraformKubeComponetsExample(t *testing.T) {
 			"eks_auth_sync_policy_name": "terratest-base-components",
 			"eks_auth_sync_role_name":   "terratest-base-components",
 			"bitswap_role_name":         bitswapRoleName,
+			"deploy_eks_auth_sync":      false, // This has it's own unit test
 		},
 	}
 
 	sensitiveTerraformOptions := *terraformOptions
 	sensitiveTerraformOptions.Logger = logger.Discard // https://github.com/gruntwork-io/terratest/issues/358
 
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
 	config := &rest.Config{

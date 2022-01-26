@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "eks_auth_sync_policy" {
-  name        = "eks-auth-sync-policy"
+  name        = var.eks_auth_sync_policy_name
   description = "Policy that enables reading of user/role tags"
   policy      = <<EOF
 {
@@ -43,7 +43,7 @@ module "iam_oidc_eks_auth_sync" { # https://registry.terraform.io/modules/terraf
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version = "~> 4.0"
   create_role                   = true
-  role_name                     = "eks-auth-sync-role"
+  role_name                     = var.eks_auth_sync_role_name
   provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.eks_auth_sync_policy.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${local.serviceAccountName}"]

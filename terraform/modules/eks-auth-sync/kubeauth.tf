@@ -1,6 +1,5 @@
 
 resource "kubernetes_role" "eksauth" {
-  count = var.deploy_eks_auth_sync ? 1 : 0
   metadata {
     name = "aws-auth-editor"
     namespace = var.namespace
@@ -17,7 +16,7 @@ resource "kubernetes_role" "eksauth" {
 }
 
 resource "kubernetes_role" "eksauth-system" {
-  count = var.deploy_eks_auth_sync && var.namespace != "kube-system" ? 1 : 0
+  count = var.namespace != "kube-system" ? 1 : 0
   metadata {
     name = "aws-auth-editor"
     namespace = "kube-system"
@@ -34,7 +33,6 @@ resource "kubernetes_role" "eksauth-system" {
 }
 
 resource "kubernetes_role_binding" "eksauth" {
-  count = var.deploy_eks_auth_sync ? 1 : 0
   metadata {
     name      = "eks-auth-sync"
     namespace = var.namespace
@@ -55,7 +53,7 @@ resource "kubernetes_role_binding" "eksauth" {
 }
 
 resource "kubernetes_role_binding" "eksauth-system" {
-  count = var.deploy_eks_auth_sync && var.namespace != "kube-system" ? 1 : 0
+  count = var.namespace != "kube-system" ? 1 : 0
   metadata {
     name      = "eks-auth-sync"
     namespace = "kube-system"
@@ -84,7 +82,6 @@ resource "kubernetes_service_account" "eksauth" {
     }
     annotations = {
       "eks.amazonaws.com/role-arn" = module.iam_oidc_eks_auth_sync.iam_role_arn
-      # "eks.amazonaws.com/role-arn" = replace("arn:aws:iam::account_id:role/${local.serviceAccountName}","account_id",local.account_id)
     }
   }
 }

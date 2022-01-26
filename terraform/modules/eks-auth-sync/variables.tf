@@ -24,8 +24,17 @@ variable "deploy_cluster_autoscaler" {
   default     = true
 }
 
-variable "deploy_eks_auth_sync" {
-  description = "Whether to deploy or not the eks_auth_sync daemon on the cluster"
-  type        = bool
-  default     = true
+variable "eks_auth_sync_policy_name" {
+  type = string
+  default = "eks-auth-sync-policy"
+}
+
+variable "eks_auth_sync_role_name" {
+  type = string
+  default = "eks-auth-sync-role"
+}
+
+variable "cronjob_schedule" {
+  type = string
+  default = "*/15 * * * *"
 }

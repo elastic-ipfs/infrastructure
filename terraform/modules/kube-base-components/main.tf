@@ -20,6 +20,7 @@ provider "kubernetes" {
 }
 
 module "eks_auth_sync" {
+  count = var.deploy_eks_auth_sync ? 1 : 0
   source = "../eks-auth-sync"
   region = var.region
   cluster_name = var.cluster_id
