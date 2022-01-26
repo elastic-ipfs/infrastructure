@@ -67,7 +67,7 @@ func assertAwsAuthConfigMap(config *rest.Config, t *testing.T, terraformOptions 
 		panic(err)
 	}
 
-	time.Sleep(time.Second * 75)
+	time.Sleep(time.Second * 75) // Wait for Cronjob to update aws-auth configmap
 
 	awsAuthConfigClient, err := kubeclient.CoreV1().ConfigMaps(metav1.NamespaceSystem).Get(context.TODO(), "aws-auth", metav1.GetOptions{})
 	if err != nil {
