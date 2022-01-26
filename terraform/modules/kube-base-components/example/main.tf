@@ -135,6 +135,7 @@ module "kube-base-components" {
   cluster_ca_certificate    = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   eks_auth_sync_policy_name = "example-eks-auth-sync-policy"
   eks_auth_sync_role_name   = "example-eks-auth-sync-role"
+  deploy_eks_auth_sync      = var.deploy_eks_auth_sync
   service_account_roles = {
     "${var.bitswap_role_name}" = {
       service_account_name      = "bitswap-irsa",

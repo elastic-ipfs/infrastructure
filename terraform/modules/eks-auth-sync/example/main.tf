@@ -16,6 +16,20 @@ provider "aws" {
   }
 }
 
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.eks.endpoint
+    token                  = data.aws_eks_cluster_auth.eks.token
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  }
+}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.eks.endpoint
+  token                  = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+}
+
 data "aws_availability_zones" "available" {
 }
 data "aws_eks_cluster" "eks" {
@@ -55,16 +69,16 @@ module "vpc" {
 }
 
 module "eks" {
-  source                             = "terraform-aws-modules/eks/aws"
-  version                            = "~> 18.2.0"
-  cluster_name                       = var.cluster_name
-  cluster_version                    = var.cluster_version
-  cluster_endpoint_private_access    = true
-  cluster_endpoint_public_access     = true
-  vpc_id                             = module.vpc.vpc_id
-  subnet_ids                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
+  source                          = "terraform-aws-modules/eks/aws"
+  version                         = "~> 18.2.0"
+  cluster_name                    = var.cluster_name
+  cluster_version                 = var.cluster_version
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = true
+  vpc_id                          = module.vpc.vpc_id
+  subnet_ids                      = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
 
-  eks_managed_node_groups = { 
+  eks_managed_node_groups = {
     test-ipfs-peer-subsys = {
       name         = "test-ipfs-peer-subsys"
       desired_size = 2
@@ -80,7 +94,7 @@ module "eks" {
       }
 
       tags = { # This is also applied to IAM role.
-        "eks/505595374361/${var.cluster_name}/type" : "node"
+        "eks/${var.accountId}/${var.cluster_name}/type" : "node"
       }
     }
   }
@@ -99,43 +113,28 @@ module "eks" {
       ]
 
       tags = { # This is also applied to IAM role.
-        "eks/505595374361/${var.cluster_name}/type" : "fargateNode"
+        "eks/${var.accountId}/${var.cluster_name}/type" : "fargateNode"
       }
       timeouts = {
         create = "5m"
         delete = "5m"
       }
     }
-  }  
+  }
 }
+
+// TODO: Do and validate:
+// - Create IAM User with the TAG
+// - Create IAM Role with the TAG
+// - Verifiy that both managed nodes and worker node exist at aws-auth
+// Will any of this require those OpenID stuff I was creating at kube-base? (Hopefully not but let's find out...)
 
 module "eks_auth_sync" {
-  source = "../"
-  region = var.region
-  cluster_name = module.eks.cluster_id
-  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+  source                    = "../"
+  region                    = var.region
+  cluster_name              = module.eks.cluster_id
+  cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
+  cronjob_schedule          = var.cronjob_schedule
+  eks_auth_sync_policy_name = var.eks_auth_sync_policy_name
+  eks_auth_sync_role_name   = var.eks_auth_sync_role_name
 }
-
-# # # TODO: Replace it witg eks-auth-sync module
-# module "kube-base-components" {
-#   source                  = "../"
-#   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
-#   cluster_id              = module.eks.cluster_id
-#   region                  = var.region
-#   config_bucket_name      = var.config_bucket_name
-#   host                    = data.aws_eks_cluster.eks.endpoint
-#   token                   = data.aws_eks_cluster_auth.eks.token
-#   cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-#   eks_auth_sync_policy_name = "example-eks-auth-sync-policy"
-#   eks_auth_sync_role_name = "example-eks-auth-sync-role"
-#   service_account_roles = {
-#     "bitswap_peer_subsystem_role" = {
-#       service_account_name      = "bitswap-irsa",
-#       service_account_namespace = "default",
-#       role_name                 = "example_bitswap_peer_subsys",
-#       policies_list = [
-#         aws_iam_policy.config_peer_s3_bucket_policy_read
-#       ]
-#     },
-#   }
-# }

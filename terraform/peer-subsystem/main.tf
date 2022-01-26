@@ -125,7 +125,7 @@ module "eks" {
       }
 
       tags = { # This is also applied to IAM role.
-        "eks/505595374361/${var.cluster_name}/type" : "node"
+        "eks/${var.accountId}/${var.cluster_name}/type" : "node"
       }
     }
   }
@@ -171,7 +171,7 @@ module "eks" {
       ]
 
       tags = { # This is also applied to IAM role.
-        "eks/505595374361/${var.cluster_name}/type" : "fargateNode"
+        "eks/${var.accountId}/${var.cluster_name}/type" : "fargateNode"
       }
       timeouts = {
         create = "5m"
