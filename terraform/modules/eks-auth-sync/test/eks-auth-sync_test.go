@@ -47,7 +47,7 @@ func TestTerraformEksAuthSyncExample(t *testing.T) {
 	sensitiveTerraformOptions := *terraformOptions
 	sensitiveTerraformOptions.Logger = logger.Discard // https://github.com/gruntwork-io/terratest/issues/358
 
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
 	config := &rest.Config{
