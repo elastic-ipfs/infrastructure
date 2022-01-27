@@ -6,10 +6,9 @@ variable "cluster_oidc_issuer_url" {
   type = string
 }
 
-variable "kubeconfig_output_path" {
+variable "region" {
   type = string
 }
-
 
 variable "config_bucket_name" {
   type        = string
@@ -38,4 +37,20 @@ variable "service_account_roles" {
       arn  = string,
     }))
   }))
+}
+
+variable "eks_auth_sync_policy_name" {
+  type = string
+  default = "eks-auth-sync-policy"
+}
+
+variable "eks_auth_sync_role_name" {
+  type = string
+  default = "eks-auth-sync-role"
+}
+
+variable "deploy_eks_auth_sync" {
+  description = "Whether to deploy or not the eks_auth_sync daemon on the cluster"
+  type        = bool
+  default     = true
 }

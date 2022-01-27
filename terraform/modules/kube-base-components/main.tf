@@ -2,12 +2,12 @@ terraform {
   required_providers {
     kubernetes = {
       source = "hashicorp/kubernetes"
-      version = "2.7.1"
+      version = "~> 2.7.1"
     }
 
     helm = {
       source = "hashicorp/helm"
-      version = "2.4.1"
+      version = "~> 2.4.1"
     }
   }  
   required_version = ">= 1.0.0"
@@ -19,13 +19,10 @@ provider "kubernetes" {
   cluster_ca_certificate = var.cluster_ca_certificate
 }
 
-resource "kubernetes_service_account" "irsa" {
-  for_each = var.service_account_roles
-  metadata {
-    name      = each.value.service_account_name
-    namespace = each.value.service_account_namespace
-    annotations = {
-      "eks.amazonaws.com/role-arn" = module.iam_assumable_role_admin[each.key].iam_role_arn
-    }
-  }
+module "eks_auth_sync" {
+  count = var.deploy_eks_auth_sync ? 1 : 0
+  source = "../eks-auth-sync"
+  region = var.region
+  cluster_name = var.cluster_id
+  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
 }

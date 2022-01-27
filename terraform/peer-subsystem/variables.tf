@@ -3,22 +3,18 @@ variable "vpc" {
     name = string
   })
   default = {
-    name = "test-ipfs-aws-peer-subsystem-vpc"
+    name = "test-ipfs-peer-subsys"
   }
 }
 
 variable "cluster_name" {
   type = string
-  default = "test-ipfs-aws-peer-subsystem-eks"
+  default = "test-ipfs-peer-subsys"
 }
 
 variable "cluster_version" {
   type = string
   default = "1.21"
-}
-
-variable "kubeconfig_output_path" {
-  type = string
 }
 
 variable "config_bucket_name" {
@@ -34,5 +30,13 @@ variable "provider_ads_bucket_name" {
 }
 
 variable "profile" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "accountId" {
   type = string
 }

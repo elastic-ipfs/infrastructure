@@ -12,3 +12,14 @@ module "iam_assumable_role_admin" { # https://registry.terraform.io/modules/terr
   role_policy_arns              =  each.value.policies_list[*].arn
   oidc_fully_qualified_subjects = ["system:serviceaccount:${each.value.service_account_namespace}:${each.value.service_account_name}"]
 }
+
+resource "kubernetes_service_account" "irsa" {
+  for_each = var.service_account_roles
+  metadata {
+    name      = each.value.service_account_name
+    namespace = each.value.service_account_namespace
+    annotations = {
+      "eks.amazonaws.com/role-arn" = module.iam_assumable_role_admin[each.key].iam_role_arn
+    }
+  }
+}

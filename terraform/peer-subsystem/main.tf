@@ -13,10 +13,9 @@ terraform {
       version = "~> 3.38"
     }
 
-
     helm = {
       source  = "hashicorp/helm"
-      version = "2.4.1"
+      version = "~> 2.4.1"
     }
   }
 
@@ -28,7 +27,7 @@ data "terraform_remote_state" "shared" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.shared.tfstate"
-    region = "${local.region}"
+    region = "${var.region}"
   }
 }
 
@@ -42,7 +41,7 @@ data "aws_eks_cluster_auth" "eks" {
 
 provider "aws" {
   profile = var.profile
-  region  = local.region
+  region  = var.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -94,27 +93,28 @@ resource "aws_s3_bucket" "ipfs-peer-ads" {
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
   vpc_id         = module.vpc.vpc_id
-  region         = local.region
+  region         = var.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
 module "eks" {
-  source                          = "terraform-aws-modules/eks/aws"
-  version                         = "17.24.0" # TODO: Upgrade
-  cluster_name                    = var.cluster_name
-  cluster_version                 = var.cluster_version
-  vpc_id                          = module.vpc.vpc_id
-  subnets                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
-  fargate_subnets                 = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
-  enable_irsa                     = true # To be able to access AWS services from PODs  
-  node_groups = {                        # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
-    test-ipfs-aws-peer-subsystem = {
-      name             = "test-ipfs-aws-peer-subsystem-node-group"
-      desired_capacity = 2
-      min_size         = 2
-      max_size         = 4
+  source                             = "terraform-aws-modules/eks/aws"
+  version                            = "~> 18.2.0"
+  cluster_name                       = var.cluster_name
+  cluster_version                    = var.cluster_version
+  cluster_endpoint_private_access    = true
+  cluster_endpoint_public_access     = true
+  vpc_id                             = module.vpc.vpc_id
+  subnet_ids                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
+  enable_irsa                        = true # To be able to access AWS services from PODs  
+  cluster_security_group_description = "EKS cluster security group - Control Plane"
+
+  eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
+    test-ipfs-peer-subsys = {
+      name         = "test-ipfs-peer-subsys"
+      desired_size = 2
+      min_size     = 1
+      max_size     = 4
 
       instance_types = ["t3.large"]
       k8s_labels = {
@@ -123,11 +123,44 @@ module "eks" {
       update_config = {
         max_unavailable_percentage = 50
       }
+
+      tags = { # This is also applied to IAM role.
+        "eks/${var.accountId}/${var.cluster_name}/type" : "node"
+      }
     }
   }
+
+  node_security_group_additional_rules = {
+    metrics_server_8443_ing = {
+      description                   = "Cluster API to node metrics server"
+      protocol                      = "tcp"
+      from_port                     = 8443
+      to_port                       = 8443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+    metrics_server_10250_ing = {
+      description = "Node to node kubelets (Required for metrics server)"
+      protocol    = "tcp"
+      from_port   = 10250
+      to_port     = 10250
+      type        = "ingress"
+      self        = true
+    }
+    metrics_server_10250_eg_node = {
+      description = "Node to node metrics server"
+      protocol    = "tcp"
+      from_port   = 10250
+      to_port     = 10250
+      type        = "egress"
+      self        = true 
+    }
+  }
+
   fargate_profiles = {
     default = {
-      name = "default"
+      name       = "default"
+      subnet_ids = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
       selectors = [
         {
           namespace = "default"
@@ -136,35 +169,46 @@ module "eks" {
           }
         }
       ]
+
+      tags = { # This is also applied to IAM role.
+        "eks/${var.accountId}/${var.cluster_name}/type" : "fargateNode"
+      }
       timeouts = {
         create = "5m"
         delete = "5m"
       }
     }
   }
-  # TODO: Solve error when trying to manage_aws_auth. Is trying to always post to "http://localhost/api/v1/namespaces/kube-system/configmaps":
-  manage_aws_auth = false
-  ## TODO: Use operator to map users
-  # map_users = [
-  #   {
-  #     userarn  = "arn:aws:iam::505595374361:user/francisco",
-  #     username = "francisco",
-  #     groups   = ["system:masters"]
-  #   }
-  # ]
-  ## TODO: Remove Kubeconfig generation. Admin user should write it's own based on AWS console information
-  kubeconfig_aws_authenticator_command      = "aws"
-  kubeconfig_aws_authenticator_command_args = ["eks", "get-token", "--cluster-name", var.cluster_name]
-  kubeconfig_output_path                    = var.kubeconfig_output_path
-  # cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"] # Enable for loging
 }
+
+resource "aws_security_group_rule" "fargate_ingress" {
+  description = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
+  type      = "ingress"
+  from_port = 10250
+  to_port   = 10250
+  protocol  = "tcp"
+  source_security_group_id = module.eks.node_security_group_id
+  security_group_id        = module.eks.cluster_primary_security_group_id
+}
+
+
+resource "aws_security_group_rule" "fargate_egress" {
+  description              = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
+  protocol                 = "tcp"
+  from_port                = 10250
+  to_port                  = 10250
+  type                     = "egress"
+  source_security_group_id = module.eks.cluster_primary_security_group_id
+  security_group_id        = module.eks.node_security_group_id
+}
+
 
 module "kube-base-components" {
   source                  = "../modules/kube-base-components"
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   cluster_id              = module.eks.cluster_id
+  region                  = var.region
   config_bucket_name      = var.config_bucket_name
-  kubeconfig_output_path  = module.eks.kubeconfig_filename
   host                    = data.aws_eks_cluster.eks.endpoint
   token                   = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
