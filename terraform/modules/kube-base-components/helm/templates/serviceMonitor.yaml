@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aws-ipfs-bitswap-peer-servicemonitor 
+  namespace: prometheus  # Change this to the namespace the Prometheus instance is running in
+  labels:
+    app: peer-servicemonitor
+    release: kube-prometheus-stack
+spec:
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      app: "aws-ipfs-bitswap-peer"
+  endpoints:
+  - port: http-metrics
+    interval: 5s

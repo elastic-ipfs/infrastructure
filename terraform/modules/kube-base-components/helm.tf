@@ -19,5 +19,9 @@ resource "helm_release" "metric-server" {
   }
 }
 
-# TODO: Install Operator for managing admin users (Required to work properly with workflows)
-# TODO: Install Prometheus
+resource "helm_release" "prometheus_dependencies" {
+  name       = "prometheus-dependencies"
+  chart = "../modules/kube-base-components/helm/"
+  namespace  = "prometheus" 
+  create_namespace = true
+}
