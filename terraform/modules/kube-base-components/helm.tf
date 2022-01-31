@@ -25,3 +25,7 @@ resource "helm_release" "prometheus_dependencies" {
   namespace  = "prometheus" 
   create_namespace = true
 }
+
+# Don't forget to manually update metricsBindAddress (For now)
+# TODO: follow: https://github.com/aws/containers-roadmap/issues/657
+# # Can I temporarly just send the shell comand here?
