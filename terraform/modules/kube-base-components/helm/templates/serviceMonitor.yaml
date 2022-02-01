@@ -1,19 +1,16 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  # name: aws-ipfs-bitswap-peer-servicemonitor 
   name: aws-ipfs-servicemonitor 
   namespace: {{.Release.namespace}}
   labels:
-    app: ipfs-servicemonitor
-    release: kube-prometheus-stack
+     release: {{.Release.Name}}
 spec:
   namespaceSelector:
     matchNames:
     - default
   selector:
     matchLabels:
-      # app: "aws-ipfs-bitswap-peer"
       metricsMonitor: "true"
   endpoints:
   - port: http-metrics

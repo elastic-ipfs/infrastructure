@@ -632,9 +632,9 @@ kube-prometheus-stack:
     enabled: true
     namespaceOverride: ""
 
-    resources: # TODO: Does this work?
+    resources:
       limits:
-        cpu: 1000m
+        cpu: "1"
         memory: 512Mi
       requests:
         cpu: 500m
@@ -2236,10 +2236,10 @@ kube-prometheus-stack:
       ## If {}, select all ServiceMonitors
       ##
       serviceMonitorSelector: {}
-      ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
+      ## Example which selects ServiceMonitors with label "prometheus" set to "ipfs-servicemonitor"
       # serviceMonitorSelector:
       #   matchLabels:
-      #     prometheus: somelabel
+      #     prometheus: ipfs-servicemonitor
 
       ## Namespaces to be selected for ServiceMonitor discovery.
       ##
