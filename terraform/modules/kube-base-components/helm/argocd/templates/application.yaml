@@ -4,8 +4,6 @@ kind: Application
 metadata:
   name: bitswap-peer
   namespace: argocd
-  # finalizers:
-  # - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
 
