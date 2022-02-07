@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aws-ipfs-servicemonitor 
+  namespace: {{.Release.namespace}}
+  labels:
+     release: {{.Release.Name}}
+spec:
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      metricsMonitor: "true"
+  endpoints:
+  - port: http-metrics
+    interval: 5s

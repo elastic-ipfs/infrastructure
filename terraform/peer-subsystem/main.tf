@@ -130,32 +130,7 @@ module "eks" {
     }
   }
 
-  node_security_group_additional_rules = {
-    metrics_server_8443_ing = {
-      description                   = "Cluster API to node metrics server"
-      protocol                      = "tcp"
-      from_port                     = 8443
-      to_port                       = 8443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-    metrics_server_10250_ing = {
-      description = "Node to node kubelets (Required for metrics server)"
-      protocol    = "tcp"
-      from_port   = 10250
-      to_port     = 10250
-      type        = "ingress"
-      self        = true
-    }
-    metrics_server_10250_eg_node = {
-      description = "Node to node metrics server"
-      protocol    = "tcp"
-      from_port   = 10250
-      to_port     = 10250
-      type        = "egress"
-      self        = true 
-    }
-  }
+  node_security_group_additional_rules = local.node_security_group_additional_rules
 
   fargate_profiles = {
     default = {
@@ -182,11 +157,11 @@ module "eks" {
 }
 
 resource "aws_security_group_rule" "fargate_ingress" {
-  description = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
-  type      = "ingress"
-  from_port = 10250
-  to_port   = 10250
-  protocol  = "tcp"
+  description              = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
+  type                     = "ingress"
+  from_port                = 10250
+  to_port                  = 10250
+  protocol                 = "tcp"
   source_security_group_id = module.eks.node_security_group_id
   security_group_id        = module.eks.cluster_primary_security_group_id
 }
@@ -198,6 +173,26 @@ resource "aws_security_group_rule" "fargate_egress" {
   from_port                = 10250
   to_port                  = 10250
   type                     = "egress"
+  source_security_group_id = module.eks.cluster_primary_security_group_id
+  security_group_id        = module.eks.node_security_group_id
+}
+
+resource "aws_security_group_rule" "dns_ingress_tcp" {
+  description              = "Fargate to DNS (TCP)"
+  type                     = "ingress"
+  from_port                = 53
+  to_port                  = 53
+  protocol                 = "tcp"
+  source_security_group_id = module.eks.cluster_primary_security_group_id
+  security_group_id        = module.eks.node_security_group_id
+}
+
+resource "aws_security_group_rule" "dns_ingress_udp" {
+  description              = "Fargate to DNS (UDP)"
+  type                     = "ingress"
+  from_port                = 53
+  to_port                  = 53
+  protocol                 = "udp"
   source_security_group_id = module.eks.cluster_primary_security_group_id
   security_group_id        = module.eks.node_security_group_id
 }

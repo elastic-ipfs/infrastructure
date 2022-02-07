@@ -7,3 +7,5 @@
 terraform/modules/kube-base-components/testapp/node_modules
 **/go.mod
 **/go.sum
+terraform.tfstate**
+kube-prometheus-stack-**.tgz
