@@ -8,10 +8,10 @@ provider "helm" {
 
 resource "helm_release" "metric-server" {
   name       = "metric-server-release"
-  repository = local.bitnami_repo 
+  repository = local.bitnami_repo
   chart      = "metrics-server"
   namespace  = "kube-system"
-  version = "~> 5.10"
+  version    = "~> 5.10"
 
   set {
     name  = "apiService.create"
@@ -19,15 +19,34 @@ resource "helm_release" "metric-server" {
   }
 }
 
-resource "helm_release" "prometheus_dependencies" {
-  name       = "prometheus-dependencies"
-  chart = "../modules/kube-base-components/helm/"
-  namespace  = "prometheus" 
+# resource "helm_release" "argocd" { # TODO: Wrap it at my own helm with application specs
+#   name             = "argocd"
+#   chart            = "argo-cd"
+#   repository       = "https://argoproj.github.io/argo-helm"
+#   version          = "~> 2.2.5"
+#   namespace        = "argocd"
+#   create_namespace = true
+#   # timeout          = 1800
+# }
+
+
+resource "helm_release" "argocd" { # TODO: Wrap it at my own helm with application specs
+  name             = "argocd"
+  chart            = "../modules/kube-base-components/helm/argocd"
+  namespace        = "argocd"
   create_namespace = true
-  timeout = 1800
+  # timeout          = 1800
 }
 
-# MANUAL STEP REQUIRED:
+resource "helm_release" "prometheus_dependencies" {
+  name             = "prometheus-dependencies"
+  chart            = "../modules/kube-base-components/helm/prometheus"
+  namespace        = "prometheus"
+  create_namespace = true
+  timeout          = 1800
+}
+
+# MANUAL STEP REQUIRED to monitor kube-proxy:
 # Don't forget to manually update metricsBindAddress (For now)
 # TODO: follow: https://github.com/aws/containers-roadmap/issues/657
 # # Can I temporarly just send the shell comand here? Or add that at workflow stage
