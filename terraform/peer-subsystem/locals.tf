@@ -8,6 +8,16 @@ locals {
       type                          = "ingress"
       source_cluster_security_group = true
     }
+
+    aws_lb_controller_webhook_9443_ing = {
+      description                   = "Webhook from AWS LB Controller: Cluster API to node"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
     metrics_server_10250_ing = {
       description = "Node to node kubelets (Required for metrics server)"
       protocol    = "tcp"
@@ -170,6 +180,42 @@ locals {
       protocol    = "udp"
       from_port   = 9094
       to_port     = 9094
+      type        = "egress"
+      self        = true
+    }
+
+    node_to_node_443_ing = {
+      description = "Node to node HTTPS"
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "ingress"
+      self        = true
+    }
+
+    node_to_node_443_out = {
+      description = "Node to node HTTPS"
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "egress"
+      self        = true
+    }
+
+    node_to_node_80_ing = {
+      description = "Node to node HTTP"
+      protocol    = "tcp"
+      from_port   = 80
+      to_port     = 80
+      type        = "ingress"
+      self        = true
+    }
+
+    node_to_node_80_out = {
+      description = "Node to node HTTP"
+      protocol    = "tcp"
+      from_port   = 80
+      to_port     = 80
       type        = "egress"
       self        = true
     }

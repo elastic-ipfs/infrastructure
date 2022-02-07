@@ -24,6 +24,7 @@ resource "helm_release" "prometheus_dependencies" {
   chart = "../modules/kube-base-components/helm/"
   namespace  = "prometheus" 
   create_namespace = true
+  timeout = 1800
 }
 
 # MANUAL STEP REQUIRED:
