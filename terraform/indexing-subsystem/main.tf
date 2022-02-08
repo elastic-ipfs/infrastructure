@@ -89,3 +89,4 @@ module "lambda-from-s3" {
     data.terraform_remote_state.shared.outputs.sqs_policy_send
   ]
 }
+
