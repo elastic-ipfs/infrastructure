@@ -97,6 +97,10 @@ module "gateway-endpoint-to-s3-dynamo" {
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
 module "eks" {
   source                             = "terraform-aws-modules/eks/aws"
   version                            = "~> 18.2.0"
@@ -108,6 +112,11 @@ module "eks" {
   subnet_ids                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
   enable_irsa                        = true # To be able to access AWS services from PODs  
   cluster_security_group_description = "EKS cluster security group - Control Plane"
+
+  cluster_endpoint_public_access_cidrs = [ # TODO: Access through AWS transit gateway
+    "${chomp(data.http.myip.body)}/32", # GitHub Actions network 
+    # "177.33.141.81/32" # My Network
+  ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-peer-subsys = {
