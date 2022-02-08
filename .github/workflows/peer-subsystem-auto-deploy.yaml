@@ -2,7 +2,7 @@ name: 'Peer Subsystem Auto Deploy'
 on:
   push:
     branches:
-    - main
+    - main 
     paths: 
     - 'terraform/peer-subsystem/**'
     - 'terraform/modules/eks-auth-sync/**'
@@ -14,8 +14,9 @@ on:
     - 'terraform/modules/kube-base-components/**'
 jobs:
   terraform:
-    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main
+    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
+      options: -var profile=default -var region=us-west-2 -var accountId=505595374361
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/peer-subsystem'
