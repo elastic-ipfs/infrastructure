@@ -5,9 +5,15 @@ on:
     - main 
     paths: 
     - 'terraform/indexing-subsystem/**'
+    - 'terraform/modules/api-gateway-to-lambda/**'
+    - 'terraform/modules/dynamodb/**'
+    - 'terraform/modules/gateway-endpoint-to-s3-dynamo/**'
   pull_request:
     paths: 
     - 'terraform/indexing-subsystem/**'
+    - 'terraform/modules/api-gateway-to-lambda/**'
+    - 'terraform/modules/dynamodb/**'
+    - 'terraform/modules/gateway-endpoint-to-s3-dynamo/**'
 jobs:
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
