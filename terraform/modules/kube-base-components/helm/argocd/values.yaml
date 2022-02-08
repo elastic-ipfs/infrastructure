@@ -2,9 +2,9 @@ argo-cd:
   installCRDs: false
   dex:
     enabled: false
-  server:
-    extraArgs:
-      - --insecure # serve the Web UI over http
+  # server:
+  #   extraArgs:
+  #     - --insecure # serve the Web UI over http
   # config:
   #   repositories: |
   #     - type: helm
