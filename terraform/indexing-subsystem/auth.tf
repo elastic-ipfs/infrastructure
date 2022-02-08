@@ -26,3 +26,8 @@ resource "aws_iam_role_policy_attachment" "uploader_s3_read" {
   role       = aws_iam_role.uploader_lambda_role.name 
   policy_arn = data.terraform_remote_state.shared.outputs.s3_policy_read.arn
 }
+
+resource "aws_iam_role_policy_attachment" "uploader_lambda_role" {
+  role       = aws_iam_role.uploader_lambda_role.id
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
+}

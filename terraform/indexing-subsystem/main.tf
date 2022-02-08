@@ -22,13 +22,13 @@ data "terraform_remote_state" "shared" {
   config = {
     bucket = "ipfs-aws-terraform-state"
     key    = "terraform.shared.tfstate"
-    region = "us-west-2"
+    region = var.region
   }
 }
 
 provider "aws" {
-  profile =  var.profile
-  region  = "us-west-2"
+  profile = var.profile
+  region  = var.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -49,10 +49,14 @@ resource "aws_lambda_function" "uploader" {
 
   environment {
     variables = {
-        S3_BUCKET =	"ipfs-cars"
-        NODE_ENV= "production"
-      } 
+      S3_BUCKET = "ipfs-cars"
+      NODE_ENV  = "production"
+    }
   }
+
+  layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
+    "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
+  ]
 
   depends_on = [
     aws_iam_role_policy_attachment.uploader_lambda_logs,
@@ -61,9 +65,9 @@ resource "aws_lambda_function" "uploader" {
 }
 
 data "archive_file" "lambda_zip" {
-    type          = "zip"
-    source_file   = "lambda_base_code/index.js"
-    output_path   = "lambda_function_base_code.zip"
+  type        = "zip"
+  source_file = "lambda_base_code/index.js"
+  output_path = "lambda_function_base_code.zip"
 }
 
 module "api-gateway-to-lambda" {
@@ -72,10 +76,11 @@ module "api-gateway-to-lambda" {
 }
 
 module "lambda-from-s3" {
-  source = "../modules/lambda-from-s3"
-  indexingLambdaName = "indexing"
-  bucket = data.terraform_remote_state.shared.outputs.cars_bucket
+  source                   = "../modules/lambda-from-s3"
+  indexingLambdaName       = "indexing"
+  bucket                   = data.terraform_remote_state.shared.outputs.cars_bucket
   sqs_publishing_queue_url = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
+  region = var.region
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,

@@ -45,7 +45,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
     - name: Terraform Plan
-      run: terraform plan ${{ inputs.options }}
+      run: terraform plan ${{ inputs.options }} -var region=${{ inputs.aws_region }}
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' 
       run: terraform apply ${{ inputs.options }} -auto-approve

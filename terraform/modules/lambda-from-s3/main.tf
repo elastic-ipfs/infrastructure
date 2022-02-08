@@ -15,17 +15,21 @@ resource "aws_lambda_function" "indexing" {
   role          = aws_iam_role.indexing_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"
-  memory_size = 1024
-  timeout = 900
+  memory_size   = 1024
+  timeout       = 900
 
   environment {
     variables = {
-        "CONCURRENCY"     = "32"
-        "NODE_ENV"        = "production"
-        "SKIP_PUBLISHING" = "false"
-        "SQS_PUBLISHING_QUEUE_URL" = var.sqs_publishing_queue_url
-      } 
+      "CONCURRENCY"              = "32"
+      "NODE_ENV"                 = "production"
+      "SKIP_PUBLISHING"          = "false"
+      "SQS_PUBLISHING_QUEUE_URL" = var.sqs_publishing_queue_url
+    }
   }
+
+  layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
+    "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
+  ]
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,

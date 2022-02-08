@@ -21,3 +21,7 @@ variable "aws_iam_role_policy_list" {
   }))
   description = "This list contains policies that will be attached to the current role"
 }
+
+variable "region" {
+  type = string
+}
