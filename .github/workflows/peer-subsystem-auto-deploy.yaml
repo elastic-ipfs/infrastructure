@@ -16,7 +16,7 @@ jobs:
   terraform:
     uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
-      options: -var profile=default -var region=us-west-2 -var accountId=505595374361
+      options: -var profile=default -var accountId=505595374361
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/peer-subsystem'
