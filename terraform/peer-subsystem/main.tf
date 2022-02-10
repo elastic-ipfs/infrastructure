@@ -242,4 +242,3 @@ module "kube-base-components" {
     },
   }
 }
-

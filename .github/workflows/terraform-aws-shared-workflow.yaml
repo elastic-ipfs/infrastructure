@@ -24,7 +24,7 @@ on:
 jobs:
   # TODO: Add a job for deploying at a staging environment and run automated tests
   terraform:
-    runs-on: [self-hosted, linux, X64, aws-management-github-runner]
+    runs-on: [self-hosted, linux, X64, management-github-runner]
     name: 'Terraform'
     environment: ${{ inputs.environment }}
     defaults:
