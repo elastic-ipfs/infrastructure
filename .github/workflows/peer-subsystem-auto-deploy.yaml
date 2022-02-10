@@ -3,7 +3,6 @@ on:
   push:
     branches:
     - main 
-    - self-hosted-runner
     paths: 
     - 'terraform/peer-subsystem/**'
     - 'terraform/modules/eks-auth-sync/**'
