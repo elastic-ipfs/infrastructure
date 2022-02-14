@@ -114,7 +114,7 @@ module "eks" {
   cluster_security_group_description = "EKS cluster security group - Control Plane"
 
   cluster_endpoint_public_access_cidrs = [ # TODO: Access through AWS transit gateway
-    "${chomp(data.http.myip.body)}/32", # GitHub Actions network 
+    "${chomp(data.http.myip.body)}/32", # GitHub Actions Self Runner Static IP 
     # "177.33.141.81/32" # My Network
   ]
 
@@ -242,4 +242,3 @@ module "kube-base-components" {
     },
   }
 }
-
