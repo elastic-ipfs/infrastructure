@@ -1,3 +1,38 @@
+terraform {
+  backend "s3" {
+    profile        = "ipfs"
+    bucket         = "ipfs-elastic-provider-terraform-state"
+    dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
+    region         = "us-west-2"
+    key            = "terraform.provider.tfstate"
+    encrypt        = true
+  }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.38"
+    }
+  }
+
+  required_version = ">= 1.0.0"
+}
+
+provider "aws" {
+  profile = var.profile
+  region  = "us-west-2"
+  default_tags {
+    tags = {
+      Team        = "NearForm"
+      Project     = "IPFS-Elastic-Provider"
+      Environment = "POC"
+      Subsystem   = "Provider"
+      ManagedBy   = "Terraform"
+    }
+  }
+}
+
+
+
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
   filename      = "lambda_function_base_code.zip"
@@ -28,4 +63,3 @@ resource "aws_lambda_function" "advertisement" {
     "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
   ]
 }
-
