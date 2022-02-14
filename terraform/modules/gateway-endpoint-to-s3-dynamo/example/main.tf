@@ -8,7 +8,7 @@ provider "aws" {
   default_tags {
     tags = {
       Team       = "NearForm"
-      Project    = "AWS-IPFS"
+      Project    = "IPFS-Elastic-Provider"
       ManagedBy  = "Terraform"
       Example    = "true"
       Production = "false"

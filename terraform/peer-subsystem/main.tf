@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
     profile        = "ipfs"
-    bucket         = "ipfs-aws-terraform-state"
-    dynamodb_table = "ipfs-aws-terraform-state-lock"
+    bucket         = "ipfs-elastic-provider-terraform-state"
+    dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
     region         = "us-west-2"
     key            = "terraform.peer.tfstate"
     encrypt        = true
@@ -25,7 +25,7 @@ terraform {
 data "terraform_remote_state" "shared" {
   backend = "s3"
   config = {
-    bucket = "ipfs-aws-terraform-state"
+    bucket = "ipfs-elastic-provider-terraform-state"
     key    = "terraform.shared.tfstate"
     region = "${var.region}"
   }
@@ -45,7 +45,7 @@ provider "aws" {
   default_tags {
     tags = {
       Team        = "NearForm"
-      Project     = "AWS-IPFS"
+      Project     = "IPFS-Elastic-Provider"
       Environment = "POC"
       Subsystem   = "Peer"
       ManagedBy   = "Terraform"

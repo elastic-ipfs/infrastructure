@@ -8,11 +8,11 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/web3-storage/AWS-IPFS-bitswap-peer.git
+    repoURL: https://github.com/web3-storage/IPFS-Elastic-Provider-bitswap-peer.git
     targetRevision: HEAD
     path: helm
     helm:
-      releaseName: aws-ipfs-bitswap-peer
+      releaseName: ipfs-elastic-provider-bitswap-peer
   destination:
     server: https://kubernetes.default.svc
     namespace: default
