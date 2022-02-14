@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: aws-ipfs-servicemonitor 
+  name: ipfs-elastic-provider-servicemonitor 
   namespace: {{.Release.namespace}}
   labels:
      release: {{.Release.Name}}

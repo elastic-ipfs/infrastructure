@@ -11,7 +11,7 @@ on:
 jobs:
 # TODO: If shared was changed, should we also run apply to all its dependencies?
   terraform:
-    uses: web3-storage/AWS-IPFS-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
+    uses: web3-storage/IPFS-Elastic-Provider-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
       options: -var profile=ipfs
       aws_region: us-west-2

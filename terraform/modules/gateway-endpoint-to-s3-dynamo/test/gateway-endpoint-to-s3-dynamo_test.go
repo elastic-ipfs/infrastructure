@@ -27,7 +27,7 @@ func TestTerraformAwsEndpointToS3AndDynamoExample(t *testing.T) {
 			"region":  awsRegion,
 			"profile": "nearform", // TODO: Change to oficial sandbox account
 			"vpc": map[string]string{
-				"name": "terratest-ipfs-aws-peer-subsystem-vpc",
+				"name": "terratest-ipfs-elastic-providerpeer-subsystem-vpc",
 			},
 		},
 	}

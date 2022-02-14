@@ -4,7 +4,6 @@ variable "profile" {
 
 variable "domain_name" {
   type = string
-  # default = "aws-ipfs.com"
   default = "franciscocardosotest.com"
 }
 
