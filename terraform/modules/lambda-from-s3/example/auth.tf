@@ -52,7 +52,7 @@ resource "aws_iam_policy" "terratest_sqs_policy_send" {
         {
             "Effect": "Allow",
             "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.terratest_lambda_from_s3_publishing_queue.arn}"
+            "Resource": "${aws_sqs_queue.terratest_lambda_from_s3_multihashes_topic.arn}"
         }
     ]
 }

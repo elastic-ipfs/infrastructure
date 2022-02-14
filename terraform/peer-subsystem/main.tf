@@ -229,16 +229,5 @@ module "kube-base-components" {
         aws_iam_policy.config_peer_s3_bucket_policy_read,
       ]
     },
-    "provider_peer_subsystem_role" = {
-      service_account_name      = "provider-irsa",
-      service_account_namespace = "default",
-      role_name                 = "provider_peer_subsystem_role",
-      policies_list = [
-        data.terraform_remote_state.shared.outputs.sqs_policy_receive,
-        data.terraform_remote_state.shared.outputs.sqs_policy_delete,
-        aws_iam_policy.ads_s3_bucket_policy_read,
-        aws_iam_policy.ads_s3_bucket_policy_write,
-      ]
-    },
   }
 }

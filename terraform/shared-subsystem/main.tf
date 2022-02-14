@@ -36,8 +36,8 @@ resource "aws_s3_bucket" "cars" {
   acl    = "private"
 }
 
-resource "aws_sqs_queue" "publishing_queue" {
-  name                      = "publishing"
+resource "aws_sqs_queue" "multihashes_topic" {
+  name                      = "multihashes_topic"
   receive_wait_time_seconds = 10
 }
 
