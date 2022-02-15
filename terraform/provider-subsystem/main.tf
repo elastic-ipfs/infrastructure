@@ -31,8 +31,6 @@ provider "aws" {
   }
 }
 
-
-
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
   filename      = "lambda_function_base_code.zip"
@@ -62,4 +60,9 @@ resource "aws_lambda_function" "advertisement" {
   layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
     "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
   ]
+}
+
+resource "aws_s3_bucket" "ipfs-peer-ads" {
+  bucket = var.provider_ads_bucket_name
+  acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
 }

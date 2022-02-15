@@ -85,11 +85,6 @@ resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
   acl    = "private" # TODO: Private
 }
 
-resource "aws_s3_bucket" "ipfs-peer-ads" {
-  bucket = var.provider_ads_bucket_name
-  acl    = "public-read" # Must be public read so Hydra Nodes are capable of reading
-}
-
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
   vpc_id         = module.vpc.vpc_id
