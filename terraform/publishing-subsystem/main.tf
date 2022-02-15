@@ -46,6 +46,16 @@ data "archive_file" "lambda_zip" {
   output_path = "lambda_function_base_code.zip"
 }
 
+
+
+resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" {
+  event_source_arn = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
+  enabled          = true
+  function_name    = "${aws_lambda_function.content.arn}"
+  batch_size       = 10000
+  maximum_batching_window_in_seconds = 30
+}
+
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
   filename      = "lambda_function_base_code.zip"
@@ -63,10 +73,16 @@ resource "aws_lambda_function" "content" {
   ]
 }
 
-
 resource "aws_sqs_queue" "ads_topic" {
   name                      = "advertisements-topic"
-  receive_wait_time_seconds = 10
+}
+
+resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
+  event_source_arn = aws_sqs_queue.ads_topic.arn
+  enabled          = true
+  function_name    = "${aws_lambda_function.ads.arn}"
+  batch_size       = 100
+  maximum_batching_window_in_seconds = 5
 }
 
 resource "aws_lambda_function" "ads" {

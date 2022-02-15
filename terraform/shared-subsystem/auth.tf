@@ -70,6 +70,11 @@ resource "aws_iam_policy" "sqs_policy_receive" {
             "Effect": "Allow",
             "Action": "sqs:ReceiveMessage",
             "Resource": "${aws_sqs_queue.multihashes_topic.arn}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
+            "Resource": "${aws_sqs_queue.multihashes_topic.arn}"
         }
     ]
 }

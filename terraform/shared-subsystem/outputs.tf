@@ -7,8 +7,11 @@ output "cars_bucket" {
   }
 }
 
-output "sqs_multihashes_topic_url" {
-  value = aws_sqs_queue.multihashes_topic.url
+output "sqs_multihashes_topic" {
+  value = {
+    url = aws_sqs_queue.multihashes_topic.url
+    arn = aws_sqs_queue.multihashes_topic.arn
+  }
 }
 
 output "dynamodb_blocks_policy" {

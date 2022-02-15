@@ -38,7 +38,8 @@ resource "aws_s3_bucket" "cars" {
 
 resource "aws_sqs_queue" "multihashes_topic" {
   name                      = "multihashes-topic"
-  receive_wait_time_seconds = 10
+  message_retention_seconds = 86400 # 1 day
+  visibility_timeout_seconds = 300 # 5 min
 }
 
 module "dynamodb" {

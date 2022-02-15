@@ -105,10 +105,15 @@ resource "aws_iam_policy" "sqs_ads_policy_receive" {
   policy      = <<EOF
 {
     "Version": "2012-10-17",
-    "Statement": [
+    "Statement": [         
         {
             "Effect": "Allow",
             "Action": "sqs:ReceiveMessage",
+            "Resource": "${aws_sqs_queue.ads_topic.arn}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
             "Resource": "${aws_sqs_queue.ads_topic.arn}"
         }
     ]
