@@ -34,7 +34,7 @@ provider "aws" {
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
   filename      = "lambda_function_base_code.zip"
-  role          = "?"
+  role          = aws_iam_role.content_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"  
 
@@ -52,7 +52,7 @@ resource "aws_sqs_queue" "advertisements_topic" {
 resource "aws_lambda_function" "advertisement" {
   function_name = local.advertisement_lambda.name
   filename      = "lambda_function_base_code.zip"
-  role          = "?"
+  role          =  aws_iam_role.ads_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"
   reserved_concurrent_executions = 1 # https://docs.aws.amazon.com/lambda/latest/operatorguide/reserved-concurrency.html
@@ -62,7 +62,7 @@ resource "aws_lambda_function" "advertisement" {
   ]
 }
 
-resource "aws_s3_bucket" "ipfs-peer-ads" {
+resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
   acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
 }
