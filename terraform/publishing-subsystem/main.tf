@@ -25,7 +25,7 @@ provider "aws" {
       Team        = "NearForm"
       Project     = "IPFS-Elastic-Provider"
       Environment = "POC"
-      Subsystem   = "Provider"
+      Subsystem   = "Publishing"
       ManagedBy   = "Terraform"
     }
   }
