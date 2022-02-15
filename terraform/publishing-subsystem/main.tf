@@ -65,7 +65,7 @@ resource "aws_lambda_function" "content" {
 
 
 resource "aws_sqs_queue" "ads_topic" {
-  name                      = "ads_topic"
+  name                      = "advertisements-topic"
   receive_wait_time_seconds = 10
 }
 

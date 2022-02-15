@@ -37,7 +37,7 @@ resource "aws_s3_bucket" "cars" {
 }
 
 resource "aws_sqs_queue" "multihashes_topic" {
-  name                      = "multihashes_topic"
+  name                      = "multihashes-topic"
   receive_wait_time_seconds = 10
 }
 

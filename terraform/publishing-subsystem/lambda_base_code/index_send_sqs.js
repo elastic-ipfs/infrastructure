@@ -1,12 +1,12 @@
-exports.handler = (event, context, callback) => {
+const AWS = require('aws-sdk')
+const sqs = new AWS.SQS(
+    {
+        apiVersion: '2012-11-05',
+        region: "us-west-2"
+    }
+);
 
-    const AWS = require('aws-sdk')
-    const sqs = new AWS.SQS(
-        {
-            apiVersion: '2012-11-05',
-            region: "us-west-2"
-        }
-    );
+exports.handler = (event, context, callback) => {
 
     // Setup the sendMessage parameter object
     const sqsParams = {
