@@ -8,24 +8,24 @@ variable "vpc" {
 }
 
 variable "cluster_name" {
-  type = string
+  type    = string
   default = "test-ipfs-peer-subsys"
 }
 
 variable "cluster_version" {
-  type = string
+  type    = string
   default = "1.21"
 }
 
 variable "config_bucket_name" {
-  type    = string
+  type = string
   # default = "ipfs-peer-bitswap-config"
   default = "ipfs-peer-bitswap-config"
 }
 
 variable "provider_ads_bucket_name" {
-  type    = string
-  default = "ipfs-provider-ads"
+  type        = string
+  default     = "ipfs-provider-ads"
   description = "Bucket for storing provider files"
 }
 

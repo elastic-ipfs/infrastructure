@@ -1,8 +1,8 @@
 # Important info about that on 'readme.md'
 resource "aws_acm_certificate" "cert" {
-  domain_name       = var.domain_name
-  subject_alternative_names = [local.api_domain] 
-  validation_method = "DNS"
+  domain_name               = var.domain_name
+  subject_alternative_names = [local.api_domain]
+  validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true
   }
