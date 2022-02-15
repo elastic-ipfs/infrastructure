@@ -15,7 +15,7 @@ exports.handler = (event, context, callback) => {
             date: (new Date()).toISOString()
         }),
         // QueueUrl: `https://sqs.us-east-1.amazonaws.com/${accountId}/${queueName}`
-        QueueUrl: `https://sqs.us-west-2.amazonaws.com/505595374361/publishing`
+        QueueUrl: `https://sqs.us-west-2.amazonaws.com/505595374361/multihashes_topic`
     };
     sqs.sendMessage(sqsParams, (err, data) => {
         if (err) {

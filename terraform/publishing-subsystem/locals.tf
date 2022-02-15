@@ -2,7 +2,7 @@ locals {
   content_lambda = {
     name = "publishing-content"
   }
-  advertisement_lambda = {
+  ads_lambda = {
     name = "publishing-advertisement"
   }
 }

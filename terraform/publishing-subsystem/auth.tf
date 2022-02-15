@@ -92,7 +92,7 @@ resource "aws_iam_policy" "sqs_ads_policy_send" {
         {
             "Effect": "Allow",
             "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.advertisements_topic.arn}"
+            "Resource": "${aws_sqs_queue.ads_topic.arn}"
         }
     ]
 }
@@ -109,7 +109,7 @@ resource "aws_iam_policy" "sqs_ads_policy_receive" {
         {
             "Effect": "Allow",
             "Action": "sqs:ReceiveMessage",
-            "Resource": "${aws_sqs_queue.advertisements_topic.arn}"
+            "Resource": "${aws_sqs_queue.ads_topic.arn}"
         }
     ]
 }
@@ -126,7 +126,7 @@ resource "aws_iam_policy" "sqs_ads_policy_delete" {
         {
             "Effect": "Allow",
             "Action": "sqs:DeleteMessage",
-            "Resource": "${aws_sqs_queue.advertisements_topic.arn}"
+            "Resource": "${aws_sqs_queue.ads_topic.arn}"
         }
     ]
 }
@@ -154,6 +154,7 @@ resource "aws_iam_role_policy_attachment" "content_s3_read" {
   role       = aws_iam_role.content_lambda_role.id
   policy_arn = aws_iam_policy.s3_ads_policy_read.arn
 }
+
 
 resource "aws_iam_role_policy_attachment" "content_s3_write" {
   role       = aws_iam_role.content_lambda_role.id

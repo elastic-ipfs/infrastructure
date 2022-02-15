@@ -56,16 +56,21 @@ resource "aws_lambda_function" "content" {
   layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
     "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
   ]
+
+  depends_on = [
+    aws_iam_role_policy_attachment.content_lambda_logs,
+    aws_cloudwatch_log_group.content_log_group,
+  ]
 }
 
 
-resource "aws_sqs_queue" "advertisements_topic" {
-  name                      = "advertisements_topic"
+resource "aws_sqs_queue" "ads_topic" {
+  name                      = "ads_topic"
   receive_wait_time_seconds = 10
 }
 
-resource "aws_lambda_function" "advertisement" {
-  function_name = local.advertisement_lambda.name
+resource "aws_lambda_function" "ads" {
+  function_name = local.ads_lambda.name
   filename      = "lambda_function_base_code.zip"
   role          =  aws_iam_role.ads_lambda_role.arn
   handler       = "index.handler"
@@ -74,6 +79,11 @@ resource "aws_lambda_function" "advertisement" {
 
   layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
     "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
+  ]
+
+  depends_on = [
+    aws_iam_role_policy_attachment.ads_lambda_logs,
+    aws_cloudwatch_log_group.ads_log_group,
   ]
 }
 
