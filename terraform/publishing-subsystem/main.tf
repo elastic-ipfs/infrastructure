@@ -4,7 +4,7 @@ terraform {
     bucket         = "ipfs-elastic-provider-terraform-state"
     dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
     region         = "us-west-2"
-    key            = "terraform.provider.tfstate"
+    key            = "terraform.publishing.tfstate"
     encrypt        = true
   }
   required_providers {
@@ -17,9 +17,18 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+data "terraform_remote_state" "shared" {
+  backend = "s3"
+  config = {
+    bucket = "ipfs-elastic-provider-terraform-state"
+    key    = "terraform.shared.tfstate"
+    region = var.region
+  }
+}
+
 provider "aws" {
   profile = var.profile
-  region  = "us-west-2"
+  region  = var.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -29,6 +38,12 @@ provider "aws" {
       ManagedBy   = "Terraform"
     }
   }
+}
+
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_file = "lambda_base_code/index.js"
+  output_path = "lambda_function_base_code.zip"
 }
 
 resource "aws_lambda_function" "content" {

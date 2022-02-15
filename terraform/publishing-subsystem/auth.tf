@@ -140,19 +140,29 @@ resource "aws_iam_role_policy_attachment" "content_insights" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
 }
 
+resource "aws_iam_role_policy_attachment" "content_sqs_multihash_receive" {
+  role       = aws_iam_role.content_lambda_role.id
+  policy_arn = data.terraform_remote_state.shared.outputs.sqs_policy_receive.arn
+}
+
+resource "aws_iam_role_policy_attachment" "content_sqs_multihash_delete" {
+  role       = aws_iam_role.content_lambda_role.id
+  policy_arn = data.terraform_remote_state.shared.outputs.sqs_policy_delete.arn
+}
+
 resource "aws_iam_role_policy_attachment" "content_s3_read" {
   role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_read
+  policy_arn = aws_iam_policy.s3_ads_policy_read.arn
 }
 
 resource "aws_iam_role_policy_attachment" "content_s3_write" {
   role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_write
+  policy_arn = aws_iam_policy.s3_ads_policy_write.arn
 }
 
 resource "aws_iam_role_policy_attachment" "content_sqs_send" {
   role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.sqs_ads_policy_send
+  policy_arn = aws_iam_policy.sqs_ads_policy_send.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ads_insights" {
@@ -162,20 +172,20 @@ resource "aws_iam_role_policy_attachment" "ads_insights" {
 
 resource "aws_iam_role_policy_attachment" "ads_s3_write" {
   role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_write
+  policy_arn = aws_iam_policy.s3_ads_policy_write.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ads_s3_read" {
   role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_read
+  policy_arn = aws_iam_policy.s3_ads_policy_read.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ads_sqs_receive" {
   role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.sqs_ads_policy_receive
+  policy_arn = aws_iam_policy.sqs_ads_policy_receive.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ads_sqs_delete" {
   role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.sqs_ads_policy_delete
+  policy_arn = aws_iam_policy.sqs_ads_policy_delete.arn
 }
