@@ -1,0 +1,21 @@
+name: 'Publishing Subsystem Auto Deploy'
+on:
+  push:
+    branches:
+    - main 
+    paths: 
+    - 'terraform/publishing-subsystem/**'
+  pull_request:
+    paths: 
+    - 'terraform/publishing-subsystem/**'
+jobs:
+  terraform:
+    uses: web3-storage/IPFS-Elastic-Provider-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
+    with:
+      options: -var profile=default
+      aws_region: us-west-2
+      environment: production
+      working_directory: './terraform/publishing-subsystem'
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
