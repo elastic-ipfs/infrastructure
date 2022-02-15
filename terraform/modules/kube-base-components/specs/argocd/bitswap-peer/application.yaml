@@ -5,9 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
-
   source:
-    repoURL: https://github.com/web3-storage/IPFS-Elastic-Provider-bitswap-peer.git
+    repoURL: https://github.com/web3-storage/AWS-IPFS-bitswap-peer.git # TODO: Rename after repo rebranding
     targetRevision: HEAD
     path: helm
     helm:

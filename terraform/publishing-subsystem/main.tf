@@ -49,10 +49,10 @@ data "archive_file" "lambda_zip" {
 
 
 resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" {
-  event_source_arn = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
-  enabled          = true
-  function_name    = "${aws_lambda_function.content.arn}"
-  batch_size       = 10000
+  event_source_arn                   = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
+  enabled                            = true
+  function_name                      = aws_lambda_function.content.arn
+  batch_size                         = 10000
   maximum_batching_window_in_seconds = 30
 }
 
@@ -61,7 +61,7 @@ resource "aws_lambda_function" "content" {
   filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.content_lambda_role.arn
   handler       = "index.handler"
-  runtime       = "nodejs14.x"  
+  runtime       = "nodejs14.x"
 
   layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
     "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
@@ -74,23 +74,25 @@ resource "aws_lambda_function" "content" {
 }
 
 resource "aws_sqs_queue" "ads_topic" {
-  name                      = "advertisements-topic"
+  name                       = "advertisements-topic"
+  message_retention_seconds  = 900 # 15 min
+  visibility_timeout_seconds = 300 # 5 min
 }
 
 resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
-  event_source_arn = aws_sqs_queue.ads_topic.arn
-  enabled          = true
-  function_name    = "${aws_lambda_function.ads.arn}"
-  batch_size       = 100
+  event_source_arn                   = aws_sqs_queue.ads_topic.arn
+  enabled                            = true
+  function_name                      = aws_lambda_function.ads.arn
+  batch_size                         = 100
   maximum_batching_window_in_seconds = 5
 }
 
 resource "aws_lambda_function" "ads" {
-  function_name = local.ads_lambda.name
-  filename      = "lambda_function_base_code.zip"
-  role          =  aws_iam_role.ads_lambda_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
+  function_name                  = local.ads_lambda.name
+  filename                       = "lambda_function_base_code.zip"
+  role                           = aws_iam_role.ads_lambda_role.arn
+  handler                        = "index.handler"
+  runtime                        = "nodejs14.x"
   reserved_concurrent_executions = 1 # https://docs.aws.amazon.com/lambda/latest/operatorguide/reserved-concurrency.html
 
   layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
