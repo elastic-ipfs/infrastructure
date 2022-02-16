@@ -58,14 +58,25 @@ resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" 
 
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
-  filename      = "lambda_function_base_code.zip"
-  role          = aws_iam_role.content_lambda_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
+  # filename      = "lambda_function_base_code.zip"
+  package_type = "Image"
+  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/paolo-publishing-lambda:latest" # TODO: Change to official image URI
+  role         = aws_iam_role.content_lambda_role.arn
+  memory_size  = 1024
+  timeout      = 60
 
-  layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
-    "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
-  ]
+  environment {
+    variables = {
+      BITSWAP_PEER_MULTIADDR       = "/dns4/a3576e1d263ce43ee9eda1ae43b4d66c-2112169669.us-west-2.elb.amazonaws.com/tcp/3000/ws"
+      HANDLER                      = "content"
+      INDEXER_NODE_URL             = "http://54.244.99.27:3001"
+      NODE_ENV                     = "production"
+      PEER_ID_FILE                 = "peerId.json"
+      PEER_ID_S3_BUCKET            = "ipfs-peer-bitswap-config" # TODO: Get from resource
+      S3_BUCKET                    = "ipfs-advertisement" # TODO: Get from resource
+      SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
+    }
+  }
 
   depends_on = [
     aws_iam_role_policy_attachment.content_lambda_logs,
@@ -88,16 +99,26 @@ resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
 }
 
 resource "aws_lambda_function" "ads" {
-  function_name                  = local.ads_lambda.name
-  filename                       = "lambda_function_base_code.zip"
+  function_name = local.ads_lambda.name
+  image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/paolo-publishing-lambda:latest" # TODO: Change to official image URI
+  package_type                   = "Image"
   role                           = aws_iam_role.ads_lambda_role.arn
-  handler                        = "index.handler"
-  runtime                        = "nodejs14.x"
+  memory_size                    = 1024
+  timeout                        = 300
   reserved_concurrent_executions = 1 # https://docs.aws.amazon.com/lambda/latest/operatorguide/reserved-concurrency.html
 
-  layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
-    "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
-  ]
+  environment {
+    variables = {
+      BITSWAP_PEER_MULTIADDR       = "/dns4/a3576e1d263ce43ee9eda1ae43b4d66c-2112169669.us-west-2.elb.amazonaws.com/tcp/3000/ws"
+      HANDLER                      = "advertisement"
+      INDEXER_NODE_URL             = "http://54.244.99.27:3001"
+      NODE_ENV                     = "production"
+      PEER_ID_FILE                 = "peerId.json"
+      PEER_ID_S3_BUCKET            = "ipfs-peer-bitswap-config" # TODO: Get from resource (For that I need to import data from peer-subsystem. Should I do it?)
+      S3_BUCKET                    = aws_s3_bucket.ipfs_peer_ads.id
+      SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
+    }
+  }
 
   depends_on = [
     aws_iam_role_policy_attachment.ads_lambda_logs,
