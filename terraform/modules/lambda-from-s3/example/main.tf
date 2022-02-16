@@ -21,7 +21,7 @@ resource "aws_s3_bucket" "terratest_lambda_from_s3_cars" {
   acl    = "private"
 }
 
-resource "aws_sqs_queue" "terratest_lambda_from_s3_publishing_queue" {
+resource "aws_sqs_queue" "terratest_lambda_from_s3_multihashes_topic" {
   name                      = var.testQueueName
   receive_wait_time_seconds = 10
 }
@@ -30,7 +30,7 @@ module "lambda-from-s3" {
   source = "../"
   indexingLambdaName = var.indexingLambdaName
   bucket = aws_s3_bucket.terratest_lambda_from_s3_cars
-  sqs_publishing_queue_url = aws_sqs_queue.terratest_lambda_from_s3_publishing_queue.url
+  sqs_multihashes_topic_url = aws_sqs_queue.terratest_lambda_from_s3_multihashes_topic.url
   aws_iam_role_policy_list = [
     aws_iam_policy.terratest_s3_policy_read,
     aws_iam_policy.terratest_s3_policy_write,

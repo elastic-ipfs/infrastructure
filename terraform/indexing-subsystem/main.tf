@@ -49,7 +49,7 @@ resource "aws_lambda_function" "uploader" {
 
   environment {
     variables = {
-      S3_BUCKET = "ipfs-cars"
+      S3_BUCKET = "ipfs-cars" # TODO: Get from bucket resource
       NODE_ENV  = "production"
     }
   }
@@ -79,7 +79,7 @@ module "lambda-from-s3" {
   source                   = "../modules/lambda-from-s3"
   indexingLambdaName       = "indexing"
   bucket                   = data.terraform_remote_state.shared.outputs.cars_bucket
-  sqs_publishing_queue_url = data.terraform_remote_state.shared.outputs.sqs_publishing_queue_url
+  sqs_multihashes_topic_url = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.url
   region                   = var.region
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.s3_policy_read,

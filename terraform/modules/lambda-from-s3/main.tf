@@ -11,7 +11,8 @@ terraform {
 
 resource "aws_lambda_function" "indexing" {
   function_name = var.indexingLambdaName
-  filename      = "lambda_function_base_code.zip"
+  package_type = "Image"
+  image_uri = "505595374361.dkr.ecr.us-west-2.amazonaws.com/paolo-indexing-lambda:latest" # TODO: Change to official image URI
   role          = aws_iam_role.indexing_lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs14.x"
@@ -23,13 +24,9 @@ resource "aws_lambda_function" "indexing" {
       "CONCURRENCY"              = "32"
       "NODE_ENV"                 = "production"
       "SKIP_PUBLISHING"          = "false"
-      "SQS_PUBLISHING_QUEUE_URL" = var.sqs_publishing_queue_url
+      "SQS_PUBLISHING_QUEUE_URL" = var.sqs_multihashes_topic_url
     }
   }
-
-  layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
-    "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
-  ]
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,

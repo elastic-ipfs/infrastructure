@@ -36,9 +36,10 @@ resource "aws_s3_bucket" "cars" {
   acl    = "private"
 }
 
-resource "aws_sqs_queue" "publishing_queue" {
-  name                      = "publishing"
-  receive_wait_time_seconds = 10
+resource "aws_sqs_queue" "multihashes_topic" {
+  name                      = "multihashes-topic"
+  message_retention_seconds = 86400 # 1 day
+  visibility_timeout_seconds = 300 # 5 min
 }
 
 module "dynamodb" {

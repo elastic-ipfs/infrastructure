@@ -52,7 +52,7 @@ resource "aws_iam_policy" "sqs_policy_send" {
         {
             "Effect": "Allow",
             "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.publishing_queue.arn}"
+            "Resource": "${aws_sqs_queue.multihashes_topic.arn}"
         }
     ]
 }
@@ -69,7 +69,12 @@ resource "aws_iam_policy" "sqs_policy_receive" {
         {
             "Effect": "Allow",
             "Action": "sqs:ReceiveMessage",
-            "Resource": "${aws_sqs_queue.publishing_queue.arn}"
+            "Resource": "${aws_sqs_queue.multihashes_topic.arn}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
+            "Resource": "${aws_sqs_queue.multihashes_topic.arn}"
         }
     ]
 }
@@ -86,7 +91,7 @@ resource "aws_iam_policy" "sqs_policy_delete" {
         {
             "Effect": "Allow",
             "Action": "sqs:DeleteMessage",
-            "Resource": "${aws_sqs_queue.publishing_queue.arn}"
+            "Resource": "${aws_sqs_queue.multihashes_topic.arn}"
         }
     ]
 }

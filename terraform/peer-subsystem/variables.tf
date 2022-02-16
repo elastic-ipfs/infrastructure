@@ -18,8 +18,7 @@ variable "cluster_version" {
 }
 
 variable "config_bucket_name" {
-  type = string
-  # default = "ipfs-peer-bitswap-config"
+  type    = string
   default = "ipfs-peer-bitswap-config"
 }
 

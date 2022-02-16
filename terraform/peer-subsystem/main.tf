@@ -85,11 +85,6 @@ resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
   acl    = "private" # TODO: Private
 }
 
-resource "aws_s3_bucket" "ipfs-peer-ads" {
-  bucket = var.provider_ads_bucket_name
-  acl    = "public-read" # Must be public read so Hydra Nodes are capable of reading
-}
-
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
   vpc_id         = module.vpc.vpc_id
@@ -227,17 +222,6 @@ module "kube-base-components" {
         data.terraform_remote_state.shared.outputs.s3_policy_write,
         data.terraform_remote_state.shared.outputs.sqs_policy_send,
         aws_iam_policy.config_peer_s3_bucket_policy_read,
-      ]
-    },
-    "provider_peer_subsystem_role" = {
-      service_account_name      = "provider-irsa",
-      service_account_namespace = "default",
-      role_name                 = "provider_peer_subsystem_role",
-      policies_list = [
-        data.terraform_remote_state.shared.outputs.sqs_policy_receive,
-        data.terraform_remote_state.shared.outputs.sqs_policy_delete,
-        aws_iam_policy.ads_s3_bucket_policy_read,
-        aws_iam_policy.ads_s3_bucket_policy_write,
       ]
     },
   }
