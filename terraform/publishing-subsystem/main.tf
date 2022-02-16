@@ -65,7 +65,7 @@ resource "aws_lambda_function" "content" {
       NODE_ENV                     = "production"
       PEER_ID_FILE                 = "peerId.json"
       PEER_ID_S3_BUCKET            = "ipfs-peer-bitswap-config" # TODO: Get from resource
-      S3_BUCKET                    = "ipfs-advertisement" # TODO: Get from resource
+      S3_BUCKET                    = "ipfs-advertisement"       # TODO: Get from resource
       SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
     }
   }
@@ -91,7 +91,7 @@ resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
 }
 
 resource "aws_lambda_function" "ads" {
-  function_name = local.ads_lambda.name
+  function_name                  = local.ads_lambda.name
   image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/paolo-publishing-lambda:latest" # TODO: Change to official image URI
   package_type                   = "Image"
   role                           = aws_iam_role.ads_lambda_role.arn
