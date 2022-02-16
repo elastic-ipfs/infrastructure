@@ -40,14 +40,6 @@ provider "aws" {
   }
 }
 
-data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_file = "lambda_base_code/index.js"
-  output_path = "lambda_function_base_code.zip"
-}
-
-
-
 resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" {
   event_source_arn                   = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
   enabled                            = true
