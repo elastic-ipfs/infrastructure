@@ -1,8 +1,8 @@
 output "cars_bucket" {
   value = {
     bucket = aws_s3_bucket.cars.bucket
-    id = aws_s3_bucket.cars.id
-    arn = aws_s3_bucket.cars.arn
+    id     = aws_s3_bucket.cars.id
+    arn    = aws_s3_bucket.cars.arn
     region = aws_s3_bucket.cars.region
   }
 }

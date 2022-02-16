@@ -40,12 +40,12 @@ variable "service_account_roles" {
 }
 
 variable "eks_auth_sync_policy_name" {
-  type = string
+  type    = string
   default = "eks-auth-sync-policy"
 }
 
 variable "eks_auth_sync_role_name" {
-  type = string
+  type    = string
   default = "eks-auth-sync-role"
 }
 

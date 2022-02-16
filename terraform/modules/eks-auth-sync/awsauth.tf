@@ -40,8 +40,8 @@ EOF
 }
 
 module "iam_oidc_eks_auth_sync" { # https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-assumable-role-with-oidc 
-  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version = "~> 4.0"
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "~> 4.0"
   create_role                   = true
   role_name                     = var.eks_auth_sync_role_name
   provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")

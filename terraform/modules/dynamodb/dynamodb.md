@@ -22,18 +22,22 @@ No modules.
 |------|------|
 | [aws_dynamodb_table.blocks_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) | resource |
 | [aws_dynamodb_table.cars_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) | resource |
-| [aws_iam_policy.dynamodb_car_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.dynamodb_blocks_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_role_policy_attachment.dynamodb_car_policy_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.dynamodb_blocks_policy_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_policy.dynamodb_car_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_lambdaRoleName"></a> [lambdaRoleName](#input\_lambdaRoleName) | n/a | `string` | n/a | yes |
+| <a name="input_blocks_table"></a> [blocks\_table](#input\_blocks\_table) | n/a | <pre>object({<br>    name = string<br>  })</pre> | n/a | yes |
+| <a name="input_cars_table"></a> [cars\_table](#input\_cars\_table) | n/a | <pre>object({<br>    name = string<br>  })</pre> | n/a | yes |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_blocks_table"></a> [blocks\_table](#output\_blocks\_table) | n/a |
+| <a name="output_cars_table"></a> [cars\_table](#output\_cars\_table) | n/a |
+| <a name="output_dynamodb_blocks_policy"></a> [dynamodb\_blocks\_policy](#output\_dynamodb\_blocks\_policy) | n/a |
+| <a name="output_dynamodb_car_policy"></a> [dynamodb\_car\_policy](#output\_dynamodb\_car\_policy) | n/a |
 <!-- END_TF_DOCS -->

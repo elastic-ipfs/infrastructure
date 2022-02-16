@@ -1,3 +1,3 @@
 locals {
-  bitnami_repo                 = "https://charts.bitnami.com/bitnami"
+  bitnami_repo = "https://charts.bitnami.com/bitnami"
 }

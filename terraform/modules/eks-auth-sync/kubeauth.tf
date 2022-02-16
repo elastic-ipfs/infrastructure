@@ -1,34 +1,34 @@
 
 resource "kubernetes_role" "eksauth" {
   metadata {
-    name = "aws-auth-editor"
+    name      = "aws-auth-editor"
     namespace = var.namespace
     labels = {
       k8s-app = "aws-auth-sync"
     }
   }
   rule {
-    api_groups      = [""]
-    resources       = ["configmaps"]
-    resource_names  = ["aws-auth"]
-    verbs           = ["get", "update", "create"]
+    api_groups     = [""]
+    resources      = ["configmaps"]
+    resource_names = ["aws-auth"]
+    verbs          = ["get", "update", "create"]
   }
 }
 
 resource "kubernetes_role" "eksauth-system" {
   count = var.namespace != "kube-system" ? 1 : 0
   metadata {
-    name = "aws-auth-editor"
+    name      = "aws-auth-editor"
     namespace = "kube-system"
     labels = {
       k8s-app = "aws-auth-sync"
     }
   }
   rule {
-    api_groups      = [""]
-    resources       = ["configmaps"]
-    resource_names  = ["aws-auth"]
-    verbs           = ["get", "update", "create"]
+    api_groups     = [""]
+    resources      = ["configmaps"]
+    resource_names = ["aws-auth"]
+    verbs          = ["get", "update", "create"]
   }
 }
 
@@ -47,7 +47,7 @@ resource "kubernetes_role_binding" "eksauth" {
   }
   subject {
     kind      = "ServiceAccount"
-    name      = "${local.serviceAccountName}"
+    name      = local.serviceAccountName
     namespace = var.namespace
   }
 }
@@ -68,14 +68,14 @@ resource "kubernetes_role_binding" "eksauth-system" {
   }
   subject {
     kind      = "ServiceAccount"
-    name      = "${local.serviceAccountName}"
+    name      = local.serviceAccountName
     namespace = var.namespace
   }
 }
 
 resource "kubernetes_service_account" "eksauth" {
   metadata {
-    name = "${local.serviceAccountName}"
+    name      = local.serviceAccountName
     namespace = var.namespace
     labels = {
       k8s-app = "eks-auth-sync"
