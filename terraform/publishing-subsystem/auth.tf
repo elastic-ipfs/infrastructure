@@ -138,7 +138,30 @@ resource "aws_iam_policy" "sqs_ads_policy_delete" {
 EOF
 }
 
+data "aws_iam_policy_document" "s3_advertisment_files_public_access" {
+  statement {
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }    
+
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      "${aws_s3_bucket.ipfs_peer_ads.arn}/*",
+    ]
+  }  
+}
+
+
 ### Attachments
+resource "aws_s3_bucket_policy" "allow_public_access_to_files" {
+  bucket = aws_s3_bucket.ipfs_peer_ads.id
+  policy = data.aws_iam_policy_document.s3_advertisment_files_public_access.json
+}
+
 resource "aws_iam_role_policy_attachment" "content_insights" {
   role       = aws_iam_role.content_lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
