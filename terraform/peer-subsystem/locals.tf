@@ -130,7 +130,7 @@ locals {
       to_port     = 8080
       type        = "egress"
       self        = true
-    } 
+    }
 
     prometheus_alertmanager_9093_ing = {
       description = "Node to node prometheus alertmanager"
@@ -221,56 +221,56 @@ locals {
     }
   }
 
-    argocd_repo_server_8081_ing = {
-      description = "Node to node argocd-repo-server"
-      protocol    = "tcp"
-      from_port   = 8081
-      to_port     = 8081
-      type        = "ingress"
-      self        = true
-    }
-    argocd_repo_server_8081_eg = {
-      description = "Node to node argocd-repo-server"
-      protocol    = "tcp"
-      from_port   = 8081
-      to_port     = 8081
-      type        = "egress"
-      self        = true
-    }
+  argocd_repo_server_8081_ing = {
+    description = "Node to node argocd-repo-server"
+    protocol    = "tcp"
+    from_port   = 8081
+    to_port     = 8081
+    type        = "ingress"
+    self        = true
+  }
+  argocd_repo_server_8081_eg = {
+    description = "Node to node argocd-repo-server"
+    protocol    = "tcp"
+    from_port   = 8081
+    to_port     = 8081
+    type        = "egress"
+    self        = true
+  }
 
-    argocd-application-controller_8082_ing = {
-      description = "Node to node argocd-application-controller"
-      protocol    = "tcp"
-      from_port   = 8082
-      to_port     = 8082
-      type        = "ingress"
-      self        = true
-    }
-    argocd-application-controller_8082_eg = {
-      description = "Node to node argocd-application-controller"
-      protocol    = "tcp"
-      from_port   = 8082
-      to_port     = 8082
-      type        = "egress"
-      self        = true
-    }
+  argocd-application-controller_8082_ing = {
+    description = "Node to node argocd-application-controller"
+    protocol    = "tcp"
+    from_port   = 8082
+    to_port     = 8082
+    type        = "ingress"
+    self        = true
+  }
+  argocd-application-controller_8082_eg = {
+    description = "Node to node argocd-application-controller"
+    protocol    = "tcp"
+    from_port   = 8082
+    to_port     = 8082
+    type        = "egress"
+    self        = true
+  }
 
 
-    argocd_redis_6379_ing = {
-      description = "Node to node argocd-redis"
-      protocol    = "tcp"
-      from_port   = 6379
-      to_port     = 6379
-      type        = "ingress"
-      self        = true
-    }
-    argocd_redis_6379_eg = {
-      description = "Node to node argocd-redis"
-      protocol    = "tcp"
-      from_port   = 6379
-      to_port     = 6379
-      type        = "egress"
-      self        = true
-    }
+  argocd_redis_6379_ing = {
+    description = "Node to node argocd-redis"
+    protocol    = "tcp"
+    from_port   = 6379
+    to_port     = 6379
+    type        = "ingress"
+    self        = true
+  }
+  argocd_redis_6379_eg = {
+    description = "Node to node argocd-redis"
+    protocol    = "tcp"
+    from_port   = 6379
+    to_port     = 6379
+    type        = "egress"
+    self        = true
+  }
 
 }

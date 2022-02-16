@@ -3,33 +3,33 @@ variable "profile" {
 }
 
 variable "domain_name" {
-  type = string
+  type    = string
   default = "franciscocardosotest.com"
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
-  default = "peer"
+  default     = "peer"
   description = "Subdomains that will be handled by peer svc loadbalancer"
 }
 
 variable "subdomains_provider_loadbalancer" {
-  default = "provider"
+  default     = "provider"
   description = "Subdomains that will be handled by provider svc loadbalancer"
 }
 
 variable "subdomain_apis" {
-  type = string
-  default = "api.uploader"
+  type        = string
+  default     = "api.uploader"
   description = "Name for a API Gateway subdomain"
 }
 
 variable "bitswap_load_balancer_hostname" {
-  type = string
+  type        = string
   description = "Bitswap LoadBalancer URL"
 }
 
 variable "provider_load_balancer_hostname" {
-  type = string
+  type        = string
   description = "Provider LoadBalancer URL"
 }
 

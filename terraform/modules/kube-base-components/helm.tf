@@ -35,7 +35,7 @@ resource "helm_release" "prometheus_dependencies" {
 # kubectl -n kube-system get cm kube-proxy-config -o yaml |sed 's/metricsBindAddress: 127.0.0.1:10249/metricsBindAddress: 0.0.0.0:10249/' | kubectl apply -f -
 # kubectl -n kube-system patch ds kube-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"updateTime\":\"`date +'%s'`\"}}}}}"
 
-resource "helm_release" "argocd" { 
+resource "helm_release" "argocd" {
   name             = "argocd"
   chart            = "../modules/kube-base-components/helm/argocd"
   namespace        = "argocd"

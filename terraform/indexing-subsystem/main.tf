@@ -79,8 +79,8 @@ module "lambda-from-s3" {
   source                   = "../modules/lambda-from-s3"
   indexingLambdaName       = "indexing"
   bucket                   = data.terraform_remote_state.shared.outputs.cars_bucket
-  sqs_multihashes_topic_url = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.url
-  region = var.region
+  sqs_publishing_queue_url = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic
+  region                   = var.region
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.s3_policy_read,
     data.terraform_remote_state.shared.outputs.s3_policy_write,
