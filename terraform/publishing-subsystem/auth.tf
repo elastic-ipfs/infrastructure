@@ -151,7 +151,7 @@ resource "aws_iam_role_policy_attachment" "content_sqs_multihash_receive" {
 
 resource "aws_iam_role_policy_attachment" "content_sqs_multihash_delete" {
   role       = aws_iam_role.content_lambda_role.id
-  policy_arn = data.terraform_remote_state.shared.outputs.sqs_policy_delete.arn
+  policy_arn = data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_delete.arn
 }
 
 resource "aws_iam_role_policy_attachment" "content_s3_read" {

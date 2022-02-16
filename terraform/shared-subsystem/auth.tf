@@ -81,8 +81,8 @@ resource "aws_iam_policy" "sqs_multihashes_policy_receive" {
 EOF
 }
 
-resource "aws_iam_policy" "sqs_policy_delete" {
-  name        = "sqs-policy-delete"
+resource "aws_iam_policy" "sqs_multihashes_policy_delete" {
+  name        = "sqs-multihashes-policy-delete"
   description = "Policy for allowing publish messages in SQS"
   policy      = <<EOF
 {

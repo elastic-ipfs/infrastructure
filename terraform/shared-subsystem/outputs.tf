@@ -73,9 +73,9 @@ output "sqs_multihashes_policy_receive" {
 }
 
 
-output "sqs_policy_delete" {
+output "sqs_multihashes_policy_delete" {
   value = {
-    name = aws_iam_policy.sqs_policy_delete.name,
-    arn  = aws_iam_policy.sqs_policy_delete.arn,
+    name = aws_iam_policy.sqs_multihashes_policy_delete.name,
+    arn  = aws_iam_policy.sqs_multihashes_policy_delete.arn,
   }
 }
