@@ -139,7 +139,6 @@ EOF
 }
 
 ### Attachments
-# TODO: Attach READ and DELETE permissions from shared multihashed topics to content publishing lambda
 resource "aws_iam_role_policy_attachment" "content_insights" {
   role       = aws_iam_role.content_lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
@@ -147,7 +146,7 @@ resource "aws_iam_role_policy_attachment" "content_insights" {
 
 resource "aws_iam_role_policy_attachment" "content_sqs_multihash_receive" {
   role       = aws_iam_role.content_lambda_role.id
-  policy_arn = data.terraform_remote_state.shared.outputs.sqs_policy_receive.arn
+  policy_arn = data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_receive.arn
 }
 
 resource "aws_iam_role_policy_attachment" "content_sqs_multihash_delete" {
@@ -196,38 +195,12 @@ resource "aws_iam_role_policy_attachment" "ads_sqs_delete" {
   policy_arn = aws_iam_policy.sqs_ads_policy_delete.arn
 }
 
-
-
-####  TODO: This can't be here
-
-resource "aws_iam_policy" "config_peer_s3_bucket_policy_read" {
-  name        = "temporary-deleteme-config-peer-s3-bucket-policy-read"
-  description = "Policy for allowing reading objects from S3"
-  policy      = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::ipfs-peer-bitswap-config/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:ListObjects",
-            "Resource": "arn:aws:s3:::ipfs-peer-bitswap-config/*"
-        }
-    ]
-}
-EOF
-}
-
 resource "aws_iam_role_policy_attachment" "content_s3_peer_config_read" {
   role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.config_peer_s3_bucket_policy_read.arn
+  policy_arn = data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ads_s3_peer_config_read" {
   role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.config_peer_s3_bucket_policy_read.arn
+  policy_arn = data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read.arn
 }

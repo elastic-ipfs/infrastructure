@@ -4,6 +4,11 @@ variable "carsBucketName" {
   description = "Bucket for storing CAR files"
 }
 
+variable "config_bucket_name" {
+  type    = string
+  default = "ipfs-peer-bitswap-config"
+}
+
 variable "profile" {
   type = string
 }

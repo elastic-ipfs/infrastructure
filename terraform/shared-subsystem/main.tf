@@ -36,6 +36,11 @@ resource "aws_s3_bucket" "cars" {
   acl    = "private"
 }
 
+resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
+  bucket = var.config_bucket_name
+  acl    = "private"
+}
+
 resource "aws_sqs_queue" "multihashes_topic" {
   name                      = "multihashes-topic"
   message_retention_seconds = 86400 # 1 day

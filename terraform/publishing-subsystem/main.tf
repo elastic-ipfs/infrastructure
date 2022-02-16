@@ -64,8 +64,8 @@ resource "aws_lambda_function" "content" {
       INDEXER_NODE_URL             = "http://54.244.99.27:3001"
       NODE_ENV                     = "production"
       PEER_ID_FILE                 = "peerId.json"
-      PEER_ID_S3_BUCKET            = "ipfs-peer-bitswap-config" # TODO: Get from resource
-      S3_BUCKET                    = "ipfs-advertisement"       # TODO: Get from resource
+      PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
+      S3_BUCKET                    = aws_s3_bucket.ipfs_peer_ads.id
       SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
     }
   }
@@ -106,7 +106,7 @@ resource "aws_lambda_function" "ads" {
       INDEXER_NODE_URL             = "http://54.244.99.27:3001"
       NODE_ENV                     = "production"
       PEER_ID_FILE                 = "peerId.json"
-      PEER_ID_S3_BUCKET            = "ipfs-peer-bitswap-config" # TODO: Get from resource (For that I need to import data from peer-subsystem. Should I do it?)
+      PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
       S3_BUCKET                    = aws_s3_bucket.ipfs_peer_ads.id
       SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
     }

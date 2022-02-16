@@ -32,8 +32,8 @@ module "lambda-from-s3" {
   bucket = aws_s3_bucket.terratest_lambda_from_s3_cars
   sqs_multihashes_topic_url = aws_sqs_queue.terratest_lambda_from_s3_multihashes_topic.url
   aws_iam_role_policy_list = [
-    aws_iam_policy.terratest_s3_policy_read,
-    aws_iam_policy.terratest_s3_policy_write,
-    aws_iam_policy.terratest_sqs_policy_send
+    aws_iam_policy.terratest_s3_cars_policy_read,
+    aws_iam_policy.terratest_s3_cars_policy_write,
+    aws_iam_policy.terratest_sqs_multihashes_policy_send
   ]
 }
