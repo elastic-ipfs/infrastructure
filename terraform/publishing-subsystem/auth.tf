@@ -143,7 +143,7 @@ data "aws_iam_policy_document" "s3_advertisment_files_public_access" {
     principals {
       type        = "*"
       identifiers = ["*"]
-    }    
+    }
 
     actions = [
       "s3:GetObject",
@@ -152,7 +152,7 @@ data "aws_iam_policy_document" "s3_advertisment_files_public_access" {
     resources = [
       "${aws_s3_bucket.ipfs_peer_ads.arn}/*",
     ]
-  }  
+  }
 }
 
 
