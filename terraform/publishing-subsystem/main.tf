@@ -58,7 +58,7 @@ resource "aws_lambda_function" "content" {
 
   environment {
     variables = {
-      BITSWAP_PEER_MULTIADDR       = "/dns4/a3576e1d263ce43ee9eda1ae43b4d66c-2112169669.us-west-2.elb.amazonaws.com/tcp/3000/ws"
+      BITSWAP_PEER_MULTIADDR       = "/dns4/a041218039f304a65a3ea818796ec078-530051802.us-west-2.elb.amazonaws.com/tcp/3000/ws"
       HANDLER                      = "content"
       INDEXER_NODE_URL             = "http://54.244.99.27:3001"
       NODE_ENV                     = "production"
@@ -91,7 +91,7 @@ resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
 
 resource "aws_lambda_function" "ads" {
   function_name                  = local.ads_lambda.name
-  image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publishing-lambda:latest" # TODO: Change to official image URI
+  image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
   package_type                   = "Image"
   role                           = aws_iam_role.ads_lambda_role.arn
   memory_size                    = 1024
@@ -100,7 +100,7 @@ resource "aws_lambda_function" "ads" {
 
   environment {
     variables = {
-      BITSWAP_PEER_MULTIADDR       = "/dns4/a3576e1d263ce43ee9eda1ae43b4d66c-2112169669.us-west-2.elb.amazonaws.com/tcp/3000/ws"
+      BITSWAP_PEER_MULTIADDR       = "/dns4/a041218039f304a65a3ea818796ec078-530051802.us-west-2.elb.amazonaws.com/tcp/3000/ws"
       HANDLER                      = "advertisement"
       INDEXER_NODE_URL             = "http://54.244.99.27:3001"
       NODE_ENV                     = "production"
