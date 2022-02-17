@@ -1,4 +1,4 @@
-resource "aws_iam_policy" "terratest_s3_policy_write" {
+resource "aws_iam_policy" "terratest_s3_cars_policy_write" {
   name        = "terratest-s3-policy-write"
   description = "Policy for allowing put objects at S3"
   policy      = <<EOF
@@ -15,7 +15,7 @@ resource "aws_iam_policy" "terratest_s3_policy_write" {
 EOF
 }
 
-resource "aws_iam_policy" "terratest_s3_policy_read" {
+resource "aws_iam_policy" "terratest_s3_cars_policy_read" {
   name        = "terratest-s3-policy-read"
   description = "Policy for allowing reading objects from S3"
   policy      = <<EOF
@@ -42,7 +42,7 @@ resource "aws_iam_policy" "terratest_s3_policy_read" {
 EOF
 }
 
-resource "aws_iam_policy" "terratest_sqs_policy_send" {
+resource "aws_iam_policy" "terratest_sqs_multihashes_policy_send" {
   name        = "terratest-sqs-policy-send"
   description = "Policy for allowing publish messages in SQS"
   policy      = <<EOF

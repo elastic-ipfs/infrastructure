@@ -221,6 +221,27 @@ locals {
     }
   }
 
+  ## TODO: Validate ###
+
+  argocd_6379_ing = {
+    description = "Node to node 6379 argocd"
+    protocol    = "tcp"
+    from_port   = 6379
+    to_port     = 6379
+    type        = "ingress"
+    self        = true
+  }
+  argocd_6379_eg = {
+    description = "Node to node argocd"
+    protocol    = "tcp"
+    from_port   = 6379
+    to_port     = 6379
+    type        = "egress"
+    self        = true
+  }
+
+  ######
+
   argocd_repo_server_8081_ing = {
     description = "Node to node argocd-repo-server"
     protocol    = "tcp"

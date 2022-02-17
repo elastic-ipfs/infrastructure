@@ -10,16 +10,16 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_archive"></a> [archive](#provider\_archive) | n/a |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.38 |
+| <a name="provider_archive"></a> [archive](#provider\_archive) | 2.2.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.74.2 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_api-gateway-to-lambda"></a> [api-gateway-to-lambda](../modules/api-gateway-to-lambda/api-gateway-to-lambda.md) | ../modules/api-gateway-to-lambda | n/a |
-| <a name="module_lambda-from-s3"></a> [lambda-from-s3](../modules/lambda-from-s3/lambda-from-s3.md) | ../modules/lambda-from-s3 | n/a |
+| <a name="module_api-gateway-to-lambda"></a> [api-gateway-to-lambda](#module\_api-gateway-to-lambda) | ../modules/api-gateway-to-lambda | n/a |
+| <a name="module_lambda-from-s3"></a> [lambda-from-s3](#module\_lambda-from-s3) | ../modules/lambda-from-s3 | n/a |
 
 ## Resources
 

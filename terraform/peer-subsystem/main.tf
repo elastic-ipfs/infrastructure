@@ -80,10 +80,7 @@ module "vpc" {
   }
 }
 
-resource "aws_s3_bucket" "ipfs-peer-bitswap-config" {
-  bucket = var.config_bucket_name
-  acl    = "private" # TODO: Private
-}
+
 
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
@@ -110,7 +107,6 @@ module "eks" {
 
   cluster_endpoint_public_access_cidrs = [ # TODO: Access through AWS transit gateway
     "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
-    # "177.33.141.81/32" # My Network
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
@@ -207,7 +203,7 @@ module "kube-base-components" {
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
   cluster_id              = module.eks.cluster_id
   region                  = var.region
-  config_bucket_name      = var.config_bucket_name
+  config_bucket_name      = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
   host                    = data.aws_eks_cluster.eks.endpoint
   token                   = data.aws_eks_cluster_auth.eks.token
   cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
@@ -218,10 +214,10 @@ module "kube-base-components" {
       role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-        data.terraform_remote_state.shared.outputs.s3_policy_read,
-        data.terraform_remote_state.shared.outputs.s3_policy_write,
-        data.terraform_remote_state.shared.outputs.sqs_policy_send,
-        aws_iam_policy.config_peer_s3_bucket_policy_read,
+        data.terraform_remote_state.shared.outputs.s3_cars_policy_read,
+        data.terraform_remote_state.shared.outputs.s3_cars_policy_write,
+        data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
+        data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
       ]
     },
   }

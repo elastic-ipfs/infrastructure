@@ -17,11 +17,6 @@ variable "cluster_version" {
   default = "1.21"
 }
 
-variable "config_bucket_name" {
-  type    = string
-  default = "ipfs-peer-bitswap-config"
-}
-
 variable "provider_ads_bucket_name" {
   type        = string
   default     = "ipfs-provider-ads"
