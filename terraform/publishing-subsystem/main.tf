@@ -40,6 +40,49 @@ provider "aws" {
   }
 }
 
+
+module "content_lambda_from_sqs" {
+  source = "../modules/lambda-from-sqs"
+  sqs_trigger = {
+    arn                                = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
+    batch_size                         = 1000
+    maximum_batching_window_in_seconds = 30
+  }
+
+  lambda = {
+    image_uri   = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
+    name        = "${local.content_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
+    memory_size = 1024
+    timeout     = 60
+    environment_variables = {
+      BITSWAP_PEER_MULTIADDR       = "/dns4/a041218039f304a65a3ea818796ec078-530051802.us-west-2.elb.amazonaws.com/tcp/3000/ws"
+      HANDLER                      = "content"
+      INDEXER_NODE_URL             = "http://54.244.99.27:3001"
+      NODE_ENV                     = "production"
+      PEER_ID_FILE                 = "peerId.json"
+      PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
+      S3_BUCKET                    = aws_s3_bucket.ipfs_peer_ads.id
+      SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
+    }
+
+    policies_list = [ 
+      data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+      data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_receive,
+      data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_delete,
+      aws_iam_policy.s3_ads_policy_read,
+      aws_iam_policy.s3_ads_policy_write,
+      aws_iam_policy.sqs_ads_policy_send,
+    ]
+  }
+
+}
+
+# module "ads_lambda_from_sqs" {
+#   source = "../modules/lambda-from-sqs"
+
+# }
+
+
 resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" {
   event_source_arn                   = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
   enabled                            = true
@@ -50,11 +93,11 @@ resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" 
 
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
-  package_type = "Image"                 
-  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
-  role         = aws_iam_role.content_lambda_role.arn
-  memory_size  = 1024
-  timeout      = 60
+  package_type  = "Image"
+  image_uri     = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
+  role          = aws_iam_role.content_lambda_role.arn
+  memory_size   = 1024
+  timeout       = 60
 
   environment {
     variables = {
