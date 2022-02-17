@@ -52,7 +52,7 @@ resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
   # filename      = "lambda_function_base_code.zip"
   package_type = "Image"
-  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/paolo-publishing-lambda:latest" # TODO: Change to official image URI
+  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publishing-lambda:latest"
   role         = aws_iam_role.content_lambda_role.arn
   memory_size  = 1024
   timeout      = 60
@@ -92,7 +92,7 @@ resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
 
 resource "aws_lambda_function" "ads" {
   function_name                  = local.ads_lambda.name
-  image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/paolo-publishing-lambda:latest" # TODO: Change to official image URI
+  image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publishing-lambda:latest" # TODO: Change to official image URI
   package_type                   = "Image"
   role                           = aws_iam_role.ads_lambda_role.arn
   memory_size                    = 1024
