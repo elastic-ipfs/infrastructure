@@ -9,11 +9,11 @@ variable "sqs_trigger" {
 
 variable "lambda" {
   type = object({
-    name                  = string
-    image_uri             = string
-    environment_variables = map(string)
-    memory_size = number
-    timeout = number
+    name                           = string
+    image_uri                      = string
+    environment_variables          = map(string)
+    memory_size                    = number
+    timeout                        = number
     reserved_concurrent_executions = number
     policies_list = list(object({
       name = string,

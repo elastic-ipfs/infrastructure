@@ -10,7 +10,7 @@ spec:
     targetRevision: HEAD
     path: helm
     helm:
-      releaseName: ipfs-elastic-provider-bitswap-peer
+      releaseName: AWS-IPFS-bitswap-peer
   destination:
     server: https://kubernetes.default.svc
     namespace: default
