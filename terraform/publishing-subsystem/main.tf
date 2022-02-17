@@ -50,9 +50,8 @@ resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" 
 
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
-  # filename      = "lambda_function_base_code.zip"
-  package_type = "Image"
-  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publishing-lambda:latest"
+  package_type = "Image"                 
+  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
   role         = aws_iam_role.content_lambda_role.arn
   memory_size  = 1024
   timeout      = 60
