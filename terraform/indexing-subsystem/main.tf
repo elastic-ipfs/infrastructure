@@ -42,10 +42,9 @@ provider "aws" {
 
 resource "aws_lambda_function" "uploader" {
   function_name = local.uploader_lambda.name
-  filename      = "lambda_function_base_code.zip"
   role          = aws_iam_role.uploader_lambda_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
+  package_type = "Image"                 
+  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/uploader-lambda:latest"
 
   environment {
     variables = {
@@ -53,10 +52,6 @@ resource "aws_lambda_function" "uploader" {
       NODE_ENV  = "production"
     }
   }
-
-  layers = [ # TODO: This will change depending on deployed region # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versionsx86-64.html
-    "arn:aws:lambda:${var.region}:580247275435:layer:LambdaInsightsExtension:16"
-  ]
 
   depends_on = [
     aws_iam_role_policy_attachment.uploader_lambda_logs,
