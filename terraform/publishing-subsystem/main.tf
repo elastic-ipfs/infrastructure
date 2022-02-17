@@ -45,15 +45,15 @@ module "content_lambda_from_sqs" {
   source = "../modules/lambda-from-sqs"
   sqs_trigger = {
     arn                                = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
-    batch_size                         = 1000
+    batch_size                         = 10000
     maximum_batching_window_in_seconds = 30
   }
 
   lambda = {
-    image_uri   = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
-    name        = "${local.content_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
-    memory_size = 1024
-    timeout     = 60
+    image_uri                      = local.publisher_image_url
+    name                           = "${local.content_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
+    memory_size                    = 1024
+    timeout                        = 60
     reserved_concurrent_executions = -1 # No restrictions
     environment_variables = merge(
       local.environment_variables,
@@ -74,43 +74,37 @@ module "content_lambda_from_sqs" {
 
 }
 
-# module "ads_lambda_from_sqs" {
-#   source = "../modules/lambda-from-sqs"
+module "ads_lambda_from_sqs" {
+  source = "../modules/lambda-from-sqs"
 
-#   sqs_trigger = {
-#     arn                                = "advertisements-topic"
-#     batch_size                         = 900 # 15 min
-#     maximum_batching_window_in_seconds = 300 # 5 min
-#   }
+  sqs_trigger = {
+    arn                                = aws_sqs_queue.ads_topic.arn
+    batch_size                         = 100
+    maximum_batching_window_in_seconds = 5
+  }
 
-#   lambda = {
-#     image_uri   = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
-#     name        = "${local.ads_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
-#     memory_size = 1024
-#     timeout     = 300
-#     reserved_concurrent_executions = 1
-#     environment_variables = {
-#       HANDLER                      = "advertisement"
-#       BITSWAP_PEER_MULTIADDR       = local.environment_variables.BITSWAP_PEER_MULTIADDR
-#       INDEXER_NODE_URL             = local.environment_variables.INDEXER_NODE_URL
-#       NODE_ENV                     = local.environment_variables.NODE_ENV
-#       PEER_ID_FILE                 = local.environment_variables.PEER_ID_FILE
-#       PEER_ID_S3_BUCKET            = local.environment_variables.PEER_ID_S3_BUCKET
-#       S3_BUCKET                    = local.environment_variables.S3_BUCKET
-#       SQS_ADVERTISEMENTS_QUEUE_URL = local.environment_variables.SQS_ADVERTISEMENTS_QUEUE_URL
-#     }
+  lambda = {
+    image_uri                      = local.publisher_image_url
+    name                           = "${local.ads_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
+    memory_size                    = 1024
+    timeout                        = 300
+    reserved_concurrent_executions = 1
+    environment_variables = merge(
+      local.environment_variables,
+      {
+        HANDLER = "advertisement"
+      }
+    )
 
-#     policies_list = [
-#       aws_iam_policy.s3_ads_policy_write,
-#       aws_iam_policy.s3_ads_policy_read,
-#       aws_iam_policy.sqs_ads_policy_receive,
-#       aws_iam_policy.sqs_ads_policy_delete,
-#       data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
-#       data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
-#     ]
-#   }
-
-# }
+    policies_list = [
+      data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+      aws_iam_policy.s3_ads_policy_write,
+      aws_iam_policy.s3_ads_policy_read,
+      aws_iam_policy.sqs_ads_policy_receive,
+      aws_iam_policy.sqs_ads_policy_delete,
+    ]
+  }
+}
 
 
 resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" {
@@ -124,7 +118,7 @@ resource "aws_lambda_event_source_mapping" "multihashes_event_triggers_content" 
 resource "aws_lambda_function" "content" {
   function_name = local.content_lambda.name
   package_type  = "Image"
-  image_uri     = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
+  image_uri     = local.publisher_image_url
   role          = aws_iam_role.content_lambda_role.arn
   memory_size   = 1024
   timeout       = 60
@@ -164,7 +158,7 @@ resource "aws_lambda_event_source_mapping" "ads_event_triggers_ads" {
 
 resource "aws_lambda_function" "ads" {
   function_name                  = local.ads_lambda.name
-  image_uri                      = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
+  image_uri                      = local.publisher_image_url
   package_type                   = "Image"
   role                           = aws_iam_role.ads_lambda_role.arn
   memory_size                    = 1024
