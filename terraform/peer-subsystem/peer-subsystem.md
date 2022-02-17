@@ -11,8 +11,8 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.38 |
-| <a name="provider_http"></a> [http](#provider\_http) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.74.2 |
+| <a name="provider_http"></a> [http](#provider\_http) | 2.1.0 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
@@ -20,19 +20,14 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_eks"></a> [eks](#module\_eks) | terraform-aws-modules/eks/aws | ~> 18.2.0 |
-| <a name="module_gateway-endpoint-to-s3-dynamo"></a> [gateway-endpoint-to-s3-dynamo](../modules/gateway-endpoint-to-s3-dynamo/README.md) | ../modules/gateway-endpoint-to-s3-dynamo | n/a |
-| <a name="module_kube-base-components"></a> [kube-base-components](../modules/kube-base-components/README.md) | ../modules/kube-base-components | n/a |
+| <a name="module_gateway-endpoint-to-s3-dynamo"></a> [gateway-endpoint-to-s3-dynamo](#module\_gateway-endpoint-to-s3-dynamo) | ../modules/gateway-endpoint-to-s3-dynamo | n/a |
+| <a name="module_kube-base-components"></a> [kube-base-components](#module\_kube-base-components) | ../modules/kube-base-components | n/a |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_iam_policy.ads_s3_bucket_policy_read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.ads_s3_bucket_policy_write](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.config_peer_s3_bucket_policy_read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_s3_bucket.ipfs-peer-ads](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
-| [aws_s3_bucket.ipfs-peer-bitswap-config](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_security_group_rule.dns_ingress_tcp](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.dns_ingress_udp](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.fargate_egress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
@@ -50,7 +45,6 @@
 | <a name="input_accountId"></a> [accountId](#input\_accountId) | n/a | `string` | n/a | yes |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `"test-ipfs-peer-subsys"` | no |
 | <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | n/a | `string` | `"1.21"` | no |
-| <a name="input_config_bucket_name"></a> [config\_bucket\_name](#input\_config\_bucket\_name) | n/a | `string` | `"ipfs-peer-bitswap-config"` | no |
 | <a name="input_profile"></a> [profile](#input\_profile) | n/a | `string` | n/a | yes |
 | <a name="input_provider_ads_bucket_name"></a> [provider\_ads\_bucket\_name](#input\_provider\_ads\_bucket\_name) | Bucket for storing provider files | `string` | `"ipfs-provider-ads"` | no |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | n/a | yes |
