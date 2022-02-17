@@ -48,7 +48,7 @@ resource "aws_lambda_function" "uploader" {
 
   environment {
     variables = {
-      S3_BUCKET = "ipfs-cars" # TODO: Get from bucket resource
+      S3_BUCKET = data.terraform_remote_state.shared.outputs.cars_bucket.id
       NODE_ENV  = "production"
     }
   }
