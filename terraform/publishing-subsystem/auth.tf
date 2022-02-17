@@ -1,42 +1,3 @@
-### Roles
-resource "aws_iam_role" "content_lambda_role" {
-  name = "content_lambda_role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role" "ads_lambda_role" {
-  name = "ads_lambda_role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
-}
-
 ### Policies
 resource "aws_iam_policy" "s3_ads_policy_write" {
   name        = "s3-ads-policy-write"
@@ -138,6 +99,8 @@ resource "aws_iam_policy" "sqs_ads_policy_delete" {
 EOF
 }
 
+### Bucket
+
 data "aws_iam_policy_document" "s3_advertisment_files_public_access" {
   statement {
     principals {
@@ -156,74 +119,7 @@ data "aws_iam_policy_document" "s3_advertisment_files_public_access" {
 }
 
 
-### Attachments
 resource "aws_s3_bucket_policy" "allow_public_access_to_files" {
   bucket = aws_s3_bucket.ipfs_peer_ads.id
   policy = data.aws_iam_policy_document.s3_advertisment_files_public_access.json
-}
-
-resource "aws_iam_role_policy_attachment" "content_insights" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
-}
-
-resource "aws_iam_role_policy_attachment" "content_sqs_multihash_receive" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_receive.arn
-}
-
-resource "aws_iam_role_policy_attachment" "content_sqs_multihash_delete" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_delete.arn
-}
-
-resource "aws_iam_role_policy_attachment" "content_s3_read" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_read.arn
-}
-
-
-resource "aws_iam_role_policy_attachment" "content_s3_write" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_write.arn
-}
-
-resource "aws_iam_role_policy_attachment" "content_sqs_send" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = aws_iam_policy.sqs_ads_policy_send.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ads_insights" {
-  role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
-}
-
-resource "aws_iam_role_policy_attachment" "ads_s3_write" {
-  role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_write.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ads_s3_read" {
-  role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.s3_ads_policy_read.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ads_sqs_receive" {
-  role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.sqs_ads_policy_receive.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ads_sqs_delete" {
-  role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = aws_iam_policy.sqs_ads_policy_delete.arn
-}
-
-resource "aws_iam_role_policy_attachment" "content_s3_peer_config_read" {
-  role       = aws_iam_role.content_lambda_role.id
-  policy_arn = data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ads_s3_peer_config_read" {
-  role       = aws_iam_role.ads_lambda_role.id
-  policy_arn = data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read.arn
 }
