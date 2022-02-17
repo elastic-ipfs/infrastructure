@@ -54,18 +54,15 @@ module "content_lambda_from_sqs" {
     name        = "${local.content_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
     memory_size = 1024
     timeout     = 60
-    environment_variables = {
-      BITSWAP_PEER_MULTIADDR       = "/dns4/a041218039f304a65a3ea818796ec078-530051802.us-west-2.elb.amazonaws.com/tcp/3000/ws"
-      HANDLER                      = "content"
-      INDEXER_NODE_URL             = "http://54.244.99.27:3001"
-      NODE_ENV                     = "production"
-      PEER_ID_FILE                 = "peerId.json"
-      PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
-      S3_BUCKET                    = aws_s3_bucket.ipfs_peer_ads.id
-      SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
-    }
+    reserved_concurrent_executions = -1 # No restrictions
+    environment_variables = merge(
+      local.environment_variables,
+      {
+        HANDLER = "content"
+      }
+    )
 
-    policies_list = [ 
+    policies_list = [
       data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
       data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_receive,
       data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_delete,
@@ -79,6 +76,39 @@ module "content_lambda_from_sqs" {
 
 # module "ads_lambda_from_sqs" {
 #   source = "../modules/lambda-from-sqs"
+
+#   sqs_trigger = {
+#     arn                                = "advertisements-topic"
+#     batch_size                         = 900 # 15 min
+#     maximum_batching_window_in_seconds = 300 # 5 min
+#   }
+
+#   lambda = {
+#     image_uri   = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
+#     name        = "${local.ads_lambda.name}-test-module" # TODO: Remove '-test-module' sufix
+#     memory_size = 1024
+#     timeout     = 300
+#     reserved_concurrent_executions = 1
+#     environment_variables = {
+#       HANDLER                      = "advertisement"
+#       BITSWAP_PEER_MULTIADDR       = local.environment_variables.BITSWAP_PEER_MULTIADDR
+#       INDEXER_NODE_URL             = local.environment_variables.INDEXER_NODE_URL
+#       NODE_ENV                     = local.environment_variables.NODE_ENV
+#       PEER_ID_FILE                 = local.environment_variables.PEER_ID_FILE
+#       PEER_ID_S3_BUCKET            = local.environment_variables.PEER_ID_S3_BUCKET
+#       S3_BUCKET                    = local.environment_variables.S3_BUCKET
+#       SQS_ADVERTISEMENTS_QUEUE_URL = local.environment_variables.SQS_ADVERTISEMENTS_QUEUE_URL
+#     }
+
+#     policies_list = [
+#       aws_iam_policy.s3_ads_policy_write,
+#       aws_iam_policy.s3_ads_policy_read,
+#       aws_iam_policy.sqs_ads_policy_receive,
+#       aws_iam_policy.sqs_ads_policy_delete,
+#       data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+#       data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+#     ]
+#   }
 
 # }
 

@@ -14,6 +14,7 @@ variable "lambda" {
     environment_variables = map(string)
     memory_size = number
     timeout = number
+    reserved_concurrent_executions = number
     policies_list = list(object({
       name = string,
       arn  = string,

@@ -7,12 +7,13 @@ resource "aws_lambda_event_source_mapping" "event_triggers" {
 }
 
 resource "aws_lambda_function" "lambda" {
-  function_name = var.lambda.name
-  package_type = "Image"                 
-  image_uri    = var.lambda.image_uri
-  role         = aws_iam_role.lambda_role.arn
-  memory_size  = var.lambda.memory_size
-  timeout      = var.lambda.timeout
+  function_name                  = var.lambda.name
+  package_type                   = "Image"
+  image_uri                      = var.lambda.image_uri
+  role                           = aws_iam_role.lambda_role.arn
+  memory_size                    = var.lambda.memory_size
+  timeout                        = var.lambda.timeout
+  reserved_concurrent_executions = var.lambda.reserved_concurrent_executions
 
   environment {
     variables = var.lambda.environment_variables
