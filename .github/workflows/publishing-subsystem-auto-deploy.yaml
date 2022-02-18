@@ -12,7 +12,7 @@ on:
     - 'terraform/modules/lambda-from-sqs/**'
 jobs:
   terraform:
-    uses: web3-storage/IPFS-Elastic-Provider-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
+    uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
       options: -var profile=default
       aws_region: us-west-2

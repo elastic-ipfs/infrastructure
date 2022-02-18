@@ -16,7 +16,7 @@ on:
     - 'terraform/modules/gateway-endpoint-to-s3-dynamo/**'
 jobs:
   terraform:
-    uses: web3-storage/IPFS-Elastic-Provider-Infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
+    uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
       options: -var profile=default -var accountId=505595374361
       aws_region: us-west-2
