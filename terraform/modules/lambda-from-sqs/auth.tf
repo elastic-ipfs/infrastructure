@@ -28,3 +28,8 @@ resource "aws_iam_role_policy_attachment" "content_insights" {
   role       = aws_iam_role.lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
 }
+
+resource "aws_iam_role_policy_attachment" "aws_xray_write_only_access" {
+  role       = aws_iam_role.lambda_role.id
+  policy_arn = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+}

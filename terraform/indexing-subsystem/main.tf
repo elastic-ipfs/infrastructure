@@ -46,13 +46,17 @@ resource "aws_lambda_function" "uploader" {
   package_type = "Image"                 
   image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/uploader-lambda:latest"
   memory_size   = 1024
-  timeout       = 60
+  timeout = 30
 
   environment {
     variables = {
       S3_BUCKET = data.terraform_remote_state.shared.outputs.cars_bucket.id
       NODE_ENV  = "production"
     }
+  }
+
+  tracing_config { # X-Ray
+    mode = "Active"
   }
 
   depends_on = [

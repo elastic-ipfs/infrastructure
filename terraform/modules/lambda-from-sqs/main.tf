@@ -18,4 +18,8 @@ resource "aws_lambda_function" "lambda" {
   environment {
     variables = var.lambda.environment_variables
   }
+
+  tracing_config { # X-Ray
+    mode = "Active"
+  }
 }

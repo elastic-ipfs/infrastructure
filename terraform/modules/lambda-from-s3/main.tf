@@ -26,6 +26,10 @@ resource "aws_lambda_function" "indexing" {
     }
   }
 
+  tracing_config { # X-Ray
+    mode = "Active"
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
     aws_cloudwatch_log_group.indexing_log_group,
