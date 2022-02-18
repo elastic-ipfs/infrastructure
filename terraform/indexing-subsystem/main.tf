@@ -45,12 +45,18 @@ resource "aws_lambda_function" "uploader" {
   role          = aws_iam_role.uploader_lambda_role.arn
   package_type = "Image"                 
   image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/uploader-lambda:latest"
+  memory_size   = 1024
+  timeout = 30
 
   environment {
     variables = {
       S3_BUCKET = data.terraform_remote_state.shared.outputs.cars_bucket.id
       NODE_ENV  = "production"
     }
+  }
+
+  tracing_config { # X-Ray
+    mode = "Active"
   }
 
   depends_on = [
@@ -83,4 +89,10 @@ module "lambda-from-s3" {
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
     data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send
   ]
+}
+resource "aws_ecr_repository" "ecr-repo-uploader-lambda" {
+  name = "uploader-lambda"
+}
+resource "aws_ecr_repository" "ecr-repo-indexer-lambda" {
+  name = "indexer-lambda"
 }

@@ -113,3 +113,7 @@ module "ads_lambda_from_sqs" {
     ]
   }
 }
+
+resource "aws_ecr_repository" "ecr-repo-publisher-lambda" {
+  name = "publisher-lambda"
+}
