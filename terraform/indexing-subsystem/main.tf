@@ -90,3 +90,9 @@ module "lambda-from-s3" {
     data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send
   ]
 }
+resource "aws_ecr_repository" "ecr-repo-uploader-lambda" {
+  name = "uploader-lambda"
+}
+resource "aws_ecr_repository" "ecr-repo-indexer-lambda" {
+  name = "indexer-lambda"
+}
