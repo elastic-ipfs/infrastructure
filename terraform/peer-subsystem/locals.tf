@@ -66,6 +66,26 @@ locals {
       type        = "egress"
       self        = true
     }
+
+
+    prometheus_bitswap_peer_3001_ing = {
+      description = "Node to node Prometheus scrape bitswap_peer metrics"
+      protocol    = "tcp"
+      from_port   = 3001
+      to_port     = 3001
+      type        = "ingress"
+      self        = true
+    }
+    prometheus_bitswap_peer_3001_eg = {
+      description = "Node to node Prometheus scrape bitswap_peer metrics"
+      protocol    = "tcp"
+      from_port   = 3001
+      to_port     = 3001
+      type        = "egress"
+      self        = true
+    }
+
+
     prometheus_grafana_9090_ing = {
       description = "Node to node Grafana Datasource Prometheus"
       protocol    = "tcp"
