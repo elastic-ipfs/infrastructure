@@ -45,6 +45,8 @@ resource "aws_lambda_function" "uploader" {
   role          = aws_iam_role.uploader_lambda_role.arn
   package_type = "Image"                 
   image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/uploader-lambda:latest"
+  memory_size   = 1024
+  timeout       = 60
 
   environment {
     variables = {
