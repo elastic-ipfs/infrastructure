@@ -7,44 +7,45 @@ provider "helm" {
 }
 
 resource "helm_release" "cloudwatch_exporter" {
-  name       = "cloudwatch-exporter"
-  chart      = "prometheus-community/prometheus-cloudwatch-exporter"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  namespace  = local.cloudwatch_exporter.namespace
+  name             = "cloudwatch-exporter"
+  chart            = "prometheus-cloudwatch-exporter"
+  version          = "~> 0.18.0"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  namespace        = local.cloudwatch_exporter.namespace
   create_namespace = true
 
   set {
-    name = "service.portName"
+    name  = "service.portName"
     value = "http-metrics"
   }
 
   set {
-    name = "service.labels.metricsMonitor"
+    name  = "service.labels.metricsMonitor"
     value = "true"
   }
 
   set {
-    name = "serviceAccount.create"
+    name  = "serviceAccount.create"
     value = "true"
   }
 
   set {
-    name = "serviceAccount.name"
-    value = "${local.cloudwatch_exporter.serviceaccount.name}"
+    name  = "serviceAccount.name"
+    value = local.cloudwatch_exporter.serviceaccount.name
   }
 
   set {
-    name = "serviceAccount.annotations.eks.amazonaws.com/role-arn"
+    name  = "serviceAccount.annotations.eks.amazonaws.com/role-arn"
     value = module.cloudwatch_exporter_role.iam_role_arn
   }
 
   set {
-    name = "eks.amazonaws.com/sts-regional-endpoints"
+    name  = "eks.amazonaws.com/sts-regional-endpoints"
     value = "true"
   }
 
   set {
-    name = "config"
+    name  = "config"
     value = <<EOF
       region: us-west-2
       metrics:
