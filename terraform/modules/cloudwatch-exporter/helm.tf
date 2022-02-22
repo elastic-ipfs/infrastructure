@@ -108,3 +108,4 @@ resource "helm_release" "cloudwatch_exporter" {
     EOF
   }
 }
+
