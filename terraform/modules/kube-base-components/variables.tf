@@ -50,7 +50,7 @@ variable "eks_auth_sync_role_name" {
 }
 
 variable "deploy_eks_auth_sync" {
-  description = "Whether to deploy or not the eks_auth_sync daemon on the cluster"
+  description = "Whether to deploy or not the eks_auth_sync daemon to the cluster"
   type        = bool
   default     = true
 }

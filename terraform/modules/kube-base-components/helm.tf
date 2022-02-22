@@ -40,5 +40,4 @@ resource "helm_release" "argocd" {
   chart            = "../modules/kube-base-components/helm/argocd"
   namespace        = "argocd"
   create_namespace = true
-  # timeout          = 1800
 }
