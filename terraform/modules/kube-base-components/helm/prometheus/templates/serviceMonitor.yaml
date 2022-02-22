@@ -9,6 +9,7 @@ spec:
   namespaceSelector:
     matchNames:
     - default
+    - cloudwatch-exporter
   selector:
     matchLabels:
       metricsMonitor: "true"

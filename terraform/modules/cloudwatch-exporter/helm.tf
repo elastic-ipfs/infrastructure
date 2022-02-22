@@ -22,6 +22,7 @@ resource "helm_release" "cloudwatch_exporter" {
   set {
     name  = "service.labels.metricsMonitor"
     value = "true"
+    type = "string"
   }
 
   set {
@@ -37,12 +38,14 @@ resource "helm_release" "cloudwatch_exporter" {
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.cloudwatch_exporter_role.iam_role_arn
+    type = "string"
   }
 
-  # set {
-  #   name  = "eks.amazonaws.com/sts-regional-endpoints"
-  #   value = "true"
-  # }
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/sts-regional-endpoints"
+    value = "true"
+    type = "string"
+  }
 
   set {
     name  = "config"
