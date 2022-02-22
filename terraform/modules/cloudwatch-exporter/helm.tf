@@ -35,14 +35,14 @@ resource "helm_release" "cloudwatch_exporter" {
   }
 
   set {
-    name  = "serviceAccount.annotations.eks.amazonaws.com/role-arn"
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.cloudwatch_exporter_role.iam_role_arn
   }
 
-  set {
-    name  = "eks.amazonaws.com/sts-regional-endpoints"
-    value = "true"
-  }
+  # set {
+  #   name  = "eks.amazonaws.com/sts-regional-endpoints"
+  #   value = "true"
+  # }
 
   set {
     name  = "config"
