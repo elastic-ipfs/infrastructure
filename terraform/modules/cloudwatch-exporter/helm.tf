@@ -120,8 +120,6 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_metric_name: memory_utilization
         aws_statistics:
         - Maximum
-      - aws_dimensions:
-        - function_name
     EOF
   }
 }
