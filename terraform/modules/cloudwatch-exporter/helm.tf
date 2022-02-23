@@ -108,7 +108,20 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_namespace: AWS/Lambda
         aws_statistics:
         - Sum
+      - aws_dimensions:
+        - function_name
+        aws_namespace: LambdaInsights
+        aws_metric_name: total_network
+        aws_statistics:
+        - Sum
+      - aws_dimensions:
+        - function_name
+        aws_namespace: LambdaInsights 
+        aws_metric_name: memory_utilization
+        aws_statistics:
+        - Maximum
+      - aws_dimensions:
+        - function_name
     EOF
   }
 }
-
