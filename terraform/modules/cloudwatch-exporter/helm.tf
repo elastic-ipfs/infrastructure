@@ -101,6 +101,7 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_namespace: AWS/Lambda
         aws_statistics:
         - Sum
+        - Average
       - aws_dimensions:
         - FunctionName
         - Resource
@@ -108,6 +109,7 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_namespace: AWS/Lambda
         aws_statistics:
         - Sum
+        - Average
       - aws_dimensions:
         - function_name
         aws_namespace: LambdaInsights
