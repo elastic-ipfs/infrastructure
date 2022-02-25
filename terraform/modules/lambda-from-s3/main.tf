@@ -11,8 +11,8 @@ terraform {
 
 resource "aws_lambda_function" "indexing" {
   function_name = var.indexingLambdaName
-  package_type = "Image"
-  image_uri = "505595374361.dkr.ecr.us-west-2.amazonaws.com/indexer-lambda:latest" 
+  package_type  = "Image"
+  image_uri     = "505595374361.dkr.ecr.us-west-2.amazonaws.com/indexer-lambda:latest"
   role          = aws_iam_role.indexing_lambda_role.arn
   memory_size   = 1024
   timeout       = 900

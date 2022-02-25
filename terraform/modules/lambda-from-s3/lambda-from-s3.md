@@ -23,6 +23,7 @@ No modules.
 | [aws_cloudwatch_log_group.indexing_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_iam_policy.lambda_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.indexing_lambda_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.aws_xray_write_only_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.indexing_lambda_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.lambda_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.policies_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
@@ -38,7 +39,7 @@ No modules.
 | <a name="input_bucket"></a> [bucket](#input\_bucket) | n/a | <pre>object({<br>    bucket = string<br>    arn    = string<br>    id     = string<br>  })</pre> | n/a | yes |
 | <a name="input_indexingLambdaName"></a> [indexingLambdaName](#input\_indexingLambdaName) | n/a | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | n/a | yes |
-| <a name="input_sqs_publishing_queue_url"></a> [sqs\_publishing\_queue\_url](#input\_sqs\_publishing\_queue\_url) | n/a | `string` | n/a | yes |
+| <a name="input_sqs_multihashes_topic_url"></a> [sqs\_multihashes\_topic\_url](#input\_sqs\_multihashes\_topic\_url) | n/a | `string` | n/a | yes |
 
 ## Outputs
 

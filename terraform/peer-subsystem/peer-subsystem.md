@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.74.2 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.74.3 |
 | <a name="provider_http"></a> [http](#provider\_http) | 2.1.0 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
