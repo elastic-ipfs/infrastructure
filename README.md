@@ -24,7 +24,7 @@ This project is divided into modules, where each subsystem has its own. For exam
 - [`shared-modules`](terraform/shared-subsystem/shared-subsystem.md) (Base resources used by multiple subsystems)
 - [`indexing-subsystem`](terraform/indexing-subsystem/indexing-subsystem.md)
 - [`peer-subsystem`](terraform/peer-subsystem/peer-subsystem.md)
-- `publishing-subsystem`
+- [`publishing-subsystem`](terraform/publishing-subsystem/publishing-subsystem.md)
 - [`dns`](terraform/dns/readme.md)
 
 There are also modules with smaller scope for grouping resources that serve a specific purpose. For example:
