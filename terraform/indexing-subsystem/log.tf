@@ -30,3 +30,22 @@ resource "aws_iam_role_policy_attachment" "uploader_lambda_logs" {
   role       = aws_iam_role.uploader_lambda_role.name # Change this
   policy_arn = aws_iam_policy.uploader_lambda_logging.arn
 }
+
+## Custom metrics filter
+
+resource "aws_cloudwatch_log_metric_filter" "uploader-s3-heads-count" {
+  name           = "test-s3-heads-count"
+  pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
+  log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
+
+
+  metric_transformation {
+    namespace = "test-custom-uploader-metrics"
+    name      = "test-s3_heads-count"
+    value     = "$.metrics.s3-heads-count"
+
+    # dimensions = {
+    #   "function_name" = "uploader"
+    # }
+  }
+}
