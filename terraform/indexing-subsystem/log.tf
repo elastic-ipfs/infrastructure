@@ -33,19 +33,27 @@ resource "aws_iam_role_policy_attachment" "uploader_lambda_logs" {
 
 ## Custom metrics filter
 
-resource "aws_cloudwatch_log_metric_filter" "uploader-s3-heads-count" {
-  name           = "test-s3-heads-count"
+resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_count" {
+  name           = "uploader-lambda-s3-heads-count"
   pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
   log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
 
-
   metric_transformation {
-    namespace = "test-custom-uploader-metrics"
-    name      = "test-s3_heads-count"
+    namespace = "uploader-lambda-metrics"
+    name      = "uploader-lambda-s3-heads-count"
     value     = "$.metrics.s3-heads-count"
-
-    # dimensions = {
-    #   "function_name" = "uploader"
-    # }
   }
 }
+
+resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_signs_count" {
+  name           = "uploader-lambda-s3-signs-count"
+  pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
+  log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
+
+  metric_transformation {
+    namespace = "uploader-lambda-metrics"
+    name      = "uploader-lambda-s3-signs-count"
+    value     = "$.metrics.s3-signs-count"
+  }
+}
+
