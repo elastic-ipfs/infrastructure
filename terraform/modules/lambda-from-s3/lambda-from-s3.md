@@ -37,7 +37,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_iam_role_policy_list"></a> [aws\_iam\_role\_policy\_list](#input\_aws\_iam\_role\_policy\_list) | This list contains policies that will be attached to the current role | <pre>list(object({<br>    name = string,<br>    arn  = string,<br>  }))</pre> | n/a | yes |
 | <a name="input_bucket"></a> [bucket](#input\_bucket) | n/a | <pre>object({<br>    bucket = string<br>    arn    = string<br>    id     = string<br>  })</pre> | n/a | yes |
-| <a name="input_indexingLambdaName"></a> [indexingLambdaName](#input\_indexingLambdaName) | n/a | `string` | n/a | yes |
+| <a name="input_lambdaName"></a> [lambdaName](#input\_lambdaName) | n/a | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | n/a | yes |
 | <a name="input_sqs_multihashes_topic_url"></a> [sqs\_multihashes\_topic\_url](#input\_sqs\_multihashes\_topic\_url) | n/a | `string` | n/a | yes |
 

@@ -10,7 +10,7 @@ terraform {
 }
 
 resource "aws_lambda_function" "indexing" {
-  function_name = var.indexingLambdaName
+  function_name = var.lambdaName
   package_type  = "Image"
   image_uri     = "505595374361.dkr.ecr.us-west-2.amazonaws.com/indexer-lambda:latest"
   role          = aws_iam_role.indexing_lambda_role.arn
