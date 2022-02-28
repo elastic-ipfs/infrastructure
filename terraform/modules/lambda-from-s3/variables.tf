@@ -25,3 +25,8 @@ variable "aws_iam_role_policy_list" {
 variable "region" {
   type = string
 }
+
+variable custom_metrics {
+  type = list(string)
+  default = []
+}

@@ -89,6 +89,10 @@ module "lambda-from-s3" {
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
     data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send
   ]
+  custom_metrics = [
+    "s3-fetchs-count",
+    "dynamo-reads-count",
+  ]
 }
 resource "aws_ecr_repository" "ecr-repo-uploader-lambda" {
   name = "uploader-lambda"
