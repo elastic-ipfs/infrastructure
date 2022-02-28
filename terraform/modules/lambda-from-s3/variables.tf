@@ -1,4 +1,4 @@
-variable "indexingLambdaName" {
+variable "lambdaName" {
   type = string
 }
 

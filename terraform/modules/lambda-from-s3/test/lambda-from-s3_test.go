@@ -26,7 +26,7 @@ func TestTerraformAwsLambdaFromS3Example(t *testing.T) {
 			"region":         awsRegion,
 			"profile":        "nearform", // TODO: Change to oficial sandbox account
 			"testBucketName": bucketName,
-			"indexingLambdaName": "terratest_indexing",
+			"lambdaName": "terratest_indexing",
 			"testQueueName":  "terratest-lambda-from-s3-publishing-queue",
 		},
 	}

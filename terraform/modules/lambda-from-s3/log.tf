@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "indexing_log_group" {
-  name              = "/aws/lambda/${var.indexingLambdaName}"
+  name              = "/aws/lambda/${var.lambdaName}"
   retention_in_days = 14
 }
 
@@ -36,11 +36,11 @@ resource "aws_cloudwatch_log_metric_filter" "lambda_s3_metrics_count" {
   # for_each       = var.custom_metrics
   for_each       = { for metric in var.custom_metrics : metric => metric }
   name           = each.value
-  pattern        = "{ $.ipfs_provider_component = \"${var.indexingLambdaName}-lambda\" }"
+  pattern        = "{ $.ipfs_provider_component = \"${var.lambdaName}-lambda\" }"
   log_group_name = aws_cloudwatch_log_group.indexing_log_group.name
 
   metric_transformation {
-    namespace = "${var.indexingLambdaName}-lambda-metrics"
+    namespace = "${var.lambdaName}-lambda-metrics"
     name      = each.value
     value     = "$.metrics.${each.value}"
     dimensions = {

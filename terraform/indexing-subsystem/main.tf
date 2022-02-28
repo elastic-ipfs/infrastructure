@@ -78,7 +78,7 @@ module "api-gateway-to-lambda" {
 
 module "lambda-from-s3" {
   source                    = "../modules/lambda-from-s3"
-  indexingLambdaName        = "indexing"
+  lambdaName        = "indexer"
   bucket                    = data.terraform_remote_state.shared.outputs.cars_bucket
   sqs_multihashes_topic_url = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.url
   region                    = var.region
@@ -91,7 +91,11 @@ module "lambda-from-s3" {
   ]
   custom_metrics = [
     "s3-fetchs-count",
+    "dynamo-creates-count",
+    "dynamo-updates-count",
+    "dynamo-deletes-count",
     "dynamo-reads-count",
+    "sqs-publishes-count"
   ]
 }
 resource "aws_ecr_repository" "ecr-repo-uploader-lambda" {

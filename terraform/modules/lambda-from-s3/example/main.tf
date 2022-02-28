@@ -28,7 +28,7 @@ resource "aws_sqs_queue" "terratest_lambda_from_s3_multihashes_topic" {
 
 module "lambda-from-s3" {
   source = "../"
-  indexingLambdaName = var.indexingLambdaName
+  lambdaName = var.lambdaName
   bucket = aws_s3_bucket.terratest_lambda_from_s3_cars
   sqs_multihashes_topic_url = aws_sqs_queue.terratest_lambda_from_s3_multihashes_topic.url
   aws_iam_role_policy_list = [
