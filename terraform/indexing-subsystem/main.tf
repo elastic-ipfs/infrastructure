@@ -43,10 +43,10 @@ provider "aws" {
 resource "aws_lambda_function" "uploader" {
   function_name = local.uploader_lambda.name
   role          = aws_iam_role.uploader_lambda_role.arn
-  package_type = "Image"                 
-  image_uri    = "505595374361.dkr.ecr.us-west-2.amazonaws.com/uploader-lambda:latest"
+  package_type  = "Image"
+  image_uri     = "505595374361.dkr.ecr.us-west-2.amazonaws.com/uploader-lambda:latest"
   memory_size   = 1024
-  timeout = 30
+  timeout       = 30
 
   environment {
     variables = {
@@ -78,7 +78,7 @@ module "api-gateway-to-lambda" {
 
 module "lambda-from-s3" {
   source                    = "../modules/lambda-from-s3"
-  lambdaName        = "indexer"
+  lambdaName                = "indexer"
   bucket                    = data.terraform_remote_state.shared.outputs.cars_bucket
   sqs_multihashes_topic_url = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.url
   region                    = var.region
