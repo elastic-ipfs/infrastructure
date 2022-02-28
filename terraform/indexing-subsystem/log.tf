@@ -27,7 +27,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "uploader_lambda_logs" {
-  role       = aws_iam_role.uploader_lambda_role.name # Change this
+  role       = aws_iam_role.uploader_lambda_role.name
   policy_arn = aws_iam_policy.uploader_lambda_logging.arn
 }
 
@@ -40,7 +40,7 @@ resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_count" {
 
   metric_transformation {
     namespace = "uploader-lambda-metrics"
-    name      = "uploader-lambda-s3-heads-count"
+    name      = "s3-heads-count"
     value     = "$.metrics.s3-heads-count"
     dimensions = {
       ipfs_provider_component = "$.ipfs_provider_component"
@@ -55,7 +55,7 @@ resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_signs_count" {
 
   metric_transformation {
     namespace = "uploader-lambda-metrics"
-    name      = "uploader-lambda-s3-signs-count"
+    name      = "s3-signs-count"
     value     = "$.metrics.s3-signs-count"
     dimensions = {
       ipfs_provider_component = "$.ipfs_provider_component"

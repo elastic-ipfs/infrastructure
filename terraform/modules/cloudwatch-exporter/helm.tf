@@ -124,11 +124,18 @@ resource "helm_release" "cloudwatch_exporter" {
         - Maximum
       - aws_dimensions: 
         - ipfs_provider_component
-        aws_metric_name: uploader-lambda-s3-heads-count
+        aws_metric_name: s3-heads-count
         aws_namespace: uploader-lambda-metrics
         aws_statistics:
         - Sum
         - Average    
+      - aws_dimensions: 
+        - ipfs_provider_component
+        aws_metric_name: s3-signs-count
+        aws_namespace: uploader-lambda-metrics
+        aws_statistics:
+        - Sum
+        - Average 
       EOF
   }
 }
