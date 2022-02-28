@@ -139,42 +139,42 @@ resource "helm_release" "cloudwatch_exporter" {
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: dynamo-creates-count
-        aws_namespace: indexer-lambda
+        aws_namespace: indexer-lambda-metrics
         aws_statistics:
         - Sum
         - Average 
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: dynamo-deletes-count
-        aws_namespace: indexer-lambda
+        aws_namespace: indexer-lambda-metrics
         aws_statistics:
         - Sum
         - Average 
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: dynamo-reads-count
-        aws_namespace: indexer-lambda
+        aws_namespace: indexer-lambda-metrics
         aws_statistics:
         - Sum
         - Average
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: dynamo-updates-count
-        aws_namespace: indexer-lambda
+        aws_namespace: indexer-lambda-metrics
         aws_statistics:
         - Sum
         - Average
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: s3-fetchs-count
-        aws_namespace: indexer-lambda
+        aws_namespace: indexer-lambda-metrics
         aws_statistics:
         - Sum
         - Average
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: sqs-publishes-count
-        aws_namespace: indexer-lambda
+        aws_namespace: indexer-lambda-metrics
         aws_statistics:
         - Sum
         - Average
