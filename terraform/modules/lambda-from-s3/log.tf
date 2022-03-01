@@ -31,9 +31,7 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
-## Custom metrics filter
 resource "aws_cloudwatch_log_metric_filter" "lambda_s3_metrics_count" {
-  # for_each       = var.custom_metrics
   for_each       = { for metric in var.custom_metrics : metric => metric }
   name           = each.value
   pattern        = "{ $.ipfs_provider_component = \"${var.lambdaName}-lambda\" }"

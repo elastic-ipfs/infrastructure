@@ -178,6 +178,41 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_statistics:
         - Sum
         - Average
+      - aws_dimensions: 
+        - ipfs_provider_component
+        aws_metric_name: s3-fetchs-count
+        aws_namespace: publishing-content-lambda
+        aws_statistics:
+        - Sum
+        - Average
+      - aws_dimensions: 
+        - ipfs_provider_component
+        aws_metric_name: s3-uploads-count
+        aws_namespace: publishing-content-lambda
+        aws_statistics:
+        - Sum
+        - Average
+      - aws_dimensions: 
+        - ipfs_provider_component
+        aws_metric_name: sqs-publishes-count
+        aws_namespace: publishing-content-lambda
+        aws_statistics:
+        - Sum
+        - Average
+      - aws_dimensions: 
+        - ipfs_provider_component
+        aws_metric_name: http-head-cid-fetchs-count
+        aws_namespace: publishing-content-lambda
+        aws_statistics:
+        - Sum
+        - Average
+      - aws_dimensions: 
+        - ipfs_provider_component
+        aws_metric_name: http-indexer-announcements-count
+        aws_namespace: publishing-content-lambda
+        aws_statistics:
+        - Sum
+        - Average
       EOF
   }
 }
