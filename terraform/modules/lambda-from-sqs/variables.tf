@@ -21,3 +21,12 @@ variable "lambda" {
     }))
   })
 }
+
+variable metrics_namespace {
+  type = string
+}
+
+variable custom_metrics {
+  type = list(string)
+  default = []
+}

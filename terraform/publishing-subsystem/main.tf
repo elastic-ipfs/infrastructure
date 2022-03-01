@@ -81,6 +81,16 @@ module "content_lambda_from_sqs" {
     ]
   }
 
+  metrics_namespace = "publishing-lambda-metrics"
+
+  custom_metrics = [
+    "s3-fetchs-count",
+    "s3-uploads-count",
+    "sqs-publishes-count",
+    "http-head-cid-fetchs-count",
+    "http-indexer-announcements-count",
+  ]
+
 }
 
 module "ads_lambda_from_sqs" {
@@ -112,6 +122,16 @@ module "ads_lambda_from_sqs" {
       aws_iam_policy.sqs_ads_policy_delete,
     ]
   }
+
+  metrics_namespace = "publishing-lambda-metrics"
+
+  custom_metrics = [
+    "s3-fetchs-count",
+    "s3-uploads-count",
+    "sqs-publishes-count",
+    "http-head-cid-fetchs-count",
+    "http-indexer-announcements-count",
+  ]
 }
 
 resource "aws_ecr_repository" "ecr-repo-publisher-lambda" {

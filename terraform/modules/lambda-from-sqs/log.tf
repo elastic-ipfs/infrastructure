@@ -30,3 +30,19 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
+
+resource "aws_cloudwatch_log_metric_filter" "lambda_sqs_metrics_count" {
+  for_each       = { for metric in var.custom_metrics : metric => metric }
+  name           = each.value
+  pattern        = "{ $.ipfs_provider_component = \"${var.lambda.name}-lambda\" }"
+  log_group_name = aws_cloudwatch_log_group.log_group.name
+
+  metric_transformation {
+    namespace = "${var.metrics_namespace}"
+    name      = each.value
+    value     = "$.metrics.${each.value}"
+    dimensions = {
+      ipfs_provider_component = "$.ipfs_provider_component"
+    }
+  }
+}
