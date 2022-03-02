@@ -52,6 +52,52 @@ resource "helm_release" "cloudwatch_exporter" {
     value = <<EOF
       region: us-west-2
       metrics:
+      # DynamoDB
+      - aws_dimensions: 
+        - Operation
+        - TableName
+        aws_metric_name: SuccessfulRequestLatency
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Average          
+      - aws_dimensions: 
+        - Operation
+        - TableName
+        aws_metric_name: ThrottledRequests
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Sum
+      - aws_dimensions: 
+        - TableName
+        aws_metric_name: ConsumedReadCapacityUnits
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Sum
+      - aws_dimensions: 
+        - TableName
+        aws_metric_name: ProvisionedReadCapacityUnits
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Sum
+      - aws_dimensions: 
+        - TableName
+        aws_metric_name: ConsumedWriteCapacityUnits
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Sum
+      - aws_dimensions: 
+        - TableName
+        aws_metric_name: ProvisionedWriteCapacityUnits
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Average
+      - aws_dimensions: 
+        - TableName
+        - Operation
+        aws_metric_name: ReturnedItemCount
+        aws_namespace: AWS/DynamoDB
+        aws_statistics:
+        - Sum
       # SQS
       - aws_dimensions: 
         - QueueName
