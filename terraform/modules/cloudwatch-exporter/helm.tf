@@ -52,6 +52,24 @@ resource "helm_release" "cloudwatch_exporter" {
     value = <<EOF
       region: us-west-2
       metrics:
+       # S3
+      - aws_dimensions: 
+        - BucketName
+        - StorageType
+        aws_metric_name: NumberOfObjects
+        aws_namespace: AWS/S3
+        aws_statistics:
+        - Sum
+        - Average
+      - aws_dimensions: 
+        - BucketName
+        - StorageType
+        aws_metric_name: BucketSizeBytes
+        aws_namespace: AWS/S3
+        aws_statistics:
+        - Sum
+        - Average
+      # Lambda Insights
       - aws_dimensions:
         - FunctionName
         - Resource
@@ -121,7 +139,8 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_namespace: LambdaInsights 
         aws_metric_name: memory_utilization
         aws_statistics:
-        - Maximum
+        - Maximum     
+      # Custom Lambda metrics
       - aws_dimensions: 
         - ipfs_provider_component
         aws_metric_name: s3-heads-count
