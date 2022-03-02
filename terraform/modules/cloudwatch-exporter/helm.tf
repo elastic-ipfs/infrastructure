@@ -108,7 +108,6 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_metric_name: NumberOfObjects
         aws_namespace: AWS/S3
         aws_statistics:
-        - Sum
         - Average
       - aws_dimensions: 
         - BucketName
@@ -116,7 +115,6 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_metric_name: BucketSizeBytes
         aws_namespace: AWS/S3
         aws_statistics:
-        - Sum
         - Average
       # Lambda Insights
       - aws_dimensions:
