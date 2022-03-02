@@ -52,7 +52,56 @@ resource "helm_release" "cloudwatch_exporter" {
     value = <<EOF
       region: us-west-2
       metrics:
-       # S3
+      # SQS
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: NumberOfMessagesSent
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: NumberOfMessagesReceived
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: NumberOfMessagesDeleted
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: ApproximateAgeOfOldestMessage
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: ApproximateNumberOfMessagesVisible
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average      
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: ApproximateNumberOfMessagesDelayed
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average      
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: NumberOfEmptyReceives
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average
+      - aws_dimensions: 
+        - QueueName
+        aws_metric_name: SentMessageSize
+        aws_namespace: AWS/SQS
+        aws_statistics:
+        - Average
+      # S3
       - aws_dimensions: 
         - BucketName
         - StorageType
