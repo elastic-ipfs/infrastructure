@@ -63,36 +63,6 @@ resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_duration_c
   }
 }
 
-resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_duration_min" {
-  name           = "uploader-lambda-s3-heads-duration-min"
-  pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
-  log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
-
-  metric_transformation {
-    namespace = "uploader-lambda-metrics"
-    name      = "s3-heads-duration-min"
-    value     = "$.metrics.s3-heads-durations.min"
-    dimensions = {
-      ipfs_provider_component = "$.ipfs_provider_component"
-    }
-  }
-}
-
-resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_duration_max" {
-  name           = "uploader-lambda-s3-heads-duration-max"
-  pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
-  log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
-
-  metric_transformation {
-    namespace = "uploader-lambda-metrics"
-    name      = "s3-heads-duration-max"
-    value     = "$.metrics.s3-heads-durations.max"
-    dimensions = {
-      ipfs_provider_component = "$.ipfs_provider_component"
-    }
-  }
-}
-
 resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_duration_mean" {
   name           = "uploader-lambda-s3-heads-duration-mean"
   pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
