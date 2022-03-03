@@ -78,7 +78,7 @@ resource "helm_release" "cloudwatch_exporter" {
         aws_metric_name: ProvisionedReadCapacityUnits
         aws_namespace: AWS/DynamoDB
         aws_statistics:
-        - Sum
+        - Average
       - aws_dimensions: 
         - TableName
         aws_metric_name: ConsumedWriteCapacityUnits
