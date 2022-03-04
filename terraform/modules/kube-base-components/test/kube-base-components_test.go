@@ -91,7 +91,7 @@ func assertServiceConnections(config *rest.Config, t *testing.T, sensitiveTerraf
 
 	assert.Equal(t, 2, len(serviceAccounts.Items)) // 2 because there is also a "default" sa
 	assert.Equal(t, "bitswap-irsa", serviceAccounts.Items[1].Name)
-	assert.Equal(t, "default", serviceAccounts.Items[1].Namespace)
+	assert.Equal(t, "bitswap-peer", serviceAccounts.Items[1].Namespace)
 	assert.Equal(t, serviceAccounts.Items[1].Annotations["eks.amazonaws.com/role-arn"], iam_roles[bitswapRoleName])
 }
 

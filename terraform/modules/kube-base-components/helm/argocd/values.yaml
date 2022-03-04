@@ -1,6 +1,7 @@
-bitswap-peer:
-  repoURL: https://github.com/web3-storage/ipfs-elastic-provider-bitswap-peer.git
+bitswapPeer:
+  repoURL: "https://github.com/web3-storage/ipfs-elastic-provider-bitswap-peer.git"
   releaseName: ipfs-elastic-provider-bitswap-peer
+  namespace: bitswap-peer
 
 argo-cd:
   installCRDs: false

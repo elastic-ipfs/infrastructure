@@ -212,7 +212,7 @@ module "kube-base-components" {
   service_account_roles = {
     "bitswap_peer_subsystem_role" = {
       service_account_name      = "bitswap-irsa",
-      service_account_namespace = "default",
+      service_account_namespace = "bitswap-peer",
       role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,

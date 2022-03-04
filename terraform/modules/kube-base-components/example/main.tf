@@ -139,7 +139,7 @@ module "kube-base-components" {
   service_account_roles = {
     "${var.bitswap_role_name}" = {
       service_account_name      = "bitswap-irsa",
-      service_account_namespace = "default",
+      service_account_namespace = "bitswap-peer",
       role_name                 = var.bitswap_role_name,
       policies_list = [
         aws_iam_policy.config_peer_s3_bucket_policy_read

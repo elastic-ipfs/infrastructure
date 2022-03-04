@@ -3,18 +3,24 @@ kind: Application
 metadata:
   name: bitswap-peer
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: test-bot
+    notifications.argoproj.io/subscribe.on-deployed.slack: test-bot
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: test-bot
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: test-bot
+    notifications.argoproj.io/subscribe.on-sync-running.slack: test-bot
+    notifications.argoproj.io/subscribe.on-sync-status-unknown.slack: test-bot
 spec:
   project: default
-
   source:
-    repoURL: {{ .Values.bitswap-peer.repoURL }}
+    repoURL: {{ .Values.bitswapPeer.repoURL }}
     targetRevision: HEAD
     path: helm
     helm:
-      releaseName: {{ .Values.bitswap-peer.releaseName }}
+      releaseName: {{ .Values.bitswapPeer.releaseName }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: {{ .Values.bitswapPeer.namespace }}
 
   syncPolicy:
     automated:
