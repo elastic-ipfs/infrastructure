@@ -34,6 +34,46 @@ locals {
       type        = "egress"
       self        = true
     }
+
+
+    ## *** HPA target??
+    metrics_server_10255_ing = {
+      description = "Node to node metrics server"
+      protocol    = "tcp"
+      from_port   = 10255
+      to_port     = 10255
+      type        = "ingress"
+      self        = true
+    }
+    metrics_server_10255_eg = {
+      description = "Node to node metrics server"
+      protocol    = "tcp"
+      from_port   = 10255
+      to_port     = 10255
+      type        = "egress"
+      self        = true
+    }
+
+    metrics_server_4194_ing = {
+      description = "Node to node metrics server (CAdvisor)"
+      protocol    = "tcp"
+      from_port   = 4194
+      to_port     = 4194
+      type        = "ingress"
+      self        = true
+    }
+    metrics_server_4194_eg = {
+      description = "Node to node metrics server (CAdvisor)"
+      protocol    = "tcp"
+      from_port   = 4194
+      to_port     = 4194
+      type        = "egress"
+      self        = true
+    }
+
+    # *****
+
+
     prometheus_coredns_9153_ing = {
       description = "Node to node Prometheus scrape CoreDNS metrics"
       protocol    = "tcp"

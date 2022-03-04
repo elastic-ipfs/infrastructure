@@ -107,7 +107,8 @@ module "eks" {
 
   cluster_endpoint_public_access_cidrs = [ # TODO: Access through AWS transit gateway
     "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
-    "177.33.141.81/32"
+    "177.33.141.81/32",
+    "185.152.47.29/32",
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
