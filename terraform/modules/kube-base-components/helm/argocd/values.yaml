@@ -1,5 +1,5 @@
 bitswapPeer:
-  repoURL: "https://github.com/web3-storage/ipfs-elastic-provider-bitswap-peer.git"
+  repoURL: "https://github.com/web3-storage/ipfs-elastic-provider-bitswap-peer-deployment.git"
   releaseName: ipfs-elastic-provider-bitswap-peer
   namespace: bitswap-peer
 
