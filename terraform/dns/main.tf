@@ -31,15 +31,6 @@ provider "aws" {
   }
 }
 
-data "terraform_remote_state" "peer" {
-  backend = "s3"
-  config = {
-    bucket = "ipfs-elastic-provider-terraform-state"
-    key    = "terraform.peer.tfstate"
-    region = "${var.region}"
-  }
-}
-
 data "terraform_remote_state" "indexing" {
   backend = "s3"
   config = {
@@ -59,14 +50,6 @@ resource "aws_route53_record" "peer_bitswap_load_balancer" {
   type    = "CNAME"
   ttl     = "300"
   records = [var.bitswap_load_balancer_hostname]
-}
-
-resource "aws_route53_record" "provider_load_balancer" {
-  zone_id = aws_route53_zone.hosted_zone.zone_id
-  name    = "${var.subdomains_provider_loadbalancer}.${var.domain_name}"
-  type    = "CNAME"
-  ttl     = "300"
-  records = [var.provider_load_balancer_hostname]
 }
 
 ### API Gateway

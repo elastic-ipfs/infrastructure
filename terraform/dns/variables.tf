@@ -4,17 +4,12 @@ variable "profile" {
 
 variable "domain_name" {
   type    = string
-  default = "franciscocardosotest.com"
+  default = "provider.dag.house"
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
   default     = "peer"
   description = "Subdomains that will be handled by peer svc loadbalancer"
-}
-
-variable "subdomains_provider_loadbalancer" {
-  default     = "provider"
-  description = "Subdomains that will be handled by provider svc loadbalancer"
 }
 
 variable "subdomain_apis" {
@@ -26,11 +21,6 @@ variable "subdomain_apis" {
 variable "bitswap_load_balancer_hostname" {
   type        = string
   description = "Bitswap LoadBalancer URL"
-}
-
-variable "provider_load_balancer_hostname" {
-  type        = string
-  description = "Provider LoadBalancer URL"
 }
 
 variable "region" {
