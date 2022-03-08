@@ -4,12 +4,12 @@ metadata:
   name: bitswap-peer
   namespace: argocd
   annotations:
-    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: test-bot
-    notifications.argoproj.io/subscribe.on-deployed.slack: test-bot
-    notifications.argoproj.io/subscribe.on-health-degraded.slack: test-bot
-    notifications.argoproj.io/subscribe.on-sync-failed.slack: test-bot
-    notifications.argoproj.io/subscribe.on-sync-running.slack: test-bot
-    notifications.argoproj.io/subscribe.on-sync-status-unknown.slack: test-bot
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: protocol-labs-internal-notifications
+    notifications.argoproj.io/subscribe.on-deployed.slack: protocol-labs-internal-notifications
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: protocol-labs-internal-notifications
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: protocol-labs-internal-notifications
+    notifications.argoproj.io/subscribe.on-sync-running.slack: protocol-labs-internal-notifications
+    notifications.argoproj.io/subscribe.on-sync-status-unknown.slack: protocol-labs-internal-notifications
 spec:
   project: default
   source:
