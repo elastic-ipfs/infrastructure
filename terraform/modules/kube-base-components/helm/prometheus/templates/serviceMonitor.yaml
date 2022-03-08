@@ -10,6 +10,7 @@ spec:
     matchNames:
     - default
     - cloudwatch-exporter
+    - bitswap-peer
   selector:
     matchLabels:
       metricsMonitor: "true"
