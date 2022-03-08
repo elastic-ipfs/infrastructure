@@ -1,4 +1,5 @@
-# Important info about that on 'readme.md'
+# READ THIS (Important): For now it has a manual step: Updating domain server with the new generated route 53 DNS Servers. 
+# If this is not done, certificate validation will fail.
 resource "aws_acm_certificate" "cert" {
   domain_name               = var.domain_name
   subject_alternative_names = [local.api_domain]

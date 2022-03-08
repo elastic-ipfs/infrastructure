@@ -4,7 +4,7 @@ variable "profile" {
 
 variable "domain_name" {
   type    = string
-  default = "provider.dag.house"
+  default = "ipfs-elastic-provider.com"
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
