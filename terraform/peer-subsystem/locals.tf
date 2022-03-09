@@ -35,8 +35,6 @@ locals {
       self        = true
     }
 
-
-    ## *** HPA target??
     metrics_server_10255_ing = {
       description = "Node to node metrics server"
       protocol    = "tcp"
@@ -70,9 +68,6 @@ locals {
       type        = "egress"
       self        = true
     }
-
-    # *****
-
 
     prometheus_coredns_9153_ing = {
       description = "Node to node Prometheus scrape CoreDNS metrics"
@@ -330,6 +325,24 @@ locals {
       to_port     = 6379
       type        = "egress"
       self        = true
+    }
+
+    traceroute_33434_33464_eg = {
+      description = "Enable troubleshoot: UDP Traceroute to all internet"
+      protocol    = "UDP"
+      from_port   = 33434
+      to_port     = 33655
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    traceroute_ICMP_eg = {
+      description = "Enable troubleshoot: ICMP Traceroute to all internet"
+      protocol    = "ICMP"
+      from_port   = -1
+      to_port     = -1
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
     }
   }
 }

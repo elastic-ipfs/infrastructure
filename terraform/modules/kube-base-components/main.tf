@@ -28,11 +28,11 @@ module "eks_auth_sync" {
 }
 
 module "cloudwatch_exporter" {
-  # Can't do the same 'count' enable/desable strategy here because submodule uses a provider.
-  source                  = "../cloudwatch-exporter"
-  region                  = var.region
-  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
-  host                    = var.host
-  token                   = var.token
-  cluster_ca_certificate  = var.cluster_ca_certificate
+  source                     = "../cloudwatch-exporter"
+  deploy_cloudwatch_exporter = var.deploy_cloudwatch_exporter
+  region                     = var.region
+  cluster_oidc_issuer_url    = var.cluster_oidc_issuer_url
+  host                       = var.host
+  token                      = var.token
+  cluster_ca_certificate     = var.cluster_ca_certificate
 }

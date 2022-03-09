@@ -20,6 +20,7 @@ resource "helm_release" "metric-server" {
 }
 
 resource "helm_release" "prometheus_dependencies" {
+  count            = var.deploy_prometheus ? 1 : 0
   name             = "prometheus-dependencies"
   chart            = "../modules/kube-base-components/helm/prometheus"
   namespace        = "prometheus"
@@ -36,6 +37,7 @@ resource "helm_release" "prometheus_dependencies" {
 # kubectl -n kube-system patch ds kube-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"updateTime\":\"`date +'%s'`\"}}}}}"
 
 resource "helm_release" "argocd" {
+  count            = var.deploy_argocd ? 1 : 0
   name             = "argocd"
   chart            = "../modules/kube-base-components/helm/argocd"
   namespace        = "argocd"
