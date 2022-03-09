@@ -8,6 +8,7 @@ provider "helm" {
 
 resource "helm_release" "cloudwatch_exporter" {
   name             = "cloudwatch-exporter"
+  count            = var.deploy_cloudwatch_exporter ? 1 : 0
   chart            = "prometheus-cloudwatch-exporter"
   version          = "~> 0.18.0"
   repository       = "https://prometheus-community.github.io/helm-charts"
