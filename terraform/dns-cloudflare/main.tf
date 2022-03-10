@@ -20,11 +20,12 @@ provider "cloudflare" {
 }
 
 resource "cloudflare_record" "record_cname" {
-  zone_id = var.record.zone_id
-  name    = var.record.name
-  value   = var.record.value
+  for_each = { for record in var.records : record.name => record }
+  zone_id  = each.value.zone_id
+  name     = each.value.name
+  value    = each.value.value
   # proxied = true   ## ??
-  type    = "CNAME"
+  type = "CNAME"
   # ttl     = 1 # Proxied
-  ttl     = 3600
+  ttl = 3600
 }
