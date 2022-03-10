@@ -40,12 +40,18 @@ data "terraform_remote_state" "indexing" {
   }
 }
 
+data "aws_route53_zone" "hosted_zone" {
+  count = var.existing_zone ? 1 : 0
+  name  = var.domain_name
+}
+
 resource "aws_route53_zone" "hosted_zone" {
-  name = var.domain_name
+  count = var.existing_zone ? 0 : 1
+  name  = var.domain_name
 }
 
 resource "aws_route53_record" "peer_bitswap_load_balancer" {
-  zone_id = aws_route53_zone.hosted_zone.zone_id
+  zone_id = var.existing_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
   name    = "${var.subdomains_bitwsap_loadbalancer}.${var.domain_name}"
   type    = "CNAME"
   ttl     = "300"
@@ -72,11 +78,11 @@ resource "aws_api_gateway_base_path_mapping" "api" {
 resource "aws_route53_record" "api" {
   name    = aws_api_gateway_domain_name.api.domain_name
   type    = "A"
-  zone_id = aws_route53_zone.hosted_zone.id
+  zone_id = var.existing_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
 
   alias {
     evaluate_target_health = true
     name                   = aws_api_gateway_domain_name.api.regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.api.regional_zone_id
+    zone_id                = var.existing_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
   }
 }

@@ -2,9 +2,17 @@ variable "profile" {
   type = string
 }
 
+
+variable "region" {
+  type = string
+}
+
+variable "existing_zone" {
+  type = bool
+}
+
 variable "domain_name" {
   type    = string
-  default = "ipfs-elastic-provider.com"
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
@@ -21,8 +29,4 @@ variable "subdomain_apis" {
 variable "bitswap_load_balancer_hostname" {
   type        = string
   description = "Bitswap LoadBalancer URL"
-}
-
-variable "region" {
-  type = string
 }
