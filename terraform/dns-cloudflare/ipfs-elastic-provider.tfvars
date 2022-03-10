@@ -12,12 +12,13 @@ records = [
     zone_id = "527a751e662d1464124d11e83c2250ea"
     name    = "api.uploader.ipfs-elastic-provider.com"
     value   = "api.uploader.ipfs-elastic-provider-aws.com"
+    # value = "d-htzmw93n2l.execute-api.us-west-2.amazonaws.com" 
   },
   {
     zone_id = "527a751e662d1464124d11e83c2250ea"
     name    = "peer.ipfs-elastic-provider.com"
     value   = "peer.ipfs-elastic-provider-aws.com"
-    # value = "ad62259e461cc4df986d3d01bd51140f-2139506693.us-west-2.elb.amazonaws.com" # When connected directly it works
+    # value = "ad62259e461cc4df986d3d01bd51140f-2139506693.us-west-2.elb.amazonaws.com" 
   },
   {
     zone_id = "527a751e662d1464124d11e83c2250ea"
