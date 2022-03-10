@@ -16,7 +16,6 @@ terraform {
 }
 
 provider "cloudflare" {
-  # api_key = var.cloudflare_api_key
   api_token = var.cloudflare_api_token
 }
 
@@ -24,6 +23,7 @@ resource "cloudflare_record" "record_cname" {
   zone_id = var.record.zone_id
   name    = var.record.name
   value   = var.record.value
+  
   type    = "CNAME"
   ttl     = 3600
 }
