@@ -23,7 +23,8 @@ resource "cloudflare_record" "record_cname" {
   zone_id = var.record.zone_id
   name    = var.record.name
   value   = var.record.value
-  
+  # proxied = true   ## ??
   type    = "CNAME"
+  # ttl     = 1 # Proxied
   ttl     = 3600
 }
