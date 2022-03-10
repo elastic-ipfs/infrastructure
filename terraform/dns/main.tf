@@ -83,6 +83,6 @@ resource "aws_route53_record" "api" {
   alias {
     evaluate_target_health = true
     name                   = aws_api_gateway_domain_name.api.regional_domain_name
-    zone_id                = var.existing_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
+    zone_id                = aws_api_gateway_domain_name.api.regional_zone_id
   }
 }
