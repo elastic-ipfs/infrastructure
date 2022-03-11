@@ -1,24 +1,6 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.38"
-    }
-
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 3.0"
-    }
-  }
-
-  required_version = ">= 1.0.0"
-}
-
-# READ THIS (Important): For now it has a manual step: Updating domain server with the new generated route 53 DNS Servers. 
-# If this is not done, certificate validation will fail.
 resource "aws_acm_certificate" "cert" {
   domain_name               = var.domain_name
-  subject_alternative_names = var.subdomains
+  subject_alternative_names = [var.subdomain]
   validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true

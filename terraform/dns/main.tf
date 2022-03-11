@@ -78,9 +78,14 @@ module "dns_cloudflare" {
   ]
 }
 
-module "dns_cloudflare-acm" {
-  source      = "../modules/dns-cloudflare-acm"
+module "dns-cloudflare-apig-domain" {
+  source      = "../modules/dns-cloudflare-apig-domain"
   domain_name = var.cloudflare_domain_name
-  subdomains  = ["${var.subdomain_apis}.${var.cloudflare_domain_name}"]
+  subdomain   = "${var.subdomain_apis}.${var.cloudflare_domain_name}"
   zone_id     = var.cloudflare_zone_id
+
+  api_gateway = {
+    api_id     = data.terraform_remote_state.indexing.outputs.api_id
+    stage_name = data.terraform_remote_state.indexing.outputs.stage_name
+  }
 }
