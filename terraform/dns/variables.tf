@@ -6,23 +6,11 @@ variable "region" {
   type = string
 }
 
-variable "cloudflare_api_token" {
-  type = string
-}
-
 variable "existing_aws_zone" {
   type    = bool
 }
 
 variable "aws_domain_name" {
-  type    = string
-}
-
-variable "cloudflare_zone_id" {
-  type    = string
-}
-
-variable "cloudflare_domain_name" {
   type    = string
 }
 

@@ -11,12 +11,7 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.38"
-    }
-
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 3.0"
-    }
+    }    
   }
 
   required_version = ">= 1.0.0"
@@ -45,10 +40,6 @@ provider "aws" {
   }
 }
 
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
-}
-
 module "dns_route53" {
   source                          = "../modules/dns-route53"
   existing_zone                   = var.existing_aws_zone
@@ -56,34 +47,6 @@ module "dns_route53" {
   subdomains_bitwsap_loadbalancer = var.subdomains_bitwsap_loadbalancer
   subdomain_apis                  = var.subdomain_apis
   bitswap_load_balancer_hostname  = var.bitswap_load_balancer_hostname
-  api_gateway = {
-    api_id     = data.terraform_remote_state.indexing.outputs.api_id
-    stage_name = data.terraform_remote_state.indexing.outputs.stage_name
-  }
-}
-
-module "dns_cloudflare" {
-  source = "../modules/dns-cloudflare"
-  records = [
-    # {
-    #   zone_id = var.cloudflare_zone_id
-    #   name    = "*.${var.cloudflare_domain_name}"
-    #   value   = "${var.aws_domain_name}"
-    # },
-    {
-      zone_id = var.cloudflare_zone_id
-      name    = "${var.subdomain_apis}.${var.cloudflare_domain_name}"
-      value   = "${var.subdomain_apis}.${var.aws_domain_name}"
-    },
-  ]
-}
-
-module "dns-cloudflare-apig-domain" {
-  source      = "../modules/dns-cloudflare-apig-domain"
-  domain_name = var.cloudflare_domain_name
-  subdomain   = "${var.subdomain_apis}.${var.cloudflare_domain_name}"
-  zone_id     = var.cloudflare_zone_id
-
   api_gateway = {
     api_id     = data.terraform_remote_state.indexing.outputs.api_id
     stage_name = data.terraform_remote_state.indexing.outputs.stage_name
