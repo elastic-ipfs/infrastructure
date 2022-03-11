@@ -1,0 +1,41 @@
+name: "Workflow Verifier"
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/*.yaml'
+
+jobs:
+  workflow-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # Makes sure we get the latest commit from the PR
+      - name: Install shellcheck
+        id: get_shellcheck
+        run: |
+          SHELLCHECK_VERSION=v0.8.0
+          arch="$(uname -m)";
+          echo "arch is $arch";
+          if [ "${arch}" = 'armv7l' ]; then
+            arch='armv6hf';
+          fi;
+          url_base='https://github.com/koalaman/shellcheck/releases/download/';
+          tar_file="${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.${arch}.tar.xz";
+          wget "${url_base}${tar_file}" -q -O - | tar xJf -;
+          cd "shellcheck-${SHELLCHECK_VERSION}"
+          exe="$(pwd)/shellcheck"
+          echo "::set-output name=executable::${exe}"
+
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+
+      - name: Check workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color -shellcheck ${{ steps.get_shellcheck.outputs.executable }}
+        shell: bash
