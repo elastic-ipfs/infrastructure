@@ -4,6 +4,18 @@
 
 `ipfs-elastic-provider-infrastructure` is the automation responsible for provisioning the required infrastructure for the `IPFS-Elastic-Provider` project.
 
+## Architecture Diagrams
+
+![simplified arch](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f8715501-9f03-433e-9324-66c7d50a2357/IPFS_Elastic_Provider.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220314%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220314T220710Z&X-Amz-Expires=86400&X-Amz-Signature=0c60b43dbe2127e724fd0ccb309030551430f80b7b4927105f5aade043d123df&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22IPFS%2520Elastic%2520Provider.jpg%22&x-id=GetObject)
+
+### Detailed Architecture Diagram
+
+![detailed arch](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f0fdea90-cc5c-49ba-a1a1-4bceb22c0861/IPFSSingleNode-v5.drawio.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220314%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220314T220848Z&X-Amz-Expires=86400&X-Amz-Signature=65ceb5eae99f36e8fe8f3c8ea3f3534e48eaa2cd449983bd21b89076bb5095a7&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22IPFSSingleNode-v5.drawio.png%22&x-id=GetObject)
+
+### Indexer Subsystem Diagram
+
+![indexer arch](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e2d3c67f-ab20-49dc-94ea-a57f31faec2d/simplified-indexing.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220314%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220314T220956Z&X-Amz-Expires=86400&X-Amz-Signature=8e08caf5411b576b8ab3d53e0e48b894819ffe57520a473f0e15f9587bac9c77&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22simplified-indexing.jpg%22&x-id=GetObject)
+
 ## Terraform
 
 ### Requirements
