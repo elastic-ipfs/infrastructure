@@ -80,8 +80,6 @@ module "vpc" {
   }
 }
 
-
-
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
   vpc_id         = module.vpc.vpc_id
@@ -128,6 +126,8 @@ module "eks" {
 
       tags = { # This is also applied to IAM role.
         "eks/${var.accountId}/${var.cluster_name}/type" : "node"
+        "k8s.io/cluster-autoscaler/${var.cluster_name}" : "owned"
+        "k8s.io/cluster-autoscaler/enabled" : "TRUE"
       }
     }
   }
