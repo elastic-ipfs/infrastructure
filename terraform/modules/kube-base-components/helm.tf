@@ -47,18 +47,14 @@ resource "helm_release" "argocd" {
 # TODO: Enable/Disable deploy
 # TODO: Refactor to another module?
 resource "helm_release" "cluster_autoscaller" {
-  name       = "autoscaller"
+  name       = "cluster-autoscaler"
   repository = "https://kubernetes.github.io/autoscaler"
-  chart      = "autoscaler"
+  chart      = "cluster-autoscaler"
   namespace  = "kube-system"
 
   set {
     name  = "autoDiscovery.clusterName"
-    value = var.cluster_name
-  }
-  set {
-    name  = "autoDiscovery.tags"
-    value = "k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${var.cluster_name}"
+    value = var.cluster_id
   }
 
   set {
