@@ -1,4 +1,4 @@
-resource "helm_release" "cluster_autoscaller" {
+resource "helm_release" "cluster_autoscaler" {
   name       = "cluster-autoscaler"
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
@@ -21,6 +21,6 @@ resource "helm_release" "cluster_autoscaller" {
 
   set {
     name  = "rbac.serviceAccount.name"
-    value = var.serviceAccountName
+    value = var.service_account_name
   }
 }

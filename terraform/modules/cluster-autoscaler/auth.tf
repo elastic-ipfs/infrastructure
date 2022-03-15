@@ -1,6 +1,6 @@
 
-resource "aws_iam_policy" "cluster_autoscaller" {
-  name        = "eks-cluster-autoscaller-policy"
+resource "aws_iam_policy" "cluster_autoscaler" {
+  name        = "eks-cluster-autoscaler-policy"
   description = "Policy for allowing Kubernetes to autoscale nodes"
   policy      = <<EOF
 {
@@ -37,13 +37,13 @@ module "iam_assumable_role_cluster_autoscaler" {
   create_role                   = true
   role_name                     = "IPFSClusterEKSAutoscalerRole"
   provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")
-  role_policy_arns              = [aws_iam_policy.cluster_autoscaller.arn]
+  role_policy_arns              = [aws_iam_policy.cluster_autoscaler.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:cluster-autoscaler"]
 }
 
-resource "kubernetes_service_account" "irsa-autoscaller" {
+resource "kubernetes_service_account" "irsa-autoscaler" {
   metadata {
-    name      = var.serviceAccountName
+    name      = var.service_account_name
     namespace = var.namespace
     annotations = {
       "eks.amazonaws.com/role-arn" = module.iam_assumable_role_cluster_autoscaler.iam_role_arn

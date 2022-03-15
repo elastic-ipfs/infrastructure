@@ -73,8 +73,8 @@ variable "deploy_cloudwatch_exporter" {
   default     = true
 }
 
-variable "deploy_cluster_autoscaller" {
-  description = "Whether to deploy or not the cluster_autoscaller to the cluster"
+variable "deploy_cluster_autoscaler" {
+  description = "Whether to deploy or not the cluster_autoscaler to the cluster"
   type        = bool
   default     = true
 }
