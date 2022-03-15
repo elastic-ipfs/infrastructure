@@ -36,3 +36,11 @@ module "cloudwatch_exporter" {
   token                      = var.token
   cluster_ca_certificate     = var.cluster_ca_certificate
 }
+
+module "cluster_autoscaller" {
+  count                   = var.deploy_cluster_autoscaller ? 1 : 0
+  source                  = "../cluster-autoscaller"
+  region                  = var.region
+  cluster_name            = var.cluster_id
+  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
+}

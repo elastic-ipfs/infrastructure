@@ -43,34 +43,3 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 }
-
-# TODO: Enable/Disable deploy
-# TODO: Refactor to another module?
-resource "helm_release" "cluster_autoscaller" {
-  name       = "cluster-autoscaler"
-  repository = "https://kubernetes.github.io/autoscaler"
-  chart      = "cluster-autoscaler"
-  namespace  = "kube-system"
-
-  set {
-    name  = "autoDiscovery.clusterName"
-    value = var.cluster_id
-  }
-
-  set {
-    name  = "awsRegion"
-    value = var.region
-  }
-
-  set {
-    name = "rbac.serviceAccount.create"
-    value = false
-  }
-
-  set {
-    name = "rbac.serviceAccount.name"
-    value = "cluster-autoscaler" # TODO: From local variable
-  }
-
-  #Role? Info for the service account?
-}
