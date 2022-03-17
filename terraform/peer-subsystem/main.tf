@@ -116,7 +116,7 @@ module "eks" {
       min_size     = 2
       max_size     = 20
 
-      instance_types = ["t3.xlarge"]
+      instance_types = ["c6i.4xlarge"]
       k8s_labels = {
         workerType = "managed_ec2_node_groups"
       }
