@@ -117,6 +117,7 @@ module "eks" {
       max_size     = 20
 
       instance_types = ["c6g.2xlarge"]
+      ami_type="AL2_ARM_64"
       k8s_labels = {
         workerType = "managed_ec2_node_groups"
       }
