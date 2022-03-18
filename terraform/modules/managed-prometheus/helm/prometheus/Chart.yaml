@@ -5,6 +5,6 @@ type: application
 version: 0.1.0
 appVersion: "0.1.0"
 dependencies:
-- name: kube-prometheus-stack
+- name: prometheus
   repository: "https://prometheus-community.github.io/helm-charts"
-  version: "~> 30.0.0"
+  version: "~> 15.5.3"
