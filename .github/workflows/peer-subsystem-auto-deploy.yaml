@@ -8,6 +8,8 @@ on:
     - 'terraform/modules/eks-auth-sync/**'
     - 'terraform/modules/cloudwatch-exporter/**'
     - 'terraform/modules/kube-base-components/**'
+    - 'terraform/modules/managed-prometheus/**'
+    - 'terraform/modules/cluster-autoscaler/**'
   pull_request:
     paths: 
     - 'terraform/peer-subsystem/**'
