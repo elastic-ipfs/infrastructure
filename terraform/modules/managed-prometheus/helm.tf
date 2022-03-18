@@ -1,5 +1,4 @@
 resource "helm_release" "prometheus_dependencies" {
-  count            = var.deploy_prometheus ? 1 : 0
   name             = "prometheus-dependencies"
   chart            = "../modules/managed-prometheus/helm/prometheus"
   namespace        = var.namespace
