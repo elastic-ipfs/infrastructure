@@ -38,7 +38,7 @@ module "iam_assumable_role_cluster_autoscaler" {
   role_name                     = "IPFSClusterEKSAutoscalerRole"
   provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.cluster_autoscaler.arn]
-  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:cluster-autoscaler"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${var.service_account_name}"]
 }
 
 resource "kubernetes_service_account" "irsa-autoscaler" {
