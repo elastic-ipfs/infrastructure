@@ -24,6 +24,7 @@ prometheus:
     server:
       name: "amp-iamproxy-ingest-service-account"
       annotations:
+        app.kubernetes.io/managed-by: "Helm"
         eks.amazonaws.com/role-arn: "arn:aws:iam::505595374361:role/amp-iamproxy-ingest-role"
     alertmanager:
       create: true
