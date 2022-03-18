@@ -6,7 +6,7 @@ serviceMonitor:
   portName: http-metrics  
   scrapeInterval: 5s
   matchLabelName: metricsMonitor
-  matchLabelValue: "true"
+  matchLabelValue: true
 
 prometheus:
   rbac:

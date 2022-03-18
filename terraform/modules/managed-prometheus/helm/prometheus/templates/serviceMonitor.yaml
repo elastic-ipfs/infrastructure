@@ -10,7 +10,7 @@ spec:
     matchNames: {{ .Values.serviceMonitor.namespaceSelector }}
   selector:
     matchLabels:
-      {{ .Values.serviceMonitor.matchLabelName }}: {{ .Values.serviceMonitor.matchLabelValue }}
+      {{ .Values.serviceMonitor.matchLabelName }}: {{ .Values.serviceMonitor.matchLabelValue | squote }}
   endpoints:
   - port: {{ .Values.serviceMonitor.portName }}
     interval: {{ .Values.serviceMonitor.scrapeInterval }}
