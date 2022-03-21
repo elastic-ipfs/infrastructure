@@ -7,7 +7,11 @@ metadata:
      release: {{.Release.Name}}
 spec:
   namespaceSelector:
-    matchNames: {{ .Values.serviceMonitor.namespaceSelector }}
+    matchNames: 
+    {{- $namespaceSelector := .Values.serviceMonitor.namespaceSelector -}}
+    {{- range $p := $namespaceSelector }}
+    - {{ . }}
+    {{- end }}
   selector:
     matchLabels:
       {{ .Values.serviceMonitor.matchLabelName }}: {{ .Values.serviceMonitor.matchLabelValue | squote }}

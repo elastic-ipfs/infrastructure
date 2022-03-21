@@ -1,7 +1,6 @@
 serviceMonitor:
   namespaceSelector:
   - default
-  - cloudwatch-exporter
   - bitswap-peer
   portName: http-metrics  
   scrapeInterval: 5s
