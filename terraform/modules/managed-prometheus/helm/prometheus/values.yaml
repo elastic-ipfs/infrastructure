@@ -2398,9 +2398,9 @@ kube-prometheus-stack:
       - url: https://aps-workspaces.us-west-2.amazonaws.com/workspaces/ws-61f38f48-1263-4a67-9245-962b2cc1c23a/api/v1/remote_write
         sigv4:
           region: us-west-2
-        queue_config:
-          max_samples_per_send: 1000
-          max_shards: 200
+        queueConfig:
+          maxSamplesPerSend: 1000
+          maxShards: 200
           capacity: 2500
       # - url: http://remote1/push
       ## additionalRemoteWrite is appended to remoteWrite
