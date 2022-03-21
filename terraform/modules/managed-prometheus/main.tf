@@ -18,11 +18,11 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-resource "aws_prometheus_workspace" "ipfs-elastic-provider" {
+resource "aws_prometheus_workspace" "ipfs_elastic_provider" {
   alias = "ipfs-elastic-provider"
 }
 
-resource "aws_grafana_workspace" "ipfs-elastic-provider" {
+resource "aws_grafana_workspace" "ipfs_elastic_provider" {
   account_access_type      = "CURRENT_ACCOUNT"
   authentication_providers = ["SAML"]
   permission_type          = "SERVICE_MANAGED"
