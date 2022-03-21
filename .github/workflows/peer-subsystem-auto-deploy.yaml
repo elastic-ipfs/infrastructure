@@ -14,7 +14,10 @@ on:
     paths: 
     - 'terraform/peer-subsystem/**'
     - 'terraform/modules/eks-auth-sync/**'
+    - 'terraform/modules/cloudwatch-exporter/**'
     - 'terraform/modules/kube-base-components/**'
+    - 'terraform/modules/managed-prometheus/**'
+    - 'terraform/modules/cluster-autoscaler/**'
 jobs:
   terraform:
     uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
