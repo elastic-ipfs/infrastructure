@@ -25,7 +25,7 @@ resource "helm_release" "prometheus_dependencies" {
 
   set {
     name = "kube-prometheus-stack.prometheus.prometheusSpec.remoteWrite[0].url"
-    value = "${aws_prometheus_workspace.ipfs_elastic_provider.prometheus_endpoint}/api/v1/remote_write"
+    value = "${aws_prometheus_workspace.ipfs_elastic_provider.prometheus_endpoint}api/v1/remote_write"
   }
 
   set {
