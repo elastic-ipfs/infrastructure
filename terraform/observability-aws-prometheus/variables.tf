@@ -9,7 +9,7 @@ variable "namespace" {
 }
 
 variable "cluster_name" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -19,6 +19,11 @@ variable "host" {
 }
 
 variable "cluster_oidc_issuer_url" {
+  type    = string
+  default = ""
+}
+
+variable "cluster_ca_cert" {
   type    = string
   default = ""
 }

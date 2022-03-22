@@ -1751,7 +1751,7 @@ kube-prometheus-stack:
     ##
     serviceAccount:
       create: false # This is created by managed-prometheus module through auth.tf file
-      name: 'amp-iamproxy-ingest-service-account'
+      name: valuereplacedbyterraform
 
     # Service for thanos service discovery on sidecar
     # Enable this can make Thanos Query can use
@@ -2394,9 +2394,9 @@ kube-prometheus-stack:
       ## The remote_write spec configuration for Prometheus.
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#remotewritespec
       remoteWrite:
-        - url: https://aps-workspaces.us-west-2.amazonaws.com/workspaces/ws-61f38f48-1263-4a67-9245-962b2cc1c23a/api/v1/remote_write
+        - url: valuereplacedbyterraform
           sigv4:
-            region: us-west-2
+            region: valuereplacedbyterraform
           queueConfig:
             maxSamplesPerSend: 1000
             maxShards: 200
