@@ -17,15 +17,24 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+data "terraform_remote_state" "aws_prometheus" {
+  backend = "s3"
+  config = {
+    bucket = "ipfs-elastic-provider-terraform-state"
+    key    = "terraform.aws-prometheus.tfstate"
+    region = "${var.region}"
+  }
+}
+
 provider "grafana" {
-  url  = var.grafana_url # TODO: Can I get that from remote state?
+  url  = data.terraform_remote_state.aws_prometheus.grafana_endpoint
   auth = var.grafana_auth
 }
 
 resource "grafana_data_source" "prometheus" {
   type = "prometheus"
   name = "amp"
-  url  = var.prometheus_url # TODO: Get from remote state!
+  url  = data.terraform_remote_state.aws_prometheus.prometheus_endpoint
 
   json_data {
     http_method     = "POST"

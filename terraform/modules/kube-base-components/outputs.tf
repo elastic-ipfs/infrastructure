@@ -8,3 +8,12 @@ output "iam_roles" {
     iam_role_arn => attributes.iam_role_arn
   }
 }
+
+output "prometheus_endpoint" {
+  value = module.prometheus.prometheus_endpoint
+}
+
+output "grafana_endpoint" {
+  value = module.prometheus.grafana_endpoint
+}
+

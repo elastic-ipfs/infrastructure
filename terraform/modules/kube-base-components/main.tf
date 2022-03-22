@@ -44,11 +44,3 @@ module "cluster_autoscaler" {
   cluster_name            = var.cluster_id
   cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
 }
-
-module "prometheus" {
-  count                   = var.deploy_prometheus ? 1 : 0
-  source                  = "../managed-prometheus"
-  region                  = var.region
-  cluster_name            = var.cluster_id
-  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
-}
