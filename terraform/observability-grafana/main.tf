@@ -27,14 +27,14 @@ data "terraform_remote_state" "aws_prometheus" {
 }
 
 provider "grafana" {
-  url  = data.terraform_remote_state.aws_prometheus.grafana_endpoint
+  url  = "https://${var.grafana_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.grafana_endpoint : var.grafana_endpoint}"
   auth = var.grafana_auth
 }
 
 resource "grafana_data_source" "prometheus" {
   type = "prometheus"
   name = "amp"
-  url  = data.terraform_remote_state.aws_prometheus.prometheus_endpoint
+  url  = "https://${var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint}"
 
   json_data {
     http_method     = "POST"
@@ -50,10 +50,16 @@ resource "grafana_folder" "IPFS_Elastic_Provider" {
   title = "IPFS Elastic Provider"
 }
 
-resource "grafana_dashboard" "id_dashboards" {
+resource "grafana_dashboard" "id_dashboards" { # TODO: It was required to inform config_json even with id
   for_each = var.grafana_dashboards_ids
   folder   = grafana_folder.IPFS_Elastic_Provider.id
-  id       = each.value
+  config_json = jsonencode({
+    id = each.value
+    # title         = "data_source_dashboards 1"
+    # tags          = ["data_source_dashboards"]
+    # timezone      = "browser"
+    # schemaVersion = 16
+  })
 }
 
 resource "grafana_dashboard" "file_dashboards" {

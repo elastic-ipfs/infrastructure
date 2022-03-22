@@ -2,8 +2,14 @@ variable "region" {
   type = string
 }
 
-variable "grafana_url" {
+variable "grafana_endpoint" {
   type = string
+  default = ""
+}
+
+variable "prometheus_endpoint" {
+  type = string
+  default = ""
 }
 
 variable "grafana_auth" {
@@ -12,4 +18,5 @@ variable "grafana_auth" {
 
 variable "grafana_dashboards_ids" {
   type = list(string)
+  default = []
 }
