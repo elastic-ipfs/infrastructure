@@ -1,10 +1,10 @@
 provider "helm" {
   kubernetes {
-    host = var.host
+    host = var.host == "" ? data.terraform_remote_state.peer.outputs.host : var.host
     # cluster_ca_certificate = base64decode(var.cluster_ca_cert)
     exec {
       api_version = "client.authentication.k8s.io/v1alpha1"
-      args        = ["eks", "get-token", "--cluster-name", var.cluster_name]
+      args        = ["eks", "get-token", "--cluster-name", var.cluster_name == "" ? data.terraform_remote_state.peer.outputs.cluster_id : var.cluster_name]
       command     = "aws"
     }
   }

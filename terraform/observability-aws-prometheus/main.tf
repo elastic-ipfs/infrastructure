@@ -21,10 +21,19 @@ terraform {
 
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.38"
+      version = "~> 4.2"
     }
   }
   required_version = ">= 1.0.0"
+}
+
+data "terraform_remote_state" "peer" {
+  backend = "s3"
+  config = {
+    bucket = "ipfs-elastic-provider-terraform-state"
+    key    = "terraform.peer.tfstate"
+    region = "${var.region}"
+  }
 }
 
 provider "aws" {
@@ -42,11 +51,11 @@ provider "aws" {
 }
 
 provider "kubernetes" {
-  host = var.host
+  host = var.host == "" ? data.terraform_remote_state.peer.outputs.host : var.host
   # cluster_ca_certificate = base64decode(var.cluster_ca_cert)
   exec {
     api_version = "client.authentication.k8s.io/v1alpha1"
-    args        = ["eks", "get-token", "--cluster-name", var.cluster_name]
+    args        = ["eks", "get-token", "--cluster-name", var.cluster_name == "" ? data.terraform_remote_state.peer.outputs.cluster_id : var.cluster_name]
     command     = "aws"
   }
 }

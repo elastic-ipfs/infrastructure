@@ -9,11 +9,4 @@ output "iam_roles" {
   }
 }
 
-output "prometheus_endpoint" {
-  value = module.prometheus.prometheus_endpoint
-}
-
-output "grafana_endpoint" {
-  value = module.prometheus.grafana_endpoint
-}
 

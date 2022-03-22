@@ -105,6 +105,7 @@ module "eks" {
 
   cluster_endpoint_public_access_cidrs = [ # TODO: Access through AWS transit gateway
     "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
+    "34.223.161.95/32", # TODO: This is temp. DELETE this
     "177.33.141.81/32",
     "185.152.47.29/32",
   ]

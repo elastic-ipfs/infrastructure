@@ -25,7 +25,7 @@ module "iam_assumable_role_prometheus" {
   version                       = "~> 4.0"
   create_role                   = true
   role_name                     = "amp-iamproxy-ingest-role"
-  provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")
+  provider_url                  = replace(var.cluster_oidc_issuer_url == "" ? data.terraform_remote_state.peer.outputs.cluster_oidc_issuer_url : var.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.metric_ingest_remote_write.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${var.service_account_name}"]
 }
