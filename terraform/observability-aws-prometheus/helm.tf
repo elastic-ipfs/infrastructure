@@ -12,7 +12,7 @@ provider "helm" {
 
 resource "helm_release" "prometheus_dependencies" {
   name             = "prometheus-dependencies"
-  chart            = "../modules/managed-prometheus/helm/prometheus"
+  chart            = "helm/prometheus"
   namespace        = var.namespace
   create_namespace = true
   timeout          = 1800
