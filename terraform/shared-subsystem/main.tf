@@ -31,11 +31,6 @@ provider "aws" {
   }
 }
 
-resource "aws_s3_bucket" "cars" {
-  bucket = var.carsBucketName
-  acl    = "private"
-}
-
 resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
   bucket = var.config_bucket_name
   acl    = "private"
