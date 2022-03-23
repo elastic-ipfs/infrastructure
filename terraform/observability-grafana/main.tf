@@ -43,7 +43,6 @@ resource "grafana_data_source" "prometheus" {
     http_method     = "GET"
     sigv4_auth      = true
     sigv4_auth_type = "ec2_iam_role"
-    # sigv4_assume_role_arn = var.grafana_role_arn == "" ? data.terraform_remote_state.aws_prometheus.outputs.grafana_role_arn : var.grafana_role_arn
     sigv4_region    = var.region
   }
 }
@@ -67,17 +66,17 @@ resource "grafana_folder" "IPFS_Elastic_Provider" {
   title = "IPFS Elastic Provider"
 }
 
-resource "grafana_dashboard" "id_dashboards" { # TODO: It was required to inform config_json even with id
-  for_each = { for dashboard_id in var.grafana_dashboards_ids : dashboard_id => dashboard_id }
-  folder   = grafana_folder.kubernetes.id
-  config_json = jsonencode({
-    id            = each.value
-    title         = "data_source_dashboards 1"
-    tags          = ["data_source_dashboards"]
-    timezone      = "browser"
-    schemaVersion = 16
-  })
-}
+# resource "grafana_dashboard" "id_dashboards" { # TODO: It was required to inform config_json even with id
+#   for_each = { for dashboard_id in var.grafana_dashboards_ids : dashboard_id => dashboard_id }
+#   folder   = grafana_folder.kubernetes.id
+#   config_json = jsonencode({
+#     id            = each.value
+#     title         = "data_source_dashboards 1"
+#     tags          = ["data_source_dashboards"]
+#     timezone      = "browser"
+#     schemaVersion = 16
+#   })
+# }
 
 resource "grafana_dashboard" "file_dashboards" {
   #   for_each =   fileset("${path.module}/files", "*") 
