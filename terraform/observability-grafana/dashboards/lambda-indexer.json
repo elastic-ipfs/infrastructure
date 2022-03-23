@@ -20,12 +20,14 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
-  "id": 30,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -110,6 +112,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -194,6 +197,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -278,6 +282,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -362,6 +367,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -447,7 +453,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 34,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "TODO: Durations"
@@ -463,6 +469,5 @@
   "timezone": "",
   "title": "Lambda Indexer",
   "uid": "5y_boZL7z",
-  "version": 9,
-  "weekStart": ""
+  "version": 1
 }

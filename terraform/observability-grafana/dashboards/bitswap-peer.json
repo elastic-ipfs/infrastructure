@@ -20,14 +20,16 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
-  "id": 24,
-  "iteration": 1646770644186,
+  "id": 7,
+  "iteration": 1648057261857,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -40,6 +42,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -81,9 +84,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -101,6 +105,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -142,9 +147,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -162,6 +168,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -199,9 +206,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -219,6 +227,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -256,9 +265,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -276,6 +286,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -313,9 +324,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -333,6 +345,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -374,9 +387,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -394,6 +408,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -432,9 +447,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -452,6 +468,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -490,9 +507,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -510,6 +528,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -548,9 +567,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -568,6 +588,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -606,9 +627,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -626,6 +648,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -667,9 +690,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "datasource": {
@@ -688,6 +712,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -700,6 +725,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -784,6 +810,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -868,6 +895,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -952,6 +980,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1036,6 +1065,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1120,6 +1150,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1204,6 +1235,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1289,82 +1321,7 @@
       "type": "timeseries"
     },
     {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Mean"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "blue",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 3
-              },
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              }
-            ]
-          }
-        ]
-      },
+      "datasource": null,
       "gridPos": {
         "h": 10,
         "w": 12,
@@ -1373,71 +1330,13 @@
       },
       "id": 35,
       "libraryPanel": {
-        "description": "",
-        "meta": {
-          "connectedDashboards": 1,
-          "created": "2022-03-03T20:11:35Z",
-          "createdBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          },
-          "folderName": "IPFS Elastic Provider",
-          "folderUid": "0I2fyPBnz",
-          "updated": "2022-03-03T20:11:35Z",
-          "updatedBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          }
-        },
         "name": "S3 Fetches Duration",
-        "type": "timeseries",
-        "uid": "Kh_QhKYnk",
-        "version": 1
+        "uid": "Kh_QhKYnk"
       },
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": true,
-          "expr": "sum(s3_fetchs_durations_sum) / sum(s3_fetchs_durations_count)",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Mean",
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": true,
-          "expr": "sum by (le) (s3_fetchs_durations_bucket{pod=~\"$pod\"})",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{ le }} %",
-          "refId": "E"
-        }
-      ],
-      "title": "S3 Fetches Duration",
-      "type": "timeseries"
+      "type": "Name: \"S3 Fetches Duration\", UID: \"Kh_QhKYnk\""
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1524,6 +1423,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1648,6 +1548,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1734,6 +1635,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1750,6 +1652,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1777,7 +1680,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1831,6 +1734,7 @@
       }
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1917,21 +1821,26 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
+        "allValue": null,
         "current": {
           "isNone": true,
           "selected": false,
           "text": "None",
           "value": ""
         },
+        "datasource": null,
         "definition": "label_values(up{job=\"kube-state-metrics\"}, cluster)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": false,
         "name": "cluster",
         "options": [],
@@ -1952,9 +1861,13 @@
           "text": "All",
           "value": "$__all"
         },
+        "datasource": null,
         "definition": "label_values(kube_pod_info{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"default\"}, pod)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": false,
         "name": "pod",
         "options": [],
@@ -1971,13 +1884,12 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Bitswap Peer",
   "uid": "7YzJYEBnz",
-  "version": 24,
-  "weekStart": ""
+  "version": 1
 }

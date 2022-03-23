@@ -12,11 +12,11 @@ variable "prometheus_endpoint" {
   default = ""
 }
 
-variable "grafana_auth" {
-  type = string
-}
-
 variable "grafana_dashboards_ids" {
   type = list(string)
   default = []
+}
+
+variable "grafana_auth" {
+  type = string
 }

@@ -20,12 +20,14 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
-  "id": 31,
+  "id": 5,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -110,6 +112,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -194,6 +197,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -278,6 +282,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -362,6 +367,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -446,7 +452,7 @@
       "type": "timeseries"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "Under Construction",
@@ -463,6 +469,5 @@
   "timezone": "",
   "title": "Lambda Publisher",
   "uid": "_KtITnL7k",
-  "version": 5,
-  "weekStart": ""
+  "version": 1
 }

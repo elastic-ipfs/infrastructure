@@ -41,7 +41,7 @@ resource "kubernetes_service_account" "irsa" {
   }
 }
 
-## Grafana Data Sources and SNS
+## Grafana Data Sources and SNS 
 resource "aws_iam_policy" "metric_prometheus_read" {
   name        = "metric-prometheus-read"
   description = "Policy for allowing Prometheus server to push data to AWS Managed Prometheus"
@@ -57,7 +57,8 @@ resource "aws_iam_policy" "metric_prometheus_read" {
                 "aps:QueryMetrics",
                 "aps:GetLabels",
                 "aps:GetSeries",
-                "aps:GetMetricMetadata"
+                "aps:GetMetricMetadata",
+                "aps:ListRules"
             ],
             "Resource": "*"
         }

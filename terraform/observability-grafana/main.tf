@@ -40,12 +40,24 @@ resource "grafana_data_source" "prometheus" {
   is_default = true
   
   json_data {
-    http_method     = "POST"
+    http_method     = "GET"
     sigv4_auth      = true
-    sigv4_auth_type = "default"
+    sigv4_auth_type = "ec2_iam_role"
+    # sigv4_assume_role_arn = var.grafana_role_arn == "" ? data.terraform_remote_state.aws_prometheus.outputs.grafana_role_arn : var.grafana_role_arn
     sigv4_region    = var.region
   }
 }
+
+resource "grafana_data_source" "cloudwatch" {
+  type = "cloudwatch"
+  name = "cloudwatch-${var.region}"
+
+  json_data {
+    default_region = var.region
+    auth_type      = "Workspace IAM Role"
+  }
+}
+
 
 resource "grafana_folder" "kubernetes" {
   title = "Kubernetes"
