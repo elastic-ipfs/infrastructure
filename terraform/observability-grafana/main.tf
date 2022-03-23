@@ -1,3 +1,5 @@
+# Important: There is a required manual step before applying this module, which is updating Grafana API Key to be used as `grafana_auth`. Check: <grafana_endpoint>/org/apikeys
+
 terraform {
   backend "s3" {
     profile        = "ipfs"
@@ -34,7 +36,7 @@ provider "grafana" {
 resource "grafana_data_source" "prometheus" {
   type = "prometheus"
   name = "amp"
-  url  = "https://${var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint}"
+  url  = "${var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint}"
 
   json_data {
     http_method     = "POST"
@@ -44,21 +46,23 @@ resource "grafana_data_source" "prometheus" {
   }
 }
 
-# I THINK that data_source from CloudWatch already comes setup by default, but let's see...
+resource "grafana_folder" "kubernetes" {
+  title = "Kubernetes"
+}
 
 resource "grafana_folder" "IPFS_Elastic_Provider" {
   title = "IPFS Elastic Provider"
 }
 
 resource "grafana_dashboard" "id_dashboards" { # TODO: It was required to inform config_json even with id
-  for_each = var.grafana_dashboards_ids
-  folder   = grafana_folder.IPFS_Elastic_Provider.id
+  for_each = { for dashboard_id in var.grafana_dashboards_ids : dashboard_id => dashboard_id }
+  folder   = grafana_folder.kubernetes.id
   config_json = jsonencode({
     id = each.value
-    # title         = "data_source_dashboards 1"
-    # tags          = ["data_source_dashboards"]
-    # timezone      = "browser"
-    # schemaVersion = 16
+    title         = "data_source_dashboards 1"
+    tags          = ["data_source_dashboards"]
+    timezone      = "browser"
+    schemaVersion = 16
   })
 }
 
