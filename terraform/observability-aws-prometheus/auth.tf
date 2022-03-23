@@ -1,3 +1,4 @@
+## Push Gateway
 resource "aws_iam_policy" "metric_ingest_remote_write" {
   name        = "metric-ingest-remote-write"
   description = "Policy for allowing Prometheus server to push data to AWS Managed Prometheus"
@@ -40,6 +41,107 @@ resource "kubernetes_service_account" "irsa" {
   }
 }
 
+## Grafana Data Sources and SNS
+resource "aws_iam_policy" "metric_prometheus_read" {
+  name        = "metric-prometheus-read"
+  description = "Policy for allowing Prometheus server to push data to AWS Managed Prometheus"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "aps:ListWorkspaces",
+                "aps:DescribeWorkspace",
+                "aps:QueryMetrics",
+                "aps:GetLabels",
+                "aps:GetSeries",
+                "aps:GetMetricMetadata"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "metric_cloudwatch_read" {
+  name        = "metric-cloudwatch-read"
+  description = "Policy for allowing Grafana to use CloudWatch as Data Source"
+  policy      = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Sid": "AllowReadingMetricsFromCloudWatch",
+          "Effect": "Allow",
+          "Action": [
+              "cloudwatch:DescribeAlarmsForMetric",
+              "cloudwatch:DescribeAlarmHistory",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:ListMetrics",
+              "cloudwatch:GetMetricStatistics",
+              "cloudwatch:GetMetricData",
+              "cloudwatch:GetInsightRuleReport"
+          ],
+          "Resource": "*"
+      },
+      {
+          "Sid": "AllowReadingLogsFromCloudWatch",
+          "Effect": "Allow",
+          "Action": [
+              "logs:DescribeLogGroups",
+              "logs:GetLogGroupFields",
+              "logs:StartQuery",
+              "logs:StopQuery",
+              "logs:GetQueryResults",
+              "logs:GetLogEvents"
+          ],
+          "Resource": "*"
+      },
+      {
+          "Sid": "AllowReadingTagsInstancesRegionsFromEC2",
+          "Effect": "Allow",
+          "Action": [
+              "ec2:DescribeTags",
+              "ec2:DescribeInstances",
+              "ec2:DescribeRegions"
+          ],
+          "Resource": "*"
+      },
+      {
+          "Sid": "AllowReadingResourcesForTags",
+          "Effect": "Allow",
+          "Action": "tag:GetResources",
+          "Resource": "*"
+      }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "metric_notification_push" {
+  name        = "metric-notification-push"
+  description = "Policy for allowing Grafana to push notifications to SNS"
+  policy      = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+              "sns:Publish"
+          ],
+          "Resource": [
+              "arn:aws:sns:*:505595374361:grafana*"
+          ]
+      }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role" "assume" {
   name = "grafana-assume"
   assume_role_policy = jsonencode({
@@ -55,4 +157,18 @@ resource "aws_iam_role" "assume" {
       },
     ]
   })
+}
+resource "aws_iam_role_policy_attachment" "metric_prometheus_read" {
+  role       = aws_iam_role.assume.name
+  policy_arn = aws_iam_policy.metric_prometheus_read.arn
+}
+
+resource "aws_iam_role_policy_attachment" "metric_cloudwatch_read" {
+  role       = aws_iam_role.assume.name
+  policy_arn = aws_iam_policy.metric_cloudwatch_read.arn
+}
+
+resource "aws_iam_role_policy_attachment" "metric_notification_push" {
+  role       = aws_iam_role.assume.name
+  policy_arn = aws_iam_policy.metric_notification_push.arn
 }

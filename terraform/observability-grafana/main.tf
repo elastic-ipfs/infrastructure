@@ -35,9 +35,10 @@ provider "grafana" {
 
 resource "grafana_data_source" "prometheus" {
   type = "prometheus"
-  name = "amp"
-  url  = "${var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint}"
-
+  name = "AWS_Managed_Prometheus"
+  url  = var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint
+  is_default = true
+  
   json_data {
     http_method     = "POST"
     sigv4_auth      = true
@@ -58,7 +59,7 @@ resource "grafana_dashboard" "id_dashboards" { # TODO: It was required to inform
   for_each = { for dashboard_id in var.grafana_dashboards_ids : dashboard_id => dashboard_id }
   folder   = grafana_folder.kubernetes.id
   config_json = jsonencode({
-    id = each.value
+    id            = each.value
     title         = "data_source_dashboards 1"
     tags          = ["data_source_dashboards"]
     timezone      = "browser"
