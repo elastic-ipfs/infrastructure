@@ -168,7 +168,6 @@ resource "aws_security_group_rule" "fargate_ingress" {
   security_group_id        = module.eks.cluster_primary_security_group_id
 }
 
-
 resource "aws_security_group_rule" "fargate_egress" {
   description              = "Node to cluster - Fargate kubelet (Required for Metrics Server)"
   protocol                 = "tcp"
@@ -198,7 +197,6 @@ resource "aws_security_group_rule" "dns_ingress_udp" {
   source_security_group_id = module.eks.cluster_primary_security_group_id
   security_group_id        = module.eks.node_security_group_id
 }
-
 
 module "kube-base-components" {
   source                  = "../modules/kube-base-components"
