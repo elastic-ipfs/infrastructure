@@ -201,15 +201,16 @@ resource "aws_security_group_rule" "dns_ingress_udp" {
 
 
 module "kube-base-components" {
-  source                  = "../modules/kube-base-components"
-  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
-  cluster_id              = module.eks.cluster_id
-  region                  = var.region
-  config_bucket_name      = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
-  host                    = data.aws_eks_cluster.eks.endpoint
-  token                   = data.aws_eks_cluster_auth.eks.token
-  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  source                     = "../modules/kube-base-components"
+  cluster_oidc_issuer_url    = module.eks.cluster_oidc_issuer_url
+  cluster_id                 = module.eks.cluster_id
+  region                     = var.region
+  config_bucket_name         = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
+  host                       = data.aws_eks_cluster.eks.endpoint
+  token                      = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate     = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   deploy_cloudwatch_exporter = false
+  deploy_prometheus          = false
   service_account_roles = {
     "bitswap_peer_subsystem_role" = {
       service_account_name      = "bitswap-irsa",
@@ -217,8 +218,7 @@ module "kube-base-components" {
       role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-        data.terraform_remote_state.shared.outputs.s3_cars_policy_read,
-        data.terraform_remote_state.shared.outputs.s3_cars_policy_write,
+        # TODO: Add external Uploader CAR bucket policy
         data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
         data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
       ]
