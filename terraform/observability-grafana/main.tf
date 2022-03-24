@@ -57,35 +57,25 @@ resource "grafana_data_source" "cloudwatch" {
   }
 }
 
+resource "grafana_folder" "IPFS_Elastic_Provider" {
+  title = "IPFS Elastic Provider"
+}
 
 resource "grafana_folder" "kubernetes" {
   title = "Kubernetes"
 }
 
-resource "grafana_folder" "IPFS_Elastic_Provider" {
-  title = "IPFS Elastic Provider"
-}
-
-# resource "grafana_dashboard" "id_dashboards" { # TODO: It was required to inform config_json even with id
-#   for_each = { for dashboard_id in var.grafana_dashboards_ids : dashboard_id => dashboard_id }
-#   folder   = grafana_folder.kubernetes.id
-#   config_json = jsonencode({
-#     id            = each.value
-#     title         = "data_source_dashboards 1"
-#     tags          = ["data_source_dashboards"]
-#     timezone      = "browser"
-#     schemaVersion = 16
-#   })
-# }
-
 resource "grafana_dashboard" "ipfs_elastic_provider_dashboards" {
-  for_each = fileset("ipfs-elastic-provider-dashboards", "*.json")
+  for_each    = fileset("ipfs-elastic-provider-dashboards", "*.json")
   folder      = grafana_folder.IPFS_Elastic_Provider.id
   config_json = file("ipfs-elastic-provider-dashboards/${each.value}")
 }
 
-# resource "grafana_dashboard" "kubernetes_dashboards" {
-#   for_each = fileset("kubernetes-dashboards", "*.json")
-#   folder      = grafana_folder.IPFS_Elastic_Provider.id
-#   config_json = file("kubernetes-dashboards/${each.value}")
-# }
+// TODO: Use IDs from grafana.com instead of these files. Ex: [12116, 12133...]
+// https://github.com/grafana/terraform-provider-grafana/issues/443
+resource "grafana_dashboard" "kubernetes_dashboards" {
+  for_each    = fileset("kubernetes-dashboards", "*.json")
+  folder      = grafana_folder.kubernetes.id
+  config_json = file("kubernetes-dashboards/${each.value}")
+  overwrite   = true
+}
