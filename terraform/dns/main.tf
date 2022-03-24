@@ -47,8 +47,4 @@ module "dns_route53" {
   subdomains_bitwsap_loadbalancer = var.subdomains_bitwsap_loadbalancer
   subdomain_apis                  = var.subdomain_apis
   bitswap_load_balancer_hostname  = var.bitswap_load_balancer_hostname
-  api_gateway = {
-    api_id     = data.terraform_remote_state.indexing.outputs.api_id
-    stage_name = data.terraform_remote_state.indexing.outputs.stage_name
-  }
 }
