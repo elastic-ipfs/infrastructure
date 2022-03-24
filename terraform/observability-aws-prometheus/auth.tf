@@ -44,7 +44,7 @@ resource "kubernetes_service_account" "irsa" {
 ## Grafana Data Sources and SNS 
 resource "aws_iam_policy" "metric_prometheus_read" {
   name        = "metric-prometheus-read"
-  description = "Policy for allowing Prometheus server to push data to AWS Managed Prometheus"
+  description = "Policy for allowing Grafana to use Prometheus as Data Source"
   policy      = <<EOF
 {
     "Version": "2012-10-17",
