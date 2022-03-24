@@ -45,6 +45,5 @@ module "dns_route53" {
   existing_zone                   = var.existing_aws_zone
   domain_name                     = var.aws_domain_name
   subdomains_bitwsap_loadbalancer = var.subdomains_bitwsap_loadbalancer
-  subdomain_apis                  = var.subdomain_apis
   bitswap_load_balancer_hostname  = var.bitswap_load_balancer_hostname
 }

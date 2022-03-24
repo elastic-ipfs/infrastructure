@@ -14,11 +14,6 @@ variable "aws_domain_name" {
   type    = string
 }
 
-variable "subdomain_apis" {
-  type        = string
-  description = "Name for a API Gateway subdomain"
-}
-
 variable "subdomains_bitwsap_loadbalancer" {
   description = "Subdomains that will be handled by peer svc loadbalancer"
 }
