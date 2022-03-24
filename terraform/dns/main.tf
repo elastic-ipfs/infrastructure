@@ -47,3 +47,4 @@ module "dns_route53" {
   subdomains_bitwsap_loadbalancer = var.subdomains_bitwsap_loadbalancer
   bitswap_load_balancer_hostname  = var.bitswap_load_balancer_hostname
 }
+
