@@ -57,7 +57,7 @@ resource "grafana_data_source" "cloudwatch" {
   }
 }
 
-resource "grafana_folder" "IPFS_Elastic_Provider" {
+resource "grafana_folder" "ipfs_elastic_provider" {
   title = "IPFS Elastic Provider"
 }
 
@@ -65,17 +65,28 @@ resource "grafana_folder" "kubernetes" {
   title = "Kubernetes"
 }
 
+resource "grafana_folder" "aws" {
+  title = "AWS"
+}
+
 resource "grafana_dashboard" "ipfs_elastic_provider_dashboards" {
-  for_each    = fileset("ipfs-elastic-provider-dashboards", "*.json")
-  folder      = grafana_folder.IPFS_Elastic_Provider.id
-  config_json = file("ipfs-elastic-provider-dashboards/${each.value}")
+  for_each    = fileset("dashboards/ipfs-elastic-provider", "*.json")
+  folder      = grafana_folder.ipfs_elastic_provider.id
+  config_json = file("dashboards/ipfs-elastic-provider/${each.value}")
 }
 
 // TODO: Use IDs from grafana.com instead of these files. Ex: [12116, 12133...]
 // https://github.com/grafana/terraform-provider-grafana/issues/443
 resource "grafana_dashboard" "kubernetes_dashboards" {
-  for_each    = fileset("kubernetes-dashboards", "*.json")
+  for_each    = fileset("dashboards/kubernetes", "*.json")
   folder      = grafana_folder.kubernetes.id
-  config_json = file("kubernetes-dashboards/${each.value}")
+  config_json = file("dashboards/kubernetes/${each.value}")
+  overwrite   = true
+}
+
+resource "grafana_dashboard" "aws_dashboards" {
+  for_each    = fileset("dashboards/aws", "*.json")
+  folder      = grafana_folder.aws.id
+  config_json = file("dashboards/aws/${each.value}")
   overwrite   = true
 }
