@@ -1,4 +1,4 @@
-name: 'Publishing Subsystem Auto Deploy'
+name: 'Grafana Auto Deploy'
 on:
   push:
     branches:

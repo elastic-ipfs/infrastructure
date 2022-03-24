@@ -1,4 +1,4 @@
-name: 'Publishing Subsystem Auto Deploy'
+name: 'Prometheus Auto Deploy'
 on:
   push:
     branches:
