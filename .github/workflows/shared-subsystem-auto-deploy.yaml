@@ -13,7 +13,7 @@ jobs:
   terraform:
     uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
-      options: -var profile=ipfs
+      options: -var profile=ipfs -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }}
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/shared-subsystem'
