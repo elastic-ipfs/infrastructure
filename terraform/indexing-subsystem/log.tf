@@ -27,20 +27,3 @@ EOF
 }
 
 
-## Custom metrics filter
-
-resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_signs_count" {
-  name           = "uploader-lambda-s3-signs-count"
-  pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
-  log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
-
-  metric_transformation {
-    namespace = "uploader-lambda-metrics"
-    name      = "s3-signs-count"
-    value     = "$.metrics.s3-signs-count"
-    dimensions = {
-      ipfs_provider_component = "$.ipfs_provider_component"
-    }
-  }
-}
-
