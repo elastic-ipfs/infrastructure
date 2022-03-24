@@ -26,27 +26,7 @@ resource "aws_iam_policy" "uploader_lambda_logging" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "uploader_lambda_logs" {
-  role       = aws_iam_role.uploader_lambda_role.name
-  policy_arn = aws_iam_policy.uploader_lambda_logging.arn
-}
-
 ## Custom metrics filter
-
-resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_heads_count" {
-  name           = "uploader-lambda-s3-heads-count"
-  pattern        = "{ $.ipfs_provider_component = \"uploader-lambda\" }"
-  log_group_name = aws_cloudwatch_log_group.uploader_log_group.name
-
-  metric_transformation {
-    namespace = "uploader-lambda-metrics"
-    name      = "s3-heads-count"
-    value     = "$.metrics.s3-heads-count"
-    dimensions = {
-      ipfs_provider_component = "$.ipfs_provider_component"
-    }
-  }
-}
 
 resource "aws_cloudwatch_log_metric_filter" "uploader_lambda_s3_signs_count" {
   name           = "uploader-lambda-s3-signs-count"
