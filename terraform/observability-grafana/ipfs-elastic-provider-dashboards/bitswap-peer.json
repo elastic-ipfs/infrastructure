@@ -1327,11 +1327,8 @@
         "y": 43
       },
       "id": 35,
-      "libraryPanel": {
-        "name": "S3 Fetches Duration",
-        "uid": "Kh_QhKYnk"
-      },
-      "type": "Name: \"S3 Fetches Duration\", UID: \"Kh_QhKYnk\""
+      "title": "S3 Fetches Duration",
+      "type": "timeseries"
     },
     {
       "datasource": null,
@@ -1887,7 +1884,5 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Bitswap Peer",
-  "uid": "7YzJYEBnz",
-  "version": 1
+  "title": "Bitswap Peer"
 }

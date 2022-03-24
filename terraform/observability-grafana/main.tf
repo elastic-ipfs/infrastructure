@@ -34,11 +34,11 @@ provider "grafana" {
 }
 
 resource "grafana_data_source" "prometheus" {
-  type = "prometheus"
-  name = "AWS_Managed_Prometheus"
-  url  = var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint
+  type       = "prometheus"
+  name       = "AWS_Managed_Prometheus"
+  url        = var.prometheus_endpoint == "" ? data.terraform_remote_state.aws_prometheus.outputs.prometheus_endpoint : var.prometheus_endpoint
   is_default = true
-  
+
   json_data {
     http_method     = "GET"
     sigv4_auth      = true
@@ -78,9 +78,14 @@ resource "grafana_folder" "IPFS_Elastic_Provider" {
 #   })
 # }
 
-resource "grafana_dashboard" "file_dashboards" {
-  #   for_each =   fileset("${path.module}/files", "*") 
-  for_each    = fileset("dashboards", "*.json")
+resource "grafana_dashboard" "ipfs_elastic_provider_dashboards" {
+  for_each = fileset("ipfs-elastic-provider-dashboards", "*.json")
   folder      = grafana_folder.IPFS_Elastic_Provider.id
-  config_json = file("dashboards/${each.value}")
+  config_json = file("ipfs-elastic-provider-dashboards/${each.value}")
 }
+
+# resource "grafana_dashboard" "kubernetes_dashboards" {
+#   for_each = fileset("kubernetes-dashboards", "*.json")
+#   folder      = grafana_folder.IPFS_Elastic_Provider.id
+#   config_json = file("kubernetes-dashboards/${each.value}")
+# }
