@@ -8,9 +8,9 @@ locals {
 
   environment_variables = {
     BITSWAP_PEER_MULTIADDR       = "/dns4/${data.terraform_remote_state.dns.outputs.bitswap_loadbalancer_domain}/tcp/3000/ws"
-    ### TODO: I think this can be deleted
+    ## TODO: Sync with PL to use production storetheindex URL
     INDEXER_NODE_URL             = "http://abcca6d4490f0426d9dd855139563762-159596440.us-east-2.elb.amazonaws.com:3001"
-    ###
+    ##
     NODE_ENV                     = "production"
     PEER_ID_FILE                 = "peerId.json"
     PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
