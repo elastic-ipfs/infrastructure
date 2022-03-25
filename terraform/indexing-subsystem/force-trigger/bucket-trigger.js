@@ -1,45 +1,38 @@
-const { S3, SQS } = require('aws-sdk')
-const s3 = new S3()
-const sqs = new SQS()
+const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3')
+const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
+
+const S3client = new S3Client()
+const SQSclient = new SQSClient()
 
 async function* listAllKeys(opts) {
   opts = { ...opts }
   do {
-    const data = await s3.listObjectsV2(opts).promise()
-    opts.ContinuationToken = data.NextContinuationToken
-    yield data
+    const command = new ListObjectsV2Command(opts)
+    const foundObjects = await S3client.send(command)
+    opts.ContinuationToken = foundObjects.NextContinuationToken
+    yield foundObjects
   } while (opts.ContinuationToken)
 }
 
 const opts = {
   Bucket: process.env.SOURCE_BUCKET_NAME,
-  // ContinuationToken: 'STRING_VALUE',
-  // Delimiter: 'STRING_VALUE',
-  // EncodingType: url,
-  // FetchOwner: true || false,
-  // MaxKeys: 'NUMBER_VALUE',
-  // Prefix: 'STRING_VALUE',
-  // RequestPayer: requester,
-  // StartAfter: 'STRING_VALUE'
 }
-
 
 async function sendIndexSQSMessage(bucketName, fileKey) {
   const message = `s3://${bucketName}/${fileKey}`
   console.log(message)
 
-  var params = {
+  const command = new SendMessageCommand({
     MessageBody: message,
     QueueUrl: process.env.SQS_QUEUE_URL,
-  }
-
-  sqs.sendMessage(params, function (err, data) {
-    if (err) {
-      console.log('Error', err)
-    } else {
-      console.log('Success', data.MessageId)
-    }
   })
+
+  try {
+    const data = await SQSclient.send(command);
+    console.log('Success', data.MessageId)    
+  } catch (error) {
+    console.error('Error', error)
+  } 
 }
 
 async function main() {
