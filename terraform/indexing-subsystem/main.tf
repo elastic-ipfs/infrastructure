@@ -63,6 +63,47 @@ provider "aws" {
 #   ]
 # }
 
+module "indexer_lambda_from_sqs" {
+  source = "../modules/lambda-from-sqs"
+  sqs_trigger = {
+    arn                                = aws_sqs_queue.indexer_topic.arn
+    batch_size                         = 10000
+    maximum_batching_window_in_seconds = 30
+  }
+
+  lambda = {
+    image_uri                      = local.indexer_image_url
+    name                           = local.indexer_lambda.name
+    memory_size                    = 1024
+    timeout                        = 60
+    reserved_concurrent_executions = -1 # No restrictions
+    region                         = var.region
+    environment_variables          = local.environment_variables     
+    policies_list = [
+      data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
+      data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
+      data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send
+    ]     
+  }
+  metrics_namespace = "indexer-lambda-metrics"
+
+  custom_metrics = [
+    "s3-fetchs-count",
+    "dynamo-creates-count",
+    "dynamo-updates-count",
+    "dynamo-deletes-count",
+    "dynamo-reads-count",
+    "sqs-publishes-count"
+  ]
+
+}
+
 resource "aws_ecr_repository" "ecr-repo-indexer-lambda" {
   name = "indexer-lambda"
+}
+
+resource "aws_sqs_queue" "indexer_topic" {
+  name                       = "indexer-topic"
+  message_retention_seconds  = 86400 # 1 day
+  visibility_timeout_seconds = 300   # 5 min
 }
