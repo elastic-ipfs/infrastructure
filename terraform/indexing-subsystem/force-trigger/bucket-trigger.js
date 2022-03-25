@@ -11,7 +11,7 @@ async function* listAllKeys(opts) {
 }
 
 const opts = {
-  Bucket: 'francisco-nearform-test' /* required */,
+  Bucket: process.env.SOURCE_BUCKET_NAME /* required */,
   // ContinuationToken: 'STRING_VALUE',
   // Delimiter: 'STRING_VALUE',
   // EncodingType: url,
