@@ -23,14 +23,13 @@ const opts = {
   // StartAfter: 'STRING_VALUE'
 }
 
+
 async function sendIndexSQSMessage(bucketName, fileKey) {
   const message = `s3://${bucketName}/${fileKey}`
   console.log(message)
 
   var params = {
     MessageBody: message,
-    // MessageDeduplicationId: "TheWhistler",  // Required for FIFO queues
-    // MessageGroupId: "Group1",  // Required for FIFO queues
     QueueUrl: process.env.SQS_QUEUE_URL,
   }
 
@@ -44,9 +43,7 @@ async function sendIndexSQSMessage(bucketName, fileKey) {
 }
 
 async function main() {
-  // using for of await loop
   for await (const data of listAllKeys(opts)) {
-    // console.log(data.Contents)
     sendIndexSQSMessage(opts.Bucket, data.Contents[0].Key)
   }
 }
