@@ -19,7 +19,7 @@ const opts = {
 }
 
 async function sendIndexSQSMessage(bucketName, fileKey) {
-  const message = `s3://${bucketName}/${fileKey}`
+  const message = `${bucketName}/${fileKey}`
   console.log(message)
 
   const command = new SendMessageCommand({
