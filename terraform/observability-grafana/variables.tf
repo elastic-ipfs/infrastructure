@@ -19,4 +19,5 @@ variable "grafana_dashboards_ids" {
 
 variable "grafana_auth" {
   type = string
+  sensitive = true
 }
