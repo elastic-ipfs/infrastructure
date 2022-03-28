@@ -1,8 +1,11 @@
 # TODO: Should this be part of the same workflow?
 # Maybe make just high or critical block main workflow
 ### soft_fail_commenter - set to true to to comment silently without breaking the build
-name: tfsec-pr-commenter
+name: tfsec
 on:
+  push:
+    branches:
+    - main
   pull_request:
 jobs:
   tfsec:
@@ -12,6 +15,6 @@ jobs:
     - name: Clone repo
       uses: actions/checkout@master
     - name: tfsec
-      uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+      uses: aquasecurity/tfsec-action@v1.0.0
       with:
-        github_token: ${{ github.token }}
+        soft_fail: true
