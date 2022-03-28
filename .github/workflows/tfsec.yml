@@ -9,7 +9,7 @@ on:
   pull_request:
 jobs:
   tfsec:
-    name: tfsec PR commenter
+    name: tfsec
     runs-on: ubuntu-latest
     steps:
     - name: Clone repo
