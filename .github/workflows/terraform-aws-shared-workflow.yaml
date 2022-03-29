@@ -45,6 +45,7 @@ jobs:
         aws-region: ${{ inputs.aws_region }}
     - run: whoami
     - run: pwd
+    - run: aws configure list
     - run: ls -l
     - run: cat ~/.aws/config
     - name: Setup Terraform
