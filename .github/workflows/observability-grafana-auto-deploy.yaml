@@ -23,18 +23,20 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14'
+    # TODO: Is this required?
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region:  us-west-2
+    ##
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
     - name: Terraform Init
       run: terraform init
     - name: Terraform Plan
-      run: terraform plan  -var profile=default -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region= us-west-2
+      run: terraform plan -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region= us-west-2
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' 
-      run: terraform apply  -var profile=default -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region= us-west-2 -auto-approve
+      run: terraform apply -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region= us-west-2 -auto-approve
