@@ -41,7 +41,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: sudo apt install awscli -y
+      - run: | 
+          sudo apt update -y
+          sudo apt install awscli -y
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
