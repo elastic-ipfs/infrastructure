@@ -75,3 +75,4 @@ resource "aws_grafana_workspace" "ipfs_elastic_provider" {
     "XRAY"
   ]
 }
+
