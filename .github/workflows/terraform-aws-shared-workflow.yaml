@@ -45,6 +45,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.aws_iam_role_to_assume }}
           aws-region: ${{ inputs.aws_region }}
+      - run: echo $AWS_PROFILE
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
       - name: Terraform Init
