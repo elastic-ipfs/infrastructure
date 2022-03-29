@@ -20,7 +20,7 @@ on:
     - 'terraform/modules/cluster-autoscaler/**'
 jobs:
   terraform:
-    uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
+    uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@prometheus-workflow 
     with:
       options: -var profile=default -var accountId=505595374361
       aws_region: us-west-2
