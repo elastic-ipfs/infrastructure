@@ -36,7 +36,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
     - name: Terraform Plan
-      run: terraform plan -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region= us-west-2
+      run: terraform plan -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region=us-west-2
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' 
-      run: terraform apply -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region= us-west-2 -auto-approve
+      run: terraform apply -var grafana_auth=${{ secrets.GRAFANA_APP_KEY }} -var region=us-west-2 -auto-approve
