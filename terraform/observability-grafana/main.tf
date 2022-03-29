@@ -90,3 +90,4 @@ resource "grafana_dashboard" "aws_dashboards" {
   config_json = file("dashboards/aws/${each.value}")
   overwrite   = true
 }
+
