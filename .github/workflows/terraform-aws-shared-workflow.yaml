@@ -43,7 +43,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: | 
+      - name: Install AWS CLI
+        run: | 
           sudo apt update -y
           sudo apt install awscli -y
       - name: Configure AWS credentials
