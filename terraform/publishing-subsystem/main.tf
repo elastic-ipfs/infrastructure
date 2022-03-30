@@ -26,6 +26,15 @@ data "terraform_remote_state" "shared" {
   }
 }
 
+data "terraform_remote_state" "dns" {
+  backend = "s3"
+  config = {
+    bucket = "ipfs-elastic-provider-terraform-state"
+    key    = "terraform.dns.tfstate"
+    region = "${var.region}"
+  }
+}
+
 provider "aws" {
   profile = var.profile
   region  = var.region

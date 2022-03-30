@@ -7,8 +7,8 @@ locals {
   }
 
   environment_variables = {
-    BITSWAP_PEER_MULTIADDR       = "/dns4/afb33e07892214fd0ad11b52ddd30fb0-614313715.us-west-2.elb.amazonaws.com/tcp/3000/ws"
-    INDEXER_NODE_URL             = "http://abcca6d4490f0426d9dd855139563762-159596440.us-east-2.elb.amazonaws.com:3001"
+    BITSWAP_PEER_MULTIADDR       = "/dns4/${data.terraform_remote_state.dns.outputs.bitswap_loadbalancer_domain}/tcp/3000/ws"
+    INDEXER_NODE_URL             = "http://ae12982c68cbd4f0d8b07163518cd1ee-1196334068.us-east-1.elb.amazonaws.com:3001"
     NODE_ENV                     = "production"
     PEER_ID_FILE                 = "peerId.json"
     PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
