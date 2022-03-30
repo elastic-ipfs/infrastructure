@@ -1,8 +1,6 @@
 const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3')
-const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
 
 const S3client = new S3Client()
-const SQSclient = new SQSClient()
 
 async function* listAllKeys(opts) {
   opts = { ...opts }
@@ -21,21 +19,6 @@ const opts = {
 fileCount = 0
 messageSentCount = 0
 
-async function sendIndexSQSMessage(message) {
-  const command = new SendMessageCommand({
-    MessageBody: message,
-    QueueUrl: process.env.SQS_QUEUE_URL,
-  })
-
-  try {
-    const data = await SQSclient.send(command)
-    console.log('Success', data.MessageId)
-    messageSentCount++
-  } catch (error) {
-    console.error('Error', error)
-  }
-}
-
 async function main() {
   console.log('Starting to process all keys from ' + opts.Bucket)
   const start = Date.now
@@ -44,7 +27,8 @@ async function main() {
       fileCount++
       const message = `${opts.Bucket}/${object.Key}`
       console.log(message)
-      // sendIndexSQSMessage(message)
+      // success = sendIndexSQSMessage(message)
+      // if success messageSentCount++
     }
   }
   const duration = Date.now() - start
