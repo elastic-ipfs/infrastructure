@@ -10,9 +10,8 @@ on:
     - 'terraform/observability-aws-prometheus/**'
 jobs:
   terraform:
-    uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
+    uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main
     with:
-      options: -var profile=default
       aws_region: us-west-2
       environment: production
       working_directory: './terraform/observability-aws-prometheus'

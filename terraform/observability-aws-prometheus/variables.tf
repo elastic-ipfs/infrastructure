@@ -27,11 +27,6 @@ variable "cluster_ca_cert" {
   type    = string
   default = ""
 }
-
-variable "profile" {
-  type = string
-}
-
 variable "region" {
   type = string
 }

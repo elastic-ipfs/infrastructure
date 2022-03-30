@@ -37,7 +37,6 @@ data "terraform_remote_state" "peer" {
 }
 
 provider "aws" {
-  profile = var.profile
   region  = var.region
   default_tags {
     tags = {
@@ -75,3 +74,4 @@ resource "aws_grafana_workspace" "ipfs_elastic_provider" {
     "XRAY"
   ]
 }
+
