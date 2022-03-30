@@ -22,10 +22,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            if (context.eventName === "pull_request") {
-              // Triggered by PR
-              return context.payload.pull_request.head.sha
-            } else if (context.eventName === "issue_comment" && context.payload.issue.pull_request) {
+            if (context.eventName === "issue_comment" && context.payload.issue.pull_request) {
               // Triggered by PR Comment
               const { owner, repo, number } = context.issue;
               const pr = await github.rest.pulls.get({

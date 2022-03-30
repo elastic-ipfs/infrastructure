@@ -24,7 +24,7 @@ module.exports = async ({github, context}) => {
       // - terraspace up [stack]
       if (commandArray[0] === "terraspace" && commandArray.length === 3) {
         result.program = "terraspace"
-        if (commandArray[1] === "all" && ["plan", "up"].includes(commandArray[2])) {
+        const createStatusChecks = async () => {
           const res = await github.rest.checks.create({
             owner,
             repo,
@@ -51,7 +51,12 @@ module.exports = async ({github, context}) => {
             description: "Terraspace Comment Check",
             context: "Terraspace / pr-comment"
           });
+
+          result.commitStatusId = commitStatusRes.data.id
           // console.log(`commitStatusRes = ${JSON.stringify(commitStatusRes)}`)
+        }
+        if (commandArray[1] === "all" && ["plan", "up"].includes(commandArray[2])) {
+          await createStatusChecks()
 
           result.proceed = "true"
           result.cmd = "all"
@@ -60,34 +65,7 @@ module.exports = async ({github, context}) => {
           result.requestAllUp = result.subCmd === "up" ? "true" : "false"
           result.requestAllPlan = result.subCmd === "plan" ? "true" : "false"
         } else if (["plan", "up"].includes(commandArray[1])) {
-          const res = await github.rest.checks.create({
-            owner,
-            repo,
-            status: "in_progress",
-            name: "PR Comment",
-            head_sha: ref,
-            details_url: `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`,
-            external_id: `${context.runId}`,
-            output: {
-              title: "Terraspace Comment Action",
-              summary: `[Action Run Log](${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId})`,
-              text: "Started"
-            }
-          });
-          // console.log(`res = ${JSON.stringify(res)}`)
-          result.checkRunId = res.data.id
-
-          const commitStatusRes = await github.rest.repos.createCommitStatus({
-            owner,
-            repo,
-            sha: ref,
-            state: "pending",
-            target_url: `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`,
-            description: "this is a description",
-            context: "commit-status"
-          });
-          // console.log(`commitStatusRes = ${JSON.stringify(commitStatusRes)}`)
-          result.commitStatusId = res.data.id
+          await createStatusChecks()
 
           result.proceed = "true"
           result.cmd = commandArray[1]
