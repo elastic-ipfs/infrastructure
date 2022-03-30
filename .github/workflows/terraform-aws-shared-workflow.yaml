@@ -6,7 +6,7 @@ on:
       options:
         required: false
         type: string
-        default: ''
+        default: ""
       aws_region:
         required: true
         type: string
