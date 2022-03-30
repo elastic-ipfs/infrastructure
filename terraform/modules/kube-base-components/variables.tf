@@ -55,12 +55,6 @@ variable "deploy_eks_auth_sync" {
   default     = true
 }
 
-variable "deploy_prometheus" {
-  description = "Whether to deploy or not the prometheus to the cluster"
-  type        = bool
-  default     = true
-}
-
 variable "deploy_argocd" {
   description = "Whether to deploy or not the argocd to the cluster"
   type        = bool
