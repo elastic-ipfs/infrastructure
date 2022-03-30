@@ -16,29 +16,45 @@ async function* listAllKeys(opts) {
 
 const opts = {
   Bucket: process.env.SOURCE_BUCKET_NAME,
+  Prefix: 'raw/',
 }
+fileCount = 0
+messageSentCount = 0
 
-async function sendIndexSQSMessage(bucketName, fileKey) {
-  const message = `${bucketName}/${fileKey}`
-  console.log(message)
-
+async function sendIndexSQSMessage(message) {
   const command = new SendMessageCommand({
     MessageBody: message,
     QueueUrl: process.env.SQS_QUEUE_URL,
   })
 
   try {
-    const data = await SQSclient.send(command);
-    console.log('Success', data.MessageId)    
+    const data = await SQSclient.send(command)
+    console.log('Success', data.MessageId)
+    messageSentCount++
   } catch (error) {
     console.error('Error', error)
-  } 
+  }
 }
 
 async function main() {
+  console.log('Starting to process all keys from ' + opts.Bucket)
+  const start = Date.now
   for await (const data of listAllKeys(opts)) {
-    sendIndexSQSMessage(opts.Bucket, data.Contents[0].Key)
+    for (const object of data.Contents) {
+      fileCount++
+      const message = `${opts.Bucket}/${object.Key}`
+      console.log(message)
+      // sendIndexSQSMessage(message)
+    }
   }
+  const duration = Date.now() - start
+  console.log(
+    `Finished processing all keys from ${0}. ${1} files were processed and ${2} messages were published to Index SNS. Processing time(ms): ${3}`,
+    opts.Bucket,
+    fileCount,
+    messageSentCount,
+    duration,
+  )
 }
 
 main()
