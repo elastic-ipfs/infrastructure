@@ -27,5 +27,7 @@ jobs:
       environment: production
       working_directory: './terraform/peer-subsystem'
     secrets:
-      aws_iam_role_to_assume: ${{ secrets.AWS_IAM_ROLE_TO_ASSUME }}
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 

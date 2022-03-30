@@ -17,7 +17,9 @@ on:
         required: true
         type: string
     secrets:
-      aws_iam_role_to_assume:
+      aws_access_key_id:
+        required: true
+      aws_secret_access_key:
         required: true
 jobs:
   # TODO: Add a job for deploying at a staging environment and run automated tests
@@ -47,7 +49,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.aws_iam_role_to_assume }}
+          aws-access-key-id: ${{ secrets.aws_access_key_id }}
+          aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
           aws-region: ${{ inputs.aws_region }}
       - run: echo $AWS_PROFILE
       - run: aws configure list
