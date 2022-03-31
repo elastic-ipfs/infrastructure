@@ -75,3 +75,7 @@ resource "aws_grafana_workspace" "ipfs_elastic_provider" {
   ]
 }
 
+resource "aws_sns_topic" "alerts_topic" {
+  name = "alerts-topic"
+}
+
