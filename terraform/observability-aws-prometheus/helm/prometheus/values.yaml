@@ -175,13 +175,21 @@ kube-prometheus-stack:
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
-        receiver: 'null'
+        receiver: 'alert_receiver'
         routes:
           - match:
               alertname: Watchdog
-            receiver: 'null'
+            receiver: 'alert_receiver'
       receivers:
-        - name: 'null'
+        - name: alert_receiver
+          sns_configs:
+            - sigv4:
+                region: us-west-2
+            topic_arn: arn:aws:sns:us-west-2:505595374361:alerts-topic
+            subject: Alert
+            # attributes:
+            #   key: somekey
+            #   value: somevalue
       templates:
         - '/etc/alertmanager/config/*.tmpl'
 
