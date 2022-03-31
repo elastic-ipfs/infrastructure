@@ -11,10 +11,10 @@ module.exports.sendIndexSQSMessage = async function(message) {
 
   try {
     const data = await SQSclient.send(command)
-    console.log('Success', data.MessageId)
+    console.log('Send Message Success', data.MessageId)
     success = true;
   } catch (error) {
-    console.error('Error', error)
+    console.error('Send Message Error', error)
     success = false;
   } finally {
     return success;

@@ -16,7 +16,7 @@
                 "AWS_REGION": "us-east-2",
             },
             "console": "integratedTerminal",
-            "program": "terraform/indexing-subsystem/force-trigger/bucket-trigger.js"
+            "program": "terraform/indexing-subsystem/force-trigger/bucket-mirror.js"
         }
     ]
 }

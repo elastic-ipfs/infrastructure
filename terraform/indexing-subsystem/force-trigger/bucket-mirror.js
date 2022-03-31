@@ -1,4 +1,5 @@
 const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3')
+const sqsMessageSender = require('./sqs-message-sender.js')
 
 const S3client = new S3Client()
 
@@ -27,8 +28,10 @@ async function main() {
       fileCount++
       const message = `${opts.Bucket}/${object.Key}`
       console.log(message)
-      // success = sendIndexSQSMessage(message)
-      // if success messageSentCount++
+      if (process.env.READ_ONLY_MODE == 'disabled') {
+        success = sqsMessageSender.sendIndexSQSMessage(message)
+        if (success) messageSentCount++
+      }
     }
   }
   const duration = Date.now() - start
