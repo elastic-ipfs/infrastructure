@@ -26,7 +26,7 @@ async function main() {
   for await (const data of listAllKeys(opts)) {
     for (const object of data.Contents) {
       fileCount++
-      const message = `${opts.Bucket}/${object.Key}`
+      const message = `${process.env.AWS_REGION}/${opts.Bucket}/${object.Key}`// ex: us-east-2/dotstorage-prod-0/xxxxx.car
       console.log(message)
       if (process.env.READ_ONLY_MODE == 'disabled') {
         success = sqsMessageSender.sendIndexSQSMessage(message)
