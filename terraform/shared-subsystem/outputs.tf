@@ -56,3 +56,10 @@ output "sqs_multihashes_policy_delete" {
     arn  = aws_iam_policy.sqs_multihashes_policy_delete.arn,
   }
 }
+
+output "s3_dotstorage_prod_0_policy_read" {
+  value = {
+    name = aws_iam_policy.s3_dotstorage_prod_0_policy_read.name,
+    arn  = aws_iam_policy.s3_dotstorage_prod_0_policy_read.arn,
+  }
+}
