@@ -218,7 +218,7 @@ module "kube-base-components" {
       role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-        # TODO: Add external Uploader CAR bucket policy
+        data.terraform_remote_state.shared.outputs.dotstorage_prod_0_policy_read,
         data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
         data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
       ]
