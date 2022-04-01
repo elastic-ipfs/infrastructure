@@ -36,3 +36,30 @@ resource "aws_iam_policy" "sqs_indexer_policy_delete" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "s3_dotstorage_prod_0_policy_read" {
+  name        = "s3-dotstorage-prod-0-policy-read"
+  description = "Policy for allowing reading objects from S3"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::dotstorage-prod-0"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::dotstorage-prod-0/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:ListObjects",
+            "Resource": "arn:aws:s3:::dotstorage-prod-0/*"
+        }
+    ]
+}
+EOF
+}

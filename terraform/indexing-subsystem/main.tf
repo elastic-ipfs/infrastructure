@@ -84,7 +84,8 @@ module "indexer_lambda_from_sqs" {
       data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
       data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
       aws_iam_policy.sqs_indexer_policy_receive,
-      aws_iam_policy.sqs_indexer_policy_delete
+      aws_iam_policy.sqs_indexer_policy_delete,
+      aws_iam_policy.s3_dotstorage_prod_0_policy_read
     ]     
   }
   metrics_namespace = "indexer-lambda-metrics"
