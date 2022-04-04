@@ -63,6 +63,8 @@ module "indexer_lambda_from_sqs" {
       data.terraform_remote_state.shared.outputs.s3_dotstorage_prod_0_policy_read,
       aws_iam_policy.sqs_indexer_policy_receive,
       aws_iam_policy.sqs_indexer_policy_delete,
+      aws_iam_policy.sqs_notifications_policy_receive,
+      aws_iam_policy.sqs_notifications_policy_delete,
     ]     
   }
   metrics_namespace = "indexer-lambda-metrics"
