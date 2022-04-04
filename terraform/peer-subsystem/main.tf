@@ -107,7 +107,7 @@ module "eks" {
     "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
     "177.33.141.81/32",
     "185.152.47.29/32",
-    "45.6.150.210/32",
+    "201.33.204.229/32",
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
