@@ -5,7 +5,6 @@ output "sqs_indexer_topic" {
   }
 }
 
-
 output "sqs_notifications_policy_receive" {
   value = {
     name = aws_iam_policy.sqs_notifications_policy_receive.name,
