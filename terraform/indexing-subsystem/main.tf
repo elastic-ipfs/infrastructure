@@ -40,29 +40,6 @@ provider "aws" {
   }
 }
 
-# module "lambda-from-s3" {
-#   source                    = "../modules/lambda-from-s3"
-#   lambdaName                = "indexer"
-#   bucket                    = data.terraform_remote_state.shared.outputs.cars_bucket
-#   sqs_multihashes_topic_url = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.url
-#   region                    = var.region
-#   aws_iam_role_policy_list = [
-#     data.terraform_remote_state.shared.outputs.s3_cars_policy_read,
-#     data.terraform_remote_state.shared.outputs.s3_cars_policy_write,
-#     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-#     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
-#     data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send
-#   ]
-#   custom_metrics = [
-#     "s3-fetchs-count",
-#     "dynamo-creates-count",
-#     "dynamo-updates-count",
-#     "dynamo-deletes-count",
-#     "dynamo-reads-count",
-#     "sqs-publishes-count"
-#   ]
-# }
-
 module "indexer_lambda_from_sqs" {
   source = "../modules/lambda-from-sqs"
   sqs_trigger = {
@@ -86,6 +63,7 @@ module "indexer_lambda_from_sqs" {
       data.terraform_remote_state.shared.outputs.s3_dotstorage_prod_0_policy_read,
       aws_iam_policy.sqs_indexer_policy_receive,
       aws_iam_policy.sqs_indexer_policy_delete,
+      aws_iam_policy.sqs_notifications_policy_send,
     ]     
   }
   metrics_namespace = "indexer-lambda-metrics"
@@ -109,4 +87,10 @@ resource "aws_sqs_queue" "indexer_topic" {
   name                       = "indexer-topic"
   message_retention_seconds  = 86400 # 1 day
   visibility_timeout_seconds = 300   # 5 min
+}
+
+resource "aws_sqs_queue" "notifications_topic" {
+  name                       = "notifications-topic"
+  message_retention_seconds  = 900 # 15 min
+  visibility_timeout_seconds = 300 # 5 min
 }
