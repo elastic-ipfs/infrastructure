@@ -173,3 +173,30 @@ resource "aws_iam_role_policy_attachment" "metric_notification_push" {
   role       = aws_iam_role.assume.name
   policy_arn = aws_iam_policy.metric_notification_push.arn
 }
+
+resource "aws_iam_role" "alertmanager_sns" {
+  name        = "alert-notification-push"
+  description = "Policy for allowing AlertManager to push notifications to SNS"
+  policy      = <<EOF
+{
+    "Sid": "Allow_Publish_Alarms",
+    "Effect": "Allow",
+    "Principal": {
+        "Service": "aps.amazonaws.com"
+    },
+    "Action": [
+        "sns:Publish",
+        "sns:GetTopicAttributes"
+    ],
+    "Condition": {
+        "ArnEquals": {
+            "aws:SourceArn": "ipfs-elastic-provider"
+        },
+        "StringEquals": {
+            "AWS:SourceAccount": "505595374361"
+        }
+    },
+    "Resource": "arn:aws:sns:us-west-2:505595374361:alerts-topic"
+}
+EOF
+}
