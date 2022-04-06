@@ -30,3 +30,7 @@ variable "cluster_ca_cert" {
 variable "region" {
   type = string
 }
+
+variable "account-id" {
+  type = string
+}

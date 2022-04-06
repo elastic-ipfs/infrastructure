@@ -173,3 +173,86 @@ resource "aws_iam_role_policy_attachment" "metric_notification_push" {
   role       = aws_iam_role.assume.name
   policy_arn = aws_iam_policy.metric_notification_push.arn
 }
+
+resource "aws_sns_topic_policy" "default" {
+  arn = aws_sns_topic.alerts_topic.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy.json
+}
+
+data "aws_iam_policy_document" "sns_topic_policy" {
+  policy_id = "__default_policy_ID"
+
+  statement {
+    actions = [
+      "SNS:Subscribe",
+      "SNS:SetTopicAttributes",
+      "SNS:RemovePermission",
+      "SNS:Receive",
+      "SNS:Publish",
+      "SNS:ListSubscriptionsByTopic",
+      "SNS:GetTopicAttributes",
+      "SNS:DeleteTopic",
+      "SNS:AddPermission",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceOwner"
+
+      values = [
+        var.account-id,
+      ]
+    }
+
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    resources = [
+      aws_sns_topic.alerts_topic.arn,
+    ]
+
+    sid = "__default_statement_ID"
+  }
+
+  statement {
+    actions = [
+      "SNS:Publish",
+      "SNS:GetTopicAttributes",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceAccount"
+
+      values = [
+        var.account-id,
+      ]
+    }
+
+    condition {
+      test     = "ArnEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        aws_sns_topic.alerts_topic.arn,
+      ]
+    }    
+
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["aps.amazonaws.com"]
+    }
+
+    resources = [
+      aws_sns_topic.alerts_topic.arn,
+    ]
+
+    sid = "Allow_Publish_Alarms"
+  }
+}
