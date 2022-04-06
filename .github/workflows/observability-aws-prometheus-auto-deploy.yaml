@@ -10,7 +10,7 @@ on:
     - 'terraform/observability-aws-prometheus/**'
 jobs:
   terraform:
-    runs-on: ubuntu-20.04
+    runs-on: [self-hosted, linux, X64, aws-management-github-runner]
     name: 'Terraform'  
     environment: production
     defaults:
