@@ -25,13 +25,13 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.aws_access_key_id }}
         aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
-        aws-region: ${{ inputs.aws_region }}
+        aws-region: us-west-2
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
     - name: Terraform Init
       run: terraform init
     - name: Terraform Plan
-      run: terraform plan ${{ inputs.options }} -var region=${{ inputs.aws_region }} -var account-id=${{ secrets.aws_account_id }}
+      run: terraform plan ${{ inputs.options }} -var region=us-west-2 -var account-id=${{ secrets.aws_account_id }}
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' 
-      run: terraform apply ${{ inputs.options }} -var region=${{ inputs.aws_region }} -var account-id=${{ secrets.aws_account_id }} -auto-approve
+      run: terraform apply ${{ inputs.options }} -var region=us-west-2 -var account-id=${{ secrets.aws_account_id }} -auto-approve
