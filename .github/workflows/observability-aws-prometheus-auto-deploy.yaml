@@ -14,7 +14,7 @@ jobs:
     name: 'Terraform'  
     environment: production
     defaults:
-        run:
+      run:
         shell: bash
         working-directory: './terraform/observability-aws-prometheus'
     steps:
