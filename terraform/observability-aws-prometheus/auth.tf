@@ -253,6 +253,6 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       aws_sns_topic.alerts_topic.arn,
     ]
 
-    sid = "__default_statement_ID"
+    sid = "Allow_Publish_Alarms"
   }
 }
