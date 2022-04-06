@@ -79,3 +79,34 @@ resource "aws_sns_topic" "alerts_topic" {
   name     = "alerts-topic"
 }
 
+resource "aws_prometheus_alert_manager_definition" "alerts" {
+  workspace_id = aws_prometheus_workspace.ipfs_elastic_provider.id
+  definition   = <<EOF
+template_files:
+  default_template: |
+    {{ define "sns.default.subject" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]{{ end }}
+    {{ define "__alertmanager" }}AlertManager{{ end }}
+    {{ define "__alertmanagerURL" }}{{ .ExternalURL }}/#/alerts?receiver={{ .Receiver | urlquery }}{{ end }}
+alertmanager_config: |
+  global:
+  templates:
+    - 'default_template'
+  route:
+    receiver: default
+  receivers:
+    - name: 'default'
+      sns_configs:
+      - topic_arn: ${aws_sns_topic.alerts_topic.arn}
+        sigv4:
+          region: us-west-2
+        attributes:
+          key: severity
+          value: SEV2
+EOF
+}
+
+resource "aws_prometheus_rule_group_namespace" "alert_group" {
+  name         = "rules"
+  workspace_id = aws_prometheus_workspace.ipfs_elastic_provider.id
+  data         = file("alerts/alert.rules.yaml")
+}
