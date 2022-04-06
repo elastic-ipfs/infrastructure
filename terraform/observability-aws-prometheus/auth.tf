@@ -174,29 +174,85 @@ resource "aws_iam_role_policy_attachment" "metric_notification_push" {
   policy_arn = aws_iam_policy.metric_notification_push.arn
 }
 
-resource "aws_iam_role" "alertmanager_sns" {
-  name        = "alert-notification-push"
-  description = "Policy for allowing AlertManager to push notifications to SNS"
-  policy      = <<EOF
-{
-    "Sid": "Allow_Publish_Alarms",
-    "Effect": "Allow",
-    "Principal": {
-        "Service": "aps.amazonaws.com"
-    },
-    "Action": [
-        "sns:Publish",
-        "sns:GetTopicAttributes"
-    ],
-    "Condition": {
-        "ArnEquals": {
-            "aws:SourceArn": "ipfs-elastic-provider"
-        },
-        "StringEquals": {
-            "AWS:SourceAccount": "505595374361"
-        }
-    },
-    "Resource": "arn:aws:sns:us-west-2:505595374361:alerts-topic"
+resource "aws_sns_topic_policy" "default" {
+  arn = aws_sns_topic.alerts_topic.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
-EOF
+
+data "aws_iam_policy_document" "sns_topic_policy" {
+  policy_id = "__default_policy_ID"
+
+  statement {
+    actions = [
+      "SNS:Subscribe",
+      "SNS:SetTopicAttributes",
+      "SNS:RemovePermission",
+      "SNS:Receive",
+      "SNS:Publish",
+      "SNS:ListSubscriptionsByTopic",
+      "SNS:GetTopicAttributes",
+      "SNS:DeleteTopic",
+      "SNS:AddPermission",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceOwner"
+
+      values = [
+        var.account-id,
+      ]
+    }
+
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    resources = [
+      aws_sns_topic.alerts_topic.arn,
+    ]
+
+    sid = "__default_statement_ID"
+  }
+
+  statement {
+    actions = [
+      "SNS:Publish",
+      "SNS:GetTopicAttributes",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceAccount"
+
+      values = [
+        var.account-id,
+      ]
+    }
+
+    condition {
+      test     = "ArnEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        aws_sns_topic.alerts_topic.arn,
+      ]
+    }    
+
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["aps.amazonaws.com"]
+    }
+
+    resources = [
+      aws_sns_topic.alerts_topic.arn,
+    ]
+
+    sid = "__default_statement_ID"
+  }
 }
