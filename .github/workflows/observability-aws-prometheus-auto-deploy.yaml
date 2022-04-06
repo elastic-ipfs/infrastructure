@@ -10,10 +10,13 @@ on:
     - 'terraform/observability-aws-prometheus/**'
 jobs:
   terraform:
-    with:
-      aws_region: us-west-2
-      environment: production
-      working_directory: './terraform/observability-aws-prometheus'
+    runs-on: ubuntu-20.04
+    name: 'Terraform'  
+    environment: production
+    defaults:
+        run:
+        shell: bash
+        working-directory: './terraform/observability-aws-prometheus'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
