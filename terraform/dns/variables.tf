@@ -2,27 +2,28 @@ variable "profile" {
   type = string
 }
 
-variable "domain_name" {
+variable "region" {
+  type = string
+}
+
+variable "existing_aws_zone" {
+  type    = bool
+}
+
+variable "aws_domain_name" {
   type    = string
-  default = "ipfs-elastic-provider.com"
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
-  default     = "peer"
   description = "Subdomains that will be handled by peer svc loadbalancer"
 }
 
-variable "subdomain_apis" {
+variable "bitswap_load_balancer_dns" {
   type        = string
-  default     = "api.uploader"
-  description = "Name for a API Gateway subdomain"
+  description = "Bitswap LoadBalancer DNS. This load balancer is created and managed by Kubernetes"
 }
 
-variable "bitswap_load_balancer_hostname" {
+variable "bitswap_load_balancer_hosted_zone" {
   type        = string
-  description = "Bitswap LoadBalancer URL"
-}
-
-variable "region" {
-  type = string
+  description = "Bitswap LoadBalancer Hosted Zone. This load balancer is created and managed by Kubernetes"
 }

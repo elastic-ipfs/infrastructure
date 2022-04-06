@@ -1,38 +1,94 @@
-resource "aws_iam_role" "uploader_lambda_role" {
-  name = "uploader_lambda_role"
-
-  assume_role_policy = <<EOF
+resource "aws_iam_policy" "sqs_indexer_policy_receive" {
+  name        = "sqs-indexer-policy-receive"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [         
+        {
+            "Effect": "Allow",
+            "Action": "sqs:ReceiveMessage",
+            "Resource": "${aws_sqs_queue.indexer_topic.arn}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
+            "Resource": "${aws_sqs_queue.indexer_topic.arn}"
+        }
+    ]
 }
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "uploader_s3_write" {
-  role       = aws_iam_role.uploader_lambda_role.name
-  policy_arn = data.terraform_remote_state.shared.outputs.s3_cars_policy_write.arn
+resource "aws_iam_policy" "sqs_indexer_policy_delete" {
+  name        = "sqs-indexer-policy-delete"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:DeleteMessage",
+            "Resource": "${aws_sqs_queue.indexer_topic.arn}"
+        }
+    ]
+}
+EOF
 }
 
-resource "aws_iam_role_policy_attachment" "uploader_s3_read" {
-  role       = aws_iam_role.uploader_lambda_role.name
-  policy_arn = data.terraform_remote_state.shared.outputs.s3_cars_policy_read.arn
+resource "aws_iam_policy" "sqs_notifications_policy_receive" {
+  name        = "sqs-notifications-policy-receive"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [         
+        {
+            "Effect": "Allow",
+            "Action": "sqs:ReceiveMessage",
+            "Resource": "${aws_sqs_queue.notifications_topic.arn}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
+            "Resource": "${aws_sqs_queue.notifications_topic.arn}"
+        }
+    ]
+}
+EOF
 }
 
-resource "aws_iam_role_policy_attachment" "uploader_lambda_role" {
-  role       = aws_iam_role.uploader_lambda_role.id
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
+resource "aws_iam_policy" "sqs_notifications_policy_delete" {
+  name        = "sqs-notifications-policy-delete"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:DeleteMessage",
+            "Resource": "${aws_sqs_queue.notifications_topic.arn}"
+        }
+    ]
+}
+EOF
 }
 
-resource "aws_iam_role_policy_attachment" "aws_xray_write_only_access" {
-  role       = aws_iam_role.uploader_lambda_role.id
-  policy_arn = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+resource "aws_iam_policy" "sqs_notifications_policy_send" {
+  name        = "sqs-notifications-policy-send"
+  description = "Policy for allowing publish messages in SQS"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:SendMessage",
+            "Resource": "${aws_sqs_queue.notifications_topic.arn}"
+        }
+    ]
+}
+EOF
 }

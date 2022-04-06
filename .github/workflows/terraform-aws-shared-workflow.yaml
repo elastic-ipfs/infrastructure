@@ -7,20 +7,26 @@ on:
         required: false
         type: string
         default: ""
+        description: Extra arguments to be used at terraform commands
       aws_region:
         required: true
         type: string
+        description: Used for authentication
       working_directory:
         required: true
         type: string
+        description: Name of the folder where to find the terraform code to be executed
       environment:
         required: true
         type: string
+        description: If this is dev, staging, production, etc. The name of the environment which the infrastructure will be applied to.
     secrets:
       aws_access_key_id:
         required: true
+        description: Used for authentication
       aws_secret_access_key:
         required: true
+        description: Used for authentication
 jobs:
   # TODO: Add a job for deploying at a staging environment and run automated tests
   terraform:

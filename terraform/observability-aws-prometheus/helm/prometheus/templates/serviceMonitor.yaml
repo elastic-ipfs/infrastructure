@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ipfs-elastic-provider-servicemonitor 
+  namespace: {{.Release.namespace}}
+  labels:
+     release: {{.Release.Name}}
+spec:
+  namespaceSelector:
+    matchNames: 
+    {{- $namespaceSelector := .Values.serviceMonitor.namespaceSelector -}}
+    {{- range $p := $namespaceSelector }}
+    - {{ . }}
+    {{- end }}
+  selector:
+    matchLabels:
+      {{ .Values.serviceMonitor.matchLabelName }}: {{ .Values.serviceMonitor.matchLabelValue | squote }}
+  endpoints:
+  - port: {{ .Values.serviceMonitor.portName }}
+    interval: {{ .Values.serviceMonitor.scrapeInterval }}

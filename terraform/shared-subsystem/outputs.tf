@@ -1,12 +1,3 @@
-output "cars_bucket" {
-  value = {
-    bucket = aws_s3_bucket.cars.bucket
-    id     = aws_s3_bucket.cars.id
-    arn    = aws_s3_bucket.cars.arn
-    region = aws_s3_bucket.cars.region
-  }
-}
-
 output "ipfs_peer_bitswap_config_bucket" {
   value = {
     bucket = aws_s3_bucket.ipfs_peer_bitswap_config.bucket
@@ -37,20 +28,6 @@ output "dynamodb_car_policy" {
   }
 }
 
-output "s3_cars_policy_write" {
-  value = {
-    name = aws_iam_policy.s3_cars_policy_write.name,
-    arn  = aws_iam_policy.s3_cars_policy_write.arn,
-  }
-}
-
-output "s3_cars_policy_read" {
-  value = {
-    name = aws_iam_policy.s3_cars_policy_read.name,
-    arn  = aws_iam_policy.s3_cars_policy_read.arn,
-  }
-}
-
 output "s3_config_peer_bucket_policy_read" {
   value = {
     name = aws_iam_policy.s3_config_peer_bucket_policy_read.name,
@@ -77,5 +54,12 @@ output "sqs_multihashes_policy_delete" {
   value = {
     name = aws_iam_policy.sqs_multihashes_policy_delete.name,
     arn  = aws_iam_policy.sqs_multihashes_policy_delete.arn,
+  }
+}
+
+output "s3_dotstorage_prod_0_policy_read" {
+  value = {
+    name = aws_iam_policy.s3_dotstorage_prod_0_policy_read.name,
+    arn  = aws_iam_policy.s3_dotstorage_prod_0_policy_read.arn,
   }
 }

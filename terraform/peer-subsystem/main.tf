@@ -80,8 +80,6 @@ module "vpc" {
   }
 }
 
-
-
 module "gateway-endpoint-to-s3-dynamo" {
   source         = "../modules/gateway-endpoint-to-s3-dynamo"
   vpc_id         = module.vpc.vpc_id
@@ -109,16 +107,17 @@ module "eks" {
     "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
     "177.33.141.81/32",
     "185.152.47.29/32",
+    "168.227.34.17/32",
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-peer-subsys = {
       name         = var.cluster_name
       desired_size = 2
-      min_size     = 1
-      max_size     = 4
+      min_size     = 2
+      max_size     = 20
 
-      instance_types = ["t3.large"]
+      instance_types = ["c6i.2xlarge"]
       k8s_labels = {
         workerType = "managed_ec2_node_groups"
       }
@@ -128,6 +127,8 @@ module "eks" {
 
       tags = { # This is also applied to IAM role.
         "eks/${var.accountId}/${var.cluster_name}/type" : "node"
+        "k8s.io/cluster-autoscaler/${var.cluster_name}" : "owned"
+        "k8s.io/cluster-autoscaler/enabled" : "TRUE"
       }
     }
   }
@@ -201,14 +202,15 @@ resource "aws_security_group_rule" "dns_ingress_udp" {
 
 
 module "kube-base-components" {
-  source                  = "../modules/kube-base-components"
-  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
-  cluster_id              = module.eks.cluster_id
-  region                  = var.region
-  config_bucket_name      = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
-  host                    = data.aws_eks_cluster.eks.endpoint
-  token                   = data.aws_eks_cluster_auth.eks.token
-  cluster_ca_certificate  = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  source                     = "../modules/kube-base-components"
+  cluster_oidc_issuer_url    = module.eks.cluster_oidc_issuer_url
+  cluster_id                 = module.eks.cluster_id
+  region                     = var.region
+  config_bucket_name         = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
+  host                       = data.aws_eks_cluster.eks.endpoint
+  token                      = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_certificate     = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  deploy_cloudwatch_exporter = false
   service_account_roles = {
     "bitswap_peer_subsystem_role" = {
       service_account_name      = "bitswap-irsa",
@@ -216,11 +218,11 @@ module "kube-base-components" {
       role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-        data.terraform_remote_state.shared.outputs.s3_cars_policy_read,
-        data.terraform_remote_state.shared.outputs.s3_cars_policy_write,
         data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
         data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+        data.terraform_remote_state.shared.outputs.s3_dotstorage_prod_0_policy_read,
       ]
     },
   }
 }
+

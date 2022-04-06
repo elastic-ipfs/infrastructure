@@ -2,6 +2,7 @@ locals {
   k8s_service_account_namespace = "default"
   k8s_service_account_name      = "test-sa-from-interesting-module"
 }
+
 module "iam_assumable_role_admin" { # https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-assumable-role-with-oidc
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "~> 4.0"
@@ -23,3 +24,6 @@ resource "kubernetes_service_account" "irsa" {
     }
   }
 }
+
+### Prometheus
+# TODO: Another module?

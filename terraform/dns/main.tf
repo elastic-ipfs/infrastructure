@@ -17,9 +17,18 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+data "terraform_remote_state" "indexing" {
+  backend = "s3"
+  config = {
+    bucket = "ipfs-elastic-provider-terraform-state"
+    key    = "terraform.indexing.tfstate"
+    region = "${var.region}"
+  }
+}
+
 provider "aws" {
   profile = var.profile
-  region  = "us-west-2"
+  region  = var.region
   default_tags {
     tags = {
       Team        = "NearForm"
@@ -31,52 +40,11 @@ provider "aws" {
   }
 }
 
-data "terraform_remote_state" "indexing" {
-  backend = "s3"
-  config = {
-    bucket = "ipfs-elastic-provider-terraform-state"
-    key    = "terraform.indexing.tfstate"
-    region = "${var.region}"
-  }
-}
-
-resource "aws_route53_zone" "hosted_zone" {
-  name = var.domain_name
-}
-
-resource "aws_route53_record" "peer_bitswap_load_balancer" {
-  zone_id = aws_route53_zone.hosted_zone.zone_id
-  name    = "${var.subdomains_bitwsap_loadbalancer}.${var.domain_name}"
-  type    = "CNAME"
-  ttl     = "300"
-  records = [var.bitswap_load_balancer_hostname]
-}
-
-### API Gateway
-resource "aws_api_gateway_domain_name" "api" {
-  domain_name              = local.api_domain
-  regional_certificate_arn = aws_acm_certificate_validation.cert_validation.certificate_arn
-
-  endpoint_configuration {
-    types = ["REGIONAL"]
-  }
-}
-
-resource "aws_api_gateway_base_path_mapping" "api" {
-  api_id      = data.terraform_remote_state.indexing.outputs.api_id
-  stage_name  = data.terraform_remote_state.indexing.outputs.stage_name
-  base_path   = data.terraform_remote_state.indexing.outputs.stage_name
-  domain_name = aws_api_gateway_domain_name.api.domain_name
-}
-
-resource "aws_route53_record" "api" {
-  name    = aws_api_gateway_domain_name.api.domain_name
-  type    = "A"
-  zone_id = aws_route53_zone.hosted_zone.id
-
-  alias {
-    evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.api.regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.api.regional_zone_id
-  }
+module "dns_route53" {
+  source                            = "../modules/dns-route53"
+  existing_zone                     = var.existing_aws_zone
+  domain_name                       = var.aws_domain_name
+  subdomains_bitwsap_loadbalancer   = var.subdomains_bitwsap_loadbalancer
+  bitswap_load_balancer_dns         = var.bitswap_load_balancer_dns
+  bitswap_load_balancer_hosted_zone = var.bitswap_load_balancer_hosted_zone
 }

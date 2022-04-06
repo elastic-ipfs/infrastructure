@@ -55,12 +55,6 @@ variable "deploy_eks_auth_sync" {
   default     = true
 }
 
-variable "deploy_prometheus" {
-  description = "Whether to deploy or not the prometheus to the cluster"
-  type        = bool
-  default     = true
-}
-
 variable "deploy_argocd" {
   description = "Whether to deploy or not the argocd to the cluster"
   type        = bool
@@ -68,7 +62,13 @@ variable "deploy_argocd" {
 }
 
 variable "deploy_cloudwatch_exporter" {
-  description = "Whether to deploy or not the deploy_cloudwatch_exporter to the cluster"
+  description = "Whether to deploy or not the cloudwatch_exporter to the cluster"
+  type        = bool
+  default     = true
+}
+
+variable "deploy_cluster_autoscaler" {
+  description = "Whether to deploy or not the cluster_autoscaler to the cluster"
   type        = bool
   default     = true
 }
