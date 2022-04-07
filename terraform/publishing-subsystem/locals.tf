@@ -8,7 +8,7 @@ locals {
 
   environment_variables = {
     BITSWAP_PEER_MULTIADDR       = "/dns4/${data.terraform_remote_state.dns.outputs.bitswap_loadbalancer_domain}/tcp/3000/ws"
-    INDEXER_NODE_URL             = "https://cid.contact/ingest/announce"
+    INDEXER_NODE_URL             = "https://cid.contact"
     NODE_ENV                     = "production"
     PEER_ID_FILE                 = "peerId.json"
     PEER_ID_S3_BUCKET            = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
