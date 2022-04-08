@@ -71,7 +71,6 @@ resource "aws_sqs_queue" "ads_topic_dlq" {
 
 resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
-  acl    = "public-read" 
 }
 # resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
 #   bucket = aws_s3_bucket.ipfs_peer_ads.id
