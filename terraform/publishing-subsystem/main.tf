@@ -53,12 +53,30 @@ resource "aws_sqs_queue" "ads_topic" {
   name                       = "advertisements-topic"
   message_retention_seconds  = 900 # 15 min
   visibility_timeout_seconds = 300 # 5 min
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.ads_topic_dlq.arn
+    maxReceiveCount     = 4
+  })
+  redrive_allow_policy = jsonencode({
+    redrivePermission = "byQueue",
+    sourceQueueArns   = ["${aws_sqs_queue.ads_topic_dlq.arn}"]
+  })
+}
+
+resource "aws_sqs_queue" "ads_topic_dlq" {
+  name                       = "advertisements-topic-dlq"
+  message_retention_seconds  = 1209600 # 14 days (Max quota)
+  visibility_timeout_seconds = 300
 }
 
 resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
-  acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
+  acl    = "public-read" 
 }
+# resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
+#   bucket = aws_s3_bucket.ipfs_peer_ads.id
+#   acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
+# }
 
 module "content_lambda_from_sqs" {
   source = "../modules/lambda-from-sqs"
