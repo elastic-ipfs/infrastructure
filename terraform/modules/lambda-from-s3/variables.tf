@@ -10,7 +10,7 @@ variable "bucket" {
   })
 }
 
-variable "sqs_multihashes_topic_url" {
+variable "topic_url" {
   type = string
 }
 

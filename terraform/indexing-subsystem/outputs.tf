@@ -12,6 +12,12 @@ output "sqs_notifications_policy_receive" {
   }
 }
 
+output "sqs_notifications_policy_send" {
+  value = {
+    name = aws_iam_policy.sqs_notifications_policy_send.name,
+    arn  = aws_iam_policy.sqs_notifications_policy_send.arn,
+  }
+}
 
 output "sqs_notifications_policy_delete" {
   value = {
