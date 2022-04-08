@@ -87,21 +87,12 @@ module "gateway-endpoint-to-dynamodb" {
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
-module "gateway-endpoint-to-s3-current-region" {
+module "gateway-endpoint-to-s3" {
   source         = "../modules/gateway-endpoint-to-s3"
   vpc_id         = module.vpc.vpc_id
   region         = var.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
-
-
-module "gateway-endpoint-to-s3-us-east-2" { # Bucket dotstorage-prod-0
-  source         = "../modules/gateway-endpoint-to-s3"
-  vpc_id         = module.vpc.vpc_id
-  region         = "us-east-2"
-  route_table_id = module.vpc.private_route_table_ids[0]
-}
-
 
 data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
