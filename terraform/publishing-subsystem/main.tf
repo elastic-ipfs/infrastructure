@@ -72,10 +72,11 @@ resource "aws_sqs_queue" "ads_topic_dlq" {
 resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
 }
-# resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
-#   bucket = aws_s3_bucket.ipfs_peer_ads.id
-#   acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
-# }
+
+resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
+  bucket = aws_s3_bucket.ipfs_peer_ads.id
+  acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
+}
 
 module "content_lambda_from_sqs" {
   source = "../modules/lambda-from-sqs"
