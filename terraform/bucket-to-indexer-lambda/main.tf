@@ -70,3 +70,7 @@ module "lambda-from-s3" {
     "sqs-publishes-count"
   ]
 }
+
+resource "aws_ecr_repository" "ecr-repo-bucket-indexer-lambda" {
+  name = "bucket-indexer-lambda"
+}

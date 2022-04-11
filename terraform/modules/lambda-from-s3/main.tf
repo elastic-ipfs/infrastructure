@@ -9,11 +9,11 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-resource "aws_lambda_function" "indexing" {
+resource "aws_lambda_function" "lambda-function" {
   function_name = var.lambdaName
   package_type  = "Image"
   image_uri     = "505595374361.dkr.ecr.us-west-2.amazonaws.com/indexer-lambda:latest"
-  role          = aws_iam_role.indexing_lambda_role.arn
+  role          = aws_iam_role.lambda-function_lambda_role.arn
   memory_size   = 1024
   timeout       = 900
 
@@ -32,7 +32,7 @@ resource "aws_lambda_function" "indexing" {
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
-    aws_cloudwatch_log_group.indexing_log_group,
+    aws_cloudwatch_log_group.lambda-function_log_group,
   ]
 }
 
@@ -40,7 +40,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = var.bucket.id
 
   lambda_function {
-    lambda_function_arn = aws_lambda_function.indexing.arn
+    lambda_function_arn = aws_lambda_function.lambda-function.arn
     events              = ["s3:ObjectCreated:*"]
   }
 
