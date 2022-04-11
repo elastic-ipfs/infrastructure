@@ -30,3 +30,7 @@ variable custom_metrics {
   type = list(string)
   default = []
 }
+
+variable "lambda_image" {
+  type = string
+}

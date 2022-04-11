@@ -18,7 +18,7 @@ jobs:
   terraform:
     uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
-      options: -var profile=default
+      options: -var profile=default -var lambda_image=${{ secrets.lambda_image }}
       aws_region: us-east-2
       environment: production
       working_directory: './terraform/bucket-to-indexer-lambda'

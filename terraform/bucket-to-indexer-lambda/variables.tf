@@ -13,3 +13,7 @@ variable "bucket" {
     id     = string
   })
 }
+
+variable "lambda_image"{
+  type = string
+}

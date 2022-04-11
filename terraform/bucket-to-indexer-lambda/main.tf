@@ -55,6 +55,8 @@ module "lambda-from-s3" {
   bucket                    = var.bucket
   topic_url                 = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
   region                    = var.region
+  lambda_image              = var.lambda_image
+  
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
