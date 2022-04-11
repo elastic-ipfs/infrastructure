@@ -30,7 +30,7 @@ module "vpc" {
   enable_dns_hostnames = true
 }
 
-module "gateway-endpoint-to-s3-dynamo" {
+module "gateway-endpoint-to-s3" {
   source         = "../"
   vpc_id         = module.vpc.vpc_id
   region         = var.region

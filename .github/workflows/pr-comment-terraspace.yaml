@@ -1,0 +1,186 @@
+name: Terraspace Comment
+
+on:
+  issue_comment:
+    types:
+      - created
+
+env:
+  AWS_REGION: us-east-1 # TODO this should be dynamic
+  TF_IN_AUTOMATION: 1
+
+jobs:
+  pre-reqs:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.detector.outputs.result }}
+      gitRef: ${{ steps.git_ref.outputs.result }}
+    steps:
+      - name: Determine Git Ref
+        uses: actions/github-script@v6
+        id: git_ref
+        with:
+          result-encoding: string
+          script: |
+            if (context.eventName === "issue_comment" && context.payload.issue.pull_request) {
+              // Triggered by PR Comment
+              const { owner, repo, number } = context.issue;
+              const pr = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: number,
+              });
+              return pr.data.head.sha
+            } else {
+              // Fallback to "main" if none of the above match
+              return "main"
+            }
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.git_ref.outputs.result }}
+
+      - name: PR Command Detector
+        id: detector
+        uses: actions/github-script@v6
+        env:
+          GIT_REF: ${{ steps.git_ref.outputs.result }}
+        with:
+          script: |
+            const detector = require("./.github/scripts/commentDetector.js")
+            const result = await detector({github, context})
+            console.log(`result = ${JSON.stringify(result)}`)
+            return result
+  ts-command:
+    runs-on: ubuntu-latest
+    if: |
+      fromJSON(needs.pre-reqs.outputs.result).proceed == 'true'
+    needs:
+      - pre-reqs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.pre-reqs.outputs.gitRef }}
+
+      - name: ASDF - Install
+        uses: asdf-vm/actions/setup@v1
+        with:
+          asdf_branch: v0.9.0
+
+      - name: ASDF - Cache Tools
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-asdf-tools
+        with:
+          # asdf cache files are stored in `~/.asdf` on Linux/macOS
+          path: |
+            ~/.asdf/installs
+            ~/.asdf/plugins
+            ~/.asdf/shims
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/.tool-versions') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: ASDF - Install Tools
+        working-directory: terraspace/infra-prj-a
+        run: |
+          # Add each plugin contained in tool-versions
+          cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add
+          # Install tools
+          asdf install
+
+      - name: Bundle - Install
+        working-directory: terraspace/infra-prj-a
+        run: bundle install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraspace - Plan
+        id: ts_plan
+        if: fromJSON(needs.pre-reqs.outputs.result).requestPlan == 'true'
+        working-directory: terraspace/infra-prj-a
+        continue-on-error: true
+        env:
+          STACK: ${{ fromJSON(needs.pre-reqs.outputs.result).subCmd }}
+        run: |
+          echo "STACK=${STACK}"
+          terraspace plan "${STACK}" --auto
+
+      - name: Terraspace - All Plan
+        id: ts_all_plan
+        if: fromJSON(needs.pre-reqs.outputs.result).requestAllPlan == 'true'
+        working-directory: terraspace/infra-prj-a
+        continue-on-error: true
+        run: terraspace all plan --out ":MOD_NAME.plan"
+
+      - name: Terraspace - All Plan Logs
+        if: steps.ts_all_plan.conclusion != 'skipped'
+        working-directory: terraspace/infra-prj-a
+        run: terraspace logs plan -a --no-timestamps
+
+      - name: Get Approval Status
+        id: get_approval_state
+        env:
+          pr_number: ${{ fromJSON(needs.pre-reqs.outputs.result).prNumber }}
+        run: |
+          res=$(curl "https://api.github.com/repos/${{ github.repository }}/pulls/${pr_number}/reviews?per_page=100" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H 'Content-Type: application/json')
+          echo "Res: $res"
+          echo "::set-output name=approval_state::$(echo "$res" | jq '.[] | select(.state=="APPROVED").state' | sed 's/"//g')"
+
+      - name: Display Approval Result
+        env:
+          APPROVAL_STATE: ${{ steps.get_approval_state.outputs.approval_state }}
+        run: echo "approval_state=${APPROVAL_STATE}"
+
+      - name: Terraspace - Up
+        id: ts_up
+        if: |
+          fromJSON(needs.pre-reqs.outputs.result).requestUp == 'true' &&
+          steps.get_approval_state.outputs.approval_state  == 'APPROVED'
+        working-directory: terraspace/infra-prj-a
+        continue-on-error: true
+        env:
+          STACK: ${{ fromJSON(needs.pre-reqs.outputs.result).subCmd }}
+        run: terraspace up "${STACK}" --auto --yes
+
+      - name: Terraspace - All Up
+        id: ts_all_up
+        if: |
+          fromJSON(needs.pre-reqs.outputs.result).requestAllUp == 'true' &&
+          steps.get_approval_state.outputs.approval_state  == 'APPROVED'
+        working-directory: terraspace/infra-prj-a
+        continue-on-error: true
+        run: terraspace all up --yes --plan ":MOD_NAME.plan"
+
+      - name: Terraspace - All Up Logs
+        if: steps.ts_all_up.conclusion != 'skipped'
+        working-directory: terraspace/infra-prj-a
+        run: terraspace logs up -a --no-timestamps
+
+      - name: Report Check Run Conclusion
+        id: check_run_conclusion
+        if: always()
+        uses: actions/github-script@v6
+        env:
+          GIT_REF: ${{ needs.pre-reqs.outputs.gitRef }}
+          CHECK_RUN_ID: ${{ fromJSON(needs.pre-reqs.outputs.result).checkRunId }}
+          RESULT: ${{
+            steps.ts_plan.conclusion != 'skipped' && steps.ts_plan.outcome ||
+            steps.ts_all_plan.conclusion != 'skipped' && steps.ts_all_plan.outcome ||
+            steps.ts_up.conclusion != 'skipped' && steps.ts_up.outcome ||
+            steps.ts_all_up.conclusion
+            }}
+        with:
+          script: |
+            const script = require("./.github/scripts/checkRunConclusion.js")
+            const result = await script({github, context})
+            // console.log(`result = ${JSON.stringify(result)}`)
+            return result

@@ -175,13 +175,33 @@ kube-prometheus-stack:
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
-        receiver: 'null'
+        receiver: 'alert_receiver'
         routes:
           - match:
               alertname: Watchdog
-            receiver: 'null'
+            receiver: 'alert_receiver'
       receivers:
-        - name: 'null'
+        - name: alert_receiver
+          sns_configs:
+            - sigv4:
+                region: us-west-2
+            topic_arn: arn:aws:sns:us-west-2:505595374361:alerts-topic
+            subject: Alert
+            # attributes:
+            #   key: somekey
+            #   value: somevalue
+      groups:
+      - name: example
+        rules:            
+        - alert: PrometheusAlertmanagerE2eDeadManSwitch
+          expr: vector(1)
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: Prometheus AlertManager E2E dead man switch (instance {{ $labels.instance }})
+            description: "Prometheus DeadManSwitch is an always-firing alert. It's used as an end-to-end test of Prometheus through the Alertmanager.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            
       templates:
         - '/etc/alertmanager/config/*.tmpl'
 

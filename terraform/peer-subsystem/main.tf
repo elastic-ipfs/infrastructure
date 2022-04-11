@@ -80,8 +80,15 @@ module "vpc" {
   }
 }
 
-module "gateway-endpoint-to-s3-dynamo" {
-  source         = "../modules/gateway-endpoint-to-s3-dynamo"
+module "gateway-endpoint-to-dynamodb" {
+  source         = "../modules/gateway-endpoint-to-dynamodb"
+  vpc_id         = module.vpc.vpc_id
+  region         = var.region
+  route_table_id = module.vpc.private_route_table_ids[0]
+}
+
+module "gateway-endpoint-to-s3" {
+  source         = "../modules/gateway-endpoint-to-s3"
   vpc_id         = module.vpc.vpc_id
   region         = var.region
   route_table_id = module.vpc.private_route_table_ids[0]
@@ -107,6 +114,7 @@ module "eks" {
     "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
     "177.33.141.81/32",
     "185.152.47.29/32",
+    "168.227.34.17/32",
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
@@ -217,11 +225,10 @@ module "kube-base-components" {
       role_name                 = "bitswap_peer_subsystem_role",
       policies_list = [
         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-        # TODO: Add external Uploader CAR bucket policy
         data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
         data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+        data.terraform_remote_state.shared.outputs.s3_dotstorage_prod_0_policy_read,
       ]
     },
   }
 }
-
