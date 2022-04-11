@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "env": {
-                "SOURCE_BUCKET_NAME": "web3.storage-us-east-2",
+                "SOURCE_BUCKET_NAME": "dotstorage-prod-0",
                 "AWS_REGION": "us-east-2",
             },
             "console": "integratedTerminal",
