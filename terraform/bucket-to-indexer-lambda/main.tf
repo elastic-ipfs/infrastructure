@@ -4,7 +4,7 @@ terraform {
     bucket         = "ipfs-elastic-provider-terraform-state"
     dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
     region         = "us-west-2"
-    key            = "terraform.indexing.tfstate"
+    key            = "terraform.bucket-indexing.tfstate"
     encrypt        = true
   }
   required_providers {
@@ -22,7 +22,7 @@ data "terraform_remote_state" "shared" {
   config = {
     bucket = "ipfs-elastic-provider-terraform-state"
     key    = "terraform.shared.tfstate"
-    region = var.region
+    region = "us-west-2"
   }
 }
 
@@ -31,7 +31,7 @@ data "terraform_remote_state" "indexing" {
   config = {
     bucket = "ipfs-elastic-provider-terraform-state"
     key    = "terraform.indexing.tfstate"
-    region = var.region
+    region = "us-west-2"
   }
 }
 
@@ -53,14 +53,13 @@ module "lambda-from-s3" {
   source                    = "../modules/lambda-from-s3"
   lambdaName                = "bucket-to-indexer"
   bucket                    = var.bucket
-  topic_url                 = data.terraform_remote_state.shared.outputs.sqs_indexer_topic.aws_sqs_queue.indexer_topic.url
+  topic_url                 = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
   region                    = var.region
   aws_iam_role_policy_list = [
-    data.terraform_remote_state.shared.outputs.s3_cars_policy_read,
-    data.terraform_remote_state.shared.outputs.s3_cars_policy_write,
     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
-    data.terraform_remote_state.indexing.outputs.sqs_notifications_policy_send
+    aws_iam_policy.sqs_indexer_policy_send
+    # data.terraform_remote_state.indexing.outputs.sqs_notifications_policy_send
   ]
   custom_metrics = [
     "s3-fetchs-count",
