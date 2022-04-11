@@ -34,9 +34,9 @@ jobs:
     - name: Terraform Init
       run: terraform init
     - name: Terraform Plan
-      run: terraform plan -var region=us-east-2 -var lambda_image=${{ secrets.lambda_image}} -var account-id=${{ secrets.aws_account_id }}
+      run: terraform plan -var region=us-east-2 -var lambda_image=${{ secrets.lambda_image}} -var account-id=${{ secrets.aws_account_id }} -var profile=ipfs
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' 
-      run: terraform apply -var region=us-east-2 -var lambda_image=${{ secrets.lambda_image }} -var account-id=${{ secrets.aws_account_id }} -auto-approve
+      run: terraform apply -var region=us-east-2 -var lambda_image=${{ secrets.lambda_image }} -var account-id=${{ secrets.aws_account_id }} -var profile=ipfs -auto-approve
 
 
