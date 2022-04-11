@@ -15,7 +15,6 @@ async function* listAllKeys(opts) {
 
 const opts = {
   Bucket: process.env.SOURCE_BUCKET_NAME,
-  Prefix: 'raw/',
 }
 fileCount = 0
 messageSentCount = 0
