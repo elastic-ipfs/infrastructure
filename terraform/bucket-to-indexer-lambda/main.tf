@@ -4,7 +4,7 @@ terraform {
     bucket         = "ipfs-elastic-provider-terraform-state"
     dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
     region         = "us-west-2"
-    key            = "terraform.bucket-indexing.tfstate"
+    key            = "terraform.bucket-to-indexer.tfstate"
     encrypt        = true
   }
   required_providers {

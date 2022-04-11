@@ -6,8 +6,6 @@
 #     }
 # )
 
-arn:aws:s3:::dotstorage-prod-tests
-
 bucket = (
     {
         bucket  = "dotstorage-prod-tests"
