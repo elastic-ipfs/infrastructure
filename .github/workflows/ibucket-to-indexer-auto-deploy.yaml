@@ -1,4 +1,4 @@
-name: 'Indexing Subsystem Auto Deploy'
+name: 'Bucket to Indexer Auto Deploy'
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ jobs:
   terraform:
     uses: web3-storage/ipfs-elastic-provider-infrastructure/.github/workflows/terraform-aws-shared-workflow.yaml@main 
     with:
-      options: -var profile=default -var accountId=505595374361
+      options: -var profile=default
       aws_region: us-east-2
       environment: production
       working_directory: './terraform/bucket-to-indexer-lambda'
