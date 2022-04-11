@@ -15,13 +15,14 @@ async function* listAllKeys(opts) {
 
 const opts = {
   Bucket: process.env.SOURCE_BUCKET_NAME,
+  // Prefix: "raw/"  
 }
 fileCount = 0
 messageSentCount = 0
 
 async function main() {
   console.log('Starting to process all keys from ' + opts.Bucket)
-  const start = Date.now
+  const start = Date.now()
   for await (const data of listAllKeys(opts)) {
     for (const object of data.Contents) {
       fileCount++
@@ -35,9 +36,8 @@ async function main() {
   }
 
   const duration = Date.now() - start
-  // TODO: QueueName
   console.log(
-    `Finished processing all keys from ${opts.Bucket}. ${fileCount} files were processed and ${messageSentCount} messages were published to ${process.env.SQS_QUEUE_URL}. Processing time(ms): ${duration}`,
+    `Finished processing all keys from ${opts.Bucket}. ${fileCount} files were processed and ${messageSentCount} messages were published to queue ${process.env.SQS_QUEUE_URL}. Processing time(ms): ${duration}`,
   )
 }
 
