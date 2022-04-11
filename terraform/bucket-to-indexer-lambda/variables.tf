@@ -6,6 +6,10 @@ variable "region" {
   type = string
 }
 
+variable "account-id" {
+  type = string
+}
+
 variable "bucket" {
   type = object({
     bucket = string
