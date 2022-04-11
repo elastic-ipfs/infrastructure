@@ -61,7 +61,6 @@ module "lambda-from-s3" {
     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
     aws_iam_policy.sqs_indexer_policy_send
-    # data.terraform_remote_state.indexing.outputs.sqs_notifications_policy_send
   ]
   custom_metrics = [
     "s3-fetchs-count",
@@ -73,6 +72,6 @@ module "lambda-from-s3" {
   ]
 }
 
-resource "aws_ecr_repository" "ecr-repo-bucket-indexer-lambda" {
-  name = "bucket-indexer-lambda"
+resource "aws_ecr_repository" "ecr-repo-bucket-to-indexer-lambda" {
+  name = "bucket-to-indexer-lambda"
 }
