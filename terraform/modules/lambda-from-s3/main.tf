@@ -19,9 +19,6 @@ resource "aws_lambda_function" "lambda-function" {
 
   environment {
     variables = {
-      "CONCURRENCY"              = "32"
-      "NODE_ENV"                 = "production"
-      "SKIP_PUBLISHING"          = "false"
       "SQS_PUBLISHING_QUEUE_URL" = var.topic_url
     }
   }

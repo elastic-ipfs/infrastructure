@@ -51,7 +51,7 @@ provider "aws" {
 
 module "lambda-from-s3" {
   source                    = "../modules/lambda-from-s3"
-  lambdaName                = "bucket-to-indexer"
+  lambdaName                = var.lambdaName
   bucket                    = var.bucket
   topic_url                 = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
   region                    = var.region

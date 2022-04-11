@@ -21,3 +21,8 @@ variable "bucket" {
 variable "lambda_image"{
   type = string
 }
+
+variable "lambdaName" {
+  type = string
+  default = "bucket-to-indexer"
+}
