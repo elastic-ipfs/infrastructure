@@ -33,13 +33,11 @@ async function main() {
       }
     }
   }
+
   const duration = Date.now() - start
+  // TODO: QueueName
   console.log(
-    `Finished processing all keys from ${0}. ${1} files were processed and ${2} messages were published to Index SNS. Processing time(ms): ${3}`,
-    opts.Bucket,
-    fileCount,
-    messageSentCount,
-    duration,
+    `Finished processing all keys from ${opts.Bucket}. ${fileCount} files were processed and ${messageSentCount} messages were published to ${process.env.SQS_QUEUE_URL}. Processing time(ms): ${duration}`,
   )
 }
 
