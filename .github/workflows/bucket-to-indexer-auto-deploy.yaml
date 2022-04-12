@@ -5,9 +5,11 @@ on:
     - main 
     paths: 
     - 'terraform/bucket-to-indexer-lambda/**'
+    - 'terraform/modules/lambda-from-s3/**'
   pull_request:
     paths: 
     - 'terraform/bucket-to-indexer-lambda/**'
+    - 'terraform/modules/lambda-from-s3/**'
 jobs:
   terraform:
     runs-on: [self-hosted, linux, X64, aws-management-github-runner]

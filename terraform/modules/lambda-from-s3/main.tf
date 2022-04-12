@@ -18,7 +18,6 @@ resource "aws_lambda_function" "lambda-function" {
   timeout       = var.lambda_timeout
 
 # TODO - Make lambda_from_s3 patterns equals to lambda_from_sqs
-
   environment {
     variables = {
       "SQS_INDEXER_QUEUE_URL" = var.topic_url
