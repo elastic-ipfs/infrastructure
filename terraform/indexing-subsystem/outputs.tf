@@ -18,3 +18,10 @@ output "sqs_notifications_policy_delete" {
     arn  = aws_iam_policy.sqs_notifications_policy_delete.arn,
   }
 }
+
+output "sqs_indexer_policy_send" {
+  value = {
+    name = aws_iam_policy.sqs_indexer_policy_send.name,
+    arn  = aws_iam_policy.sqs_indexer_policy_send.arn,
+  }
+}
