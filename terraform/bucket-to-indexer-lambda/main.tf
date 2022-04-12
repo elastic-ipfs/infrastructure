@@ -65,12 +65,6 @@ module "lambda-from-s3" {
     aws_iam_policy.sqs_indexer_policy_send
   ]
   custom_metrics = [
-    "s3-fetchs-count",
-    "dynamo-creates-count",
-    "dynamo-updates-count",
-    "dynamo-deletes-count",
-    "dynamo-reads-count",
-    "sqs-publishes-count"
   ]
 }
 
