@@ -55,7 +55,7 @@ resource "aws_sqs_queue" "ads_topic" {
   visibility_timeout_seconds = 6 
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.ads_topic_dlq.arn
-    maxReceiveCount     = 4
+    maxReceiveCount     = 2
   })
   redrive_allow_policy = jsonencode({
     redrivePermission = "byQueue",
@@ -133,7 +133,7 @@ module "ads_lambda_from_sqs" {
     image_uri                      = local.publisher_image_url
     name                           = local.ads_lambda.name
     memory_size                    = 1024
-    timeout                        = 30
+    timeout                        = 60
     reserved_concurrent_executions = 1
     environment_variables = merge(
       local.environment_variables,
