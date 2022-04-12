@@ -1,0 +1,42 @@
+name: 'Bucket to Indexer Auto Deploy'
+on:
+  push:
+    branches:
+    - main 
+    paths: 
+    - 'terraform/bucket-to-indexer-lambda/**'
+  pull_request:
+    paths: 
+    - 'terraform/bucket-to-indexer-lambda/**'
+jobs:
+  terraform:
+    runs-on: [self-hosted, linux, X64, aws-management-github-runner]
+    name: 'Terraform'  
+    environment: production
+    defaults:
+      run:
+        shell: bash
+        working-directory: './terraform/bucket-to-indexer-lambda'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'      
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region:  us-east-2
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+    - name: Terraform Init
+      run: terraform init
+    - name: Terraform Plan
+      run: terraform plan -var region=us-east-2 -var lambda_image=${{ secrets.lambda_image}} -var account-id=${{ secrets.aws_account_id }} -var profile=ipfs
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' 
+      run: terraform apply -var region=us-east-2 -var lambda_image=${{ secrets.lambda_image }} -var account-id=${{ secrets.aws_account_id }} -var profile=ipfs -auto-approve
+
+

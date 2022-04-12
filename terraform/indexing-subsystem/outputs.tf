@@ -12,7 +12,6 @@ output "sqs_notifications_policy_receive" {
   }
 }
 
-
 output "sqs_notifications_policy_delete" {
   value = {
     name = aws_iam_policy.sqs_notifications_policy_delete.name,

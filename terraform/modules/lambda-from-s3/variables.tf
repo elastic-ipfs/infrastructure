@@ -1,4 +1,4 @@
-variable "lambdaName" {
+variable "lambda_name" {
   type = string
 }
 
@@ -10,7 +10,7 @@ variable "bucket" {
   })
 }
 
-variable "sqs_multihashes_topic_url" {
+variable "topic_url" {
   type = string
 }
 
@@ -29,4 +29,16 @@ variable "region" {
 variable custom_metrics {
   type = list(string)
   default = []
+}
+
+variable "lambda_image" {
+  type = string
+}
+
+variable "lambda_memory" {
+  type = string
+}
+
+variable "lambda_timeout" {
+  type = string
 }
