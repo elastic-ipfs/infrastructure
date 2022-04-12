@@ -1,4 +1,4 @@
-variable "lambdaName" {
+variable "lambda_name" {
   type = string
 }
 
@@ -32,5 +32,13 @@ variable custom_metrics {
 }
 
 variable "lambda_image" {
+  type = string
+}
+
+variable "lambda_memory" {
+  type = string
+}
+
+variable "lambda_timeout" {
   type = string
 }

@@ -10,12 +10,12 @@ terraform {
 }
 
 resource "aws_lambda_function" "lambda-function" {
-  function_name = var.lambdaName
+  function_name = var.lambda_name
   package_type  = "Image"
   image_uri     = var.lambda_image
   role          = aws_iam_role.lambda-function_lambda_role.arn
-  memory_size   = 1024
-  timeout       = 900
+  memory_size   = var.lambda_memory
+  timeout       = var.lambda_timeout
 
   environment {
     variables = {
