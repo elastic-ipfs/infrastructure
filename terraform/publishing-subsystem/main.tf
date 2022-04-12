@@ -52,7 +52,7 @@ provider "aws" {
 resource "aws_sqs_queue" "ads_topic" {
   name                       = "advertisements-topic"
   message_retention_seconds  = 86400 # 1 day. We wan't this to be in DLQ, not deleted.
-  visibility_timeout_seconds = 360 # 6 min
+  visibility_timeout_seconds = 6 
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.ads_topic_dlq.arn
     maxReceiveCount     = 4
