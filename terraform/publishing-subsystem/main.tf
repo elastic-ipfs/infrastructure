@@ -51,8 +51,8 @@ provider "aws" {
 
 resource "aws_sqs_queue" "ads_topic" {
   name                       = "advertisements-topic"
-  message_retention_seconds  = 900 # 15 min
-  visibility_timeout_seconds = 300 # 5 min
+  message_retention_seconds  = 86400 # 1 day. We wan't this to be in DLQ, not deleted.
+  visibility_timeout_seconds = 360 # 6 min
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.ads_topic_dlq.arn
     maxReceiveCount     = 4
@@ -133,7 +133,7 @@ module "ads_lambda_from_sqs" {
     image_uri                      = local.publisher_image_url
     name                           = local.ads_lambda.name
     memory_size                    = 1024
-    timeout                        = 300
+    timeout                        = 30
     reserved_concurrent_executions = 1
     environment_variables = merge(
       local.environment_variables,
