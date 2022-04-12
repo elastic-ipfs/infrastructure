@@ -62,7 +62,7 @@ module "lambda-from-s3" {
   aws_iam_role_policy_list = [
     data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
     data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
-    data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
+    # data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
   ]
   custom_metrics = [
   ]
