@@ -21,7 +21,7 @@ resource "aws_lambda_function" "lambda-function" {
 
   environment {
     variables = {
-      "SQS_PUBLISHING_QUEUE_URL" = var.topic_url
+      "SQS_INDEXER_QUEUE_URL" = var.topic_url
     }
   }
 
