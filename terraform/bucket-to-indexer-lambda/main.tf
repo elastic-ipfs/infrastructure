@@ -60,7 +60,7 @@ module "lambda-from-s3" {
     timeout     = var.lambda_timeout
     environment_variables = {
       "NODE_ENV"                 = "production"
-      "SQS_INDEXER_QUEUE_REGION" = "us-west-2"
+      "SQS_INDEXER_QUEUE_REGION" = data.terraform_remote_state.indexing.outputs.region
       "SQS_INDEXER_QUEUE_URL"    = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
     }
 
