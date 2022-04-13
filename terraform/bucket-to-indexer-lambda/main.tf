@@ -50,22 +50,26 @@ provider "aws" {
 }
 
 module "lambda-from-s3" {
-  source                    = "../modules/lambda-from-s3"
-  lambda_name               = var.lambda_name
-  lambda_memory             = var.lambda_memory
-  lambda_timeout            = var.lambda_timeout
-  bucket                    = var.bucket
-  topic_url                 = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
-  region                    = var.region
-  lambda_image              = var.lambda_image
-  
-  aws_iam_role_policy_list = [
-    data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-    data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
-    data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
-  ]
-  custom_metrics = [
-  ]
+  source = "../modules/lambda-from-s3"
+  region = var.region
+  bucket = var.bucket
+  lambda = {
+    image_uri   = var.lambda_image
+    name        = var.lambda_name
+    memory_size = var.lambda_memory
+    timeout     = var.lambda_timeout
+    environment_variables = {
+      "NODE_ENV"              = "production"
+      "AWS_REGION"            = "us-west-2"
+      "SQS_INDEXER_QUEUE_URL" = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
+    }
+
+    policies_list = [
+      data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
+      data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
+      data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
+    ]
+  }
 }
 
 resource "aws_ecr_repository" "ecr-repo-bucket-to-indexer-lambda" {

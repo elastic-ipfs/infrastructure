@@ -1,5 +1,5 @@
-resource "aws_iam_role" "lambda-function_lambda_role" {
-  name = "lambda-function_lambda_role"
+resource "aws_iam_role" "lambda_function_lambda_role" {
+  name = "lambda-function-lambda-role"
 
   assume_role_policy = <<EOF
 {
@@ -26,17 +26,17 @@ resource "aws_lambda_permission" "allow_bucket" {
 }
 
 resource "aws_iam_role_policy_attachment" "policies_attach" {
-  for_each   = { for policy in var.aws_iam_role_policy_list : policy.name => policy }
-  role       = aws_iam_role.lambda-function_lambda_role.name
+  for_each   = { for policy in var.lambda.policies_list : policy.name => policy }
+  role       = aws_iam_role.lambda_function_lambda_role.name
   policy_arn = each.value.arn
 }
 
-resource "aws_iam_role_policy_attachment" "lambda-function_lambda_role" {
-  role       = aws_iam_role.lambda-function_lambda_role.id
+resource "aws_iam_role_policy_attachment" "lambda_function_lambda_role" {
+  role       = aws_iam_role.lambda_function_lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
 }
 
 resource "aws_iam_role_policy_attachment" "aws_xray_write_only_access" {
-  role       = aws_iam_role.lambda-function_lambda_role.id
+  role       = aws_iam_role.lambda_function_lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
 }

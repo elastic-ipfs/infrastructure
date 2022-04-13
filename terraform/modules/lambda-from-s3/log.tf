@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "lambda-function_log_group" {
-  name              = "/aws/lambda/${var.lambda_name}"
+  name              = "/aws/lambda/${var.lambda.name}"
   retention_in_days = 14
 }
 
@@ -27,18 +27,18 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role       = aws_iam_role.lambda-function_lambda_role.name
+  role       = aws_iam_role.lambda_function_lambda_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
 resource "aws_cloudwatch_log_metric_filter" "lambda_s3_metrics_count" {
   for_each       = { for metric in var.custom_metrics : metric => metric }
   name           = each.value
-  pattern        = "{ $.ipfs_provider_component = \"${var.lambda_name}-lambda\" }"
+  pattern        = "{ $.ipfs_provider_component = \"${var.lambda.name}-lambda\" }"
   log_group_name = aws_cloudwatch_log_group.lambda-function_log_group.name
 
   metric_transformation {
-    namespace = "${var.lambda_name}-lambda-metrics"
+    namespace = "${var.lambda.name}-lambda-metrics"
     name      = each.value
     value     = "$.metrics.${each.value}"
     dimensions = {

@@ -10,18 +10,15 @@ terraform {
 }
 
 resource "aws_lambda_function" "lambda-function" {
-  function_name = var.lambda_name
+  function_name = var.lambda.name
   package_type  = "Image"
-  image_uri     = var.lambda_image
-  role          = aws_iam_role.lambda-function_lambda_role.arn
-  memory_size   = var.lambda_memory
-  timeout       = var.lambda_timeout
+  image_uri     = var.lambda.image_uri
+  role          = aws_iam_role.lambda_function_lambda_role.arn
+  memory_size   = var.lambda.memory_size
+  timeout       = var.lambda.timeout
 
-# TODO - Make lambda_from_s3 patterns equals to lambda_from_sqs
   environment {
-    variables = {
-      "SQS_INDEXER_QUEUE_URL" = var.topic_url
-    }
+    variables = var.lambda.environment_variables
   }
 
   tracing_config { # X-Ray
