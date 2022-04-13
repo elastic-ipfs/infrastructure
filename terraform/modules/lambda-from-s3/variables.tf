@@ -1,5 +1,15 @@
-variable "lambda_name" {
-  type = string
+variable "lambda" {
+  type = object({
+    name                           = string
+    image_uri                      = string
+    environment_variables          = map(string)
+    memory_size                    = number
+    timeout                        = number
+    policies_list = list(object({
+      name = string,
+      arn  = string,
+    }))
+  })
 }
 
 variable "bucket" {
@@ -10,17 +20,6 @@ variable "bucket" {
   })
 }
 
-variable "topic_url" {
-  type = string
-}
-
-variable "aws_iam_role_policy_list" {
-  type = list(object({
-    name = string,
-    arn  = string,
-  }))
-  description = "This list contains policies that will be attached to the current role"
-}
 
 variable "region" {
   type = string
@@ -29,16 +28,4 @@ variable "region" {
 variable custom_metrics {
   type = list(string)
   default = []
-}
-
-variable "lambda_image" {
-  type = string
-}
-
-variable "lambda_memory" {
-  type = string
-}
-
-variable "lambda_timeout" {
-  type = string
 }
