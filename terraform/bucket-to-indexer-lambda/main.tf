@@ -59,9 +59,9 @@ module "lambda-from-s3" {
     memory_size = var.lambda_memory
     timeout     = var.lambda_timeout
     environment_variables = {
-      "NODE_ENV"              = "production"
-      "AWS_REGION"            = "us-west-2"
-      "SQS_INDEXER_QUEUE_URL" = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
+      "NODE_ENV"                 = "production"
+      "SQS_INDEXER_QUEUE_REGION" = "us-west-2"
+      "SQS_INDEXER_QUEUE_URL"    = data.terraform_remote_state.indexing.outputs.sqs_indexer_topic.url
     }
 
     policies_list = [
