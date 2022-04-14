@@ -87,6 +87,20 @@ resource "aws_sqs_queue" "indexer_topic" {
   name                       = "indexer-topic"
   message_retention_seconds  = 86400 # 1 day
   visibility_timeout_seconds = 300   # 5 min
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.indexer_topic_dlq.arn
+    maxReceiveCount     = 2
+  })
+  redrive_allow_policy = jsonencode({
+    redrivePermission = "byQueue",
+    sourceQueueArns   = ["${aws_sqs_queue.indexer_topic_dlq.arn}"]
+  })
+}
+
+resource "aws_sqs_queue" "indexer_topic_dlq" {
+  name                       = "indexer-topic-dlq"
+  message_retention_seconds  = 1209600 # 14 days (Max quota)
+  visibility_timeout_seconds = 300
 }
 
 resource "aws_sqs_queue" "notifications_topic" {
