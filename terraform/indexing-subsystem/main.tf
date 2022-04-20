@@ -44,7 +44,7 @@ module "indexer_lambda_from_sqs" {
   source = "../modules/lambda-from-sqs"
   sqs_trigger = {
     arn                                = aws_sqs_queue.indexer_topic.arn
-    batch_size                         = 10000
+    batch_size                         = 1000
     maximum_batching_window_in_seconds = 30
   }
 
@@ -52,10 +52,10 @@ module "indexer_lambda_from_sqs" {
     image_uri                      = local.indexer_image_url
     name                           = local.indexer_lambda.name
     memory_size                    = 1024
-    timeout                        = 60
+    timeout                        = 300
     reserved_concurrent_executions = -1 # No restrictions
     region                         = var.region
-    environment_variables          = local.environment_variables     
+    environment_variables          = local.environment_variables
     policies_list = [
       data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
       data.terraform_remote_state.shared.outputs.dynamodb_car_policy,
@@ -64,7 +64,7 @@ module "indexer_lambda_from_sqs" {
       aws_iam_policy.sqs_indexer_policy_receive,
       aws_iam_policy.sqs_indexer_policy_delete,
       aws_iam_policy.sqs_notifications_policy_send,
-    ]     
+    ]
   }
   metrics_namespace = "indexer-lambda-metrics"
 
