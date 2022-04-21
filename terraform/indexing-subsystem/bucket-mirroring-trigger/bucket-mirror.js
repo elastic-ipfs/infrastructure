@@ -17,9 +17,13 @@ async function* listAllKeys(opts) {
 
 const opts = {
   Bucket: process.env.SOURCE_BUCKET_NAME,
-  Prefix: process.env.S3_PREFIX ? process.env.S3_PREFIX : '/',
   // Prefix: "raw/"
 }
+
+if (process.env.S3_PREFIX) {
+  opts.Prefix = process.env.S3_PREFIX
+}
+
 const nextPageAwait = process.env.NEXT_PAGE_AWAIT
   ? process.env.NEXT_PAGE_AWAIT
   : 0
