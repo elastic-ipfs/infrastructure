@@ -1,6 +1,8 @@
 const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
 
-const SQSclient = new SQSClient()
+const SQSclient = new SQSClient({
+  region: process.env.SQS_CLIENT_AWS_REGION,
+})
 
 module.exports.sendIndexSQSMessage = async function(message) {
   let success = false;
