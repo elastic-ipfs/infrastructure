@@ -1,5 +1,6 @@
 const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3')
 const sqsMessageSender = require('./sqs-message-sender.js')
+const fs = require('fs')
 
 const S3client = new S3Client({
   region: process.env.S3_CLIENT_AWS_REGION,
@@ -7,10 +8,17 @@ const S3client = new S3Client({
 
 async function* listAllKeys(opts) {
   opts = { ...opts }
+  let firstRun = true
   do {
+    if (firstRun && process.env.NEXT_CONTINUATION_TOKEN) {
+      // Continue where it left of in case of restarting script
+      opts.ContinuationToken = process.env.NEXT_CONTINUATION_TOKEN
+      firstRun = false
+    }
     const command = new ListObjectsV2Command(opts)
     const foundObjects = await S3client.send(command)
     opts.ContinuationToken = foundObjects.NextContinuationToken
+    fs.writeFileSync('./NextContinuationToken', opts.ContinuationToken)
     yield foundObjects
   } while (opts.ContinuationToken)
 }
@@ -35,19 +43,26 @@ async function main() {
   console.log('Starting to process all keys from ' + opts.Bucket)
   const start = Date.now()
   for await (const data of listAllKeys(opts)) {
-    await new Promise((resolve) => setTimeout(resolve, nextPageAwait))
-    for (const object of data.Contents) {
-      await new Promise((resolve) => setTimeout(resolve, fileAwait))
-      fileCount++
-      const message = `${process.env.S3_CLIENT_AWS_REGION}/${opts.Bucket}/${object.Key}` // ex: us-east-2/dotstorage-prod-0/xxxxx.car
-      console.log(message)
-      if (process.env.READ_ONLY_MODE == 'disabled') {
-        success = sqsMessageSender.sendIndexSQSMessage(message)
-        if (success) messageSentCount++
+    try {
+      await new Promise((resolve) => setTimeout(resolve, nextPageAwait))
+      for (const object of data.Contents) {
+        try {
+          await new Promise((resolve) => setTimeout(resolve, fileAwait))
+          fileCount++
+          const message = `${process.env.S3_CLIENT_AWS_REGION}/${opts.Bucket}/${object.Key}` // ex: us-east-2/dotstorage-prod-0/xxxxx.car
+          console.log(message)
+          if (process.env.READ_ONLY_MODE == 'disabled') {
+            success = sqsMessageSender.sendIndexSQSMessage(message)
+            if (success) messageSentCount++
+          }
+        } catch (e) {
+          console.error(e.message) // Don't fail loop over one errored file
+        }
       }
+    } catch (e) {
+      console.error(e.message) // Don't fail loop over one errored file
     }
   }
-
   const duration = Date.now() - start
   console.log(
     `Finished processing all keys from ${opts.Bucket}. ${fileCount} files were processed and ${messageSentCount} messages were published to queue ${process.env.SQS_QUEUE_URL}. Processing time(ms): ${duration}`,
