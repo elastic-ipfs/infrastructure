@@ -18,7 +18,11 @@ async function* listAllKeys(opts) {
     const command = new ListObjectsV2Command(opts)
     const foundObjects = await S3client.send(command)
     opts.ContinuationToken = foundObjects.NextContinuationToken
-    fs.writeFileSync('./NextContinuationToken', opts.ContinuationToken)
+    if(opts.ContinuationToken) {
+      fs.writeFileSync('./NextContinuationToken', opts.ContinuationToken)
+    } else {
+      console.log("Last page: empty continuation token!")
+    }
     yield foundObjects
   } while (opts.ContinuationToken)
 }
@@ -51,6 +55,7 @@ async function main() {
           fileCount++
           const message = `${process.env.S3_CLIENT_AWS_REGION}/${opts.Bucket}/${object.Key}` // ex: us-east-2/dotstorage-prod-0/xxxxx.car
           console.log(message)
+          console.log(`Still processing... Current status: ${fileCount} files were processed and ${messageSentCount} messages were published`)
           if (process.env.READ_ONLY_MODE == 'disabled') {
             success = sqsMessageSender.sendIndexSQSMessage(message)
             if (success) messageSentCount++
