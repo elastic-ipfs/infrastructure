@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sleep
+  labels:
+    app: sleep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sleep
+  template:
+    metadata:
+      name: sleep
+      labels:
+        app: sleep
+        workerType: fargate
+    spec:
+      containers:
+      - name: sleep
+        image: busybox
+        command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
