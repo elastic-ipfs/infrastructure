@@ -10,4 +10,3 @@ terraform/modules/kube-base-components/testapp/node_modules
 **/node_modules
 **/.terraspace-cache
 terraform.tfstate**
-# kube-prometheus-stack-**.tgz
