@@ -9,8 +9,8 @@ on:
     branches:
       - main
     paths:
-      - terraspace/infra-prj-a/**.tf
-      - terraspace/infra-prj-a/**.tfvars
+      - terraspace/**.tf
+      - terraspace/**.tfvars
 
 env:
 #  ROLE_ARN: arn:aws:iam::${{ secrets.ACCOUNT_ID }}:role/managed-oidc-service-github-actions
@@ -56,7 +56,7 @@ jobs:
           key: ${{ runner.os }}-tflint-${{ hashFiles('**/.tflint.hcl') }}
 
       - name: ASDF - Install Tools
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: |
           cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add || true
           asdf install
@@ -64,7 +64,7 @@ jobs:
           ruby --version
 
       - name: Bundle - Install
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: bundle install
 
       - name: Configure AWS credentials
@@ -82,21 +82,21 @@ jobs:
 #          aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraspace - All Init
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace all init
 
       - name: Terraspace - All Init Logs
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace logs init -a --no-timestamps
 
       - name: TFLint - Init
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: tflint --init
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: TFLint - Scan
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: |
           find .terraspace-cache -maxdepth 4 -mindepth 4 -type d | grep stacks | xargs -I '{}' -n1 sh -c 'echo "Scanning: {}" && tflint {}'
 
@@ -133,7 +133,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: ASDF - Install Tools
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: |
           cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add || true
           asdf install
@@ -141,7 +141,7 @@ jobs:
           ruby --version
 
       - name: Bundle - Install
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: bundle install
 
       - name: Configure AWS credentials
@@ -159,15 +159,15 @@ jobs:
 #          aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraspace - All Init
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace all init
 
       - name: Terraspace - All Init Logs
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace logs init -a --no-timestamps
 
       - name: TFSec
-        working-directory: terraspace/infra-prj-a/.terraspace-cache
+        working-directory: terraspace/.terraspace-cache
         run: tfsec .
 
   plan:
@@ -201,7 +201,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: ASDF - Install Tools
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: |
           cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add || true
           asdf install
@@ -209,7 +209,7 @@ jobs:
           ruby --version
 
       - name: Bundle - Install
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: bundle install
 
       - name: Configure AWS credentials
@@ -228,11 +228,11 @@ jobs:
 
       - name: Terraspace - All Plan
         id: ts_all_plan
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         continue-on-error: true
         run: terraspace all plan --out ":MOD_NAME.plan"
 
       - name: Terraspace - All Plan Logs
         if: steps.ts_all_plan.conclusion != 'skipped'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace logs plan -a --no-timestamps
