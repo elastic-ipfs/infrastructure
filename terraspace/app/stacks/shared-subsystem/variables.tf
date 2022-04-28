@@ -8,11 +8,3 @@ variable "config_bucket_name" {
   type    = string
   default = "ipfs-peer-bitswap-config"
 }
-
-variable "profile" {
-  type = string
-}
-
-variable "region" {
-  type = string
-}
