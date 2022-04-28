@@ -1,9 +1,0 @@
-kubernetes:
-  inKubeCluster: true
-scanners:
-- type: iam
-  iam:
-    clusterName: ${cluster_name}
-    clusterAccountID: "${account_id}"
-    pathPrefix: /
-    groupSeparator: "++"
