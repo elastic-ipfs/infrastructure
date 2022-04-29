@@ -1,0 +1,238 @@
+name: Terraspace
+
+permissions:
+  contents: read
+  id-token: write
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - terraspace/infra-prj-a/**.tf
+      - terraspace/infra-prj-a/**.tfvars
+
+env:
+#  ROLE_ARN: arn:aws:iam::${{ secrets.ACCOUNT_ID }}:role/managed-oidc-service-github-actions
+  ROLE_SESSION_NAME: github-actions-runner
+  AWS_REGION: us-west-2 # TODO this should be dynamic
+  TF_IN_AUTOMATION: 1
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+    name: TFLint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # Makes sure we get the latest commit from the PR
+
+      - name: ASDF - Install
+        uses: asdf-vm/actions/setup@v1
+        with:
+          asdf_branch: v0.9.0
+
+      - name: ASDF - Cache Tools
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-asdf-tools
+        with:
+          # asdf cache files are stored in `~/.asdf` on Linux/macOS
+          path: |
+            ~/.asdf/installs
+            ~/.asdf/plugins
+            ~/.asdf/shims
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/.tool-versions') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: TFLint - Cache Plugins
+        uses: actions/cache@v2
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ runner.os }}-tflint-${{ hashFiles('**/.tflint.hcl') }}
+
+      - name: ASDF - Install Tools
+        working-directory: terraspace/infra-prj-a
+        run: |
+          cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add || true
+          asdf install
+          terraform --version
+          ruby --version
+
+      - name: Bundle - Install
+        working-directory: terraspace/infra-prj-a
+        run: bundle install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          role-to-assume: ${{ env.ROLE_ARN }}
+#          role-session-name: ${{ env.ROLE_SESSION_NAME }}
+#          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraspace - All Init
+        working-directory: terraspace/infra-prj-a
+        run: terraspace all init
+
+      - name: Terraspace - All Init Logs
+        working-directory: terraspace/infra-prj-a
+        run: terraspace logs init -a --no-timestamps
+
+      - name: TFLint - Init
+        working-directory: terraspace/infra-prj-a
+        run: tflint --init
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: TFLint - Scan
+        working-directory: terraspace/infra-prj-a
+        run: |
+          find .terraspace-cache -maxdepth 4 -mindepth 4 -type d | grep stacks | xargs -I '{}' -n1 sh -c 'echo "Scanning: {}" && tflint {}'
+
+
+
+  tf-sec:
+    runs-on: ubuntu-latest
+    name: TFSec
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # Makes sure we get the latest commit from the PR
+
+      - name: ASDF - Install
+        uses: asdf-vm/actions/setup@v1
+        with:
+          asdf_branch: v0.9.0
+
+      - name: ASDF - Cache Tools
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-asdf-tools
+        with:
+          # asdf cache files are stored in `~/.asdf` on Linux/macOS
+          path: |
+            ~/.asdf/installs
+            ~/.asdf/plugins
+            ~/.asdf/shims
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/.tool-versions') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: ASDF - Install Tools
+        working-directory: terraspace/infra-prj-a
+        run: |
+          cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add || true
+          asdf install
+          terraform --version
+          ruby --version
+
+      - name: Bundle - Install
+        working-directory: terraspace/infra-prj-a
+        run: bundle install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          role-to-assume: ${{ env.ROLE_ARN }}
+#          role-session-name: ${{ env.ROLE_SESSION_NAME }}
+#          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraspace - All Init
+        working-directory: terraspace/infra-prj-a
+        run: terraspace all init
+
+      - name: Terraspace - All Init Logs
+        working-directory: terraspace/infra-prj-a
+        run: terraspace logs init -a --no-timestamps
+
+      - name: TFSec
+        working-directory: terraspace/infra-prj-a/.terraspace-cache
+        run: tfsec .
+
+  plan:
+    runs-on: ubuntu-latest
+    name: Plan
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # Makes sure we get the latest commit from the PR
+
+      - name: ASDF - Install
+        uses: asdf-vm/actions/setup@v1
+        with:
+          asdf_branch: v0.9.0
+
+      - name: ASDF - Cache Tools
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-asdf-tools
+        with:
+          # asdf cache files are stored in `~/.asdf` on Linux/macOS
+          path: |
+            ~/.asdf/installs
+            ~/.asdf/plugins
+            ~/.asdf/shims
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/.tool-versions') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: ASDF - Install Tools
+        working-directory: terraspace/infra-prj-a
+        run: |
+          cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add || true
+          asdf install
+          terraform --version
+          ruby --version
+
+      - name: Bundle - Install
+        working-directory: terraspace/infra-prj-a
+        run: bundle install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          role-to-assume: ${{ env.ROLE_ARN }}
+#          role-session-name: ${{ env.ROLE_SESSION_NAME }}
+#          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraspace - All Plan
+        id: ts_all_plan
+        working-directory: terraspace/infra-prj-a
+        continue-on-error: true
+        run: terraspace all plan --out ":MOD_NAME.plan"
+
+      - name: Terraspace - All Plan Logs
+        if: steps.ts_all_plan.conclusion != 'skipped'
+        working-directory: terraspace/infra-prj-a
+        run: terraspace logs plan -a --no-timestamps
