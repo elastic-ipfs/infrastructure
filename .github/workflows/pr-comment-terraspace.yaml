@@ -85,7 +85,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: ASDF - Install Tools
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: |
           # Add each plugin contained in tool-versions
           cut -d' ' -f1 .tool-versions | grep -v '#' | xargs -n1 asdf plugin add
@@ -93,7 +93,7 @@ jobs:
           asdf install
 
       - name: Bundle - Install
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: bundle install
 
       - name: Configure AWS credentials
@@ -106,7 +106,7 @@ jobs:
       - name: Terraspace - Plan
         id: ts_plan
         if: fromJSON(needs.pre-reqs.outputs.result).requestPlan == 'true'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         continue-on-error: true
         env:
           STACK: ${{ fromJSON(needs.pre-reqs.outputs.result).subCmd }}
@@ -117,13 +117,13 @@ jobs:
       - name: Terraspace - All Plan
         id: ts_all_plan
         if: fromJSON(needs.pre-reqs.outputs.result).requestAllPlan == 'true'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         continue-on-error: true
         run: terraspace all plan --out ":MOD_NAME.plan"
 
       - name: Terraspace - All Plan Logs
         if: steps.ts_all_plan.conclusion != 'skipped'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace logs plan -a --no-timestamps
 
       - name: Get Approval Status
@@ -145,7 +145,7 @@ jobs:
         if: |
           fromJSON(needs.pre-reqs.outputs.result).requestUp == 'true' &&
           steps.get_approval_state.outputs.approval_state  == 'APPROVED'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         continue-on-error: true
         env:
           STACK: ${{ fromJSON(needs.pre-reqs.outputs.result).subCmd }}
@@ -156,13 +156,13 @@ jobs:
         if: |
           fromJSON(needs.pre-reqs.outputs.result).requestAllUp == 'true' &&
           steps.get_approval_state.outputs.approval_state  == 'APPROVED'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         continue-on-error: true
         run: terraspace all up --yes --plan ":MOD_NAME.plan"
 
       - name: Terraspace - All Up Logs
         if: steps.ts_all_up.conclusion != 'skipped'
-        working-directory: terraspace/infra-prj-a
+        working-directory: terraspace
         run: terraspace logs up -a --no-timestamps
 
       - name: Report Check Run Conclusion
