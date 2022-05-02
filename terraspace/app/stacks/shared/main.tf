@@ -22,6 +22,7 @@ resource "aws_s3_bucket_public_access_block" "ipfs_peer_bitswap_config_block_pub
   bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
   block_public_policy = true
   block_public_acls = true
+  ignore_public_acls = false
 }
 
 resource "aws_sqs_queue" "multihashes_topic" {
