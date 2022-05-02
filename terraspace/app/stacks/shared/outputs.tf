@@ -37,7 +37,7 @@ output "s3_config_peer_bucket_policy_read" {
     name = aws_iam_policy.s3_config_peer_bucket_policy_read.name,
     arn  = aws_iam_policy.s3_config_peer_bucket_policy_read.arn,
   }
-  description = "Policy for allowing read action for configuration bucket"
+  description = "Policy for allowing read files from configuration bucket"
 }
 
 output "sqs_multihashes_policy_send" {
@@ -70,5 +70,5 @@ output "s3_dotstorage_prod_0_policy_read" {
     name = aws_iam_policy.s3_dotstorage_prod_0_policy_read.name,
     arn  = aws_iam_policy.s3_dotstorage_prod_0_policy_read.arn,
   }
-  description = "Policy for allowing reading messages from existing bucket called 'dotstorage_prod_0'"
+  description = "Policy for allowing reading files from existing bucket called 'dotstorage_prod_0'"
 }
