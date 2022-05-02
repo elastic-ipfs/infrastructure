@@ -10,8 +10,8 @@ output "ipfs_peer_bitswap_config_bucket" {
 
 output "sqs_multihashes_topic" {
   value = {
-    url = aws_sqs_queue.multihashes_topic.url
-    arn = aws_sqs_queue.multihashes_topic.arn
+    url = aws_sqs_queue.multihashes_topic.url,
+    arn = aws_sqs_queue.multihashes_topic.arn,
   }
   description = "This queue is supposed to be used for triggering publisher lambda (content)"
 }

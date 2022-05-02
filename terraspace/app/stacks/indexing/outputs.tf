@@ -1,7 +1,3 @@
-output "region" {
-  value = var.region
-}
-
 output "sqs_indexer_topic" {
   value = {
     url = aws_sqs_queue.indexer_topic.url
