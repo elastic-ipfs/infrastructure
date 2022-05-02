@@ -13,6 +13,16 @@ resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
   acl    = "private"
 }
 
+resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_readl_acl" {
+  bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
+  acl    = "private"
+}
+
+# resource "aws_s3_bucket_public_access_block" "good_example" {
+#   bucket = aws_s3_bucket.good_example.id
+#   block_public_acls = true
+# }
+
 resource "aws_sqs_queue" "multihashes_topic" {
   name                       = var.multihashes_topic_name
   message_retention_seconds  = 86400 # 1 day
