@@ -1,8 +1,8 @@
 # This follows current namespacing pattern: https://filecoinproject.slack.com/archives/C02BZPRS9HP/p1650986348274689?thread_ts=1646828696.183769&cid=C02BZPRS9HP
-config_bucket_name     = "<%= expansion(':REGION-:ENV') %>-ep-bitswap-config"
-multihashes_topic_name = "<%= expansion(':ENV') %>-ep-multihashes-topic"
-cars_table_name        = "<%= expansion(':ENV') %>-ep-cars"
-blocks_table_name      = "<%= expansion(':ENV') %>-ep-blocks"
+config_bucket_name                 = "<%= expansion(':REGION-:ENV') %>-ep-bitswap-config"
+multihashes_topic_name             = "<%= expansion(':ENV') %>-ep-multihashes-topic"
+cars_table_name                    = "<%= expansion(':ENV') %>-ep-cars"
+blocks_table_name                  = "<%= expansion(':ENV') %>-ep-blocks"
 multihashes_send_policy_name       = "<%= expansion(':ENV') %>-ep-sqs-multihashes-send"
 multihashes_receive_policy_name    = "<%= expansion(':ENV') %>-ep-sqs-multihashes-receive"
 multihashes_delete_policy_name     = "<%= expansion(':ENV') %>-ep-sqs-multihashes-delete"
