@@ -1,4 +1,4 @@
-# Compatibility with existing components
+# Prod does not follow base.tfvars patterns for keeping compatibility with pre-existing components
 config_bucket_name                 = "ipfs-peer-bitswap-config"
 multihashes_topic_name             = "multihashes-topic"
 cars_table_name                    = "cars"
