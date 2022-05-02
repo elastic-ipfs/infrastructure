@@ -10,12 +10,18 @@ terraform {
 }
 resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
   bucket = var.config_bucket_name
-  acl    = "private" # Deprecated. TODO: Remove
 }
 
 resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_private_acl" {
   bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
   acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "ipfs_peer_bitswap_config_versioning" {
+  bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
+  versioning_configuration {
+    status = "true"
+  }
 }
 
 resource "aws_sqs_queue" "multihashes_topic" {
