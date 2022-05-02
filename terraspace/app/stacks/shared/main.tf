@@ -20,7 +20,7 @@ resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_private_acl" {
 
 resource "aws_s3_bucket_public_access_block" "ipfs_peer_bitswap_config_block_public_acl" {
   bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
-  block_public_acls = true
+  block_public_policy = true
 }
 
 resource "aws_sqs_queue" "multihashes_topic" {
