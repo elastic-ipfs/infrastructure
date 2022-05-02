@@ -17,6 +17,10 @@ resource "aws_dynamodb_table" "blocks_table" {
     name = "multihash"
     type = "S"
   }
+
+  point_in_time_recovery {
+    enabled = true
+  }
 }
 
 resource "aws_dynamodb_table" "cars_table" {
@@ -26,5 +30,8 @@ resource "aws_dynamodb_table" "cars_table" {
   attribute {
     name = "path"
     type = "S"
+  }
+  point_in_time_recovery {
+    enabled = true
   }
 }
