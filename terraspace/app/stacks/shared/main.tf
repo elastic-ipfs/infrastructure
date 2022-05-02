@@ -10,18 +10,18 @@ terraform {
 }
 resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
   bucket = var.config_bucket_name
-  acl    = "private"
+  acl    = "private" # Deprecated. TODO: Remove
 }
 
-resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_readl_acl" {
+resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_private_acl" {
   bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
   acl    = "private"
 }
 
-# resource "aws_s3_bucket_public_access_block" "good_example" {
-#   bucket = aws_s3_bucket.good_example.id
-#   block_public_acls = true
-# }
+resource "aws_s3_bucket_public_access_block" "ipfs_peer_bitswap_config_block_public_acl" {
+  bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
+  block_public_acls = true
+}
 
 resource "aws_sqs_queue" "multihashes_topic" {
   name                       = var.multihashes_topic_name
