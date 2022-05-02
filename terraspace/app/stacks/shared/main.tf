@@ -20,7 +20,7 @@ resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_private_acl" {
 resource "aws_s3_bucket_versioning" "ipfs_peer_bitswap_config_versioning" {
   bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
   versioning_configuration {
-    status = "true"
+    status = "Enabled"
   }
 }
 
