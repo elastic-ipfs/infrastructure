@@ -18,13 +18,6 @@ resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_private_acl" {
   acl    = "private"
 }
 
-resource "aws_s3_bucket_public_access_block" "ipfs_peer_bitswap_config_block_public_acl" {
-  bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
-  block_public_policy = true
-  block_public_acls = true
-  ignore_public_acls = false
-}
-
 resource "aws_sqs_queue" "multihashes_topic" {
   name                       = var.multihashes_topic_name
   message_retention_seconds  = 86400 # 1 day
