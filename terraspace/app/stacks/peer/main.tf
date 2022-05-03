@@ -16,20 +16,6 @@ data "aws_eks_cluster_auth" "eks" {
   name = module.eks.cluster_id
 }
 
-provider "aws" {
-  profile = var.profile
-  region  = var.region
-  default_tags {
-    tags = {
-      Team        = "NearForm"
-      Project     = "IPFS-Elastic-Provider"
-      Environment = "POC"
-      Subsystem   = "Peer"
-      ManagedBy   = "Terraform"
-    }
-  }
-}
-
 data "aws_availability_zones" "available" {
 }
 
@@ -110,7 +96,7 @@ module "eks" {
       }
 
       tags = { # This is also applied to IAM role.
-        "eks/${var.accountId}/${var.cluster_name}/type" : "node"
+        "eks/${var.account_id}/${var.cluster_name}/type" : "node"
         "k8s.io/cluster-autoscaler/${var.cluster_name}" : "owned"
         "k8s.io/cluster-autoscaler/enabled" : "TRUE"
       }
@@ -133,7 +119,7 @@ module "eks" {
       ]
 
       tags = { # This is also applied to IAM role.
-        "eks/${var.accountId}/${var.cluster_name}/type" : "fargateNode"
+        "eks/${var.account_id}/${var.cluster_name}/type" : "fargateNode"
       }
       timeouts = {
         create = "5m"
