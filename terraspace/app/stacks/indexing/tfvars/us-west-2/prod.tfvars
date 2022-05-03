@@ -3,7 +3,7 @@ ecr_repository_name      = "indexer-lambda"
 indexer_topic_name       = "indexer-topic"
 notifications_topic_name = "notifications-topic"
 indexer_lambda = {
-  name              = ""
+  name              = "indexer"
   metrics_namespace = "indexer-lambda-metrics"
 }
 node_env                              = "production"
