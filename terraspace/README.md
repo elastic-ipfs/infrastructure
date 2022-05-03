@@ -18,7 +18,7 @@ To deploy individual stacks:
     terraspace up shared   # where shared is app/stacks/shared
     terraspace up indexing # where indexing is app/stacks/indexing
     terraspace up indexing # where indexing is app/stacks/peer
-    terraspace up indexing # where indexing is app/stacks/peer-kubernetes-components
+    terraspace up indexing # where indexing is app/stacks/peer-kubernetes-components -var token=$(aws eks get-token --cluster-name <cluster-name>)
 
 ## Terrafile
 
