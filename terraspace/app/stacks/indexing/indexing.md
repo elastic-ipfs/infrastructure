@@ -37,7 +37,6 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_account_id"></a> [account\_id](#input\_account\_id) | AWS Account ID | `string` | n/a | yes |
 | <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name) | Name for ECR repo. We use this repo to store indexer lambda docker image | `string` | n/a | yes |
 | <a name="input_indexer_lambda"></a> [indexer\_lambda](#input\_indexer\_lambda) | Indexer lambda is the core component of the indexing stack | <pre>object({<br>    name              = string<br>    metrics_namespace = string<br>  })</pre> | n/a | yes |
 | <a name="input_indexer_topic_name"></a> [indexer\_topic\_name](#input\_indexer\_topic\_name) | Name for indexer sqs queue. This is queue is supposed to be read by indexer lambda | `string` | n/a | yes |
@@ -47,7 +46,7 @@
 | <a name="input_shared_stack_dynamodb_car_policy"></a> [shared\_stack\_dynamodb\_car\_policy](#input\_shared\_stack\_dynamodb\_car\_policy) | This policy is managed by the shared subsystem. Indexer lambda requires policy for accessing this dynamodb table | <pre>object({<br>    name = string<br>    arn  = string<br>  })</pre> | n/a | yes |
 | <a name="input_shared_stack_s3_dotstorage_prod_0_policy_read"></a> [shared\_stack\_s3\_dotstorage\_prod\_0\_policy\_read](#input\_shared\_stack\_s3\_dotstorage\_prod\_0\_policy\_read) | This policy is managed by the shared subsystem. Indexer lambda requires policy for reading external bucket 'dotstorage\_prod\_0' objects content | <pre>object({<br>    name = string<br>    arn  = string<br>  })</pre> | n/a | yes |
 | <a name="input_shared_stack_sqs_multihashes_policy_send"></a> [shared\_stack\_sqs\_multihashes\_policy\_send](#input\_shared\_stack\_sqs\_multihashes\_policy\_send) | This policy is managed by the shared subsystem. Indexer lambda requires policy for sending messages to multihashes sqs queue | <pre>object({<br>    name = string<br>    arn  = string<br>  })</pre> | n/a | yes |
-| <a name="input_shared_stack_sqs_multihashes_topic"></a> [shared\_stack\_sqs\_multihashes\_topic](#input\_shared\_stack\_sqs\_multihashes\_topic) | This queue is managed by the shared subsystem. Indexer lambda sends messages to it | <pre>object({<br>    url = string<br>    arn = string<br>  })</pre> | n/a | yes |
+| <a name="input_shared_stack_sqs_multihashes_topic_url"></a> [shared\_stack\_sqs\_multihashes\_topic\_url](#input\_shared\_stack\_sqs\_multihashes\_topic\_url) | This queue is managed by the shared subsystem. Indexer lambda sends messages to it | `string` | n/a | yes |
 | <a name="input_sqs_indexer_policy_delete_name"></a> [sqs\_indexer\_policy\_delete\_name](#input\_sqs\_indexer\_policy\_delete\_name) | Name for policy which allows deleting messages from indexer sqs queue | `string` | n/a | yes |
 | <a name="input_sqs_indexer_policy_receive_name"></a> [sqs\_indexer\_policy\_receive\_name](#input\_sqs\_indexer\_policy\_receive\_name) | Name for policy which allows receiving messages from indexer sqs queue | `string` | n/a | yes |
 | <a name="input_sqs_indexer_policy_send_name"></a> [sqs\_indexer\_policy\_send\_name](#input\_sqs\_indexer\_policy\_send\_name) | Name for policy which allows sending messages to indexer sqs queue | `string` | n/a | yes |

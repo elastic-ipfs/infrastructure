@@ -55,11 +55,8 @@ variable "sqs_notifications_policy_send_name" {
   description = "Name for policy which allows sending messages to notifications sqs queue"
 }
 
-variable "shared_stack_sqs_multihashes_topic" {
-  type = object({
-    url = string
-    arn = string
-  })
+variable "shared_stack_sqs_multihashes_topic_url" {
+  type = string
   description = "This queue is managed by the shared subsystem. Indexer lambda sends messages to it"
 }
 
