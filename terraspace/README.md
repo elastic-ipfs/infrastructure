@@ -12,7 +12,9 @@ To deploy all the infrastructure stacks:
 To deploy individual stacks:
 
     AWS_PROFILE=<profile> AWS_REGION=<region> TS_ENV=<environment> bundle exec terraspace up shared
-    terraspace up shared # where shared is app/stacks/shared
+    AWS_PROFILE=<profile> AWS_REGION=<region> TS_ENV=<environment> bundle exec terraspace up indexing
+    terraspace up shared   # where shared is app/stacks/shared
+    terraspace up indexing # where indexing is app/stacks/indexing
 
 ## Terrafile
 
