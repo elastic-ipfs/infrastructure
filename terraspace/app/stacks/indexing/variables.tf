@@ -1,8 +1,3 @@
-variable "account_id" {
-  type        = string
-  description = "AWS Account ID"
-}
-
 variable "ecr_repository_name" {
   type        = string
   description = "Name for ECR repo. We use this repo to store indexer lambda docker image"

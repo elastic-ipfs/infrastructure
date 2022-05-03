@@ -1,6 +1,6 @@
 # Bucket Mirroring Trigger
 
-This script will messages to indexing SQS queue for each file that exists in a bucket.
+This script will send messages to indexing SQS queue for each file that exists in a bucket.
 
 ``` sh
 export SOURCE_BUCKET_NAME=<source-bucket-name>
