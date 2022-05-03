@@ -11,8 +11,7 @@ variable "region" {
 }
 
 variable "config_bucket_name" {
-  type        = string
-  description = "Bucket for storing CAR files"
+  type = string
 }
 
 variable "host" {
@@ -20,7 +19,8 @@ variable "host" {
 }
 
 variable "token" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "cluster_ca_certificate" {

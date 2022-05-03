@@ -14,7 +14,7 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-provider "kubernetes" { // TODO: Understand how to properly fix the version
+provider "kubernetes" {
   host                   = var.host
   token                  = var.token
   cluster_ca_certificate = var.cluster_ca_certificate
