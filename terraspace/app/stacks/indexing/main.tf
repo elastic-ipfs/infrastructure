@@ -24,7 +24,7 @@ module "indexer_lambda_from_sqs" {
     timeout                        = 300
     reserved_concurrent_executions = -1 # No restrictions
     environment_variables          = local.environment_variables
-    policies_list = [  
+    policies_list = [
       var.shared_stack_dynamodb_blocks_policy,
       var.shared_stack_dynamodb_car_policy,
       var.shared_stack_sqs_multihashes_policy_send,

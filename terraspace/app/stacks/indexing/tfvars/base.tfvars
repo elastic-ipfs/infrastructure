@@ -14,8 +14,8 @@ sqs_notifications_policy_receive_name         = "<%= expansion(':ENV') %>-ep-sqs
 sqs_notifications_policy_delete_name          = "<%= expansion(':ENV') %>-ep-sqs-notifications-delete"
 sqs_notifications_policy_send_name            = "<%= expansion(':ENV') %>-ep-sqs-notifications-send"
 sqs_indexer_policy_send_name                  = "<%= expansion(':ENV') %>-ep-sqs-indexer-send"
-shared_stack_sqs_multihashes_topic            = <%= output('shared.sqs_multihashes_topic', mock: []) %>
-shared_stack_dynamodb_blocks_policy           = <%= output('shared.dynamodb_blocks_policy', mock: []) %>
-shared_stack_dynamodb_car_policy              = <%= output('shared.dynamodb_car_policy', mock: []) %>
-shared_stack_sqs_multihashes_policy_send      = <%= output('shared.sqs_multihashes_policy_send', mock: []) %>
-shared_stack_s3_dotstorage_prod_0_policy_read = <%= output('shared.s3_dotstorage_prod_0_policy_read', mock: []) %>
+shared_stack_sqs_multihashes_topic            = <%= output('shared.sqs_multihashes_topic', mock: {}) %>
+shared_stack_dynamodb_blocks_policy           = <%= output('shared.dynamodb_blocks_policy', mock: {}) %>
+shared_stack_dynamodb_car_policy              = <%= output('shared.dynamodb_car_policy', mock: {}) %>
+shared_stack_sqs_multihashes_policy_send      = <%= output('shared.sqs_multihashes_policy_send', mock: {}) %>
+shared_stack_s3_dotstorage_prod_0_policy_read = <%= output('shared.s3_dotstorage_prod_0_policy_read', mock: {}) %>

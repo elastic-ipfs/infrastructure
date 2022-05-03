@@ -38,7 +38,7 @@ resource "aws_cloudwatch_log_metric_filter" "lambda_sqs_metrics_count" {
   log_group_name = aws_cloudwatch_log_group.log_group.name
 
   metric_transformation {
-    namespace = "${var.metrics_namespace}"
+    namespace = var.metrics_namespace
     name      = each.value
     value     = "$.metrics.${each.value}"
     dimensions = {
