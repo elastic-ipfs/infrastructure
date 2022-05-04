@@ -1,8 +1,12 @@
 provider "helm" {
   kubernetes {
-    host                   = var.host
-    token                  = var.token
-    cluster_ca_certificate = var.cluster_ca_certificate
+    host = var.host
+    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+    exec {
+      api_version = "client.authentication.k8s.io/v1alpha1"
+      args        = ["eks", "get-token", "--cluster-name", var.cluster_id]
+      command     = "aws"
+    }
   }
 }
 
@@ -22,7 +26,7 @@ resource "helm_release" "metric-server" {
 resource "helm_release" "argocd" {
   count            = var.deploy_argocd ? 1 : 0
   name             = "argocd"
-  chart            = "../modules/kube-base-components/helm/argocd"
+  chart            = "./helm/argocd"
   namespace        = "argocd"
   create_namespace = true
 }

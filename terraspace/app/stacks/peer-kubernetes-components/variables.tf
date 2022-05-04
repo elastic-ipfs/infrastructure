@@ -18,11 +18,6 @@ variable "host" {
   type = string
 }
 
-variable "token" {
-  type      = string
-  sensitive = true
-}
-
 variable "cluster_ca_certificate" {
   type = string
 }
