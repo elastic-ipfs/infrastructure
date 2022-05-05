@@ -13,12 +13,6 @@ variable "region" {
   description = "Resources that manage AWS resources require the region"
 }
 
-variable "config_bucket_name" {
-  type = string
-  description = "This bucket is managed by the shared stack. Peer container reads its objects content"
-
-}
-
 variable "host" {
   type = string
   description = "This URL is managed by the peer stack. EKS control plane API server endpoint"
@@ -41,18 +35,6 @@ variable "service_account_roles" {
   }))
   description = "Manages Kubernetes serviceaccounts (sa) that should assume roles. Also manages the roles themselves and their polices associations. Those irsa services can later be associated with kubernetes deployments"
 
-}
-
-variable "eks_auth_sync_policy_name" {
-  type    = string
-  default = "eks-auth-sync-policy"
-  description = "Name of policy that enables reading of user/role tags"
-}
-
-variable "eks_auth_sync_role_name" {
-  type    = string
-  default = "eks-auth-sync-role"
-  description = "Name of role with permissions for reading of user/role tags"
 }
 
 variable "deploy_eks_auth_sync" {

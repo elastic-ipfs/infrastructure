@@ -21,11 +21,6 @@ variable "cluster_version" {
   description = "Kubernetes version"
 }
 
-variable "provider_ads_bucket_name" {
-  type        = string
-  description = "Bucket for storing provider files"
-}
-
 variable "account_id" {
   type = string
   description = "AWS account ID"

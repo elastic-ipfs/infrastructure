@@ -3,8 +3,6 @@ cluster_id              = <%= output('peer.cluster_id', mock: "") %>
 host                    = <%= output('peer.host', mock: "") %>
 cluster_ca_certificate  = <%= output('peer.cluster_ca_certificate', mock: "") %>
 region                  = "<%= expansion(':REGION') %>"
-config_bucket_name      = "<%= output('shared.ipfs_peer_bitswap_config_bucket', mock: {}).to_ruby['id'] %>"
-# TODO: Generate token from CLI instead of using sensitive OR just use it as sensitive? (First option seems more secure). Place it in the env variable that will be read here
 # TODO: Understand why (and if we actually need) 'sqs_multihashes_policy_send' here
 service_account_roles = {
     "<%= expansion(':ENV') %>_ep_peer_subsystem_role" = {

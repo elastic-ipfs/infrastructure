@@ -3,16 +3,17 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.38"
-    }    
+    }
+
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 2.1"
+    }
   }
   required_version = ">= 1.0.0"
 }
 
 data "aws_eks_cluster" "eks" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "eks" {
   name = module.eks.cluster_id
 }
 
@@ -43,14 +44,14 @@ module "vpc" {
   }
 }
 
-module "gateway-endpoint-to-dynamodb" {
+module "gateway_endpoint_to_dynamodb" {
   source         = "../../modules/gateway-endpoint-to-dynamodb"
   vpc_id         = module.vpc.vpc_id
   region         = var.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
-module "gateway-endpoint-to-s3" {
+module "gateway_endpoint_to_s3" {
   source         = "../../modules/gateway-endpoint-to-s3"
   vpc_id         = module.vpc.vpc_id
   region         = var.region
@@ -169,29 +170,3 @@ resource "aws_security_group_rule" "dns_ingress_udp" {
   source_security_group_id = module.eks.cluster_primary_security_group_id
   security_group_id        = module.eks.node_security_group_id
 }
-
-
-# module "kube-base-components" {
-#   source                     = "../../modules/kube-base-components"
-#   cluster_oidc_issuer_url    = module.eks.cluster_oidc_issuer_url
-#   cluster_id                 = module.eks.cluster_id
-#   region                     = var.region
-#   config_bucket_name         = data.terraform_remote_state.shared.outputs.ipfs_peer_bitswap_config_bucket.id
-#   host                       = data.aws_eks_cluster.eks.endpoint
-#   token                      = data.aws_eks_cluster_auth.eks.token
-#   cluster_ca_certificate     = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-#   deploy_cloudwatch_exporter = false
-#   service_account_roles = {
-#     "bitswap_peer_subsystem_role" = {
-#       service_account_name      = "bitswap-irsa",
-#       service_account_namespace = "bitswap-peer",
-#       role_name                 = "bitswap_peer_subsystem_role",
-#       policies_list = [
-#         data.terraform_remote_state.shared.outputs.dynamodb_blocks_policy,
-#         data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_send,
-#         data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
-#         data.terraform_remote_state.shared.outputs.s3_dotstorage_prod_0_policy_read,
-#       ]
-#     },
-#   }
-# }

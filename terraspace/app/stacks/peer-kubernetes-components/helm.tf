@@ -10,7 +10,7 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "metric-server" {
+resource "helm_release" "metric_server" {
   name       = "metric-server-release"
   repository = local.bitnami_repo
   chart      = "metrics-server"
