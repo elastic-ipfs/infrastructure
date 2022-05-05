@@ -57,7 +57,7 @@ variable "sqs_notifications_policy_send_name" {
 
 variable "shared_stack_sqs_multihashes_topic_url" {
   type = string
-  description = "This queue is managed by the shared subsystem. Indexer lambda sends messages to it"
+  description = "This queue is managed by the shared stack. Indexer lambda sends messages to it"
 }
 
 variable "shared_stack_dynamodb_blocks_policy" {
@@ -65,7 +65,7 @@ variable "shared_stack_dynamodb_blocks_policy" {
     name = string
     arn  = string
   })
-  description = "This policy is managed by the shared subsystem. Indexer lambda requires policy for accessing this dynamodb table"
+  description = "This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table"
 }
 
 variable "shared_stack_dynamodb_car_policy" {
@@ -73,7 +73,7 @@ variable "shared_stack_dynamodb_car_policy" {
     name = string
     arn  = string
   })
-  description = "This policy is managed by the shared subsystem. Indexer lambda requires policy for accessing this dynamodb table"
+  description = "This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table"
 }
 
 variable "shared_stack_sqs_multihashes_policy_send" {
@@ -81,7 +81,7 @@ variable "shared_stack_sqs_multihashes_policy_send" {
     name = string
     arn  = string
   })
-  description = "This policy is managed by the shared subsystem. Indexer lambda requires policy for sending messages to multihashes sqs queue"
+  description = "This policy is managed by the shared stack. Indexer lambda requires policy for sending messages to multihashes sqs queue"
 
 }
 
@@ -90,5 +90,5 @@ variable "shared_stack_s3_dotstorage_prod_0_policy_read" {
     name = string
     arn  = string
   })
-  description = "This policy is managed by the shared subsystem. Indexer lambda requires policy for reading external bucket 'dotstorage_prod_0' objects content"
+  description = "This policy is managed by the shared stack. Indexer lambda requires policy for reading external bucket 'dotstorage_prod_0' objects content"
 }
