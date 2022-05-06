@@ -1,12 +1,4 @@
-terraform {
-  backend "s3" {
-    profile        = "ipfs"
-    bucket         = "ipfs-elastic-provider-terraform-state"
-    dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
-    region         = "us-west-2"
-    key            = "terraform.publishing.tfstate"
-    encrypt        = true
-  }
+terraform {  
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -15,38 +7,6 @@ terraform {
   }
 
   required_version = ">= 1.0.0"
-}
-
-data "terraform_remote_state" "shared" {
-  backend = "s3"
-  config = {
-    bucket = "ipfs-elastic-provider-terraform-state"
-    key    = "terraform.shared.tfstate"
-    region = var.region
-  }
-}
-
-data "terraform_remote_state" "dns" {
-  backend = "s3"
-  config = {
-    bucket = "ipfs-elastic-provider-terraform-state"
-    key    = "terraform.dns.tfstate"
-    region = "${var.region}"
-  }
-}
-
-provider "aws" {
-  profile = var.profile
-  region  = var.region
-  default_tags {
-    tags = {
-      Team        = "NearForm"
-      Project     = "IPFS-Elastic-Provider"
-      Environment = "POC"
-      Subsystem   = "Publishing"
-      ManagedBy   = "Terraform"
-    }
-  }
 }
 
 resource "aws_sqs_queue" "ads_topic" {
