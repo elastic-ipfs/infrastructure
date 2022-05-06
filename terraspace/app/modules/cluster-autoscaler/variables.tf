@@ -1,10 +1,10 @@
 variable "service_account_name" {
-  type = string
+  type    = string
   default = "cluster-autoscaler"
 }
 
 variable "namespace" {
-  type = string
+  type    = string
   default = "kube-system"
 }
 

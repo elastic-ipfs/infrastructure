@@ -6,22 +6,22 @@ variable "vpc" {
 }
 
 variable "cluster_name" {
-  type    = string
+  type        = string
   description = "EKS cluster name"
 }
 
 variable "region" {
-  type    = string
+  type        = string
   description = "VPC Gateways service names are composed using this region"
 }
 
 variable "cluster_version" {
-  type    = string
-  default = "1.21"
+  type        = string
+  default     = "1.21"
   description = "Kubernetes version"
 }
 
 variable "account_id" {
-  type = string
+  type        = string
   description = "AWS account ID"
 }

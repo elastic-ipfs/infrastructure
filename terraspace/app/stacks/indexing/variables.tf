@@ -56,7 +56,7 @@ variable "sqs_notifications_policy_send_name" {
 }
 
 variable "shared_stack_sqs_multihashes_topic_url" {
-  type = string
+  type        = string
   description = "This queue is managed by the shared stack. Indexer lambda sends messages to it"
 }
 
