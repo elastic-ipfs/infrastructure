@@ -39,7 +39,7 @@ resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
 }
 
 module "content_lambda_from_sqs" {
-  source = "../modules/lambda-from-sqs"
+  source = "../../modules/lambda-from-sqs"
   sqs_trigger = {
     arn                                = var.shared_stack_sqs_multihashes_topic_arn
     batch_size                         = 10000
@@ -81,7 +81,7 @@ module "content_lambda_from_sqs" {
 }
 
 module "ads_lambda_from_sqs" {
-  source = "../modules/lambda-from-sqs"
+  source = "../../modules/lambda-from-sqs"
 
   sqs_trigger = {
     arn                                = aws_sqs_queue.ads_topic.arn
