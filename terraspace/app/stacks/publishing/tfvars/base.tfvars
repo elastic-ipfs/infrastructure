@@ -11,9 +11,10 @@ ads_lambda = {
 }
 indexer_node_url="https://staging.cid.contact"
 
-dns_stack_bitswap_loadbalancer_domain=<%= output('dns.bitswap_loadbalancer_domain', mock: "") %>
-shared_stack_s3_config_peer_bucket_policy_read=<%= output('shared.s3_config_peer_bucket_policy_read', mock: "") %>
-shared_stack_sqs_multihashes_policy_receive=<%= output('shared.sqs_multihashes_policy_receive', mock: "") %>
-shared_stack_sqs_multihashes_policy_delete=<%= output('shared.sqs_multihashes_policy_delete', mock: "") %>
-shared_stack_ipfs_peer_bitswap_config_bucket_id="<%= output('shared.ipfs_peer_bitswap_config_bucket', mock: '').to_ruby['id'] %>"
-// TODO: ECR REPO?
+dns_stack_bitswap_loadbalancer_domain           = <%= output('dns.bitswap_loadbalancer_domain', mock: "") %>
+shared_stack_s3_config_peer_bucket_policy_read  = <%= output('shared.s3_config_peer_bucket_policy_read', mock: "") %>
+shared_stack_sqs_multihashes_policy_receive     = <%= output('shared.sqs_multihashes_policy_receive', mock: "") %>
+shared_stack_sqs_multihashes_policy_delete      = <%= output('shared.sqs_multihashes_policy_delete', mock: "") %>
+shared_stack_ipfs_peer_bitswap_config_bucket_id = "<%= output('shared.ipfs_peer_bitswap_config_bucket', mock: '').to_ruby['id'] %>"
+shared_stack_sqs_multihashes_topic_arn          = "<%= output('shared.sqs_multihashes_topic', mock: '').to_ruby['arn'] %>"
+// TODO: ECR REPO? Did I do that in indexing?

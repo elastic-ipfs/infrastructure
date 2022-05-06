@@ -1,4 +1,5 @@
 provider_ads_bucket_name = "ipfs-advertisement"
+ads_topic_name="advertisements-topic"
 content_lambda = {
   name              = "publishing-content"
   metrics_namespace = "publishing-lambda-metrics"

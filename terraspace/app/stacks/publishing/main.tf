@@ -10,7 +10,7 @@ terraform {
 }
 
 resource "aws_sqs_queue" "ads_topic" {
-  name                       = "advertisements-topic"
+  name                       = var.ads_topic_name
   message_retention_seconds  = 86400 # 1 day. We wan't this to be in DLQ, not deleted.
   visibility_timeout_seconds = 6 
   redrive_policy = jsonencode({
@@ -24,7 +24,7 @@ resource "aws_sqs_queue" "ads_topic" {
 }
 
 resource "aws_sqs_queue" "ads_topic_dlq" {
-  name                       = "advertisements-topic-dlq"
+  name                       = "${var.ads_topic_name}-dlq"
   message_retention_seconds  = 1209600 # 14 days (Max quota)
   visibility_timeout_seconds = 300
 }
@@ -47,8 +47,8 @@ module "content_lambda_from_sqs" {
   }
 
   lambda = {
-    image_uri                      = local.publisher_image_url
-    name                           = local.content_lambda.name
+    image_uri                      = var.content_lambda.image_uri
+    name                           = var.content_lambda.name
     memory_size                    = 1024
     timeout                        = 60
     reserved_concurrent_executions = -1 # No restrictions
@@ -68,7 +68,7 @@ module "content_lambda_from_sqs" {
     ]
   }
 
-  metrics_namespace = "publishing-lambda-metrics"
+  metrics_namespace = var.content_lambda.metrics_namespace
 
   custom_metrics = [
     "s3-fetchs-count",
