@@ -1,4 +1,4 @@
-provider_ads_bucket_name = "ipfs-advertisement"
+provider_ads_bucket_name = "<%= expansion(':ENV') %>-ep-ipfs-advertisement"
 content_lambda = {
   name              = "<%= expansion(':ENV') %>-ep-publishing-content"
   metrics_namespace = "<%= expansion(':ENV') %>-ep-publishing-content"
