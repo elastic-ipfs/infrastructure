@@ -1,6 +1,6 @@
 locals {
   environment_variables = {
-    BITSWAP_PEER_MULTIADDR       = var.dns_stack_bitswap_loadbalancer_domain
+    BITSWAP_PEER_MULTIADDR       = "/dns4/${var.dns_stack_bitswap_loadbalancer_domain}/tcp/3000/ws"
     INDEXER_NODE_URL             = var.indexer_node_url
     NODE_ENV                     = var.node_env
     PEER_ID_FILE                 = "peerId.json"

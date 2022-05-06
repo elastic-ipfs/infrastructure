@@ -12,3 +12,4 @@ ads_lambda = {
 }
 indexer_node_url="https://cid.contact"
 node_env="production"
+ecr_repository_name="publisher-lambda"

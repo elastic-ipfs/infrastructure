@@ -1,4 +1,4 @@
-terraform {  
+terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -12,7 +12,7 @@ terraform {
 resource "aws_sqs_queue" "ads_topic" {
   name                       = var.ads_topic_name
   message_retention_seconds  = 86400 # 1 day. We wan't this to be in DLQ, not deleted.
-  visibility_timeout_seconds = 6 
+  visibility_timeout_seconds = 6
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.ads_topic_dlq.arn
     maxReceiveCount     = 2
@@ -41,7 +41,7 @@ resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
 module "content_lambda_from_sqs" {
   source = "../modules/lambda-from-sqs"
   sqs_trigger = {
-    arn                                = data.terraform_remote_state.shared.outputs.sqs_multihashes_topic.arn
+    arn                                = var.shared_stack_sqs_multihashes_topic_arn
     batch_size                         = 10000
     maximum_batching_window_in_seconds = 30
   }
@@ -59,9 +59,9 @@ module "content_lambda_from_sqs" {
       }
     )
     policies_list = [
-      data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
-      data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_receive,
-      data.terraform_remote_state.shared.outputs.sqs_multihashes_policy_delete,
+      var.shared_stack_s3_config_peer_bucket_policy_read,
+      var.shared_stack_sqs_multihashes_policy_receive,
+      var.shared_stack_sqs_multihashes_policy_delete,
       aws_iam_policy.s3_ads_policy_read,
       aws_iam_policy.s3_ads_policy_write,
       aws_iam_policy.sqs_ads_policy_send,
@@ -90,8 +90,8 @@ module "ads_lambda_from_sqs" {
   }
 
   lambda = {
-    image_uri                      = local.publisher_image_url
-    name                           = local.ads_lambda.name
+    image_uri                      = var.ads_lambda.image_url
+    name                           = var.ads_lambda.name
     memory_size                    = 1024
     timeout                        = 60
     reserved_concurrent_executions = 1
@@ -102,7 +102,7 @@ module "ads_lambda_from_sqs" {
       }
     )
     policies_list = [
-      data.terraform_remote_state.shared.outputs.s3_config_peer_bucket_policy_read,
+      var.shared_stack_s3_config_peer_bucket_policy_read,
       aws_iam_policy.s3_ads_policy_write,
       aws_iam_policy.s3_ads_policy_read,
       aws_iam_policy.sqs_ads_policy_receive,
@@ -110,7 +110,7 @@ module "ads_lambda_from_sqs" {
     ]
   }
 
-  metrics_namespace = "publishing-lambda-metrics"
+  metrics_namespace = var.ads_lambda.metrics_namespace
 
   custom_metrics = [
     "s3-fetchs-count",
@@ -122,5 +122,8 @@ module "ads_lambda_from_sqs" {
 }
 
 resource "aws_ecr_repository" "ecr-repo-publisher-lambda" {
-  name = "publisher-lambda"
+  name = var.ecr_repository_name
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
