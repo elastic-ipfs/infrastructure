@@ -120,8 +120,7 @@ module "ads_lambda_from_sqs" {
     "http-indexer-announcements-count",
   ]
 }
-
-resource "aws_ecr_repository" "ecr-repo-publisher-lambda" {
+resource "aws_ecr_repository" "ecr_repo_publisher_lambda" {
   name = var.ecr_repository_name
   image_scanning_configuration {
     scan_on_push = true
