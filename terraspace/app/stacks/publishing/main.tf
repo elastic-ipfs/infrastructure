@@ -90,7 +90,7 @@ module "ads_lambda_from_sqs" {
   }
 
   lambda = {
-    image_uri                      = var.ads_lambda.image_url
+    image_uri                      = var.ads_lambda.image_uri
     name                           = var.ads_lambda.name
     memory_size                    = 1024
     timeout                        = 60
