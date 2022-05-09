@@ -25,13 +25,13 @@ module "vpc" {
   version = "~> 3.0"
 
   name                 = var.vpc.name
-  cidr                 = "10.0.0.0/16"
+  cidr                 = var.vpc.cidr
   azs                  = data.aws_availability_zones.available.names
-  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"] # Worker Nodes
-  public_subnets       = ["10.0.5.0/24", "10.0.6.0/24", "10.0.7.0/24"]                # LoadBalancer and NAT
-  enable_nat_gateway   = true
-  single_nat_gateway   = true
-  enable_dns_hostnames = true
+  private_subnets      = var.vpc.private_subnets # Worker Nodes
+  public_subnets       = var.vpc.public_subnets  # LoadBalancer and NAT
+  enable_nat_gateway   = var.vpc.enable_nat_gateway
+  single_nat_gateway   = var.vpc.single_nat_gateway
+  enable_dns_hostnames = var.vpc.enable_dns_hostnames
 
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"

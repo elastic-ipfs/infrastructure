@@ -1,6 +1,12 @@
 variable "vpc" {
   type = object({
-    name = string
+    name                 = string
+    cidr                 = string
+    private_subnets      = list(string)
+    public_subnets       = list(string)
+    enable_nat_gateway   = bool
+    single_nat_gateway   = bool
+    enable_dns_hostnames = bool
   })
   description = "VPC for EKS worker nodes"
 }
