@@ -11,20 +11,23 @@ variable "vpc" {
   description = "VPC for EKS worker nodes"
 }
 
-variable "cluster_name" {
-  type        = string
-  description = "EKS cluster name"
+variable "eks" {
+  type = object({
+    name    = string
+    version = string
+    eks_managed_node_groups = object({
+      desired_size   = number
+      min_size       = number
+      max_size       = number
+      instance_types = list(string)
+    })
+  })
+  description = "EKS cluster"
 }
 
 variable "region" {
   type        = string
   description = "VPC Gateways service names are composed using this region"
-}
-
-variable "cluster_version" {
-  type        = string
-  default     = "1.21"
-  description = "Kubernetes version"
 }
 
 variable "account_id" {

@@ -7,5 +7,14 @@ vpc = {
   single_nat_gateway   = true
   enable_dns_hostnames = true
 }
-cluster_name    = "test-ipfs-peer-subsys"
-account_id      = "<%= expansion(':ACCOUNT') %>"
+eks = {
+  name    = "test-ipfs-peer-subsys"
+  version = 1.21
+  eks_managed_node_groups = {
+    desired_size   = 2
+    min_size       = 2
+    max_size       = 20
+    instance_types = ["c6i.2xlarge"]
+  }
+}
+account_id = "<%= expansion(':ACCOUNT') %>"

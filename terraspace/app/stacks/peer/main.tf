@@ -34,12 +34,12 @@ module "vpc" {
   enable_dns_hostnames = var.vpc.enable_dns_hostnames
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/cluster/${var.eks.name}" = "shared"
     "kubernetes.io/role/elb"                    = "1"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/cluster/${var.eks.name}" = "shared"
     "kubernetes.io/role/internal-elb"           = "1"
   }
 }
@@ -66,8 +66,8 @@ data "http" "myip" {
 module "eks" {
   source                             = "terraform-aws-modules/eks/aws"
   version                            = "~> 18.2.0"
-  cluster_name                       = var.cluster_name
-  cluster_version                    = var.cluster_version
+  cluster_name                       = var.eks.name
+  cluster_version                    = var.eks.version
   cluster_endpoint_private_access    = true
   cluster_endpoint_public_access     = true
   vpc_id                             = module.vpc.vpc_id
@@ -84,12 +84,12 @@ module "eks" {
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
     test-ipfs-peer-subsys = {
-      name         = var.cluster_name
-      desired_size = 2
-      min_size     = 2
-      max_size     = 20
+      name         = var.eks.name
+      desired_size = var.eks.eks_managed_node_groups.desired_size
+      min_size     = var.eks.eks_managed_node_groups.min_size
+      max_size     = var.eks.eks_managed_node_groups.max_size
 
-      instance_types = ["c6i.2xlarge"]
+      instance_types = var.eks.eks_managed_node_groups.instance_types
       k8s_labels = {
         workerType = "managed_ec2_node_groups"
       }
@@ -98,8 +98,8 @@ module "eks" {
       }
 
       tags = { # This is also applied to IAM role.
-        "eks/${var.account_id}/${var.cluster_name}/type" : "node"
-        "k8s.io/cluster-autoscaler/${var.cluster_name}" : "owned"
+        "eks/${var.account_id}/${var.eks.name}/type" : "node"
+        "k8s.io/cluster-autoscaler/${var.eks.name}" : "owned"
         "k8s.io/cluster-autoscaler/enabled" : "TRUE"
       }
     }
@@ -121,7 +121,7 @@ module "eks" {
       ]
 
       tags = { # This is also applied to IAM role.
-        "eks/${var.account_id}/${var.cluster_name}/type" : "fargateNode"
+        "eks/${var.account_id}/${var.eks.name}/type" : "fargateNode"
       }
       timeouts = {
         create = "5m"
