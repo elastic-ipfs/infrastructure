@@ -8,4 +8,6 @@ locals {
     S3_BUCKET                    = aws_s3_bucket.ipfs_peer_ads.id
     SQS_ADVERTISEMENTS_QUEUE_URL = aws_sqs_queue.ads_topic.url
   }
+  publisher_image_url = "${aws_ecr_repository.ecr_repo_publisher_lambda.repository_url}:${var.publishing_lambda_image_version}"
 }
+

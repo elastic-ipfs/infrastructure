@@ -47,7 +47,7 @@ module "content_lambda_from_sqs" {
   }
 
   lambda = {
-    image_uri                      = var.content_lambda.image_uri
+    image_uri                      = local.publisher_image_url
     name                           = var.content_lambda.name
     memory_size                    = 1024
     timeout                        = 60
@@ -90,7 +90,7 @@ module "ads_lambda_from_sqs" {
   }
 
   lambda = {
-    image_uri                      = var.ads_lambda.image_uri
+    image_uri                      = local.publisher_image_url
     name                           = var.ads_lambda.name
     memory_size                    = 1024
     timeout                        = 60

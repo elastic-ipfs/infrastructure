@@ -12,7 +12,6 @@ variable "content_lambda" {
   type = object({
     name              = string
     metrics_namespace = string
-    image_uri         = string
   })
   description = "Publishing (content) lambda namming"
 }
@@ -22,14 +21,19 @@ variable "ads_lambda" {
   type = object({
     name              = string
     metrics_namespace = string
-    image_uri         = string
   })
   description = "Publishing (advertisement) lambda namming"
 }
 
+variable "publishing_lambda_image_version" {
+  type    = string
+  default = "latest"
+  description = "Version tag for publishing lambda"
+}
+
 variable "indexer_node_url" {
   type        = string
-  description = "storeheindex HTTP API URL"
+  description = "storetheindex HTTP API URL"
 }
 
 variable "node_env" {
