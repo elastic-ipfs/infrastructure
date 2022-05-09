@@ -110,7 +110,7 @@ module "eks" {
   fargate_profiles = {
     default = {
       name       = "default"
-      subnet_ids = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
+      subnet_ids = module.vpc.private_subnets
       selectors = [
         {
           namespace = "default"
