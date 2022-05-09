@@ -24,7 +24,6 @@ provider "kubernetes" {
 }
 
 module "eks_auth_sync" {
-  count                   = var.deploy_eks_auth_sync ? 1 : 0
   source                  = "../../modules/eks-auth-sync"
   region                  = var.region
   cluster_name            = var.cluster_id
@@ -32,7 +31,6 @@ module "eks_auth_sync" {
 }
 
 module "cluster_autoscaler" {
-  count                   = var.deploy_cluster_autoscaler ? 1 : 0
   source                  = "../../modules/cluster-autoscaler"
   region                  = var.region
   cluster_name            = var.cluster_id

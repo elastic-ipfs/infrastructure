@@ -24,7 +24,6 @@ resource "helm_release" "metric_server" {
 }
 
 resource "helm_release" "argocd" {
-  count            = var.deploy_argocd ? 1 : 0
   name             = "argocd"
   chart            = "./helm/argocd"
   namespace        = "argocd"

@@ -36,21 +36,3 @@ variable "service_account_roles" {
   description = "Manages Kubernetes serviceaccounts (sa) that should assume roles. Also manages the roles themselves and their polices associations. Those irsa services can later be associated with kubernetes deployments"
 
 }
-
-variable "deploy_eks_auth_sync" {
-  description = "Whether to deploy or not the eks_auth_sync daemon to the cluster"
-  type        = bool
-  default     = true
-}
-
-variable "deploy_argocd" {
-  description = "Whether to deploy or not the argocd to the cluster"
-  type        = bool
-  default     = true
-}
-
-variable "deploy_cluster_autoscaler" {
-  description = "Whether to deploy or not the cluster_autoscaler to the cluster"
-  type        = bool
-  default     = true
-}
