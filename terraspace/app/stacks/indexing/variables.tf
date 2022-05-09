@@ -92,3 +92,9 @@ variable "shared_stack_s3_dotstorage_prod_0_policy_read" {
   })
   description = "This policy is managed by the shared subsystem. Indexer lambda requires policy for reading external bucket 'dotstorage_prod_0' objects content"
 }
+
+variable "indexing_lambda_image_version" {
+  type    = string
+  default = "latest"
+  description = "Version tag for publishing lambda"
+}

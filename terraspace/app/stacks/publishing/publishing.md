@@ -60,7 +60,6 @@ Type:
 object({
     name              = string
     metrics_namespace = string
-    image_uri         = string
   })
 ```
 
@@ -80,7 +79,6 @@ Type:
 object({
     name              = string
     metrics_namespace = string
-    image_uri         = string
   })
 ```
 
@@ -98,7 +96,7 @@ Type: `string`
 
 ### <a name="input_indexer_node_url"></a> [indexer\_node\_url](#input\_indexer\_node\_url)
 
-Description: storeheindex HTTP API URL
+Description: storetheindex HTTP API URL
 
 Type: `string`
 
@@ -167,7 +165,15 @@ Type: `string`
 
 ## Optional Inputs
 
-No optional inputs.
+The following input variables are optional (have default values):
+
+### <a name="input_publishing_lambda_image_version"></a> [publishing\_lambda\_image\_version](#input\_publishing\_lambda\_image\_version)
+
+Description: Version tag for publishing lambda
+
+Type: `string`
+
+Default: `"latest"`
 
 ## Outputs
 
