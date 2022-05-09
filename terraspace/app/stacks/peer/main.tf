@@ -58,6 +58,7 @@ module "gateway_endpoint_to_s3" {
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
+# TODO: Investigate alternative approach to make GitHub Actions Self Runner access EKS through the cluster private endpoint
 data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
