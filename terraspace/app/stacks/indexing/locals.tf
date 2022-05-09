@@ -7,5 +7,5 @@ locals {
     "SQS_NOTIFICATIONS_QUEUE_URL" = aws_sqs_queue.notifications_topic.url
   }
 
-  indexer_image_url = "${aws_ecr_repository.ecr_repo_indexer_lambda.repository_url}:latest"
+  indexer_image_url = "${aws_ecr_repository.ecr_repo_indexer_lambda.repository_url}:${var.indexing_lambda_image_version}"
 }
