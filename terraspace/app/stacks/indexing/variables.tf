@@ -94,7 +94,7 @@ variable "shared_stack_s3_dotstorage_prod_0_policy_read" {
 }
 
 variable "indexing_lambda_image_version" {
-  type    = string
-  default = "latest"
+  type        = string
+  default     = "latest"
   description = "Version tag for publishing lambda"
 }

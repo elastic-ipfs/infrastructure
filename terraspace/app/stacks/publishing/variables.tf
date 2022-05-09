@@ -26,8 +26,8 @@ variable "ads_lambda" {
 }
 
 variable "publishing_lambda_image_version" {
-  type    = string
-  default = "latest"
+  type        = string
+  default     = "latest"
   description = "Version tag for publishing lambda"
 }
 
