@@ -2,12 +2,10 @@ provider_ads_bucket_name = "<%= expansion(':ENV') %>-ep-ipfs-advertisement"
 content_lambda = {
   name              = "<%= expansion(':ENV') %>-ep-publishing-content"
   metrics_namespace = "<%= expansion(':ENV') %>-ep-publishing-content"
-  image_uri         = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
 }
 ads_lambda = {
   name              = "<%= expansion(':ENV') %>-ep-publishing-advertisement"
   metrics_namespace = "<%= expansion(':ENV') %>-ep-publishing-advertisement"
-  image_uri         = "505595374361.dkr.ecr.us-west-2.amazonaws.com/publisher-lambda:latest"
 }
 indexer_node_url                                = "https://staging.cid.contact"
 node_env                                        = "<%= expansion(':ENV') %>"
