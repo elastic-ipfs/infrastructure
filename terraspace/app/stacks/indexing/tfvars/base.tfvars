@@ -7,6 +7,7 @@ indexer_lambda = {
   name              = "<%= expansion(':ENV') %>-ep-indexer"
   metrics_namespace = "<%= expansion(':ENV') %>-ep-indexer-lambda-metrics"
 }
+concurrency                                   = 32
 node_env                                      = "<%= expansion(':ENV') %>"
 sqs_indexer_policy_receive_name               = "<%= expansion(':ENV') %>-ep-sqs-indexer-receive"
 sqs_indexer_policy_delete_name                = "<%= expansion(':ENV') %>-ep-sqs-indexer-delete"

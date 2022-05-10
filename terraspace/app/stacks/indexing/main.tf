@@ -13,7 +13,7 @@ module "indexer_lambda_from_sqs" {
   source = "../../modules/lambda-from-sqs"
   sqs_trigger = {
     arn                                = aws_sqs_queue.indexer_topic.arn
-    batch_size                         = local.environment_variables.CONCURRENCY
+    batch_size                         = var.concurrency
     maximum_batching_window_in_seconds = 30
   }
 

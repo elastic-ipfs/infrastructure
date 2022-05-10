@@ -1,6 +1,6 @@
 locals {
   environment_variables = {
-    "CONCURRENCY"                 = "32"
+    "CONCURRENCY"                 = var.concurrency
     "SKIP_PUBLISHING"             = "false"
     "NODE_ENV"                    = var.node_env
     "SQS_PUBLISHING_QUEUE_URL"    = var.shared_stack_sqs_multihashes_topic_url
