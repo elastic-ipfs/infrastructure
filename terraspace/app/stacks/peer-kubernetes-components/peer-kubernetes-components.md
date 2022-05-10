@@ -5,6 +5,8 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.0.0)
 
+- <a name="requirement_aws"></a> [aws](#requirement\_aws) (~> 4.12)
+
 - <a name="requirement_helm"></a> [helm](#requirement\_helm) (~> 2.4.1)
 
 - <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) (~> 2.7.1)
@@ -105,9 +107,5 @@ No optional inputs.
 
 ## Outputs
 
-The following outputs are exported:
-
-### <a name="output_iam_roles"></a> [iam\_roles](#output\_iam\_roles)
-
-Description: All roles managed by this stack
+No outputs.
 <!-- END_TF_DOCS -->
