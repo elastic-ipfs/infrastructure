@@ -328,6 +328,7 @@ locals {
     }
 
     traceroute_33434_33464_eg = {
+      count       = var.enable_tracerouting_sg_rules ? 1 : 0
       description = "Enable troubleshoot: UDP Traceroute to all internet"
       protocol    = "UDP"
       from_port   = 33434
@@ -337,6 +338,7 @@ locals {
     }
 
     traceroute_ICMP_eg = {
+      count       = var.enable_tracerouting_sg_rules ? 1 : 0
       description = "Enable troubleshoot: ICMP Traceroute to all internet"
       protocol    = "ICMP"
       from_port   = -1

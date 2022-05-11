@@ -34,3 +34,9 @@ variable "account_id" {
   type        = string
   description = "AWS account ID"
 }
+
+variable "enable_tracerouting_sg_rules" {
+  type        = bool
+  default     = false
+  description = "Defines if egress security group rules should be defined to allow tracerouting to the internet"
+}
