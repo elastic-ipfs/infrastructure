@@ -8,6 +8,6 @@ ads_lambda = {
   name              = "publishing-advertisement"
   metrics_namespace = "publishing-lambda-metrics"
 }
-indexer_node_url    = "https://cid.contact"
+indexer_node_url    = "https://prod.cid.contact"
 node_env            = "production"
 ecr_repository_name = "publisher-lambda"
