@@ -25,6 +25,11 @@ variable "node_env" {
   description = "NODE_ENV environment variable value for indexer lambda"
 }
 
+variable "concurrency" {
+  type        = string
+  description = "Amount of messages indexer lambda should batch to handle simultaneously"
+}
+
 variable "sqs_indexer_policy_receive_name" {
   type        = string
   description = "Name for policy which allows receiving messages from indexer sqs queue"
