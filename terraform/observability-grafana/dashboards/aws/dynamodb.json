@@ -23,8 +23,8 @@
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 70,
-  "iteration": 1648131846981,
+  "id": 79,
+  "iteration": 1652282209205,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -204,7 +204,8 @@
         {
           "alias": "",
           "dimensions": {
-            "Operation": "GetItem"
+            "Operation": "GetItem",
+            "TableName": "$tableName"
           },
           "expression": "",
           "id": "",
@@ -298,7 +299,8 @@
         {
           "alias": "",
           "dimensions": {
-            "Operation": "PutItem"
+            "Operation": "PutItem",
+            "TableName": "$tableName"
           },
           "expression": "",
           "id": "",
@@ -498,7 +500,9 @@
       "targets": [
         {
           "alias": "",
-          "dimensions": {},
+          "dimensions": {
+            "TableName": "$tableName"
+          },
           "expression": "",
           "id": "",
           "matchExact": true,
@@ -589,7 +593,9 @@
       "targets": [
         {
           "alias": "",
-          "dimensions": {},
+          "dimensions": {
+            "TableName": "$tableName"
+          },
           "expression": "",
           "id": "",
           "matchExact": true,
@@ -680,7 +686,9 @@
       "targets": [
         {
           "alias": "",
-          "dimensions": {},
+          "dimensions": {
+            "TableName": "$tableName"
+          },
           "expression": "",
           "id": "",
           "matchExact": true,
@@ -771,7 +779,9 @@
       "targets": [
         {
           "alias": "",
-          "dimensions": {},
+          "dimensions": {
+            "TableName": "$tableName"
+          },
           "expression": "",
           "id": "",
           "matchExact": true,
@@ -876,7 +886,9 @@
       "targets": [
         {
           "alias": "",
-          "dimensions": {},
+          "dimensions": {
+            "TableName": "$tableName"
+          },
           "expression": "",
           "id": "",
           "matchExact": true,
@@ -1035,6 +1047,28 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "blocks",
+          "value": "blocks"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "label": "TableName",
+        "name": "tableName",
+        "options": [
+          {
+            "selected": true,
+            "text": "blocks",
+            "value": "blocks"
+          }
+        ],
+        "query": "blocks",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
@@ -1046,5 +1080,5 @@
   "timezone": "",
   "title": "DynamoDB",
   "uid": "ONuY-OLnk",
-  "version": 3
+  "version": 4
 }
