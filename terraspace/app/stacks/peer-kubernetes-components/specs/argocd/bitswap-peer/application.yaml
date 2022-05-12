@@ -6,11 +6,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/web3-storage/AWS-IPFS-bitswap-peer.git # TODO: Rename after repo rebranding
+    repoURL: https://github.com/ipfs-elastic-provider/ipfs-elastic-provider-bitswap-peer.git
     targetRevision: HEAD
     path: helm
     helm:
-      releaseName: AWS-IPFS-bitswap-peer
+      releaseName: ipfs-elastic-provider-bitswap-peer
   destination:
     server: https://kubernetes.default.svc
     namespace: default
