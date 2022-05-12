@@ -5,6 +5,7 @@ eks = {
   name = "<%= expansion(':ENV') %>-ep-peer"
   version = 1.21
   eks_managed_node_groups = {
+    name           = "<%= expansion(':ENV') %>-ep-peer"
     version        = 1.21
     desired_size   = 2
     min_size       = 2

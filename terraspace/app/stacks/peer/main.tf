@@ -83,7 +83,7 @@ module "eks" {
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
-    test-ipfs-peer-subsys = {
+    (var.eks.eks_managed_node_groups.name) = {
       name         = var.eks.name
       desired_size = var.eks.eks_managed_node_groups.desired_size
       min_size     = var.eks.eks_managed_node_groups.min_size

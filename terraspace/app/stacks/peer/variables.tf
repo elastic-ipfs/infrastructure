@@ -16,6 +16,7 @@ variable "eks" {
     name    = string
     version = string
     eks_managed_node_groups = object({
+      name           = string
       desired_size   = number
       min_size       = number
       max_size       = number
