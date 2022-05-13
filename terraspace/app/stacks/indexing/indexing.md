@@ -81,7 +81,7 @@ Type: `string`
 
 ### <a name="input_shared_stack_dynamodb_blocks_policy"></a> [shared\_stack\_dynamodb\_blocks\_policy](#input\_shared\_stack\_dynamodb\_blocks\_policy)
 
-Description: This policy is managed by the shared subsystem. Indexer lambda requires policy for accessing this dynamodb table
+Description: This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table
 
 Type:
 
@@ -94,7 +94,7 @@ object({
 
 ### <a name="input_shared_stack_dynamodb_car_policy"></a> [shared\_stack\_dynamodb\_car\_policy](#input\_shared\_stack\_dynamodb\_car\_policy)
 
-Description: This policy is managed by the shared subsystem. Indexer lambda requires policy for accessing this dynamodb table
+Description: This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table
 
 Type:
 
@@ -107,7 +107,7 @@ object({
 
 ### <a name="input_shared_stack_s3_dotstorage_prod_0_policy_read"></a> [shared\_stack\_s3\_dotstorage\_prod\_0\_policy\_read](#input\_shared\_stack\_s3\_dotstorage\_prod\_0\_policy\_read)
 
-Description: This policy is managed by the shared subsystem. Indexer lambda requires policy for reading external bucket 'dotstorage\_prod\_0' objects content
+Description: This policy is managed by the shared stack. Indexer lambda requires policy for reading external bucket 'dotstorage\_prod\_0' objects content
 
 Type:
 
@@ -120,7 +120,7 @@ object({
 
 ### <a name="input_shared_stack_sqs_multihashes_policy_send"></a> [shared\_stack\_sqs\_multihashes\_policy\_send](#input\_shared\_stack\_sqs\_multihashes\_policy\_send)
 
-Description: This policy is managed by the shared subsystem. Indexer lambda requires policy for sending messages to multihashes sqs queue
+Description: This policy is managed by the shared stack. Indexer lambda requires policy for sending messages to multihashes sqs queue
 
 Type:
 
@@ -133,7 +133,7 @@ object({
 
 ### <a name="input_shared_stack_sqs_multihashes_topic_url"></a> [shared\_stack\_sqs\_multihashes\_topic\_url](#input\_shared\_stack\_sqs\_multihashes\_topic\_url)
 
-Description: This queue is managed by the shared subsystem. Indexer lambda sends messages to it
+Description: This queue is managed by the shared stack. Indexer lambda sends messages to it
 
 Type: `string`
 
