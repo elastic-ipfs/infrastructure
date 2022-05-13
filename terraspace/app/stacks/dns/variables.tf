@@ -1,11 +1,3 @@
-variable "profile" {
-  type = string
-}
-
-variable "region" {
-  type = string
-}
-
 variable "existing_aws_zone" {
   type    = bool
 }
@@ -15,6 +7,7 @@ variable "aws_domain_name" {
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
+  type        = string
   description = "Subdomains that will be handled by peer svc loadbalancer"
 }
 

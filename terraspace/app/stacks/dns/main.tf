@@ -1,12 +1,4 @@
 terraform {
-  backend "s3" {
-    profile        = "ipfs"
-    bucket         = "ipfs-elastic-provider-terraform-state"
-    dynamodb_table = "ipfs-elastic-provider-terraform-state-lock"
-    region         = "us-west-2"
-    key            = "terraform.dns.tfstate"
-    encrypt        = true
-  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -15,29 +7,6 @@ terraform {
   }
 
   required_version = ">= 1.0.0"
-}
-
-data "terraform_remote_state" "indexing" {
-  backend = "s3"
-  config = {
-    bucket = "ipfs-elastic-provider-terraform-state"
-    key    = "terraform.indexing.tfstate"
-    region = "${var.region}"
-  }
-}
-
-provider "aws" {
-  profile = var.profile
-  region  = var.region
-  default_tags {
-    tags = {
-      Team        = "NearForm"
-      Project     = "IPFS-Elastic-Provider"
-      Environment = "POC"
-      Subsystem   = "DNS"
-      ManagedBy   = "Terraform"
-    }
-  }
 }
 
 module "dns_route53" {
