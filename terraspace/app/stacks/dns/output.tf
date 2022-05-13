@@ -1,3 +1,3 @@
 output "bitswap_loadbalancer_domain" {
-  value = module.dns_route53.bitswap_loadbalancer_domain
+  value = aws_route53_record.peer_bitswap_load_balancer.name
 }
