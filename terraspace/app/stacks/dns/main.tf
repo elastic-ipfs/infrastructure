@@ -14,17 +14,17 @@ locals {
 }
 
 data "aws_route53_zone" "hosted_zone" { # Existing zone
-  count = var.existing_aws_zone ? 1 : 0
+  count = var.create_zone ? 0 : 1
   name  = var.aws_domain_name
 }
 
 resource "aws_route53_zone" "hosted_zone" { # Non existing zone
-  count = var.existing_aws_zone ? 0 : 1
+  count = var.create_zone ? 1 : 0
   name  = var.aws_domain_name
 }
 
 resource "aws_route53_record" "peer_bitswap_load_balancer" {
-  zone_id = var.existing_aws_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
+  zone_id = var.create_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
   name    = local.bitswap_loadbalancer_domain
   type    = "A"
 

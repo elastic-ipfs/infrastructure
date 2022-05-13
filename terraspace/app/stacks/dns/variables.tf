@@ -1,9 +1,11 @@
-variable "existing_aws_zone" {
-  type    = bool
+variable "create_zone" {
+  type        = bool
+  description = "If true, creates a managed hosted zone"
 }
 
 variable "aws_domain_name" {
-  type    = string
+  type        = string
+  description = "The name of the hosted zone to either create or lookup"
 }
 
 variable "subdomains_bitwsap_loadbalancer" {
