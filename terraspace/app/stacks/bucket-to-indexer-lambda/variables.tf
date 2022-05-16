@@ -4,6 +4,8 @@ variable "bucket" {
     arn    = string
     id     = string
   })
+  description = "PUT events in this bucket trigger lambda"
+
 }
 
 variable "lambda" {
@@ -12,6 +14,7 @@ variable "lambda" {
     memory_size = string
     timeout     = string
   })
+  description = "bucket_to_indexer lambda attributes"
 }
 
 variable "node_env" {
