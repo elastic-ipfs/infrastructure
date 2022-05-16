@@ -19,6 +19,3 @@ resource "kubernetes_service_account" "irsa" {
     }
   }
 }
-
-### Prometheus
-# TODO: Another module?

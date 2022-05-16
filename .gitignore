@@ -47,3 +47,4 @@ terraform/modules/kube-base-components/testapp/node_modules
 **/test/tmp
 **/test/version_tmp
 **/tmp
+**/helm/**/charts/**.tgz

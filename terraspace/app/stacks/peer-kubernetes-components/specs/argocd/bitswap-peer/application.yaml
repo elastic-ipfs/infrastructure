@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bitswap-peer
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ipfs-elastic-provider/ipfs-elastic-provider-bitswap-peer.git
+    targetRevision: HEAD
+    path: helm
+    helm:
+      releaseName: ipfs-elastic-provider-bitswap-peer
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
