@@ -24,7 +24,7 @@ resource "aws_route53_zone" "hosted_zone" { # Non existing zone
 }
 
 resource "aws_route53_record" "peer_bitswap_load_balancer" {
-  zone_id = var.create_zone ? data.aws_route53_zone.hosted_zone[0].zone_id : aws_route53_zone.hosted_zone[0].zone_id
+  zone_id = var.create_zone ? aws_route53_zone.hosted_zone[0].zone_id: data.aws_route53_zone.hosted_zone[0].zone_id
   name    = local.bitswap_loadbalancer_domain
   type    = "A"
 
