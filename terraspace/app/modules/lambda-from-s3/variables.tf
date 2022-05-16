@@ -20,11 +20,6 @@ variable "bucket" {
   })
 }
 
-
-variable "region" {
-  type = string
-}
-
 variable custom_metrics {
   type = list(string)
   default = []
