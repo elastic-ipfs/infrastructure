@@ -12,8 +12,8 @@ terraform {
 data "terraform_remote_state" "indexing" {
   backend = "s3"
   config = {
-    bucket = "<%= expansion('ipfs-ep-terraform-state-:ACCOUNT-${var.indexing_stack_region}') %>"
-    key    = "<%= expansion('${var.indexing_stack_region}/:ENV/stacks/indexing/terraform.tfstate') %>"
+    bucket = "ipfs-ep-terraform-state-${local.aws_account_id}-${var.indexing_stack_region}"
+    key    = "${var.indexing_stack_region}/${local.env}/stacks/indexing/terraform.tfstate"
     region = var.indexing_stack_region
   }
 }
