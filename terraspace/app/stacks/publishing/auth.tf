@@ -1,6 +1,6 @@
 ### Policies
 resource "aws_iam_policy" "s3_ads_policy_write" {
-  name        = "s3-ads-policy-write"
+  name        = var.s3_ads_policy_write_name
   description = "Policy for allowing put objects in S3"
   policy      = <<EOF
 {
@@ -17,7 +17,7 @@ EOF
 }
 
 resource "aws_iam_policy" "s3_ads_policy_read" {
-  name        = "s3-ads-policy-read"
+  name        = var.s3_ads_policy_read_name
   description = "Policy for allowing reading objects from S3"
   policy      = <<EOF
 {
@@ -44,7 +44,7 @@ EOF
 }
 
 resource "aws_iam_policy" "sqs_ads_policy_send" {
-  name        = "sqs-ads-policy-send"
+  name        = var.sqs_ads_policy_send_name
   description = "Policy for allowing publish messages in SQS"
   policy      = <<EOF
 {
@@ -61,7 +61,7 @@ EOF
 }
 
 resource "aws_iam_policy" "sqs_ads_policy_receive" {
-  name        = "sqs-ads-policy-receive"
+  name        = var.sqs_ads_policy_receive_name
   description = "Policy for allowing publish messages in SQS"
   policy      = <<EOF
 {
@@ -83,7 +83,7 @@ EOF
 }
 
 resource "aws_iam_policy" "sqs_ads_policy_delete" {
-  name        = "sqs-ads-policy-delete"
+  name        = var.sqs_ads_policy_delete_name
   description = "Policy for allowing publish messages in SQS"
   policy      = <<EOF
 {

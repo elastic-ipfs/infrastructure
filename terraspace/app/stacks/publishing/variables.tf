@@ -83,3 +83,31 @@ variable "shared_stack_sqs_multihashes_topic_arn" {
   type        = string
   description = "This queue is managed by the shared subsystem. Publisher lambda (content) receives messages from this queue"
 }
+
+variable "s3_ads_policy_write_name" {
+  type        = string
+  description = "Name for policy which allows writting action for advertisement bucket"
+}
+
+variable "s3_ads_policy_read_name" {
+  type        = string
+  description = "Name for policy which allows reading action for advertisement bucket"
+}
+
+variable "sqs_ads_policy_send_name" {
+  type        = string
+  description = "Name for policy which allows sending messages to advertisement sqs queue"
+}
+
+variable "sqs_ads_policy_receive_name" {
+  type        = string
+  description = "Name for policy which allows receiving messages from advertisement sqs queue"
+}
+
+variable "sqs_ads_policy_delete_name" {
+  type        = string
+  description = "Name for policy which allows deleting messages from advertisement sqs queue"
+}
+
+
+

@@ -31,7 +31,6 @@ variable "multihashes_receive_policy_name" {
 variable "multihashes_delete_policy_name" {
   type        = string
   description = "Name for policy which allows deleting messages from multihashes sqs queue"
-
 }
 
 variable "config_bucket_read_policy_name" {
