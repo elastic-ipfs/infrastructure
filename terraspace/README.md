@@ -9,6 +9,10 @@ To deploy all the infrastructure stacks:
     AWS_PROFILE=<profile> AWS_REGION=<region> TS_ENV=<environment> bundle exec terraspace all up
     terraspace all up
 
+These won't run with the `terraspace all up` command because aren't always required:
+
+- bucket-to-indexer-lambda
+
 To deploy individual stacks:
 
     AWS_PROFILE=<profile> AWS_REGION=<region> TS_ENV=<environment> bundle exec terraspace up shared
