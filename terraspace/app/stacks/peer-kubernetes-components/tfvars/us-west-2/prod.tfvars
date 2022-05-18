@@ -1,3 +1,5 @@
+bitswap_peer_namespace  = "bitswap-peer"
+# TODO: Understand why (and if we actually need) 'sqs_multihashes_policy_send' here
 service_account_roles = {
     "bitswap_peer_subsystem_role" = {
       service_account_name      = "bitswap-irsa",
@@ -11,3 +13,7 @@ service_account_roles = {
       ]
     }
 }
+eks_auth_sync_role_name        = "eks-auth-sync-role"
+eks_auth_sync_policy_name      = "eks-auth-sync-policy"
+cluster_autoscaler_role_name   = "IPFSClusterEKSAutoscalerRole"
+cluster_autoscaler_policy_name = "eks-cluster-autoscaler-policy"
