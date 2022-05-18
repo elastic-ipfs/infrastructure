@@ -83,6 +83,10 @@ resource "aws_ecr_repository" "ecr-repo-indexer-lambda" {
   name = "indexer-lambda"
 }
 
+resource "aws_ecr_repository" "test-trigger-tfsec-comment" {
+  name = "test-trigger-tfsec-comment"
+}
+
 resource "aws_sqs_queue" "indexer_topic" {
   name                       = "indexer-topic"
   message_retention_seconds  = 86400 # 1 day
