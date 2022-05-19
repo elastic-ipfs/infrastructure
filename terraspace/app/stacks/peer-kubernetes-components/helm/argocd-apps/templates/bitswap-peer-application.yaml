@@ -14,10 +14,14 @@ spec:
   project: default
   source:
     repoURL: {{ .Values.bitswapPeer.repoURL }}
-    targetRevision: HEAD
+    targetRevision: {{ .Values.bitswapPeer.targetRevision }}
     path: helm
     helm:
       releaseName: {{ .Values.bitswapPeer.releaseName }}
+      valueFiles:
+      {{- range .Values.bitswapPeer.valueFileNames }}
+      - {{ . }}
+      {{- end }}
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.bitswapPeer.namespace }}
