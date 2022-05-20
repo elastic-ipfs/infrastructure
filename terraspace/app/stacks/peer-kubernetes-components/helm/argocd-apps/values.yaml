@@ -1,6 +1,6 @@
 # Some of these default values are replaced in Terraform
 bitswapPeer:
-  repoURL: "https://github.com/web3-storage/ipfs-elastic-provider-bitswap-peer-deployment.git"
+  repoURL: "https://github.com/ipfs-elastic-provider/ipfs-elastic-provider-bitswap-peer-deployment.git"
   targetRevision: HEAD
   releaseName: ipfs-elastic-provider-bitswap-peer
   namespace: default
