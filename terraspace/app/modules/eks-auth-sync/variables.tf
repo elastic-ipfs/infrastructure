@@ -24,14 +24,14 @@ variable "deploy_cluster_autoscaler" {
   default     = true
 }
 
-variable "eks_auth_sync_policy_name" {
-  type    = string
-  default = "eks-auth-sync-policy"
-}
-
 variable "eks_auth_sync_role_name" {
   type    = string
-  default = "eks-auth-sync-role"
+  description = "Name for EKS auth sync role"
+}
+
+variable "eks_auth_sync_policy_name" {
+  type    = string
+  description = "Name for policy which allows eks auth sync to read tags from IAM"
 }
 
 variable "cronjob_schedule" {

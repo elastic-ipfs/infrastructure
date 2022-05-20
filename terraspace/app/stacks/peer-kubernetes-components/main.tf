@@ -29,15 +29,25 @@ provider "kubernetes" {
 }
 
 module "eks_auth_sync" {
-  source                  = "../../modules/eks-auth-sync"
-  region                  = var.region
-  cluster_name            = var.cluster_id
-  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
+  source                    = "../../modules/eks-auth-sync"
+  region                    = var.region
+  cluster_name              = var.cluster_id
+  cluster_oidc_issuer_url   = var.cluster_oidc_issuer_url
+  eks_auth_sync_role_name   = var.eks_auth_sync_role_name
+  eks_auth_sync_policy_name = var.eks_auth_sync_policy_name
 }
 
 module "cluster_autoscaler" {
-  source                  = "../../modules/cluster-autoscaler"
-  region                  = var.region
-  cluster_name            = var.cluster_id
-  cluster_oidc_issuer_url = var.cluster_oidc_issuer_url
+  source                         = "../../modules/cluster-autoscaler"
+  region                         = var.region
+  cluster_name                   = var.cluster_id
+  cluster_oidc_issuer_url        = var.cluster_oidc_issuer_url
+  cluster_autoscaler_role_name   = var.cluster_autoscaler_role_name
+  cluster_autoscaler_policy_name = var.cluster_autoscaler_policy_name
+}
+
+resource "kubernetes_namespace" "bitswap_peer_namespace" {
+  metadata {
+    name = var.bitswap_peer_namespace
+  }
 }

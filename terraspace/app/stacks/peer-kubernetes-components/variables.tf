@@ -34,5 +34,31 @@ variable "service_account_roles" {
     }))
   }))
   description = "Manages Kubernetes serviceaccounts (sa) that should assume roles. Also manages the roles themselves and their polices associations. Those irsa services can later be associated with kubernetes deployments"
-
 }
+
+variable "bitswap_peer_namespace" {
+  type = string
+  description = "Namespace where bitswap peer will be deployed to"
+}
+
+variable "eks_auth_sync_role_name" {
+  type    = string
+  description = "Name for EKS auth sync role"
+}
+
+variable "eks_auth_sync_policy_name" {
+  type    = string
+  description = "Name for policy which allows eks auth sync to read tags from IAM"
+}
+
+variable "cluster_autoscaler_role_name" {
+  type        = string
+  description = "Name for cluster autoscaler role"
+}
+
+variable "cluster_autoscaler_policy_name" {
+  type        = string
+  description = "Name for policy which allows cluster autoscaler operator to handle AWS node group"
+}
+
+

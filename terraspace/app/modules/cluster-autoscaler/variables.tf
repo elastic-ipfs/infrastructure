@@ -19,3 +19,13 @@ variable "cluster_oidc_issuer_url" {
 variable "region" {
   type = string
 }
+
+variable "cluster_autoscaler_role_name" {
+  type        = string
+  description = "Name for cluster autoscaler role"
+}
+
+variable "cluster_autoscaler_policy_name" {
+  type        = string
+  description = "Name for policy which allows cluster autoscaler operator to handle AWS node group"
+}
