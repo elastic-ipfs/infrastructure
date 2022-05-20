@@ -25,8 +25,8 @@ variable "cluster_ca_certificate" {
 
 variable "service_account_roles" {
   type = map(object({
-    service_account_name      = string,
-    role_name                 = string
+    service_account_name = string,
+    role_name            = string
     policies_list = list(object({
       name = string,
       arn  = string,
@@ -36,22 +36,22 @@ variable "service_account_roles" {
 }
 
 variable "bitswap_peer_namespace" {
-  type = string
+  type        = string
   description = "Namespace where bitswap peer will be deployed to"
 }
 
 variable "bitswap_peer_deployment_branch" {
-  type = string
+  type        = string
   description = "Branch which argocd should be looking at for syncing bitswap peer"
 }
 
 variable "eks_auth_sync_role_name" {
-  type    = string
+  type        = string
   description = "Name for EKS auth sync role"
 }
 
 variable "eks_auth_sync_policy_name" {
-  type    = string
+  type        = string
   description = "Name for policy which allows eks auth sync to read tags from IAM"
 }
 

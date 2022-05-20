@@ -25,12 +25,12 @@ variable "deploy_cluster_autoscaler" {
 }
 
 variable "eks_auth_sync_role_name" {
-  type    = string
+  type        = string
   description = "Name for EKS auth sync role"
 }
 
 variable "eks_auth_sync_policy_name" {
-  type    = string
+  type        = string
   description = "Name for policy which allows eks auth sync to read tags from IAM"
 }
 

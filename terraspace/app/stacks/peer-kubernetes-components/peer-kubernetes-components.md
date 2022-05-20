@@ -45,13 +45,38 @@ Version: ~> 4.0
 
 The following resources are used by this module:
 
-- [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
+- [helm_release.argocd_apps](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
 - [helm_release.metric_server](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
+- [kubernetes_namespace.bitswap_peer_namespace](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) (resource)
 - [kubernetes_service_account.irsa](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
 
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_bitswap_peer_deployment_branch"></a> [bitswap\_peer\_deployment\_branch](#input\_bitswap\_peer\_deployment\_branch)
+
+Description: Branch which argocd should be looking at for syncing bitswap peer
+
+Type: `string`
+
+### <a name="input_bitswap_peer_namespace"></a> [bitswap\_peer\_namespace](#input\_bitswap\_peer\_namespace)
+
+Description: Namespace where bitswap peer will be deployed to
+
+Type: `string`
+
+### <a name="input_cluster_autoscaler_policy_name"></a> [cluster\_autoscaler\_policy\_name](#input\_cluster\_autoscaler\_policy\_name)
+
+Description: Name for policy which allows cluster autoscaler operator to handle AWS node group
+
+Type: `string`
+
+### <a name="input_cluster_autoscaler_role_name"></a> [cluster\_autoscaler\_role\_name](#input\_cluster\_autoscaler\_role\_name)
+
+Description: Name for cluster autoscaler role
+
+Type: `string`
 
 ### <a name="input_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#input\_cluster\_ca\_certificate)
 
@@ -68,6 +93,18 @@ Type: `string`
 ### <a name="input_cluster_oidc_issuer_url"></a> [cluster\_oidc\_issuer\_url](#input\_cluster\_oidc\_issuer\_url)
 
 Description: This URL is managed by the peer stack. Used for allowing Kubernetes to manage AWS resources
+
+Type: `string`
+
+### <a name="input_eks_auth_sync_policy_name"></a> [eks\_auth\_sync\_policy\_name](#input\_eks\_auth\_sync\_policy\_name)
+
+Description: Name for policy which allows eks auth sync to read tags from IAM
+
+Type: `string`
+
+### <a name="input_eks_auth_sync_role_name"></a> [eks\_auth\_sync\_role\_name](#input\_eks\_auth\_sync\_role\_name)
+
+Description: Name for EKS auth sync role
 
 Type: `string`
 
@@ -91,9 +128,8 @@ Type:
 
 ```hcl
 map(object({
-    service_account_name      = string,
-    service_account_namespace = string,
-    role_name                 = string
+    service_account_name = string,
+    role_name            = string
     policies_list = list(object({
       name = string,
       arn  = string,
