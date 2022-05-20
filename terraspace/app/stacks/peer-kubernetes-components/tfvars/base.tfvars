@@ -8,7 +8,6 @@ bitswap_peer_namespace  = "<%= expansion(':ENV') %>-ep-bitswap-peer"
 service_account_roles = {
     "<%= expansion(':ENV') %>_ep_peer_subsystem_role" = {
       service_account_name      = "<%= expansion(':ENV') %>-ep-bitswap-irsa",
-      service_account_namespace = "<%= expansion(':ENV') %>-ep-bitswap-peer",
       role_name                 = "<%= expansion(':ENV') %>_ep-peer_subsystem_role",
       policies_list = [
         <%= output('shared.dynamodb_blocks_policy', mock: {}) %>,
@@ -18,8 +17,8 @@ service_account_roles = {
       ]
     }
 }
-
 eks_auth_sync_role_name        = "<%= expansion(':ENV') %>-ep-eks-auth-sync"
 eks_auth_sync_policy_name      = "<%= expansion(':ENV') %>-ep-eks-auth-sync"
 cluster_autoscaler_role_name   = "<%= expansion(':ENV') %>-ep-eks-cluster-autoscaler"
 cluster_autoscaler_policy_name = "<%= expansion(':ENV') %>-ep-eks-cluster-autoscaler"
+bitswap_peer_deployment_branch = "HEAD"
