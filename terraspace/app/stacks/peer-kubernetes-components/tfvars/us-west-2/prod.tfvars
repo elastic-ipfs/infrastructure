@@ -16,4 +16,3 @@ eks_auth_sync_role_name        = "eks-auth-sync-role"
 eks_auth_sync_policy_name      = "eks-auth-sync-policy"
 cluster_autoscaler_role_name   = "IPFSClusterEKSAutoscalerRole"
 cluster_autoscaler_policy_name = "eks-cluster-autoscaler-policy"
-
