@@ -25,6 +25,16 @@ variable "node_env" {
   description = "NODE_ENV environment variable value for indexer lambda"
 }
 
+variable "dynamodb_blocks_table" {
+  type        = string
+  description = "DYNAMO_BLOCKS_TABLE environment variable value for indexer lambda"
+}
+
+variable "dynamodb_cars_table" {
+  type        = string
+  description = "DYNAMO_CARS_TABLE environment variable value for indexer lambda"
+}
+
 variable "batch_size" {
   type        = string
   description = "Amount of messages indexer lambda should batch to handle simultaneously"
