@@ -41,3 +41,9 @@ variable "enable_tracerouting_sg_rules" {
   default     = false
   description = "Defines if egress security group rules should be defined to allow tracerouting to the internet"
 }
+
+variable "enable_http_egress_sg_rules" {
+  type        = bool
+  default     = false
+  description = "Defines if egress security group rules should be defined to allow unsecure HTTP requests to the internet"
+}
