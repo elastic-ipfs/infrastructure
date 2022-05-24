@@ -19,5 +19,3 @@ eks = {
   }
 }
 account_id = "<%= expansion(':ACCOUNT') %>"
-# enable_http_egress_sg_rules  = true
-# enable_tracerouting_sg_rules = true
