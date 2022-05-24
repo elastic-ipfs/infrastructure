@@ -59,6 +59,9 @@ module "gateway_endpoint_to_s3" {
 }
 
 # TODO: Investigate alternative approach to make GitHub Actions Self Runner access EKS through the cluster private endpoint
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+} 
 
 module "eks" {
   source                             = "terraform-aws-modules/eks/aws"
@@ -73,6 +76,7 @@ module "eks" {
   cluster_security_group_description = "EKS cluster security group - Control Plane"
 
   cluster_endpoint_public_access_cidrs = [ # TODO: Access through AWS transit gateway
+    "${chomp(data.http.myip.body)}/32",    # GitHub Actions Self Runner Static IP 
     "177.33.141.81/32",
     "185.152.47.29/32",
     "168.227.34.17/32",
