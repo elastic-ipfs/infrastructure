@@ -8,7 +8,6 @@ ads_lambda = {
   name              = "<%= expansion(':ENV') %>-ep-publishing-advertisement"
   metrics_namespace = "<%= expansion(':ENV') %>-ep-publishing-advertisement"
 }
-indexer_node_url                                = "<%= expansion('https://:ENV.cid.contact') %>"
 node_env                                        = "<%= expansion(':ENV') %>"
 ecr_repository_name                             = "<%= expansion(':ENV') %>-ep-publisher-lambda"
 dns_stack_bitswap_loadbalancer_domain           = <%= output('dns.bitswap_loadbalancer_domain', mock: "") %>
