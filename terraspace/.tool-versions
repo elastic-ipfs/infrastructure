@@ -1,5 +1,5 @@
 ruby 3.1.1
 terraform 1.1.7
-tfsec 1.9.0
+tfsec 1.15.0
 tflint 0.35.0
 terraform-docs 0.16.0
