@@ -11,6 +11,7 @@ on:
     paths:
       - terraspace/**.tf
       - terraspace/**.tfvars
+      - .github/**
 
 env:
 #  ROLE_ARN: arn:aws:iam::${{ secrets.ACCOUNT_ID }}:role/managed-oidc-service-github-actions
@@ -99,8 +100,6 @@ jobs:
         working-directory: terraspace
         run: |
           find .terraspace-cache -maxdepth 4 -mindepth 4 -type d | grep stacks | xargs -I '{}' -n1 sh -c 'echo "Scanning: {}" && tflint {}'
-
-
 
   tf-sec:
     runs-on: ubuntu-latest
