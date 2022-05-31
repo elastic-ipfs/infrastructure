@@ -168,7 +168,7 @@ jobs:
 
       - name: TFSec
         working-directory: terraspace/.terraspace-cache
-        run: tfsec .
+        run: tfsec . --exclude-downloaded-modules
 
   plan:
     runs-on: ubuntu-latest
