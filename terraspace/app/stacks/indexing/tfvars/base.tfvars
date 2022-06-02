@@ -9,6 +9,7 @@ indexer_lambda = {
 }
 batch_size                                    = 1
 concurrency                                   = 100
+s3_max_retries                                = 5
 node_env                                      = "<%= expansion(':ENV') %>"
 sqs_indexer_policy_receive_name               = "<%= expansion(':ENV') %>-ep-sqs-indexer-receive"
 sqs_indexer_policy_delete_name                = "<%= expansion(':ENV') %>-ep-sqs-indexer-delete"

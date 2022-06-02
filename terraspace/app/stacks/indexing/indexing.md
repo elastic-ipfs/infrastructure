@@ -42,6 +42,30 @@ The following resources are used by this module:
 
 The following input variables are required:
 
+### <a name="input_batch_size"></a> [batch\_size](#input\_batch\_size)
+
+Description: Amount of messages indexer lambda should batch to handle simultaneously
+
+Type: `string`
+
+### <a name="input_concurrency"></a> [concurrency](#input\_concurrency)
+
+Description: Amount of blocks indexer lambda should handle simultaneously
+
+Type: `string`
+
+### <a name="input_dynamodb_blocks_table"></a> [dynamodb\_blocks\_table](#input\_dynamodb\_blocks\_table)
+
+Description: DYNAMO\_BLOCKS\_TABLE environment variable value for indexer lambda
+
+Type: `string`
+
+### <a name="input_dynamodb_cars_table"></a> [dynamodb\_cars\_table](#input\_dynamodb\_cars\_table)
+
+Description: DYNAMO\_CARS\_TABLE environment variable value for indexer lambda
+
+Type: `string`
+
 ### <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name)
 
 Description: Name for ECR repo. We use this repo to store indexer lambda docker image
@@ -76,6 +100,12 @@ Type: `string`
 ### <a name="input_notifications_topic_name"></a> [notifications\_topic\_name](#input\_notifications\_topic\_name)
 
 Description: Name for notifications sqs queue. This is queue is supposed to have events created and published by indexer lambda. It can be read by external components
+
+Type: `string`
+
+### <a name="input_s3_max_retries"></a> [s3\_max\_retries](#input\_s3\_max\_retries)
+
+Description: Maximum retries when trying to fetch file from s3
 
 Type: `string`
 

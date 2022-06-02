@@ -45,6 +45,11 @@ variable "concurrency" {
   description = "Amount of blocks indexer lambda should handle simultaneously"
 }
 
+variable "s3_max_retries" {
+  type        = string
+  description = "Maximum retries when trying to fetch file from s3"
+}
+
 variable "sqs_indexer_policy_receive_name" {
   type        = string
   description = "Name for policy which allows receiving messages from indexer sqs queue"
