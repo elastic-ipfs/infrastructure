@@ -11,7 +11,7 @@ on:
     paths:
       - terraspace/**.tf
       - terraspace/**.tfvars
-      - .github/**
+      - .github/workflows/terraspace.yaml
 
 env:
 #  ROLE_ARN: arn:aws:iam::${{ secrets.ACCOUNT_ID }}:role/managed-oidc-service-github-actions
