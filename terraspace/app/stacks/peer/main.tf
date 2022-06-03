@@ -62,7 +62,7 @@ module "gateway_endpoint_to_s3" {
 
 module "eks" {
   source                             = "terraform-aws-modules/eks/aws"
-  version                            = "~> 18.2.0"
+  version                            = "~> 18.23.0"
   cluster_name                       = var.eks.name
   cluster_version                    = var.eks.version
   cluster_endpoint_private_access    = true

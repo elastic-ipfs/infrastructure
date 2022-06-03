@@ -347,14 +347,14 @@ locals {
       cidr_blocks = ["0.0.0.0/0"]
     }
 
-    all_http_eg = {
-      count       = var.enable_http_egress_sg_rules ? 1 : 0
-      description = "Egress default HTTP port to all internet "
-      protocol    = "tcp"
-      from_port   = 80
-      to_port     = 80
-      type        = "egress"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
+    # all_http_eg = {
+    #   count       = var.enable_tracerouting_sg_rules ? 1 : 0
+    #   description = "Egress default HTTP port to all internet "
+    #   protocol    = "tcp"
+    #   from_port   = 80
+    #   to_port     = 80
+    #   type        = "egress"
+    #   cidr_blocks = ["0.0.0.0/0"]
+    # }
   }
 }

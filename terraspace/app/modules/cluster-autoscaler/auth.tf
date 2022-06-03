@@ -1,5 +1,16 @@
 
+data "aws_iam_policy_document" "test" {
+  for_each = var.asg_names
+
+  statement {
+    actions   = ["iam:PassRole"]
+    resources = [each.key]
+  }
+}
+
+# TODO: FOREACH ASG_NAMES
 resource "aws_iam_policy" "cluster_autoscaler" {
+  # TODO: Where will I get the ASG NAME from? EKS Module.
   name        = var.cluster_autoscaler_policy_name
   description = "Policy for allowing Kubernetes to autoscale nodes"
   policy      = <<EOF
@@ -16,7 +27,9 @@ resource "aws_iam_policy" "cluster_autoscaler" {
         "ec2:DescribeInstanceTypes",
         "ec2:DescribeLaunchTemplateVersions"
       ],
-      "Resource": ["*"]
+      "Resource": [ 
+        "arn:aws:autoscaling:${var.region}:${var.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/${var.asg_name[0]}"
+      ]
     },
     {
       "Effect": "Allow",
@@ -24,7 +37,9 @@ resource "aws_iam_policy" "cluster_autoscaler" {
         "autoscaling:SetDesiredCapacity",
         "autoscaling:TerminateInstanceInAutoScalingGroup"
       ],
-      "Resource": ["*"]
+      "Resource": [
+        "arn:aws:autoscaling:${var.region}:${var.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/${var.asg_name[0]}"
+      ]
     }
   ]
 }

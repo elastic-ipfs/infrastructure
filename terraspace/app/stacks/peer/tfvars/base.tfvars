@@ -1,4 +1,3 @@
-cluster_name = "<%= expansion(':ENV') %>-ep-peer"
 account_id   = "<%= expansion(':ACCOUNT') %>"
 region       = "<%= expansion(':REGION') %>"
 eks = {

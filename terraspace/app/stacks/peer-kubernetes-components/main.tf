@@ -40,10 +40,12 @@ module "eks_auth_sync" {
 module "cluster_autoscaler" {
   source                         = "../../modules/cluster-autoscaler"
   region                         = var.region
+  account_id                     = local.aws_account_id
   cluster_name                   = var.cluster_id
   cluster_oidc_issuer_url        = var.cluster_oidc_issuer_url
   cluster_autoscaler_role_name   = var.cluster_autoscaler_role_name
   cluster_autoscaler_policy_name = var.cluster_autoscaler_policy_name
+  asg_names                      = var.eks_managed_node_groups_autoscaling_group_names
 }
 
 resource "kubernetes_namespace" "bitswap_peer_namespace" {

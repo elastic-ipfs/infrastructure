@@ -13,6 +13,11 @@ output "cluster_id" {
   description = "EKS cluster name"
 }
 
+output "eks_managed_node_groups_autoscaling_group_names" {
+  value  =  module.eks.eks_managed_node_groups_autoscaling_group_names
+  description = "EKS cluster austocalling group names list"
+}
+
 output "cluster_ca_certificate" {
   value       = data.aws_eks_cluster.eks.certificate_authority[0].data
   description = "Base64 encoded Certificate Authority PEM for EKS"

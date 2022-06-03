@@ -29,3 +29,13 @@ variable "cluster_autoscaler_policy_name" {
   type        = string
   description = "Name for policy which allows cluster autoscaler operator to handle AWS node group"
 }
+
+variable "account_id" {
+  type        = string
+  description = "AWS account ID"
+}
+
+variable "asg_names" {
+  type = string
+  description = "Auto Scaling Group Name"
+}
