@@ -65,8 +65,7 @@ variable "cluster_autoscaler_policy_name" {
   description = "Name for policy which allows cluster autoscaler operator to handle AWS node group"
 }
 
-output "eks_managed_node_groups_autoscaling_group_names" {
-  type        = string
+variable "eks_managed_node_groups_autoscaling_group_names" {
+  type        = list(string)
   description = "EKS cluster austocalling group names list"
 }
-

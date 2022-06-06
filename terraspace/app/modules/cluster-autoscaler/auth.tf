@@ -28,7 +28,7 @@ resource "aws_iam_policy" "cluster_autoscaler" {
         "ec2:DescribeLaunchTemplateVersions"
       ],
       "Resource": [ 
-        "arn:aws:autoscaling:${var.region}:${var.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/${var.asg_name[0]}"
+        "arn:aws:autoscaling:${var.region}:${var.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/${var.asg_names[0]}"
       ]
     },
     {
@@ -38,7 +38,7 @@ resource "aws_iam_policy" "cluster_autoscaler" {
         "autoscaling:TerminateInstanceInAutoScalingGroup"
       ],
       "Resource": [
-        "arn:aws:autoscaling:${var.region}:${var.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/${var.asg_name[0]}"
+        "arn:aws:autoscaling:${var.region}:${var.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/${var.asg_names[0]}"
       ]
     }
   ]

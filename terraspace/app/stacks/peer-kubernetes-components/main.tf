@@ -40,7 +40,7 @@ module "eks_auth_sync" {
 module "cluster_autoscaler" {
   source                         = "../../modules/cluster-autoscaler"
   region                         = var.region
-  account_id                     = local.aws_account_id
+  aws_account_id                 = local.aws_account_id
   cluster_name                   = var.cluster_id
   cluster_oidc_issuer_url        = var.cluster_oidc_issuer_url
   cluster_autoscaler_role_name   = var.cluster_autoscaler_role_name
