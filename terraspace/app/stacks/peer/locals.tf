@@ -326,9 +326,10 @@ locals {
       type        = "egress"
       self        = true
     }
+  }
 
+  node_security_group_troubleshooting_rules = {
     traceroute_33434_33464_eg = {
-      count       = var.enable_tracerouting_sg_rules ? 1 : 0
       description = "Enable troubleshoot: UDP Traceroute to all internet"
       protocol    = "UDP"
       from_port   = 33434
@@ -338,7 +339,6 @@ locals {
     }
 
     traceroute_ICMP_eg = {
-      count       = var.enable_tracerouting_sg_rules ? 1 : 0
       description = "Enable troubleshoot: ICMP Traceroute to all internet"
       protocol    = "ICMP"
       from_port   = -1
@@ -347,14 +347,13 @@ locals {
       cidr_blocks = ["0.0.0.0/0"]
     }
 
-    # all_http_eg = {
-    #   count       = var.enable_tracerouting_sg_rules ? 1 : 0
-    #   description = "Egress default HTTP port to all internet "
-    #   protocol    = "tcp"
-    #   from_port   = 80
-    #   to_port     = 80
-    #   type        = "egress"
-    #   cidr_blocks = ["0.0.0.0/0"]
-    # }
+    all_http_eg = {
+      description = "Egress default HTTP port to all internet "
+      protocol    = "tcp"
+      from_port   = 80
+      to_port     = 80
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
 }
