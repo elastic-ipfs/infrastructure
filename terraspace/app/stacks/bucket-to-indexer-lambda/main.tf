@@ -35,6 +35,8 @@ module "lambda_from_s3" {
     policies_list = [
       data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
     ]
+
+    s3_trigger_filter_suffix = ".car"
   }
 }
 
