@@ -118,3 +118,23 @@ variable "indexing_lambda_image_version" {
   default     = "latest"
   description = "Version tag for publishing lambda"
 }
+
+variable "dynamodb_max_retries" {
+  type        = string
+  description = "DYNAMO_MAX_RETRIES environment variable value for indexer lambda"
+}
+
+variable "dynamodb_retry_delay" {
+  type        = string
+  description = "DYNAMO_RETRY_DELAY environment variable value for indexer lambda"
+}
+
+variable "s3_max_retries" {
+  type        = string
+  description = "DYNAMO_MAX_RETRIES environment variable value for indexer lambda"
+}
+
+variable "s3_retry_delay" {
+  type        = string
+  description = "DYNAMO_RETRY_DELAY environment variable value for indexer lambda"
+}
