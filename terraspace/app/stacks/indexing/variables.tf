@@ -136,5 +136,5 @@ variable "s3_max_retries" {
 
 variable "s3_retry_delay" {
   type        = string
-  description = "DYNAMO_RETRY_DELAY environment variable value for indexer lambda"
+  description = "S3_RETRY_DELAY environment variable value for indexer lambda"
 }
