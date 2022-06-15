@@ -6,3 +6,4 @@ bucket = (
     id     = "dotstorage-dev-0"
   }
 )
+bucket_to_indexer_lambda_image_version = "dev"
