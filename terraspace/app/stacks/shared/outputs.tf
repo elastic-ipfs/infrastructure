@@ -65,10 +65,10 @@ output "sqs_multihashes_policy_delete" {
   description = "Policy for allowing delete messages from multihashes sqs queue"
 }
 
-output "s3_dotstorage_prod_0_policy_read" {
+output "s3_dotstorage_policy_read" {
   value = {
-    name = aws_iam_policy.s3_dotstorage_prod_0_policy_read.name,
-    arn  = aws_iam_policy.s3_dotstorage_prod_0_policy_read.arn,
+    name = aws_iam_policy.s3_dotstorage_policy_read.name,
+    arn  = aws_iam_policy.s3_dotstorage_policy_read.arn,
   }
   description = "Policy for allowing reading files from existing bucket called 'dotstorage_prod_0'"
 }

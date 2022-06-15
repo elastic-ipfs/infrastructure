@@ -8,7 +8,7 @@ service_account_roles = {
         <%= output('shared.dynamodb_blocks_policy', mock: {}) %>,
         <%= output('shared.sqs_multihashes_policy_send', mock: {}) %>,
         <%= output('shared.s3_config_peer_bucket_policy_read', mock: {}) %>,
-        <%= output('shared.s3_dotstorage_prod_0_policy_read', mock: {}) %>,
+        <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>,
       ]
     }
 }

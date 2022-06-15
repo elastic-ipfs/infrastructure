@@ -50,6 +50,12 @@ object({
   })
 ```
 
+### <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name)
+
+Description: Name for ECR repo. We use this repo to store bucket-to-indexer lambda docker image
+
+Type: `string`
+
 ### <a name="input_indexing_stack_region"></a> [indexing\_stack\_region](#input\_indexing\_stack\_region)
 
 Description: Region which indexer is deployed to
