@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "lambda-function_log_group" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "lambda_logging"
+  name        = "${var.lambda.name}_lambda_logging"
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
