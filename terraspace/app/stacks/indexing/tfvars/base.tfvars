@@ -20,7 +20,7 @@ shared_stack_sqs_multihashes_topic_url        = "<%= output('shared.sqs_multihas
 shared_stack_dynamodb_blocks_policy           = <%= output('shared.dynamodb_blocks_policy', mock: {}) %>
 shared_stack_dynamodb_car_policy              = <%= output('shared.dynamodb_car_policy', mock: {}) %>
 shared_stack_sqs_multihashes_policy_send      = <%= output('shared.sqs_multihashes_policy_send', mock: {}) %>
-shared_stack_s3_dotstorage_prod_0_policy_read = <%= output('shared.s3_dotstorage_prod_0_policy_read', mock: {}) %>
+shared_stack_s3_dotstorage_policy_read = <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>
 indexing_lambda_image_version                 = "latest"
 dynamodb_blocks_table                         = "<%= expansion(':ENV') %>-ep-blocks"
 dynamodb_cars_table                           = "<%= expansion(':ENV') %>-ep-cars"

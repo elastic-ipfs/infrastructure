@@ -42,6 +42,42 @@ The following resources are used by this module:
 
 The following input variables are required:
 
+### <a name="input_batch_size"></a> [batch\_size](#input\_batch\_size)
+
+Description: Amount of messages indexer lambda should batch to handle simultaneously
+
+Type: `string`
+
+### <a name="input_concurrency"></a> [concurrency](#input\_concurrency)
+
+Description: Amount of blocks indexer lambda should handle simultaneously
+
+Type: `string`
+
+### <a name="input_dynamodb_blocks_table"></a> [dynamodb\_blocks\_table](#input\_dynamodb\_blocks\_table)
+
+Description: DYNAMO\_BLOCKS\_TABLE environment variable value for indexer lambda
+
+Type: `string`
+
+### <a name="input_dynamodb_cars_table"></a> [dynamodb\_cars\_table](#input\_dynamodb\_cars\_table)
+
+Description: DYNAMO\_CARS\_TABLE environment variable value for indexer lambda
+
+Type: `string`
+
+### <a name="input_dynamodb_max_retries"></a> [dynamodb\_max\_retries](#input\_dynamodb\_max\_retries)
+
+Description: DYNAMO\_MAX\_RETRIES environment variable value for indexer lambda
+
+Type: `string`
+
+### <a name="input_dynamodb_retry_delay"></a> [dynamodb\_retry\_delay](#input\_dynamodb\_retry\_delay)
+
+Description: DYNAMO\_RETRY\_DELAY environment variable value for indexer lambda
+
+Type: `string`
+
 ### <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name)
 
 Description: Name for ECR repo. We use this repo to store indexer lambda docker image
@@ -79,6 +115,18 @@ Description: Name for notifications sqs queue. This is queue is supposed to have
 
 Type: `string`
 
+### <a name="input_s3_max_retries"></a> [s3\_max\_retries](#input\_s3\_max\_retries)
+
+Description: S3\_MAX\_RETRIES environment variable value for indexer lambda
+
+Type: `string`
+
+### <a name="input_s3_retry_delay"></a> [s3\_retry\_delay](#input\_s3\_retry\_delay)
+
+Description: S3\_RETRY\_DELAY environment variable value for indexer lambda
+
+Type: `string`
+
 ### <a name="input_shared_stack_dynamodb_blocks_policy"></a> [shared\_stack\_dynamodb\_blocks\_policy](#input\_shared\_stack\_dynamodb\_blocks\_policy)
 
 Description: This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table
@@ -105,7 +153,7 @@ object({
   })
 ```
 
-### <a name="input_shared_stack_s3_dotstorage_prod_0_policy_read"></a> [shared\_stack\_s3\_dotstorage\_prod\_0\_policy\_read](#input\_shared\_stack\_s3\_dotstorage\_prod\_0\_policy\_read)
+### <a name="input_shared_stack_s3_dotstorage_policy_read"></a> [shared\_stack\_s3\_dotstorage\_policy\_read](#input\_shared\_stack\_s3\_dotstorage\_policy\_read)
 
 Description: This policy is managed by the shared stack. Indexer lambda requires policy for reading external bucket 'dotstorage\_prod\_0' objects content
 

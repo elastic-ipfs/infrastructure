@@ -76,7 +76,7 @@ resource "aws_iam_policy" "s3_config_peer_bucket_policy_read" {
 EOF
 }
 
-resource "aws_iam_policy" "s3_dotstorage_prod_0_policy_read" {
+resource "aws_iam_policy" "s3_dotstorage_policy_read" {
   name        = var.dotstorage_bucket_read_policy_name
   description = "Policy for allowing reading objects from S3"
   policy      = <<EOF
@@ -86,17 +86,17 @@ resource "aws_iam_policy" "s3_dotstorage_prod_0_policy_read" {
         {
             "Effect": "Allow",
             "Action": "s3:ListBucket",
-            "Resource": "arn:aws:s3:::dotstorage-prod-0"
+            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_name}"
         },
         {
             "Effect": "Allow",
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::dotstorage-prod-0/*"
+            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_name}/*"
         },
         {
             "Effect": "Allow",
             "Action": "s3:ListObjects",
-            "Resource": "arn:aws:s3:::dotstorage-prod-0/*"
+            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_name}/*"
         }
     ]
 }

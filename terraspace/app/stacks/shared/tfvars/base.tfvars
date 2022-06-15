@@ -7,4 +7,5 @@ multihashes_send_policy_name       = "<%= expansion(':ENV') %>-ep-sqs-multihashe
 multihashes_receive_policy_name    = "<%= expansion(':ENV') %>-ep-sqs-multihashes-receive"
 multihashes_delete_policy_name     = "<%= expansion(':ENV') %>-ep-sqs-multihashes-delete"
 config_bucket_read_policy_name     = "<%= expansion(':ENV') %>-ep-s3-config-peer-bucket-read"
-dotstorage_bucket_read_policy_name = "<%= expansion(':ENV') %>-ep-s3-dotstorage-prod-0-read"
+dotstorage_bucket_read_policy_name = "<%= expansion(':ENV') %>-ep-s3-dotstorage-0-read"
+dotstorage_bucket_name             = "dotstorage-<%= expansion(':ENV') %>-0"

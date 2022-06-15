@@ -105,7 +105,7 @@ variable "shared_stack_sqs_multihashes_policy_send" {
 
 }
 
-variable "shared_stack_s3_dotstorage_prod_0_policy_read" {
+variable "shared_stack_s3_dotstorage_policy_read" {
   type = object({
     name = string
     arn  = string
