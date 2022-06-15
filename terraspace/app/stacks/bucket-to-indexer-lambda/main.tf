@@ -35,9 +35,14 @@ module "lambda_from_s3" {
     policies_list = [
       data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
     ]
+
+    s3_trigger_filter_suffix = ".car"
   }
 }
 
 resource "aws_ecr_repository" "ecr_repo_bucket_to_indexer_lambda" {
-  name = "bucket-to-indexer-lambda"
+  name = var.ecr_repository_name
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }

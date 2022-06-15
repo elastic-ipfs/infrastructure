@@ -27,6 +27,11 @@ variable "indexing_stack_region" {
   description = "Region which indexer is deployed to"
 }
 
+variable "ecr_repository_name" {
+  type        = string
+  description = "Name for ECR repo. We use this repo to store bucket-to-indexer lambda docker image"
+}
+
 variable "bucket_to_indexer_lambda_image_version" {
   type        = string
   default     = "latest"

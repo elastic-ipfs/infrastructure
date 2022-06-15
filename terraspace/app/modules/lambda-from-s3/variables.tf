@@ -9,6 +9,7 @@ variable "lambda" {
       name = string,
       arn  = string,
     }))
+    s3_trigger_filter_suffix = string
   })
 }
 

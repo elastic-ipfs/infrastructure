@@ -25,3 +25,7 @@ shared_stack_s3_dotstorage_prod_0_policy_read = <%= output('shared.s3_dotstorage
 indexing_lambda_image_version                 = "latest"
 dynamodb_blocks_table                         = "<%= expansion(':ENV') %>-ep-blocks"
 dynamodb_cars_table                           = "<%= expansion(':ENV') %>-ep-cars"
+dynamodb_max_retries                          = 3
+dynamodb_retry_delay                          = 100
+s3_max_retries                                = 3
+s3_retry_delay                                = 100
