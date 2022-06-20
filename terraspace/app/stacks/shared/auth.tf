@@ -13,6 +13,10 @@ resource "aws_iam_policy" "sqs_multihashes_policy_send" {
     ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_policy" "sqs_multihashes_policy_receive" {
@@ -35,6 +39,10 @@ resource "aws_iam_policy" "sqs_multihashes_policy_receive" {
     ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_policy" "sqs_multihashes_policy_delete" {
@@ -52,6 +60,10 @@ resource "aws_iam_policy" "sqs_multihashes_policy_delete" {
     ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_policy" "s3_config_peer_bucket_policy_read" {
@@ -74,6 +86,10 @@ resource "aws_iam_policy" "s3_config_peer_bucket_policy_read" {
     ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_policy" "s3_dotstorage_policy_read" {
@@ -101,4 +117,8 @@ resource "aws_iam_policy" "s3_dotstorage_policy_read" {
     ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

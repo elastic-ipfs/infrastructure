@@ -21,6 +21,10 @@ resource "aws_iam_policy" "dynamodb_blocks_policy" {
   ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_policy" "dynamodb_car_policy" {
@@ -45,4 +49,8 @@ resource "aws_iam_policy" "dynamodb_car_policy" {
   ]
 }
 EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
