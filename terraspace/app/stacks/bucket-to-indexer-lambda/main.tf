@@ -18,9 +18,9 @@ data "terraform_remote_state" "indexing" {
   }
 }
 
-module "lambda_from_s3" {
-  source = "../../modules/lambda-from-s3"
-  bucket = var.bucket
+module "lambda_from_sns" {
+  source = "../../modules/lambda-from-sns"
+  sns_topic = var.sns_topic
   lambda = {
     image_uri   = local.bucket_to_indexer_image_url
     name        = var.lambda.name
@@ -35,8 +35,6 @@ module "lambda_from_s3" {
     policies_list = [
       data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
     ]
-
-    s3_trigger_filter_suffix = ".car"
   }
 }
 

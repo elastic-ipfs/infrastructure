@@ -9,16 +9,12 @@ variable "lambda" {
       name = string,
       arn  = string,
     }))
-    s3_trigger_filter_suffix = string
   })
 }
 
-variable "bucket" {
-  type = object({
-    bucket = string
-    arn    = string
-    id     = string
-  })
+variable "sns_topic" {
+  type = string
+  description = "Name of SNS topic which lambda should subscribe to"
 }
 
 variable "custom_metrics" {
