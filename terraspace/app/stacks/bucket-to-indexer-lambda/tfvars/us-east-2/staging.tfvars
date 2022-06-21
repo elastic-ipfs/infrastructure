@@ -1,8 +1,2 @@
-node_env = "staging"
-bucket = (
-  {
-    bucket = "dotstorage-staging-0"
-    arn    = "arn:aws:s3:::dotstorage-staging-0"
-    id     = "dotstorage-staging-0"
-  }
-)
+node_env  = "staging"
+sns_topic = "staging-ep-s3-put"

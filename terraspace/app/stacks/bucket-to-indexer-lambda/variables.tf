@@ -1,11 +1,6 @@
-variable "bucket" {
-  type = object({
-    bucket = string
-    arn    = string
-    id     = string
-  })
-  description = "PUT events in this bucket trigger lambda"
-
+variable "sns_topic" {
+  type = string
+  description = "Name of SNS topic which lambda should subscribe to"
 }
 
 variable "lambda" {
