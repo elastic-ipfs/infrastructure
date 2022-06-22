@@ -9,7 +9,11 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-resource "aws_lambda_function" "lambda-function" {
+data "aws_sns_topic" "source_sns_topic" {
+  name = var.sns_topic
+}
+
+resource "aws_lambda_function" "lambda_function" {
   function_name = var.lambda.name
   package_type  = "Image"
   image_uri     = var.lambda.image_uri
@@ -27,18 +31,12 @@ resource "aws_lambda_function" "lambda-function" {
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
-    aws_cloudwatch_log_group.lambda-function_log_group,
+    aws_cloudwatch_log_group.lambda_function_log_group,
   ]
 }
 
-resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = var.bucket.id
-
-  lambda_function {
-    lambda_function_arn = aws_lambda_function.lambda-function.arn
-    events              = ["s3:ObjectCreated:*"]
-    filter_suffix       = var.lambda.s3_trigger_filter_suffix
-  }
-
-  depends_on = [aws_lambda_permission.allow_bucket]
+resource "aws_sns_topic_subscription" "topic_lambda" {
+  topic_arn = data.aws_sns_topic.source_sns_topic.arn
+  protocol  = "lambda"
+  endpoint  = aws_lambda_function.lambda_function.arn
 }

@@ -17,12 +17,12 @@ resource "aws_iam_role" "lambda_function_lambda_role" {
 EOF
 }
 
-resource "aws_lambda_permission" "allow_bucket" {
-  statement_id  = "AllowExecutionFromS3Bucket"
+resource "aws_lambda_permission" "with_sns" {
+  statement_id  = "AllowExecutionFromSNS"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda-function.arn
-  principal     = "s3.amazonaws.com"
-  source_arn    = var.bucket.arn
+  function_name = aws_lambda_function.lambda_function.arn
+  principal     = "sns.amazonaws.com"
+  source_arn    = data.aws_sns_topic.source_sns_topic.arn
 }
 
 resource "aws_iam_role_policy_attachment" "policies_attach" {

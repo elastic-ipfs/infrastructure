@@ -19,9 +19,9 @@ The following providers are used by this module:
 
 The following Modules are called:
 
-### <a name="module_lambda_from_s3"></a> [lambda\_from\_s3](#module\_lambda\_from\_s3)
+### <a name="module_lambda_from_sns"></a> [lambda\_from\_sns](#module\_lambda\_from\_sns)
 
-Source: ../../modules/lambda-from-s3
+Source: ../../modules/lambda-from-sns
 
 Version:
 
@@ -35,20 +35,6 @@ The following resources are used by this module:
 ## Required Inputs
 
 The following input variables are required:
-
-### <a name="input_bucket"></a> [bucket](#input\_bucket)
-
-Description: PUT events in this bucket trigger lambda
-
-Type:
-
-```hcl
-object({
-    bucket = string
-    arn    = string
-    id     = string
-  })
-```
 
 ### <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name)
 
@@ -79,6 +65,12 @@ object({
 ### <a name="input_node_env"></a> [node\_env](#input\_node\_env)
 
 Description: NODE\_ENV environment variable value for bucket\_to\_indexer lambda
+
+Type: `string`
+
+### <a name="input_sns_topic"></a> [sns\_topic](#input\_sns\_topic)
+
+Description: Name of SNS topic which lambda should subscribe to
 
 Type: `string`
 
