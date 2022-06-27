@@ -6,6 +6,13 @@ bitswapPeer:
   namespace: default
   valueFileNames: 
   - "values.yaml"
+fluentd:
+  repoURL: "https://github.com/ipfs-elastic-provider/fluentd-containers-deployment.git"
+  targetRevision: HEAD
+  releaseName: fluentd
+  namespace: logging
+  valueFileNames: 
+  - "values.yaml"
 argo-cd:
   installCRDs: false
   dex:
