@@ -48,4 +48,15 @@ resource "helm_release" "argocd_apps" {
     name  = "bitswapPeer.valueFileNames"
     value = "{values.yaml,values-${local.env}.yaml}"
   }
+
+  ##logging export
+  set {
+    name  = "logging.namespace"
+    value = kubernetes_namespace.logging_namespace.metadata[0].name
+  }
+
+  set {
+    name  = "fluentd_containers.valueFileNames"
+    value = "{values.yaml,values-${local.env}.yaml}"
+  }
 }
