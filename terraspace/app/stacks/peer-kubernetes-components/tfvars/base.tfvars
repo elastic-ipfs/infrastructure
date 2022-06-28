@@ -4,6 +4,7 @@ host                    = <%= output('peer.host', mock: "") %>
 cluster_ca_certificate  = <%= output('peer.cluster_ca_certificate', mock: "") %>
 region                  = "<%= expansion(':REGION') %>"
 bitswap_peer_namespace  = "<%= expansion(':ENV') %>-ep-bitswap-peer"
+logging_namespace       = "logging"
 # TODO: Understand why (and if we actually need) 'sqs_multihashes_policy_send' here
 service_account_roles = {
     "<%= expansion(':ENV') %>_ep_peer_subsystem_role" = {
