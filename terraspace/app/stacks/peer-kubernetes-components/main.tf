@@ -51,3 +51,9 @@ resource "kubernetes_namespace" "bitswap_peer_namespace" {
     name = var.bitswap_peer_namespace
   }
 }
+
+resource "kubernetes_namespace" "logging_namespace" {
+  metadata {
+    name = var.logging_namespace
+  }
+}

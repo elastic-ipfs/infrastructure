@@ -45,6 +45,11 @@ variable "bitswap_peer_deployment_branch" {
   description = "Branch which argocd should be looking at for syncing bitswap peer"
 }
 
+variable "logging_namespace" {
+  type        = string
+  description = "Namespace where fluentd will be deployed to"
+}
+
 variable "eks_auth_sync_role_name" {
   type        = string
   description = "Name for EKS auth sync role"
