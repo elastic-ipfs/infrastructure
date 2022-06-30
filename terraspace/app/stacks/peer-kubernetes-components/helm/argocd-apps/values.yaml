@@ -13,6 +13,13 @@ fluentd:
   namespace: logging
   valueFileNames: 
   - "values.yaml"
+fluentdLambda:
+  repoURL: "https://github.com/ipfs-elastic-provider/fluentd-lambda-logs-deployment.git"
+  targetRevision: HEAD
+  releaseName: fluentd-lambda
+  namespace: logging
+  valueFileNames: 
+  - "values.yaml"
 argo-cd:
   installCRDs: false
   dex:
