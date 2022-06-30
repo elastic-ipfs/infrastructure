@@ -2,7 +2,7 @@ serviceMonitor:
   namespaceSelector:
     - default
     - bitswap-peer
-  portName: http-metrics
+  portName: http
   scrapeInterval: 5s
   matchLabelName: metricsMonitor
   matchLabelValue: true
