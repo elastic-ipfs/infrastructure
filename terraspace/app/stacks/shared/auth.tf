@@ -182,7 +182,7 @@ EOF
 }
 
 
-resource "aws_iam_policy" "dynamodb_v1_link_table_policy" {
+resource "aws_iam_policy" "dynamodb_v1_link_policy" {
   name        = "dynamodb-${var.v1_link_table.name}-policy"
   description = "Policy for allowing all Dynamodb Actions for CAR table"
   policy      = <<EOF

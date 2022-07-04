@@ -13,8 +13,8 @@ v1_blocks_table = {
 }
 v1_link_table = {
   name      = "<%= expansion(':ENV') %>-ep-v1-blocks-cars"
-  hash_key  = "block-multihash"
-  range_key = "car-path"
+  hash_key  = "blockmultihash"
+  range_key = "carpath"
 }
 multihashes_send_policy_name       = "<%= expansion(':ENV') %>-ep-sqs-multihashes-send"
 multihashes_receive_policy_name    = "<%= expansion(':ENV') %>-ep-sqs-multihashes-receive"

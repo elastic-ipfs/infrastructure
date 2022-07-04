@@ -35,6 +35,11 @@ variable "dynamodb_cars_table" {
   description = "DYNAMO_CARS_TABLE environment variable value for indexer lambda"
 }
 
+variable "dynamodb_link_table" {
+  type        = string
+  description = "DYNAMO_LINK_TABLE environment variable value for indexer lambda"
+}
+
 variable "batch_size" {
   type        = string
   description = "Amount of messages indexer lambda should batch to handle simultaneously"
@@ -89,6 +94,14 @@ variable "shared_stack_dynamodb_blocks_policy" {
 }
 
 variable "shared_stack_dynamodb_car_policy" {
+  type = object({
+    name = string
+    arn  = string
+  })
+  description = "This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table"
+}
+
+variable "shared_stack_dynamodb_link_policy" {
   type = object({
     name = string
     arn  = string

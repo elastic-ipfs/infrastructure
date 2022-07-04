@@ -23,8 +23,9 @@ shared_stack_dynamodb_link_policy             = <%= output('shared.dynamodb_v1_l
 shared_stack_sqs_multihashes_policy_send      = <%= output('shared.sqs_multihashes_policy_send', mock: {}) %>
 shared_stack_s3_dotstorage_policy_read        = <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>
 indexing_lambda_image_version                 = "latest"
-dynamodb_blocks_table                         = "<%= expansion(':ENV') %>-ep-blocks"
-dynamodb_cars_table                           = "<%= expansion(':ENV') %>-ep-cars"
+dynamodb_blocks_table                         = <%= output('shared.dynamodb_v1_blocks_table_name', mock: {}) %>
+dynamodb_cars_table                           = <%= output('shared.dynamodb_v1_cars_table_name', mock: {}) %>
+dynamodb_link_table                           = <%= output('shared.dynamodb_v1_link_table_name', mock: {}) %>
 dynamodb_max_retries                          = 3
 dynamodb_retry_delay                          = 100
 s3_max_retries                                = 3
