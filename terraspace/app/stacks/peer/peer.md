@@ -15,8 +15,6 @@ The following providers are used by this module:
 
 - <a name="provider_aws"></a> [aws](#provider\_aws) (~> 3.38)
 
-- <a name="provider_http"></a> [http](#provider\_http) (~> 2.1)
-
 ## Modules
 
 The following Modules are called:
@@ -55,7 +53,6 @@ The following resources are used by this module:
 - [aws_security_group_rule.fargate_ingress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) (resource)
 - [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) (data source)
 - [aws_eks_cluster.eks](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) (data source)
-- [http_http.myip](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) (data source)
 
 ## Required Inputs
 
@@ -78,6 +75,7 @@ object({
     name    = string
     version = string
     eks_managed_node_groups = object({
+      name           = string
       desired_size   = number
       min_size       = number
       max_size       = number
@@ -112,7 +110,23 @@ object({
 
 ## Optional Inputs
 
-No optional inputs.
+The following input variables are optional (have default values):
+
+### <a name="input_enable_http_egress_sg_rules"></a> [enable\_http\_egress\_sg\_rules](#input\_enable\_http\_egress\_sg\_rules)
+
+Description: Defines if egress security group rules should be defined to allow unsecure HTTP requests to the internet
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_enable_tracerouting_sg_rules"></a> [enable\_tracerouting\_sg\_rules](#input\_enable\_tracerouting\_sg\_rules)
+
+Description: Defines if egress security group rules should be defined to allow tracerouting to the internet
+
+Type: `bool`
+
+Default: `false`
 
 ## Outputs
 
