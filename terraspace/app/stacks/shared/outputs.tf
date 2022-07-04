@@ -32,6 +32,30 @@ output "dynamodb_car_policy" {
   description = "Policy for allowing all Dynamodb Actions for cars table"
 }
 
+output "dynamodb_v1_blocks_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_v1_blocks_policy.name
+    arn  = aws_iam_policy.dynamodb_v1_blocks_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for V1 blocks table"
+}
+
+output "dynamodb_v1_cars_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_v1_cars_policy.name
+    arn  = aws_iam_policy.dynamodb_v1_cars_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for V1 cars table"
+}
+
+output "dynamodb_v1_link_table_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_v1_link_table_policy.name
+    arn  = aws_iam_policy.dynamodb_v1_link_table_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for V1 links table"
+}
+
 output "s3_config_peer_bucket_policy_read" {
   value = {
     name = aws_iam_policy.s3_config_peer_bucket_policy_read.name,

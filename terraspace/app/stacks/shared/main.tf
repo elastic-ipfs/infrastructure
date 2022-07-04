@@ -90,7 +90,7 @@ resource "aws_dynamodb_table" "v1_link_table" {
   }
 }
 
-### Deprecated
+### Deprecated (v0 tables)
 module "dynamodb" {
   source = "../../modules/dynamodb"
   blocks_table = {

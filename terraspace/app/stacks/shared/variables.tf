@@ -8,7 +8,7 @@ variable "multihashes_topic_name" {
   description = "Name for multihashes sqs queue. This queue is supposed to be read by publisher lambda (content)"
 }
 
-### Deprecated
+### Deprecated (v0 tables)
 variable "cars_table_name" {
   type        = string
   description = "Name for cars dynamodb table. This table is supposed to contain references to the CAR file and to control indexing status"
@@ -28,14 +28,21 @@ variable "v1_cars_table" {
   description = "v1 cars dynamodb table. This table is supposed to contain references to the CAR file"
 }
 
-variable "v1_blocks_table_name" {
-  type        = string
-  description = "Name for v1 blocs dynamodb table. This table is supposed to contain the indexes of blocks"
+variable "v1_blocks_table" {
+  type = object({
+    name     = string
+    hash_key = string
+  })
+  description = "v1 blocks dynamodb table. This table is supposed to contain the indexes of blocks"
 }
 
-variable "v1_link_table_name" {
-  type        = string
-  description = "Name for v1 link dynamodb table. This table is supposed link CARs and blocks"
+variable "v1_link_table" {
+  type = object({
+    name     = string
+    hash_key = string
+    range_key = string
+  })
+  description = "v1 cars link table. This table is supposed to link blocks with CARs"
 }
 
 variable "multihashes_send_policy_name" {
