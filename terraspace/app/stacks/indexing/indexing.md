@@ -66,6 +66,12 @@ Description: DYNAMO\_CARS\_TABLE environment variable value for indexer lambda
 
 Type: `string`
 
+### <a name="input_dynamodb_link_table"></a> [dynamodb\_link\_table](#input\_dynamodb\_link\_table)
+
+Description: DYNAMO\_LINK\_TABLE environment variable value for indexer lambda
+
+Type: `string`
+
 ### <a name="input_dynamodb_max_retries"></a> [dynamodb\_max\_retries](#input\_dynamodb\_max\_retries)
 
 Description: DYNAMO\_MAX\_RETRIES environment variable value for indexer lambda
@@ -141,6 +147,19 @@ object({
 ```
 
 ### <a name="input_shared_stack_dynamodb_car_policy"></a> [shared\_stack\_dynamodb\_car\_policy](#input\_shared\_stack\_dynamodb\_car\_policy)
+
+Description: This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table
+
+Type:
+
+```hcl
+object({
+    name = string
+    arn  = string
+  })
+```
+
+### <a name="input_shared_stack_dynamodb_link_policy"></a> [shared\_stack\_dynamodb\_link\_policy](#input\_shared\_stack\_dynamodb\_link\_policy)
 
 Description: This policy is managed by the shared stack. Indexer lambda requires policy for accessing this dynamodb table
 

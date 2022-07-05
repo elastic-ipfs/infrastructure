@@ -7,6 +7,7 @@ locals {
     "SQS_NOTIFICATIONS_QUEUE_URL" = aws_sqs_queue.notifications_topic.url
     "DYNAMO_BLOCKS_TABLE"         = var.dynamodb_blocks_table
     "DYNAMO_CARS_TABLE"           = var.dynamodb_cars_table
+    "DYNAMO_LINK_TABLE"           = var.dynamodb_link_table
     "DYNAMO_MAX_RETRIES"          = var.dynamodb_max_retries
     "DYNAMO_RETRY_DELAY"          = var.dynamodb_retry_delay
     "S3_MAX_RETRIES"              = var.s3_max_retries

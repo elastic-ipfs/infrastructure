@@ -27,6 +27,12 @@ Version:
 
 The following resources are used by this module:
 
+- [aws_dynamodb_table.v1_blocks_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) (resource)
+- [aws_dynamodb_table.v1_cars_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) (resource)
+- [aws_dynamodb_table.v1_link_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) (resource)
+- [aws_iam_policy.dynamodb_v1_blocks_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
+- [aws_iam_policy.dynamodb_v1_cars_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
+- [aws_iam_policy.dynamodb_v1_link_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.s3_config_peer_bucket_policy_read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.s3_dotstorage_policy_read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sqs_multihashes_policy_delete](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
@@ -102,6 +108,46 @@ Description: Name for multihashes sqs queue. This queue is supposed to be read b
 
 Type: `string`
 
+### <a name="input_v1_blocks_table"></a> [v1\_blocks\_table](#input\_v1\_blocks\_table)
+
+Description: v1 blocks dynamodb table. This table is supposed to contain the indexes of blocks
+
+Type:
+
+```hcl
+object({
+    name     = string
+    hash_key = string
+  })
+```
+
+### <a name="input_v1_cars_table"></a> [v1\_cars\_table](#input\_v1\_cars\_table)
+
+Description: v1 cars dynamodb table. This table is supposed to contain references to the CAR file
+
+Type:
+
+```hcl
+object({
+    name     = string
+    hash_key = string
+  })
+```
+
+### <a name="input_v1_link_table"></a> [v1\_link\_table](#input\_v1\_link\_table)
+
+Description: v1 cars link table. This table is supposed to link blocks with CARs
+
+Type:
+
+```hcl
+object({
+    name     = string
+    hash_key = string
+    range_key = string
+  })
+```
+
 ## Optional Inputs
 
 No optional inputs.
@@ -117,6 +163,30 @@ Description: Policy for allowing all Dynamodb Actions for blocks table
 ### <a name="output_dynamodb_car_policy"></a> [dynamodb\_car\_policy](#output\_dynamodb\_car\_policy)
 
 Description: Policy for allowing all Dynamodb Actions for cars table
+
+### <a name="output_dynamodb_v1_blocks_policy"></a> [dynamodb\_v1\_blocks\_policy](#output\_dynamodb\_v1\_blocks\_policy)
+
+Description: Policy for allowing all Dynamodb Actions for V1 blocks table
+
+### <a name="output_dynamodb_v1_blocks_table_name"></a> [dynamodb\_v1\_blocks\_table\_name](#output\_dynamodb\_v1\_blocks\_table\_name)
+
+Description: v1 blocks table name
+
+### <a name="output_dynamodb_v1_cars_policy"></a> [dynamodb\_v1\_cars\_policy](#output\_dynamodb\_v1\_cars\_policy)
+
+Description: Policy for allowing all Dynamodb Actions for V1 cars table
+
+### <a name="output_dynamodb_v1_cars_table_name"></a> [dynamodb\_v1\_cars\_table\_name](#output\_dynamodb\_v1\_cars\_table\_name)
+
+Description: v1 cars table name
+
+### <a name="output_dynamodb_v1_link_policy"></a> [dynamodb\_v1\_link\_policy](#output\_dynamodb\_v1\_link\_policy)
+
+Description: Policy for allowing all Dynamodb Actions for V1 links table
+
+### <a name="output_dynamodb_v1_link_table_name"></a> [dynamodb\_v1\_link\_table\_name](#output\_dynamodb\_v1\_link\_table\_name)
+
+Description: v1 link table name
 
 ### <a name="output_ipfs_peer_bitswap_config_bucket"></a> [ipfs\_peer\_bitswap\_config\_bucket](#output\_ipfs\_peer\_bitswap\_config\_bucket)
 
