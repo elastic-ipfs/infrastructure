@@ -56,7 +56,17 @@ resource "helm_release" "argocd_apps" {
   }
 
   set {
+    name  = "fluentdLambda.namespace"
+    value = kubernetes_namespace.logging_namespace.metadata[0].name
+  }
+
+  set {
     name  = "fluentd.valueFileNames"
+    value = "{values.yaml,values-${local.env}.yaml}"
+  }
+  
+  set {
+    name  = "fluentdLambda.valueFileNames"
     value = "{values.yaml,values-${local.env}.yaml}"
   }
 }
