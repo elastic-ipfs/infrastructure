@@ -31,7 +31,6 @@ module "indexer_lambda_from_sqs" {
       var.shared_stack_sqs_multihashes_policy_send,
       var.shared_stack_s3_dotstorage_policy_read,
       aws_iam_policy.sqs_indexer_policy_receive,
-      aws_iam_policy.sqs_indexer_policy_delete,
       aws_iam_policy.sqs_notifications_policy_send,
     ]
   }
