@@ -48,6 +48,7 @@ The following resources are used by this module:
 - [helm_release.argocd_apps](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
 - [helm_release.metric_server](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
 - [kubernetes_namespace.bitswap_peer_namespace](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) (resource)
+- [kubernetes_namespace.logging_namespace](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) (resource)
 - [kubernetes_service_account.irsa](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
 
 ## Required Inputs
@@ -111,6 +112,12 @@ Type: `string`
 ### <a name="input_host"></a> [host](#input\_host)
 
 Description: This URL is managed by the peer stack. EKS control plane API server endpoint
+
+Type: `string`
+
+### <a name="input_logging_namespace"></a> [logging\_namespace](#input\_logging\_namespace)
+
+Description: Namespace where fluentd will be deployed to
 
 Type: `string`
 

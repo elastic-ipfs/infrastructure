@@ -1,3 +1,18 @@
+output "dynamodb_v1_blocks_table_name" {
+  value       = aws_dynamodb_table.v1_blocks_table.name
+  description = "v1 blocks table name"
+}
+
+output "dynamodb_v1_cars_table_name" {
+  value       = aws_dynamodb_table.v1_cars_table.name
+  description = "v1 cars table name"
+}
+
+output "dynamodb_v1_link_table_name" {
+  value       = aws_dynamodb_table.v1_link_table.name
+  description = "v1 link table name"
+}
+
 output "ipfs_peer_bitswap_config_bucket" {
   value = {
     bucket = aws_s3_bucket.ipfs_peer_bitswap_config.bucket
@@ -30,6 +45,30 @@ output "dynamodb_car_policy" {
     arn  = module.dynamodb.dynamodb_car_policy.arn,
   }
   description = "Policy for allowing all Dynamodb Actions for cars table"
+}
+
+output "dynamodb_v1_blocks_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_v1_blocks_policy.name
+    arn  = aws_iam_policy.dynamodb_v1_blocks_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for V1 blocks table"
+}
+
+output "dynamodb_v1_cars_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_v1_cars_policy.name
+    arn  = aws_iam_policy.dynamodb_v1_cars_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for V1 cars table"
+}
+
+output "dynamodb_v1_link_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_v1_link_policy.name
+    arn  = aws_iam_policy.dynamodb_v1_link_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for V1 links table"
 }
 
 output "s3_config_peer_bucket_policy_read" {

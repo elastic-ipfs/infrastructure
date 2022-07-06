@@ -112,6 +112,18 @@ Description: Bucket for storing advertisement files
 
 Type: `string`
 
+### <a name="input_s3_ads_policy_read_name"></a> [s3\_ads\_policy\_read\_name](#input\_s3\_ads\_policy\_read\_name)
+
+Description: Name for policy which allows reading action for advertisement bucket
+
+Type: `string`
+
+### <a name="input_s3_ads_policy_write_name"></a> [s3\_ads\_policy\_write\_name](#input\_s3\_ads\_policy\_write\_name)
+
+Description: Name for policy which allows writting action for advertisement bucket
+
+Type: `string`
+
 ### <a name="input_shared_stack_ipfs_peer_bitswap_config_bucket_id"></a> [shared\_stack\_ipfs\_peer\_bitswap\_config\_bucket\_id](#input\_shared\_stack\_ipfs\_peer\_bitswap\_config\_bucket\_id)
 
 Description: This bucket is managed by the shared subsystem. The bucket which contains configurations that publisher lambdas require
@@ -160,6 +172,24 @@ object({
 ### <a name="input_shared_stack_sqs_multihashes_topic_arn"></a> [shared\_stack\_sqs\_multihashes\_topic\_arn](#input\_shared\_stack\_sqs\_multihashes\_topic\_arn)
 
 Description: This queue is managed by the shared subsystem. Publisher lambda (content) receives messages from this queue
+
+Type: `string`
+
+### <a name="input_sqs_ads_policy_delete_name"></a> [sqs\_ads\_policy\_delete\_name](#input\_sqs\_ads\_policy\_delete\_name)
+
+Description: Name for policy which allows deleting messages from advertisement sqs queue
+
+Type: `string`
+
+### <a name="input_sqs_ads_policy_receive_name"></a> [sqs\_ads\_policy\_receive\_name](#input\_sqs\_ads\_policy\_receive\_name)
+
+Description: Name for policy which allows receiving messages from advertisement sqs queue
+
+Type: `string`
+
+### <a name="input_sqs_ads_policy_send_name"></a> [sqs\_ads\_policy\_send\_name](#input\_sqs\_ads\_policy\_send\_name)
+
+Description: Name for policy which allows sending messages to advertisement sqs queue
 
 Type: `string`
 

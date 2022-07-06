@@ -27,6 +27,7 @@ module "indexer_lambda_from_sqs" {
     policies_list = [
       var.shared_stack_dynamodb_blocks_policy,
       var.shared_stack_dynamodb_car_policy,
+      var.shared_stack_dynamodb_link_policy,
       var.shared_stack_sqs_multihashes_policy_send,
       var.shared_stack_s3_dotstorage_policy_read,
       aws_iam_policy.sqs_indexer_policy_receive,
