@@ -1,6 +1,6 @@
 resource "aws_iam_policy" "sqs_indexer_policy_receive" {
   name        = var.sqs_indexer_policy_receive_name
-  description = "Policy for allowing publish messages in SQS"
+  description = "Policy for allowing receiving messages from SQS"
   policy      = <<EOF
 {
     "Version": "2012-10-17",
@@ -14,19 +14,7 @@ resource "aws_iam_policy" "sqs_indexer_policy_receive" {
             "Effect": "Allow",
             "Action": "sqs:GetQueueAttributes",
             "Resource": "${aws_sqs_queue.indexer_topic.arn}"
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_policy" "sqs_indexer_policy_delete" {
-  name        = var.sqs_indexer_policy_delete_name
-  description = "Policy for allowing publish messages in SQS"
-  policy      = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
+        },
         {
             "Effect": "Allow",
             "Action": "sqs:DeleteMessage",

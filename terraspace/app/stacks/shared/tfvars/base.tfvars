@@ -12,7 +12,7 @@ v1_blocks_table = {
   hash_key = "multihash"
 }
 v1_link_table = {
-  name      = "<%= expansion(':ENV') %>-ep-v1-blocks-cars"
+  name      = "<%= expansion(':ENV') %>-ep-v1-blocks-cars-position"
   hash_key  = "blockmultihash"
   range_key = "carpath"
 }
