@@ -1,1 +1,0 @@
-vpc_id = "vpc-08dde3dcfae767b5b" # management-ipfs-elastic # TODO: https://www.notion.so/IPFS-Elastic-Provider-log-868adc5d3a8f4094bf5cd0eb26679c15?v=6224285d255941269d9a8aee6b6c6171&p=18fa9755d88e4763afb86848735a5c43
