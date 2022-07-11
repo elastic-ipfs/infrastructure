@@ -77,7 +77,7 @@ module "eks" {
     "185.152.47.29/32",
     "168.227.34.17/32",
     "81.111.55.128/32",
-    "187.106.83.210/32" # Temporary. TODO: Remove it after 01/07/2022
+    "201.33.204.216/32"
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
