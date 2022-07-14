@@ -37,7 +37,7 @@ build {
 
   provisioner "shell" { # Install node and create base dir
     inline = [
-      "export DEBIAN_FRONTEND=\"noninteractive\"",
+      "echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections sudo apt-get install -y -q nodejs",
       "curl -sL https://deb.nodesource.com/setup_${var.node_version}.x | sudo bash -",
       "sudo apt-get -y install nodejs",
       "mkdir bucket-mirror"
