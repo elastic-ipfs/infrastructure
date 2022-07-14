@@ -35,15 +35,18 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-  provisioner "shell" { # Install node
-    inline = [ 
+  provisioner "shell" {
+    inline = [
+      "export DEBIAN_FRONTEND=\"noninteractive\"",
+      # Install node
       "curl -sL https://deb.nodesource.com/setup_${var.node_version}.x | sudo bash -",
-      "sudo apt-get -y install nodejs"
+      # Create dir to store scripts
+      "mkdir bucket-mirror"
     ]
   }
 
   provisioner "file" { # Copy script
     source      = "../../utils/bucket-mirror/"
-    destination = "/home/ubuntu/bucket-mirror/"
+    destination = "/home/ubuntu/bucket-mirror"
   }
 }
