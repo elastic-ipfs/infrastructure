@@ -9,12 +9,12 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "bucker_mirror" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ep-bucket-mirror*"]
+    values = [var.bucket_mirror_ami_name]
   }
 
   filter {
@@ -41,7 +41,7 @@ data "template_file" "runner_server" {
 }
 
 resource "aws_instance" "bucket_mirror_runner" {
-  ami                    = data.aws_ami.ubuntu.id
+  ami                    = data.aws_ami.bucker_mirror.id
   instance_type          = "t2.medium"
   subnet_id              = var.subnet_id
   user_data              = data.template_file.runner_server.rendered

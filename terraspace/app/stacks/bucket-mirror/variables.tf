@@ -18,6 +18,11 @@ variable "ec2_instance_name" {
   description = "Name for the EC2 which will run bucket mirror"
 }
 
+variable "bucket_mirror_ami_name" {
+  type        = string
+  description = "Name of image (AMI) which contains 'bucket-mirror' prepared to run"
+}
+
 variable "source_bucket_name" {
   type        = string
   description = "Name of bucket to read objects from"
@@ -62,10 +67,10 @@ variable "next_page_await" {
   default     = 0
 }
 
-# variable "policies_list" {
-#   type = list(object({
-#     name = string,
-#     arn  = string,
-#   }))
-#   description = "List of policies which are going to be attached to EC2 role"
-# }
+variable "policies_list" {
+  type = list(object({
+    name = string,
+    arn  = string,
+  }))
+  description = "List of policies which are going to be attached to EC2 role"
+}
