@@ -35,12 +35,11 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-  provisioner "shell" {
+  provisioner "shell" { # Install node and create base dir
     inline = [
       "export DEBIAN_FRONTEND=\"noninteractive\"",
-      # Install node
       "curl -sL https://deb.nodesource.com/setup_${var.node_version}.x | sudo bash -",
-      # Create dir to store scripts
+      "sudo apt-get -y install nodejs",
       "mkdir bucket-mirror"
     ]
   }
