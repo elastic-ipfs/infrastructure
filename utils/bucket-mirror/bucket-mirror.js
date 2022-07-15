@@ -29,7 +29,6 @@ async function* listAllKeys(opts) {
 
 const opts = {
   Bucket: process.env.SOURCE_BUCKET_NAME,
-  // Prefix: "raw/"
 }
 
 if (process.env.S3_PREFIX) {
