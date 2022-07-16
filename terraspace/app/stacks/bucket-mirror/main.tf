@@ -9,6 +9,10 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+data "aws_availability_zones" "azs" {
+  state = "available"
+}
+
 data "aws_ami" "bucker_mirror" {
   most_recent = true
 
@@ -25,10 +29,9 @@ data "aws_ami" "bucker_mirror" {
   owners = [local.aws_account_id] # PLNITRO
 }
 
-# TODO: DO we want configure the env variables here instead of the template? I think it makes sense...
 data "template_file" "runner_server" {
   template = file("config-and-start.sh")
-  vars = { # TODO: Alguns desses valores dá pra pegar de outputs mesmo!
+  vars = {
     source_bucket_name    = var.source_bucket_name
     s3_client_aws_region  = var.s3_client_aws_region
     s3_prefix             = var.s3_prefix
@@ -44,6 +47,7 @@ resource "aws_instance" "bucket_mirror_runner" {
   ami                    = data.aws_ami.bucker_mirror.id
   instance_type          = "t2.medium"
   subnet_id              = var.subnet_id
+  availability_zone      = data.aws_availability_zones.azs.names[0]
   user_data              = data.template_file.runner_server.rendered
   vpc_security_group_ids = [var.security_group_id]
   key_name               = var.key_name
@@ -54,5 +58,16 @@ resource "aws_instance" "bucket_mirror_runner" {
   }
 }
 
-# TODO: Configure EBS volume
-## Is this set by AMI? Does that really makes sense? (Guess it does when we're intending to autoscale?)
+resource "aws_ebs_volume" "bucker_mirror_volume" {
+  availability_zone = data.aws_availability_zones.azs.names[0]
+  size              = 2
+  tags = {
+    Name = "bucket-mirror"
+  }
+}
+
+resource "aws_volume_attachment" "bucker_mirror_volume_attach" {
+  device_name = "/dev/sda1"
+  volume_id   = aws_ebs_volume.bucker_mirror_volume.id
+  instance_id = aws_instance.bucket_mirror_runner.id
+}

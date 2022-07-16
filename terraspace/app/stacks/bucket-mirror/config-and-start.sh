@@ -32,10 +32,9 @@ echo "export FILE_AWAIT=${file_await}" >> $envFile
 echo "export NEXT_PAGE_AWAIT=${next_page_await}" >> $envFile
 source $envFile
 su $user
-echo "*************"
-echo "SOURCE_BUCKET_NAME=$SOURCE_BUCKET_NAME"
-echo "*************"
 cd $userHomePath/bucket-mirror
-./run-dotstorage-prod-0.sh
+./run-continuously.sh
+# To check script output, SSH and run:
+# cat /var/log/cloud-init-output.log
 
 
