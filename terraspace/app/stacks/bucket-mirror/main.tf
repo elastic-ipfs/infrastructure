@@ -56,18 +56,14 @@ resource "aws_instance" "bucket_mirror_runner" {
   tags = {
     Name = var.ec2_instance_name
   }
-}
 
-resource "aws_ebs_volume" "bucker_mirror_volume" {
-  availability_zone = data.aws_availability_zones.azs.names[0]
-  size              = 2
-  tags = {
+  root_block_device {
+    delete_on_termination = false
+    # If this instance is terminated, it will still be possible to get the latest 'NextContinuationToken' from persistent EBS.
+    # It needs to be attached and mounted into a new instance for acessing its content.
+  }
+
+  volume_tags = {
     Name = "bucket-mirror"
   }
-}
-
-resource "aws_volume_attachment" "bucker_mirror_volume_attach" {
-  device_name = "/dev/sda1"
-  volume_id   = aws_ebs_volume.bucker_mirror_volume.id
-  instance_id = aws_instance.bucket_mirror_runner.id
 }
