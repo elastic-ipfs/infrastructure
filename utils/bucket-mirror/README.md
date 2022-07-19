@@ -1,6 +1,7 @@
-# Bucket Mirroring Trigger
+# Bucket Mirror
 
-This script will send messages to indexing SQS queue for each file that exists in a bucket.
+This script will send messages to SQS queue for each file that exists in a bucket.
+
 
 ``` sh
 export SOURCE_BUCKET_NAME=<source-bucket-name>
@@ -9,8 +10,8 @@ export SQS_CLIENT_AWS_REGION=<source-bucket-region> # If this is not set you can
 export READ_ONLY_MODE="disabled" # Otherwise it will just read existing files from bucket
 export SQS_QUEUE_URL=<SQS-queue-url> 
 export PREFIX="foldername/" # Defaults to "/" if no explicitly set. Need to set the ending "/"
-export FILE_AWAIT=300 # DHow long to await between files. Useful for avoiding DB throttling
-export NEXT_PAGE_AWAIT=1000 # DHow long to await after fetching 1000 files. Useful for avoiding DB throttling
-node bucket-mirror.js
+export FILE_AWAIT=300 # How long to await between files. Useful for avoiding DB throttling
+export NEXT_PAGE_AWAIT=1000 # How long to await after fetching 1000 files. Useful for avoiding DB throttling
 ```
 
+Review values in `run-dotstorage-prod-0.sh` and run it to execute.
