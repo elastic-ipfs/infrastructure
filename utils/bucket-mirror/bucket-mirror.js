@@ -59,7 +59,7 @@ async function main() {
 async function handleObject(object) {
   if (object.Key.endsWith(config.s3suffix)) {
     try {
-      const message = `${config.s3clientAWSRegion}/${opts.Bucket}/${object.Key}` // ex: us-east-2/dotstorage-prod-0/xxxxx.car
+      const message = `{"skipExists":true, "body": "${config.s3clientAWSRegion}/${opts.Bucket}/${object.Key}" }` // ex: {"skipExists":true, "body":  us-east-2/dotstorage-prod-0/xxxxx.car }
       await new Promise((resolve) => setTimeout(resolve, config.fileAwait))
       fileCount++
       console.log(message)
