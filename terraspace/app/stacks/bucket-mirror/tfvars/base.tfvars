@@ -9,6 +9,7 @@ ec2_instance_name      = "<%= expansion(':ENV') %>-ep-bucket-mirror"
 s3_client_aws_region   = "us-east-2"
 sqs_client_aws_region  = "us-west-2"
 sqs_queue_url          = "<%= output('indexing.sqs_indexer_topic', mock: '').to_ruby['url'] %>"
+s3_suffix              = ".car"
 policies_list = [
   <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>,
   <%= output('indexing.sqs_indexer_policy_send', mock: {}) %>,

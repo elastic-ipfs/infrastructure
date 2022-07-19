@@ -25,6 +25,7 @@ export envFile="/etc/environment"
 echo "export SOURCE_BUCKET_NAME=${source_bucket_name}" >> $envFile
 echo "export S3_CLIENT_AWS_REGION=${s3_client_aws_region}" >> $envFile
 echo "export S3_PREFIX=${s3_prefix}" >> $envFile
+echo "export S3_SUFFIX=${s3_suffix}" >> $envFile
 echo "export SQS_CLIENT_AWS_REGION=${sqs_client_aws_region}" >> $envFile
 echo "export SQS_QUEUE_URL=${sqs_queue_url}" >> $envFile
 echo "export READ_ONLY_MODE=${read_only_mode}" >> $envFile

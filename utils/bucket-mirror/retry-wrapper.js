@@ -1,6 +1,8 @@
 const sleep = require('util').promisify(setTimeout)
-const retries = process.env.RETRIES ?? 3
-const retryDelay = process.env.RETRY_DELAY ?? 100
+const config = require('./config.js')
+
+const retries = config.retries
+const retryDelay = config.retryDelay
 
 module.exports.send = async function (client, command) {
   let attempts = 0
@@ -18,7 +20,7 @@ module.exports.send = async function (client, command) {
     await sleep(retryDelay)
   } while (++attempts < retries)
 
-  logger.error(
+  console.error(
     { command, error: serializeError(error) },
     `Cannot send command after ${attempts} attempts`,
   )
@@ -28,4 +30,3 @@ module.exports.send = async function (client, command) {
 function serializeError(e) {
   return `[${e.code || e.constructor.name}] ${e.message}\n${e.stack}`
 }
-

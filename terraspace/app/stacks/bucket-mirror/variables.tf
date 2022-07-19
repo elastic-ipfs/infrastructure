@@ -35,8 +35,13 @@ variable "s3_client_aws_region" {
 
 variable "s3_prefix" {
   type        = string
-  description = "value"
-  default     = "" # TODO: Is this right, or should it be "/"?
+  description = "Only read objects with this prefix"
+  default     = ""
+}
+
+variable "s3_suffix" {
+  type = string
+  description = "Only read objects with this suffix"
 }
 
 variable "sqs_client_aws_region" {
