@@ -14,3 +14,4 @@ policies_list = [
   <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>,
   <%= output('indexing.sqs_indexer_policy_send', mock: {}) %>,
 ]
+read_only_mode     = "disabled"

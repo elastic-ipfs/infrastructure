@@ -13,5 +13,3 @@ export PREFIX="foldername/" # Defaults to "/" if no explicitly set. Need to set 
 export FILE_AWAIT=300 # How long to await between files. Useful for avoiding DB throttling
 export NEXT_PAGE_AWAIT=1000 # How long to await after fetching 1000 files. Useful for avoiding DB throttling
 ```
-
-Review values in `run-dotstorage-prod-0.sh` and run it to execute.

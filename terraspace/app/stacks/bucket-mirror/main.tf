@@ -41,6 +41,8 @@ data "template_file" "runner_server" {
     read_only_mode        = var.read_only_mode
     file_await            = var.file_await
     next_page_await       = var.next_page_await
+    node_env              = var.node_env
+    log_level             = var.log_level
   }
 }
 

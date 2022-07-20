@@ -79,3 +79,15 @@ variable "policies_list" {
   }))
   description = "List of policies which are going to be attached to EC2 role"
 }
+
+variable "node_env" {
+  type        = number
+  description = "node_env environment variable value. Has effect on logs"
+  default     = "production"
+}
+
+variable "log_level" {
+  type        = number
+  description = "which level of logs should be outputted"
+  default     = "info"
+}
