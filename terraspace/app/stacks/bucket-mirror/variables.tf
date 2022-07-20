@@ -81,13 +81,13 @@ variable "policies_list" {
 }
 
 variable "node_env" {
-  type        = number
+  type        = string
   description = "node_env environment variable value. Has effect on logs"
   default     = "production"
 }
 
 variable "log_level" {
-  type        = number
+  type        = string
   description = "which level of logs should be outputted"
   default     = "info"
 }
