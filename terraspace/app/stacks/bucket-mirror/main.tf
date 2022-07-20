@@ -35,6 +35,7 @@ data "template_file" "runner_server" {
     source_bucket_name    = var.source_bucket_name
     s3_client_aws_region  = var.s3_client_aws_region
     s3_prefix             = var.s3_prefix
+    s3_suffix             = var.s3_suffix
     sqs_client_aws_region = local.region
     sqs_queue_url         = var.sqs_queue_url
     read_only_mode        = var.read_only_mode
