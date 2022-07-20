@@ -3,9 +3,10 @@ const config = require('./config.js')
 const retryWrapper = require('./retry-wrapper.js')
 const sqsMessageSender = require('./sqs-message-sender.js')
 const fs = require('fs')
+const { logger, serializeError } = require('./logging')
 
 const S3client = new S3Client({
-  region: config.s3clientAWSRegion
+  region: config.s3clientAWSRegion,
 })
 
 async function* listAllKeys(opts) {
@@ -17,6 +18,7 @@ async function* listAllKeys(opts) {
       opts.ContinuationToken = config.nextContinuationToken
       firstRun = false
     }
+
     const command = new ListObjectsV2Command(opts)
     const foundObjects = await retryWrapper.send(S3client, command)
 
@@ -24,7 +26,7 @@ async function* listAllKeys(opts) {
     if (opts.ContinuationToken) {
       fs.writeFileSync('./NextContinuationToken', opts.ContinuationToken)
     } else {
-      console.log('Last page: empty continuation token!')
+      logger.info('Last page: empty continuation token!')
     }
     yield foundObjects
   } while (opts.ContinuationToken)
@@ -32,6 +34,7 @@ async function* listAllKeys(opts) {
 
 const opts = {
   Bucket: config.sourceBucketName,
+  // MaxKeys: 3,
 }
 
 if (config.s3prefix) {
@@ -42,30 +45,32 @@ fileCount = 0
 messageSentCount = 0
 
 async function main() {
-  console.log('Starting to process all keys from ' + opts.Bucket)
+  logger.info('Starting to process all keys from ' + opts.Bucket)
   const start = Date.now()
   for await (const data of listAllKeys(opts)) {
-    await new Promise((resolve) => setTimeout(resolve, config.nextPageAwait))
     for (const object of data.Contents) {
       await handleObject(object)
     }
   }
   const duration = Date.now() - start
-  console.log(
+  logger.info(
     `Finished processing all keys from ${opts.Bucket}. ${fileCount} files were processed and ${messageSentCount} messages were published to queue ${config.sqsQueueUrl}. Processing time(ms): ${duration}`,
   )
 }
 
 async function handleObject(object) {
+  fileCount++
   if (object.Key.endsWith(config.s3suffix)) {
     try {
       const message = `{"skipExists":true, "body": "${config.s3clientAWSRegion}/${opts.Bucket}/${object.Key}" }` // ex: {"skipExists":true, "body":  us-east-2/dotstorage-prod-0/xxxxx.car }
+      // const message = `${config.s3clientAWSRegion}/${opts.Bucket}/${object.Key}` // ex: us-east-2/dotstorage-prod-0/xxxxx.car
       await new Promise((resolve) => setTimeout(resolve, config.fileAwait))
-      fileCount++
-      console.log(message)
-      console.log(
-        `Still processing... Current status: ${fileCount} files were processed and ${messageSentCount} messages were published`,
-      )
+      logger.debug(message)
+      if (fileCount % 10000 == 0) { // Reduce amount of logs
+        logger.info(
+          `Still processing... Current status: ${fileCount} files were processed and ${messageSentCount} messages were published`,
+        )
+      }
       if (config.readOnlyMode == 'disabled') {
         success = sqsMessageSender.sendIndexSQSMessage(message)
         if (success) messageSentCount++
@@ -75,6 +80,10 @@ async function handleObject(object) {
       console.error(`message ${message} has failed to be processed`)
       console.error(e.message)
     }
+  } else {
+    logger.debug(
+      `Skipping object ${object.Key} because of unmatched suffix. Expected: ${config.s3suffix}`,
+    )
   }
 }
 
