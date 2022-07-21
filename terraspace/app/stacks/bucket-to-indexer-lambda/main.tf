@@ -19,8 +19,9 @@ data "terraform_remote_state" "indexing" {
 }
 
 module "lambda_from_sns" {
-  source = "../../modules/lambda-from-sns"
+  source    = "../../modules/lambda-from-sns"
   sns_topic = var.sns_topic
+  region    = local.region
   lambda = {
     image_uri   = local.bucket_to_indexer_image_url
     name        = var.lambda.name
