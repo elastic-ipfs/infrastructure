@@ -13,11 +13,15 @@ variable "lambda" {
 }
 
 variable "sns_topic" {
-  type = string
+  type        = string
   description = "Name of SNS topic which lambda should subscribe to"
 }
 
 variable "custom_metrics" {
   type    = list(string)
   default = []
+}
+
+variable "region" {
+  type = string
 }

@@ -41,3 +41,4 @@ cd $userHomePath/bucket-mirror
 # To check script output, SSH and run:
 # cat /var/log/cloud-init-output.log
 # tail +1f /var/log/cloud-init-output.log
+

@@ -58,6 +58,12 @@ object({
   })
 ```
 
+### <a name="input_region"></a> [region](#input\_region)
+
+Description: n/a
+
+Type: `string`
+
 ### <a name="input_sns_topic"></a> [sns\_topic](#input\_sns\_topic)
 
 Description: Name of SNS topic which lambda should subscribe to
