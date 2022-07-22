@@ -3,7 +3,7 @@ const config = require('./config.js')
 const retryWrapper = require('./retry-wrapper.js')
 const sqsMessageSender = require('./sqs-message-sender.js')
 const fs = require('fs')
-const { logger, serializeError } = require('./logging')
+const { logger } = require('./logging')
 
 const S3client = new S3Client({
   region: config.s3clientAWSRegion,
@@ -42,7 +42,12 @@ if (config.s3prefix) {
 }
 
 fileCount = 0
+skippedFileSuffixCount = 0
 messageSentCount = 0
+
+function getStatusText(fileCount, messageSentCount, skippedFileSuffixCount) {
+  return `${fileCount} files were processed. ${messageSentCount} messages were published. ${skippedFileSuffixCount} were skipped because didn't match suffix "${config.s3suffix}"`
+}
 
 async function main() {
   logger.info('Starting to process all keys from ' + opts.Bucket)
@@ -54,7 +59,11 @@ async function main() {
   }
   const duration = Date.now() - start
   logger.info(
-    `Finished processing all keys from ${opts.Bucket}. ${fileCount} files were processed and ${messageSentCount} messages were published to queue ${config.sqsQueueUrl}. Processing time(ms): ${duration}`,
+    `Finished processing all keys from ${opts.Bucket}. ${getStatusText(
+      fileCount,
+      messageSentCount,
+      skippedFileSuffixCount,
+    )}`,
   )
 }
 
@@ -66,14 +75,19 @@ async function handleObject(object) {
       // const message = `${config.s3clientAWSRegion}/${opts.Bucket}/${object.Key}` // ex: us-east-2/dotstorage-prod-0/xxxxx.car
       await new Promise((resolve) => setTimeout(resolve, config.fileAwait))
       logger.debug(message)
-      if (fileCount % 10000 == 0) { // Reduce amount of logs
-        logger.info(
-          `Still processing... Current status: ${fileCount} files were processed and ${messageSentCount} messages were published`,
-        )
-      }
       if (config.readOnlyMode == 'disabled') {
         success = sqsMessageSender.sendIndexSQSMessage(message)
         if (success) messageSentCount++
+      }
+      if (fileCount % config.logAfterValueFiles == 0) {
+        // Reduce amount of logs
+        logger.info(
+          `Still processing... Current status: ${getStatusText(
+            fileCount,
+            messageSentCount,
+            skippedFileSuffixCount,
+          )}`,
+        )
       }
     } catch (e) {
       // Don't fail loop over one errored file
@@ -81,6 +95,7 @@ async function handleObject(object) {
       console.error(e.message)
     }
   } else {
+    skippedFileSuffixCount++
     logger.debug(
       `Skipping object ${object.Key} because of unmatched suffix. Expected: ${config.s3suffix}`,
     )

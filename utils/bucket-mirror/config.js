@@ -11,6 +11,7 @@ const {
   FILE_AWAIT: fileAwait,
   RETRIES: retries,
   RETRY_DELAY: retryDelay,
+  LOG_AFTER_VALUE_FILES: logAfterValueFiles
 } = process.env
 
 module.exports = {
@@ -26,4 +27,5 @@ module.exports = {
   fileAwait: fileAwait ?? 0,
   retries: retries ?? 3,
   retryDelay: retryDelay ?? 100,
+  logAfterValueFiles: logAfterValueFiles ?? 10000
 }

@@ -91,3 +91,8 @@ variable "log_level" {
   description = "which level of logs should be outputted"
   default     = "info"
 }
+
+variable "log_after_value_files" {
+  type        = number
+  description = "define after how many files to update run status in log"
+}

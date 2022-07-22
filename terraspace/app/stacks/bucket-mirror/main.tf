@@ -43,6 +43,7 @@ data "template_file" "runner_server" {
     next_page_await       = var.next_page_await
     node_env              = var.node_env
     log_level             = var.log_level
+    log_after_value_files = var.log_after_value_files
   }
 }
 
