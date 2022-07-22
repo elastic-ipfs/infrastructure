@@ -31,11 +31,13 @@ echo "export SQS_QUEUE_URL=${sqs_queue_url}" >> $envFile
 echo "export READ_ONLY_MODE=${read_only_mode}" >> $envFile
 echo "export FILE_AWAIT=${file_await}" >> $envFile
 echo "export NEXT_PAGE_AWAIT=${next_page_await}" >> $envFile
+echo "export NODE_ENV=${node_env}" >> $envFile
+echo "export LOG_LEVEL=${log_level}" >> $envFile
+echo "export LOG_AFTER_VALUE_FILES=${log_after_value_files}" >> $envFile
 source $envFile
 su $user
 cd $userHomePath/bucket-mirror
 ./run-continuously.sh
 # To check script output, SSH and run:
 # cat /var/log/cloud-init-output.log
-
-
+# tail +1f /var/log/cloud-init-output.log

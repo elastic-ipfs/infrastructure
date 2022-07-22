@@ -10,7 +10,9 @@ s3_client_aws_region   = "us-east-2"
 sqs_client_aws_region  = "us-west-2"
 sqs_queue_url          = "<%= output('indexing.sqs_indexer_topic', mock: '').to_ruby['url'] %>"
 s3_suffix              = ".car"
+log_after_value_files  = 10000
 policies_list = [
   <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>,
   <%= output('indexing.sqs_indexer_policy_send', mock: {}) %>,
 ]
+read_only_mode     = "disabled"

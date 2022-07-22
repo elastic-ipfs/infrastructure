@@ -1,4 +1,6 @@
+
 const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs')
+const { logger } = require('./logging')
 const config = require('./config.js')
 const retryWrapper = require('./retry-wrapper.js')
 
@@ -15,10 +17,10 @@ module.exports.sendIndexSQSMessage = async function(message) {
 
   try {
     const data = await retryWrapper.send(SQSclient, command)
-    console.log('Send Message Success', data.MessageId)
+    logger.debug('Send Message Success', data.MessageId)
     success = true;
   } catch (error) {
-    console.error('Send Message Error', error)
+    logger.error('Send Message Error', error)
     success = false;
   } finally {
     return success;
