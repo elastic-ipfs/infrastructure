@@ -24,8 +24,8 @@ source "amazon-ebs" "ubuntu" {
   tags = {
     Name       = "bucket-mirror"
     Team       = "NearForm"
-    Project    = "IPFS-Elastic-Provider"
-    Repository = "https://github.com/web3-storage/ipfs-elastic-provider-infrastructure"
+    Project    = "Elastic IPFS"
+    Repository = "https://github.com/elastic-ipfs/infrastructure"
     ManagedBy  = "Packer"
   }
 }
