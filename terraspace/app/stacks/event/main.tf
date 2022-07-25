@@ -9,6 +9,13 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+resource "aws_ecr_repository" "ecr_repo_event_delivery_lambda" {
+  name = var.ecr_repository_name
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
 resource "aws_sqs_queue" "event_delivery_queue" {
   name                       = var.sqs_event_delivery_queue_name
   message_retention_seconds  = 86400 # 1 day
@@ -45,11 +52,4 @@ resource "aws_sns_topic_subscription" "events_subscription" {
   topic_arn = aws_sns_topic.event_topic.arn
   protocol  = "sqs"
   endpoint  = aws_sqs_queue.event_delivery_queue.arn
-}
-
-resource "aws_ecr_repository" "ecr_repo_event_delivery_lambda" {
-  name = var.ecr_repository_name
-  image_scanning_configuration {
-    scan_on_push = true
-  }
 }
