@@ -1,8 +1,8 @@
-# ipfs-elastic-provider-infrastructure
+# infrastructure
 
 ## Description
 
-`ipfs-elastic-provider-infrastructure` is the automation responsible for provisioning the required infrastructure for the `IPFS-Elastic-Provider` project.
+`infrastructure` is the automation responsible for provisioning the required infrastructure for the `Elastic IPFS` project.
 
 ## Terraform
 
@@ -39,7 +39,7 @@ There are also modules with smaller scope for grouping resources that serve a sp
 
 From root folder:
 ``` sh
-go mod init github.com/web3-storage/ipfs-elastic-provider-infrastructure
+go mod init github.com/elastic-ipfs/infrastructure
 go mod tidy
 cd <test-folder>
 go test
