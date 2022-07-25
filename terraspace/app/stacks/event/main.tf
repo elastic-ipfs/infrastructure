@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-resource "aws_sqs_queue" "event_queue" {
+resource "aws_sqs_queue" "event_delivery_queue" {
   name                       = var.sqs_event_delivery_queue_name
   message_retention_seconds  = 86400 # 1 day
   visibility_timeout_seconds = 300   # 5 min
@@ -19,7 +19,7 @@ module "event_delivery_lambda_from_sqs" {
   source = "../../modules/lambda-from-sqs"
 
   sqs_trigger = {
-    arn                                = aws_sqs_queue.event_queue.arn
+    arn                                = aws_sqs_queue.event_delivery_queue.arn
     batch_size                         = var.batch_size
     maximum_batching_window_in_seconds = 30
   }
@@ -32,13 +32,7 @@ module "event_delivery_lambda_from_sqs" {
     reserved_concurrent_executions = -1 # No restrictions
     environment_variables          = local.environment_variables
     policies_list = [
-      var.shared_stack_dynamodb_blocks_policy,
-      var.shared_stack_dynamodb_car_policy,
-      var.shared_stack_dynamodb_link_policy,
-      var.shared_stack_sqs_multihashes_policy_send,
-      var.shared_stack_s3_dotstorage_policy_read,
-      aws_iam_policy.sqs_indexer_policy_receive,
-      aws_iam_policy.sqs_notifications_policy_send,
+      aws_iam_policy.sqs_event_delivery_queue_receive
     ]
   }
   metrics_namespace = var.event_delivery_lambda.metrics_namespace
@@ -51,5 +45,12 @@ resource "aws_sns_topic" "event_topic" {
 resource "aws_sns_topic_subscription" "events_subscription" {
   topic_arn = aws_sns_topic.event_topic.arn
   protocol  = "sqs"
-  endpoint  = aws_sqs_queue.event_queue.arn
+  endpoint  = aws_sqs_queue.event_delivery_queue.arn
+}
+
+resource "aws_ecr_repository" "ecr_repo_event_delivery_lambda" {
+  name = var.ecr_repository_name
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }

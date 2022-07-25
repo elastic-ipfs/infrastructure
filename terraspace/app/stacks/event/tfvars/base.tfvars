@@ -1,0 +1,13 @@
+account_id                    = "<%= expansion(':ACCOUNT') %>"
+ecr_repository_name           = "<%= expansion(':ENV') %>-ep-event-delivery-lambda"
+event_delivery_image_version  = "latest"
+sns_event_topic_name          = "<%= expansion(':ENV') %>-ep-event-topic"
+sqs_event_delivery_queue_name = "<%= expansion(':ENV') %>-ep-event-delivery-queue"
+event_delivery_lambda = {
+  name              = "<%= expansion(':ENV') %>-ep-event-delivery"
+  metrics_namespace = "<%= expansion(':ENV') %>-ep-event-delivery-lambda-metrics"
+}
+sqs_event_delivery_queue_policy_receive_name = "<%= expansion(':ENV') %>-ep-sqs-event-delivery-receive"
+sqs_event_delivery_queue_policy_send_name    = "<%= expansion(':ENV') %>-ep-sqs-event-delivery-send"
+sns_event_topic_policy_send_name             = "<%= expansion(':ENV') %>-ep-sns-event-send"
+node_env                                     = "<%= expansion(':ENV') %>"
