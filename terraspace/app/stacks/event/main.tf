@@ -17,7 +17,6 @@ resource "aws_sqs_queue" "event_delivery_queue" {
 
 module "event_delivery_lambda_from_sqs" {
   source = "../../modules/lambda-from-sqs"
-
   sqs_trigger = {
     arn                                = aws_sqs_queue.event_delivery_queue.arn
     batch_size                         = var.batch_size

@@ -43,7 +43,12 @@ variable "sns_event_topic_policy_send_name" {
 }
 
 ## TODO: Will this be needed?
-variable "sqs_event_delivery_queue_send" {
+variable "sqs_event_delivery_queue_policy_send_name" {
   type        = string
   description = "Name for policy which allows sending messages to event delivery sqs queue"
+}
+
+variable "batch_size" {
+  type        = string
+  description = "Amount of messages which event delivery lambda should batch to handle simultaneously"
 }
