@@ -11,7 +11,6 @@ batch_size                                    = 1
 concurrency                                   = 64
 node_env                                      = "<%= expansion(':ENV') %>"
 sqs_indexer_policy_receive_name               = "<%= expansion(':ENV') %>-ep-sqs-indexer-receive"
-sqs_indexer_policy_delete_name                = "<%= expansion(':ENV') %>-ep-sqs-indexer-delete"
 sqs_notifications_policy_receive_name         = "<%= expansion(':ENV') %>-ep-sqs-notifications-receive"
 sqs_notifications_policy_delete_name          = "<%= expansion(':ENV') %>-ep-sqs-notifications-delete"
 sqs_notifications_policy_send_name            = "<%= expansion(':ENV') %>-ep-sqs-notifications-send"

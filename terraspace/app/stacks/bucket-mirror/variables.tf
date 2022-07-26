@@ -44,11 +44,6 @@ variable "s3_suffix" {
   description = "Only read objects with this suffix"
 }
 
-variable "sqs_client_aws_region" {
-  type        = string
-  description = "Which region is the indexer SQS queue"
-}
-
 variable "sqs_queue_url" {
   type        = string
   description = "indexer SQS queue URL"

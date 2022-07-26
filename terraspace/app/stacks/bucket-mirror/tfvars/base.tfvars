@@ -7,7 +7,6 @@ bucket_mirror_ami_name = "bucket-mirror"
 source_bucket_name     = "dotstorage-<%= expansion(':ENV') %>-0"
 ec2_instance_name      = "<%= expansion(':ENV') %>-ep-bucket-mirror"
 s3_client_aws_region   = "us-east-2"
-sqs_client_aws_region  = "us-west-2"
 sqs_queue_url          = "<%= output('indexing.sqs_indexer_topic', mock: '').to_ruby['url'] %>"
 s3_suffix              = ".car"
 log_after_value_files  = 10000

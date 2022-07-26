@@ -53,6 +53,12 @@ Description: AWS key Pair name
 
 Type: `string`
 
+### <a name="input_log_after_value_files"></a> [log\_after\_value\_files](#input\_log\_after\_value\_files)
+
+Description: define after how many files to update run status in log
+
+Type: `number`
+
 ### <a name="input_policies_list"></a> [policies\_list](#input\_policies\_list)
 
 Description: List of policies which are going to be attached to EC2 role
@@ -90,12 +96,6 @@ Description: Name of bucket to read objects from
 
 Type: `string`
 
-### <a name="input_sqs_client_aws_region"></a> [sqs\_client\_aws\_region](#input\_sqs\_client\_aws\_region)
-
-Description: Which region is the indexer SQS queue
-
-Type: `string`
-
 ### <a name="input_sqs_queue_url"></a> [sqs\_queue\_url](#input\_sqs\_queue\_url)
 
 Description: indexer SQS queue URL
@@ -120,6 +120,14 @@ Type: `number`
 
 Default: `0`
 
+### <a name="input_log_level"></a> [log\_level](#input\_log\_level)
+
+Description: which level of logs should be outputted
+
+Type: `string`
+
+Default: `"info"`
+
 ### <a name="input_next_page_await"></a> [next\_page\_await](#input\_next\_page\_await)
 
 Description: How long to await after fetching 1000 files. Useful for avoiding DB throttling
@@ -127,6 +135,14 @@ Description: How long to await after fetching 1000 files. Useful for avoiding DB
 Type: `number`
 
 Default: `0`
+
+### <a name="input_node_env"></a> [node\_env](#input\_node\_env)
+
+Description: node\_env environment variable value. Has effect on logs
+
+Type: `string`
+
+Default: `"production"`
 
 ### <a name="input_read_only_mode"></a> [read\_only\_mode](#input\_read\_only\_mode)
 
