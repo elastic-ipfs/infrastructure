@@ -73,6 +73,7 @@ resource "aws_sqs_queue" "indexer_topic_dlq" {
   visibility_timeout_seconds = 300
 }
 
+### Deprecated. TODO: This must be removed after indexer app starts using "events topic" from "events stack"
 resource "aws_sqs_queue" "notifications_topic" {
   name                       = var.notifications_topic_name
   message_retention_seconds  = 900 # 15 min
