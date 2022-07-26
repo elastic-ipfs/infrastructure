@@ -44,7 +44,6 @@ EOF
 
 resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
   queue_url = aws_sqs_queue.event_delivery_queue.id
-
   policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -53,7 +52,6 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
     {
       "Sid": "First",
       "Effect": "Allow",
-      "Principal": "*",
       "Action": "sqs:SendMessage",
       "Resource": "${aws_sqs_queue.event_delivery_queue.arn}",
       "Condition": {
@@ -66,10 +64,6 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
 }
 POLICY
 }
-
-# Principal = {
-#     Service = "sns.amazonaws.com"
-# }
 
 #### TODO: Does SNS need that somehow? If just subscription is enough, remove this.
 resource "aws_iam_policy" "sqs_event_delivery_queue_send" {
