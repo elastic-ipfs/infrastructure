@@ -52,6 +52,9 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
     {
       "Sid": "First",
       "Effect": "Allow",
+      "Principal": {
+        "Service": "sns.amazonaws.com"
+      },
       "Action": "sqs:SendMessage",
       "Resource": "${aws_sqs_queue.event_delivery_queue.arn}",
       "Condition": {
