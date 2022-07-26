@@ -62,6 +62,7 @@ module "content_lambda_from_sqs" {
       var.shared_stack_s3_config_peer_bucket_policy_read,
       var.shared_stack_sqs_multihashes_policy_receive,
       var.shared_stack_sqs_multihashes_policy_delete,
+      var.event_stack_sns_topic_policy_send,
       aws_iam_policy.s3_ads_policy_read,
       aws_iam_policy.s3_ads_policy_write,
       aws_iam_policy.sqs_ads_policy_send,
@@ -103,6 +104,7 @@ module "ads_lambda_from_sqs" {
     )
     policies_list = [
       var.shared_stack_s3_config_peer_bucket_policy_read,
+      var.event_stack_sns_topic_policy_send,
       aws_iam_policy.s3_ads_policy_write,
       aws_iam_policy.s3_ads_policy_read,
       aws_iam_policy.sqs_ads_policy_receive,

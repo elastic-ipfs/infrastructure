@@ -30,6 +30,7 @@ module "indexer_lambda_from_sqs" {
       var.shared_stack_dynamodb_link_policy,
       var.shared_stack_sqs_multihashes_policy_send,
       var.shared_stack_s3_dotstorage_policy_read,
+      var.event_stack_sns_topic_policy_send,
       aws_iam_policy.sqs_indexer_policy_receive,
       aws_iam_policy.sqs_notifications_policy_send,
     ]
@@ -79,3 +80,4 @@ resource "aws_sqs_queue" "notifications_topic" {
   message_retention_seconds  = 900 # 15 min
   visibility_timeout_seconds = 300 # 5 min
 }
+###

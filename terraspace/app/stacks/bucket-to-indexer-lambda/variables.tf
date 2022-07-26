@@ -32,3 +32,11 @@ variable "bucket_to_indexer_lambda_image_version" {
   default     = "latest"
   description = "Version tag for bucket_to_indexer lambda"
 }
+
+variable "event_stack_sns_topic_policy_send" {
+  type = object({
+    name = string
+    arn  = string
+  })
+  description = "This policy is managed by the event stack. Lambda requires policy for sending events through pub/sub messaging"
+}

@@ -34,7 +34,8 @@ module "lambda_from_sns" {
     }
 
     policies_list = [
-      data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send
+      data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send,
+      var.event_stack_sns_topic_policy_send,
     ]
   }
 }

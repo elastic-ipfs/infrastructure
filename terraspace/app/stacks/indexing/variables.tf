@@ -131,6 +131,14 @@ variable "shared_stack_s3_dotstorage_policy_read" {
   description = "This policy is managed by the shared stack. Indexer lambda requires policy for reading external bucket 'dotstorage_prod_0' objects content"
 }
 
+variable "event_stack_sns_topic_policy_send" {
+  type = object({
+    name = string
+    arn  = string
+  })
+  description = "This policy is managed by the event stack. Lambda requires policy for sending events through pub/sub messaging"
+}
+
 variable "indexing_lambda_image_version" {
   type        = string
   default     = "latest"
