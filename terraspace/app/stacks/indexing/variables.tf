@@ -7,10 +7,6 @@ variable "indexer_topic_name" {
   type        = string
   description = "Name for indexer sqs queue. This is queue is supposed to be read by indexer lambda"
 }
-variable "notifications_topic_name" {
-  type        = string
-  description = "Name for notifications sqs queue. This is queue is supposed to have events created and published by indexer lambda. It can be read by external components"
-}
 
 variable "indexer_lambda" {
   type = object({
@@ -65,6 +61,13 @@ variable "sqs_indexer_policy_send_name" {
   description = "Name for policy which allows sending messages to indexer sqs queue"
 }
 
+### Deprecated. TODO: This must be removed after indexer app starts using "events topic" from "events stack"
+
+variable "notifications_topic_name" {
+  type        = string
+  description = "Name for notifications sqs queue. This is queue is supposed to have events created and published by indexer lambda. It can be read by external components"
+}
+
 variable "sqs_notifications_policy_receive_name" {
   type        = string
   description = "Name for policy which allows receiving messages from notifications sqs queue"
@@ -79,6 +82,8 @@ variable "sqs_notifications_policy_send_name" {
   type        = string
   description = "Name for policy which allows sending messages to notifications sqs queue"
 }
+
+######
 
 variable "shared_stack_sqs_multihashes_topic_url" {
   type        = string
