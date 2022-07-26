@@ -67,21 +67,3 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
 }
 POLICY
 }
-
-#### TODO: Does SNS need that somehow? If just subscription is enough, remove this.
-resource "aws_iam_policy" "sqs_event_delivery_queue_send" {
-  name        = var.sqs_event_delivery_queue_policy_send_name
-  description = "Policy for allowing publish messages in SQS"
-  policy      = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.event_delivery_queue.arn}"
-        }
-    ]
-}
-EOF
-}
