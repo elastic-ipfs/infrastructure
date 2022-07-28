@@ -21,6 +21,7 @@ shared_stack_dynamodb_car_policy              = <%= output('shared.dynamodb_v1_c
 shared_stack_dynamodb_link_policy             = <%= output('shared.dynamodb_v1_link_policy', mock: {}) %>
 shared_stack_sqs_multihashes_policy_send      = <%= output('shared.sqs_multihashes_policy_send', mock: {}) %>
 shared_stack_s3_dotstorage_policy_read        = <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>
+event_stack_sns_events_topic_arn              = <%= output('event.sns_event_topic_arn', mock: '') %>
 event_stack_sns_topic_policy_send             = <%= output('event.sns_event_topic_policy_send', mock: {}) %>
 indexing_lambda_image_version                 = "latest"
 dynamodb_blocks_table                         = <%= output('shared.dynamodb_v1_blocks_table_name', mock: {}) %>

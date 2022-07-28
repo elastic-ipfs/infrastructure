@@ -5,3 +5,8 @@ output "sns_event_topic_policy_send" {
   }
   description = "Policy for sending messages to SNS event topic"
 }
+
+output "sns_event_topic_arn" {
+  value = aws_sns_topic.event_topic.arn
+  description = "SNS event topic"
+}

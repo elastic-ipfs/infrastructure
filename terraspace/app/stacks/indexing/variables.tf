@@ -78,6 +78,11 @@ variable "sqs_notifications_policy_send_name" {
   description = "Name for policy which allows sending messages to notifications sqs queue"
 }
 
+variable "event_stack_sns_events_topic_arn" {
+  type        = string
+  description = "SNS event topic"
+}
+
 ######
 
 variable "shared_stack_sqs_multihashes_topic_url" {
