@@ -28,7 +28,6 @@ Version:
 The following resources are used by this module:
 
 - [aws_ecr_repository.ecr_repo_indexer_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) (resource)
-- [aws_iam_policy.sqs_indexer_policy_delete](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sqs_indexer_policy_receive](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sqs_indexer_policy_send](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sqs_notifications_policy_delete](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
@@ -201,12 +200,6 @@ object({
 ### <a name="input_shared_stack_sqs_multihashes_topic_url"></a> [shared\_stack\_sqs\_multihashes\_topic\_url](#input\_shared\_stack\_sqs\_multihashes\_topic\_url)
 
 Description: This queue is managed by the shared stack. Indexer lambda sends messages to it
-
-Type: `string`
-
-### <a name="input_sqs_indexer_policy_delete_name"></a> [sqs\_indexer\_policy\_delete\_name](#input\_sqs\_indexer\_policy\_delete\_name)
-
-Description: Name for policy which allows deleting messages from indexer sqs queue
 
 Type: `string`
 
