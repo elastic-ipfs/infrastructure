@@ -20,9 +20,4 @@
 
 ### Stacks and Shared Modules
 
-This project is divided into live stacks. They are organized based on the subsystem components defined [here](https://github.com/elastic-ipfs/elastic-ipfs). You can find them in [stacks folder](terraspace/app/stacks).
-
-There are also shared modules which group resources that serve a specific purpose. For example:
-
-- [`eks-auth-sync`](terraspace/app/modules/eks-auth-sync/README.md)
-- [`lambda-from-sqs`](terraspace/app/modules/lambda-from-sqs/README.md)
+This project is divided into live stacks and shared modules, according to the [Terraspace project structure](https://terraspace.cloud/docs/intro/structure/). Stacks are organized based on the subsystem components defined [here](https://github.com/elastic-ipfs/elastic-ipfs). Check [stacks](terraspace/app/stacks) and [modules](terraspace/app/modules) folders.
