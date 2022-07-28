@@ -22,6 +22,11 @@ variable "indexing_stack_region" {
   description = "Region which indexer is deployed to"
 }
 
+variable "event_stack_region" {
+  type        = string
+  description = "Region which output event components are deployed to"
+}
+
 variable "ecr_repository_name" {
   type        = string
   description = "Name for ECR repo. We use this repo to store bucket-to-indexer lambda docker image"
@@ -31,12 +36,4 @@ variable "bucket_to_indexer_lambda_image_version" {
   type        = string
   default     = "latest"
   description = "Version tag for bucket_to_indexer lambda"
-}
-
-variable "event_stack_sns_topic_policy_send" {
-  type = object({
-    name = string
-    arn  = string
-  })
-  description = "This policy is managed by the event stack. Lambda requires policy for sending events through pub/sub messaging"
 }
