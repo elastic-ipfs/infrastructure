@@ -51,11 +51,6 @@ variable "sqs_indexer_policy_receive_name" {
   description = "Name for policy which allows receiving messages from indexer sqs queue"
 }
 
-variable "sqs_indexer_policy_delete_name" {
-  type        = string
-  description = "Name for policy which allows deleting messages from indexer sqs queue"
-}
-
 variable "sqs_indexer_policy_send_name" {
   type        = string
   description = "Name for policy which allows sending messages to indexer sqs queue"

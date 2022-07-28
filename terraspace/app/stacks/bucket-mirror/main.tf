@@ -29,6 +29,7 @@ data "aws_ami" "bucker_mirror" {
   owners = [local.aws_account_id] # PLNITRO
 }
 
+# tflint-ignore: terraform_required_providers
 data "template_file" "runner_server" {
   template = file("config-and-start.sh")
   vars = {

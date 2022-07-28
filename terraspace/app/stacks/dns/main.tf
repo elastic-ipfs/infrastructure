@@ -34,3 +34,15 @@ resource "aws_route53_record" "peer_bitswap_load_balancer" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "peer_bitswap_load_balancer_ipv6" {
+  zone_id = var.create_zone ? aws_route53_zone.hosted_zone[0].zone_id : data.aws_route53_zone.hosted_zone[0].zone_id
+  name    = local.bitswap_loadbalancer_domain
+  type    = "AAAA"
+
+  alias {
+    name                   = var.bitswap_load_balancer_dns
+    zone_id                = var.bitswap_load_balancer_hosted_zone
+    evaluate_target_health = true
+  }
+}
