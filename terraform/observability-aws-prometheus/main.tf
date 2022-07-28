@@ -63,18 +63,6 @@ resource "aws_prometheus_workspace" "ipfs_elastic_provider" {
   alias = "ipfs-elastic-provider"
 }
 
-resource "aws_grafana_workspace" "ipfs_elastic_provider" {
-  account_access_type      = "CURRENT_ACCOUNT"
-  authentication_providers = ["SAML"]
-  permission_type          = "SERVICE_MANAGED"
-  role_arn                 = aws_iam_role.assume.arn
-  data_sources = [
-    "CLOUDWATCH",
-    "PROMETHEUS",
-    "XRAY"
-  ]
-}
-
 resource "aws_sns_topic" "alerts_topic" {
   name     = "alerts-topic"
 }
