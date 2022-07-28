@@ -109,6 +109,11 @@ variable "sqs_ads_policy_delete_name" {
   description = "Name for policy which allows deleting messages from advertisement sqs queue"
 }
 
+variable "event_stack_sns_events_topic_arn" {
+  type        = string
+  description = "SNS event topic"
+}
+
 variable "event_stack_sns_topic_policy_send" {
   type = object({
     name = string
