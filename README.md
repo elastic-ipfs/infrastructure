@@ -20,12 +20,7 @@
 
 ### Stacks and Shared Modules
 
-This project is divided into live stacks, where each subsystem has its own. For example:
-
-- [`shared`](terraspace/app/stacks/shared/shared.md) (Base resources used by multiple subsystems)
-- [`indexing`](terraspace/app/stacks/indexing/indexing.md)
-- [`peer`](terraspace/app/stacks/peer/peer.md)
-- [`publishing`](terraspace/app/stacks/publishing/publishing.md)
+This project is divided into live stacks. They are organized based on the subsystem components defined [here](https://github.com/elastic-ipfs/elastic-ipfs). You can find them in [stacks folder](terraspace/app/stacks).
 
 There are also shared modules which group resources that serve a specific purpose. For example:
 
