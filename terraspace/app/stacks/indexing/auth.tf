@@ -25,6 +25,8 @@ resource "aws_iam_policy" "sqs_indexer_policy_receive" {
 EOF
 }
 
+### Deprecated. TODO: This must be removed after indexer app starts using "events topic" from "events stack"
+
 resource "aws_iam_policy" "sqs_notifications_policy_receive" {
   name        = var.sqs_notifications_policy_receive_name
   description = "Policy for allowing publish messages in SQS"
@@ -80,6 +82,8 @@ resource "aws_iam_policy" "sqs_notifications_policy_send" {
 }
 EOF
 }
+
+#############
 
 resource "aws_iam_policy" "sqs_indexer_policy_send" {
   name        = var.sqs_indexer_policy_send_name

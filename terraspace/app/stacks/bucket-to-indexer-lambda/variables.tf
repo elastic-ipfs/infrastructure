@@ -22,6 +22,11 @@ variable "indexing_stack_region" {
   description = "Region which indexer is deployed to"
 }
 
+variable "event_stack_region" {
+  type        = string
+  description = "Region which output event components are deployed to"
+}
+
 variable "ecr_repository_name" {
   type        = string
   description = "Name for ECR repo. We use this repo to store bucket-to-indexer lambda docker image"

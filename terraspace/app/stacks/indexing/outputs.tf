@@ -6,6 +6,8 @@ output "sqs_indexer_topic" {
   description = "This queue is supposed to be used for triggering indexer lambda"
 }
 
+### Deprecated. TODO: This must be removed after indexer app starts using "events topic" from "events stack"
+
 output "sqs_notifications_policy_receive" {
   value = {
     name = aws_iam_policy.sqs_notifications_policy_receive.name,
@@ -21,6 +23,8 @@ output "sqs_notifications_policy_delete" {
   }
   description = "Policy for allowing delete messages from notifications sqs queue"
 }
+
+######
 
 output "sqs_indexer_policy_send" {
   value = {
