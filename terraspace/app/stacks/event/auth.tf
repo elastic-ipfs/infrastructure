@@ -44,13 +44,11 @@ EOF
 
 resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
   queue_url = aws_sqs_queue.event_delivery_queue.id
-  policy = <<POLICY
+  policy = <<EOF
 {
   "Version": "2012-10-17",
-  "Id": "sqspolicy",
   "Statement": [
     {
-      "Sid": "First",
       "Effect": "Allow",
       "Principal": {
         "Service": "sns.amazonaws.com"
@@ -65,5 +63,5 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
     }
   ]
 }
-POLICY
+EOF
 }

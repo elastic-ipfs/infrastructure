@@ -1,4 +1,3 @@
-account_id                    = "<%= expansion(':ACCOUNT') %>"
 ecr_repository_name           = "<%= expansion(':ENV') %>-ep-event-delivery-lambda"
 event_delivery_image_version  = "latest"
 sns_event_topic_name          = "<%= expansion(':ENV') %>-ep-event-topic"
