@@ -38,8 +38,8 @@ variable "v1_blocks_table" {
 
 variable "v1_link_table" {
   type = object({
-    name     = string
-    hash_key = string
+    name      = string
+    hash_key  = string
     range_key = string
   })
   description = "v1 cars link table. This table is supposed to link blocks with CARs"
@@ -67,7 +67,12 @@ variable "config_bucket_read_policy_name" {
 
 variable "dotstorage_bucket_name" {
   type        = string
-  description = "Name of existing 'dotstorage' bucket"
+  description = "Name of existing 'dotstorage' bucket in 'us-east-2' region"
+}
+
+variable "dotstorage_bucket_1_name" {
+  type        = string
+  description = "Name of existing 'dotstorage' bucket in 'us-west-2' region"
 }
 
 variable "dotstorage_bucket_read_policy_name" {
