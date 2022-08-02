@@ -43,6 +43,7 @@ module "event_delivery_lambda_from_sqs" {
     batch_size                         = var.batch_size
     maximum_batching_window_in_seconds = 30
   }
+  sqs_trigger_function_response_types  = ["ReportBatchItemFailures"]
 
   lambda = {
     name                           = var.event_delivery_lambda.name
