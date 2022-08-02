@@ -52,3 +52,11 @@ variable "event_target" {
   default     = ""
   description = "EVENT_TARGET environment variable value for event delivery lambda"
 }
+
+variable "secrets_list" {
+   type = list(object({
+      name = string,
+      description  = string,
+    }))
+  description = "List of secrets that can be used by event stack apps"
+}

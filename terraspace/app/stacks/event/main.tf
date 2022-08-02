@@ -68,3 +68,29 @@ resource "aws_sns_topic_subscription" "events_subscription" {
   protocol  = "sqs"
   endpoint  = aws_sqs_queue.event_delivery_queue.arn
 }
+
+# resource "aws_ssm_parameter" "secret" { 
+#   name        = var.vent_target_user_parameter_name
+#   description = "Event Target User"
+#   type        = "SecureString"
+#   value       = "replace_me"
+
+#   lifecycle = {
+#     ignore_changes = [
+#       value
+#     ]
+#   }
+# }
+
+resource "aws_ssm_parameter" "secret" { 
+  for_each   = { for secret in var.secrets_list : secret.name => secret }
+  name        = each.value.name
+  description = each.value.description
+  type        = "SecureString"
+  value       = "replace_me"
+  lifecycle {
+    ignore_changes = [
+      value
+    ]
+  }
+}
