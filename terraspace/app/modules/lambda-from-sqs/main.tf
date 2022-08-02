@@ -2,7 +2,7 @@ resource "aws_lambda_event_source_mapping" "event_triggers" {
   event_source_arn                   = var.sqs_trigger.arn
   enabled                            = true
   function_name                      = aws_lambda_function.lambda.arn
-  function_response_types            = var.sqs_trigger.function_response_types
+  function_response_types            = var.sqs_trigger_function_response_types
   batch_size                         = var.sqs_trigger.batch_size
   maximum_batching_window_in_seconds = var.sqs_trigger.maximum_batching_window_in_seconds
 }
