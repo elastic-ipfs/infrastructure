@@ -8,6 +8,7 @@ variable "sqs_trigger" {
 
 variable "sqs_trigger_function_response_types" {
   type                             = list(string)
+  default                          = null
   nullable                         = true
 }
 
