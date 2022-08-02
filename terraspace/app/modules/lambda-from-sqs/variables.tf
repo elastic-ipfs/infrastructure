@@ -3,9 +3,9 @@ variable "sqs_trigger" {
     arn                                = string
     batch_size                         = number
     maximum_batching_window_in_seconds = number
+    function_response_types            = "ReportBatchItemFailures"
   })
 }
-
 
 variable "lambda" {
   type = object({

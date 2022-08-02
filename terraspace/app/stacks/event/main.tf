@@ -42,6 +42,7 @@ module "event_delivery_lambda_from_sqs" {
     arn                                = aws_sqs_queue.event_delivery_queue.arn
     batch_size                         = var.batch_size
     maximum_batching_window_in_seconds = 30
+    function_response_types            = "ReportBatchItemFailures"
   }
 
   lambda = {
