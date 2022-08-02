@@ -11,10 +11,9 @@ sns_event_topic_policy_send_name             = "<%= expansion(':ENV') %>-ep-sns-
 sqs_event_delivery_queue_policy_send_name    = "<%= expansion(':ENV') %>-ep-sqs-event-delivery-send"
 node_env                                     = "<%= expansion(':ENV') %>"
 batch_size                                   = 1
-secrets_list = [
-  {
-    name        = "/<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
-    description = "Event Target Credentials"
-  },
-]
+event_target_credentials_secret =  {
+  name        = "/<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
+  description = "Event Target Credentials"
+}
+event_credential_secret_placeholder="{credentials}"
 

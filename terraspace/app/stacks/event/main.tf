@@ -69,10 +69,9 @@ resource "aws_sns_topic_subscription" "events_subscription" {
   endpoint  = aws_sqs_queue.event_delivery_queue.arn
 }
 
-resource "aws_ssm_parameter" "secrets" { 
-  for_each   = { for secret in var.secrets_list : secret.name => secret }
-  name        = each.value.name
-  description = each.value.description
+resource "aws_ssm_parameter" "event_target_credentials" { 
+  name        = var.event_target_credentials_secret.name
+  description = var.event_target_credentials_secret.description
   type        = "SecureString"
   value       = "replace_me"
   lifecycle {
@@ -80,4 +79,9 @@ resource "aws_ssm_parameter" "secrets" {
       value
     ]
   }
+}
+
+data "aws_ssm_parameter" "event_target_credentials" {
+  name = var.event_target_credentials_secret.name
+  depends_on = [aws_ssm_parameter.event_target_credentials]
 }
