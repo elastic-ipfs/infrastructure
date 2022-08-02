@@ -13,7 +13,7 @@ node_env                                     = "<%= expansion(':ENV') %>"
 batch_size                                   = 1
 secrets_list = [
   {
-    name        = "<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
+    name        = "/<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
     description = "Event Target Credentials"
   },
 ]
