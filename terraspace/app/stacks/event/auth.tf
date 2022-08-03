@@ -65,3 +65,33 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "param_store" {
+  name        = var.sns_event_topic_policy_send_name
+  description = "Policy for allowing publish messages in SNS event topic"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameters"
+            ],
+            "Resource": [
+                "${aws_ssm_parameter.event_target_credentials.arn}"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": [
+                "arn:aws:kms:us-west-2:505595374361:key/c7462fb3-65d5-4f2d-a9d1-bdd9d11526fe"
+            ]
+        }
+    ]
+}
+EOF
+}

@@ -53,10 +53,6 @@ variable "event_target" {
   description = "EVENT_TARGET environment variable value for event delivery lambda"
 }
 
-variable "event_credential_secret_placeholder" {
-  type        = string
-  description = "Placeholder to be replaced by credentials secret"
-}
 variable "event_target_credentials_secret" {
   type = object({
     name = string,
