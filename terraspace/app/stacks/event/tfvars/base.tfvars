@@ -15,3 +15,4 @@ event_target_credentials_secret =  {
   name        = "/<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
   description = "Event Target Credentials"
 }
+read_event_target_credentials_param_policy_name = "<%= expansion(':ENV') %>-ep-param-store-event-target-credentials-read"

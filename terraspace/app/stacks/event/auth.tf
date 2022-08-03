@@ -67,8 +67,8 @@ EOF
 }
 
 resource "aws_iam_policy" "read_event_target_credentials_param" {
-  name        = var.sns_event_topic_policy_send_name
-  description = "Policy for allowing publish messages in SNS event topic"
+  name        = var.read_event_target_credentials_param_policy_name
+  description = "Policy for allowing reading secret of event target credential"
   policy      = <<EOF
 {
     "Version": "2012-10-17",
@@ -88,10 +88,12 @@ resource "aws_iam_policy" "read_event_target_credentials_param" {
                 "kms:Decrypt"
             ],
             "Resource": [
-                "arn:aws:kms:us-west-2:505595374361:key/c7462fb3-65d5-4f2d-a9d1-bdd9d11526fe"
+                "${aws_kms_key.event_stack.arn}"
             ]
         }
     ]
 }
 EOF
 }
+
+# "arn:aws:kms:us-west-2:505595374361:key/c7462fb3-65d5-4f2d-a9d1-bdd9d11526fe"

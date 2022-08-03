@@ -58,5 +58,10 @@ variable "event_target_credentials_secret" {
     name = string,
     description  = string,
   })
-  description = "List of secrets that can be used by event stack apps"
+  description = "Secret which contains credentials for events target"
+}
+
+variable "read_event_target_credentials_param_policy_name" {
+  type        = string
+  description = "Name for policy which allows reading credentials for event target"
 }

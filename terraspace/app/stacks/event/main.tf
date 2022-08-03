@@ -54,7 +54,7 @@ module "event_delivery_lambda_from_sqs" {
     environment_variables          = local.environment_variables
     policies_list = [
       aws_iam_policy.sqs_event_delivery_queue_receive,
-      aws_iam_policy.param_store.read_event_target_credentials_param
+      aws_iam_policy.read_event_target_credentials_param
     ]
   }
   metrics_namespace = var.event_delivery_lambda.metrics_namespace
@@ -70,19 +70,4 @@ resource "aws_sns_topic_subscription" "events_subscription" {
   endpoint  = aws_sqs_queue.event_delivery_queue.arn
 }
 
-resource "aws_ssm_parameter" "event_target_credentials" {
-  name        = var.event_target_credentials_secret.name
-  description = var.event_target_credentials_secret.description
-  type        = "SecureString"
-  value       = "replace_me"
-  lifecycle {
-    ignore_changes = [
-      value
-    ]
-  }
-}
 
-data "aws_ssm_parameter" "event_target_credentials" {
-  name = var.event_target_credentials_secret.name
-  depends_on = [aws_ssm_parameter.event_target_credentials]
-}
