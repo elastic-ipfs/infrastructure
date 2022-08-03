@@ -49,7 +49,7 @@ variable "batch_size" {
 
 variable "event_target" {
   type        = string
-  default     = ""
+  nullable    = true
   description = "EVENT_TARGET environment variable value for event delivery lambda"
 }
 
