@@ -15,4 +15,8 @@ event_target_credentials_secret =  {
   name        = "/<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
   description = "Event Target Credentials"
 }
+secrets_key = {
+  name        = "<%= expansion(':ENV') %>-ep-<%= expansion(':MOD_NAME') %>"
+  description = "Key for Elastic IPFS event stack secrets in <%= expansion(':ENV') %> environment"
+}
 read_event_target_credentials_param_policy_name = "<%= expansion(':ENV') %>-ep-param-store-event-target-credentials-read"

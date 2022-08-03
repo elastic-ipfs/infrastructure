@@ -55,10 +55,18 @@ variable "event_target" {
 
 variable "event_target_credentials_secret" {
   type = object({
-    name = string,
-    description  = string,
+    name        = string,
+    description = string,
   })
   description = "Secret which contains credentials for events target"
+}
+
+variable "secrets_key" {
+  type = object({
+    name        = string,
+    description = string,
+  })
+  description = "KMS key for this stack"
 }
 
 variable "read_event_target_credentials_param_policy_name" {
