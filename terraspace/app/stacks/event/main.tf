@@ -69,7 +69,7 @@ resource "aws_sns_topic_subscription" "events_subscription" {
   endpoint  = aws_sqs_queue.event_delivery_queue.arn
 }
 
-resource "aws_ssm_parameter" "event_target_credentials" { 
+resource "aws_ssm_parameter" "event_target_credentials" {
   name        = var.event_target_credentials_secret.name
   description = var.event_target_credentials_secret.description
   type        = "SecureString"

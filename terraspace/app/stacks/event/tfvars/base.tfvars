@@ -15,5 +15,3 @@ event_target_credentials_secret =  {
   name        = "/<%= expansion(':ENV') %>/ep/<%= expansion(':MOD_NAME') %>/event_target_credentials"
   description = "Event Target Credentials"
 }
-event_credential_secret_placeholder="{credentials}"
-
