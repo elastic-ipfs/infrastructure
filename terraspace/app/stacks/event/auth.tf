@@ -66,7 +66,7 @@ resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
 EOF
 }
 
-resource "aws_iam_policy" "param_store" {
+resource "aws_iam_policy" "read_event_target_credentials_param" {
   name        = var.sns_event_topic_policy_send_name
   description = "Policy for allowing publish messages in SNS event topic"
   policy      = <<EOF
