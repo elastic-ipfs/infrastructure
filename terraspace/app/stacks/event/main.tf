@@ -69,5 +69,3 @@ resource "aws_sns_topic_subscription" "events_subscription" {
   protocol  = "sqs"
   endpoint  = aws_sqs_queue.event_delivery_queue.arn
 }
-
-

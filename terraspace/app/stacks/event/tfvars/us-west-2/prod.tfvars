@@ -1,1 +1,1 @@
-event_target="https://{credentials}@indexer-metrics-collector-production.protocol-labs.workers.dev/events"
+event_target="https://indexer-metrics-collector-production.protocol-labs.workers.dev/events"

@@ -95,5 +95,3 @@ resource "aws_iam_policy" "read_event_target_credentials_param" {
 }
 EOF
 }
-
-# "arn:aws:kms:us-west-2:505595374361:key/c7462fb3-65d5-4f2d-a9d1-bdd9d11526fe"
