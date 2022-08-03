@@ -53,7 +53,8 @@ module "event_delivery_lambda_from_sqs" {
     reserved_concurrent_executions = -1 # No restrictions
     environment_variables          = local.environment_variables
     policies_list = [
-      aws_iam_policy.sqs_event_delivery_queue_receive
+      aws_iam_policy.sqs_event_delivery_queue_receive,
+      aws_iam_policy.read_event_target_credentials_param
     ]
   }
   metrics_namespace = var.event_delivery_lambda.metrics_namespace

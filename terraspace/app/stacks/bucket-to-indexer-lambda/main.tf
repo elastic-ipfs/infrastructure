@@ -32,10 +32,10 @@ module "lambda_from_sns" {
   sns_topic = var.sns_topic
   region    = local.region
   lambda = {
-    image_uri   = local.bucket_to_indexer_image_url
-    name        = var.lambda.name
-    memory_size = var.lambda.memory_size
-    timeout     = var.lambda.timeout
+    image_uri             = local.bucket_to_indexer_image_url
+    name                  = var.lambda.name
+    memory_size           = var.lambda.memory_size
+    timeout               = var.lambda.timeout
     environment_variables = local.environment_variables
     policies_list = [
       data.terraform_remote_state.indexing.outputs.sqs_indexer_policy_send,
