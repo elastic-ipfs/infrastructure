@@ -2,7 +2,6 @@
 account_id               = "<%= expansion(':ACCOUNT') %>"
 ecr_repository_name      = "<%= expansion(':ENV') %>-ep-indexer-lambda"
 indexer_topic_name       = "<%= expansion(':ENV') %>-ep-indexer-topic"
-notifications_topic_name = "<%= expansion(':ENV') %>-ep-notifications-topic"
 indexer_lambda = {
   name              = "<%= expansion(':ENV') %>-ep-indexer"
   metrics_namespace = "<%= expansion(':ENV') %>-ep-indexer-lambda-metrics"
@@ -11,9 +10,6 @@ batch_size                                    = 1
 concurrency                                   = 64
 node_env                                      = "<%= expansion(':ENV') %>"
 sqs_indexer_policy_receive_name               = "<%= expansion(':ENV') %>-ep-sqs-indexer-receive"
-sqs_notifications_policy_receive_name         = "<%= expansion(':ENV') %>-ep-sqs-notifications-receive"
-sqs_notifications_policy_delete_name          = "<%= expansion(':ENV') %>-ep-sqs-notifications-delete"
-sqs_notifications_policy_send_name            = "<%= expansion(':ENV') %>-ep-sqs-notifications-send"
 sqs_indexer_policy_send_name                  = "<%= expansion(':ENV') %>-ep-sqs-indexer-send"
 shared_stack_sqs_multihashes_topic_url        = "<%= output('shared.sqs_multihashes_topic', mock: {}).to_ruby['url'] %>"
 shared_stack_dynamodb_blocks_policy           = <%= output('shared.dynamodb_v1_blocks_policy', mock: {}) %>

@@ -30,12 +30,8 @@ The following resources are used by this module:
 - [aws_ecr_repository.ecr_repo_indexer_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) (resource)
 - [aws_iam_policy.sqs_indexer_policy_receive](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sqs_indexer_policy_send](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
-- [aws_iam_policy.sqs_notifications_policy_delete](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
-- [aws_iam_policy.sqs_notifications_policy_receive](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
-- [aws_iam_policy.sqs_notifications_policy_send](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_sqs_queue.indexer_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
 - [aws_sqs_queue.indexer_topic_dlq](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
-- [aws_sqs_queue.notifications_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
 
 ## Required Inputs
 
@@ -89,6 +85,19 @@ Description: Name for ECR repo. We use this repo to store indexer lambda docker 
 
 Type: `string`
 
+### <a name="input_event_stack_sns_topic_policy_send"></a> [event\_stack\_sns\_topic\_policy\_send](#input\_event\_stack\_sns\_topic\_policy\_send)
+
+Description: This policy is managed by the event stack. Lambda requires policy for sending events through pub/sub messaging
+
+Type:
+
+```hcl
+object({
+    name = string
+    arn  = string
+  })
+```
+
 ### <a name="input_indexer_lambda"></a> [indexer\_lambda](#input\_indexer\_lambda)
 
 Description: Indexer lambda is the core component of the indexing stack
@@ -111,12 +120,6 @@ Type: `string`
 ### <a name="input_node_env"></a> [node\_env](#input\_node\_env)
 
 Description: NODE\_ENV environment variable value for indexer lambda
-
-Type: `string`
-
-### <a name="input_notifications_topic_name"></a> [notifications\_topic\_name](#input\_notifications\_topic\_name)
-
-Description: Name for notifications sqs queue. This is queue is supposed to have events created and published by indexer lambda. It can be read by external components
 
 Type: `string`
 
@@ -215,24 +218,6 @@ Description: Name for policy which allows sending messages to indexer sqs queue
 
 Type: `string`
 
-### <a name="input_sqs_notifications_policy_delete_name"></a> [sqs\_notifications\_policy\_delete\_name](#input\_sqs\_notifications\_policy\_delete\_name)
-
-Description: Name for policy which allows deleting messages from notifications sqs queue
-
-Type: `string`
-
-### <a name="input_sqs_notifications_policy_receive_name"></a> [sqs\_notifications\_policy\_receive\_name](#input\_sqs\_notifications\_policy\_receive\_name)
-
-Description: Name for policy which allows receiving messages from notifications sqs queue
-
-Type: `string`
-
-### <a name="input_sqs_notifications_policy_send_name"></a> [sqs\_notifications\_policy\_send\_name](#input\_sqs\_notifications\_policy\_send\_name)
-
-Description: Name for policy which allows sending messages to notifications sqs queue
-
-Type: `string`
-
 ## Optional Inputs
 
 The following input variables are optional (have default values):
@@ -256,12 +241,4 @@ Description: Policy for allowing send messages to indexer sqs queue
 ### <a name="output_sqs_indexer_topic"></a> [sqs\_indexer\_topic](#output\_sqs\_indexer\_topic)
 
 Description: This queue is supposed to be used for triggering indexer lambda
-
-### <a name="output_sqs_notifications_policy_delete"></a> [sqs\_notifications\_policy\_delete](#output\_sqs\_notifications\_policy\_delete)
-
-Description: Policy for allowing delete messages from notifications sqs queue
-
-### <a name="output_sqs_notifications_policy_receive"></a> [sqs\_notifications\_policy\_receive](#output\_sqs\_notifications\_policy\_receive)
-
-Description: Policy for allowing receive messages from notifications sqs queue
 <!-- END_TF_DOCS -->

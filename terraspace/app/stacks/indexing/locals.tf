@@ -4,7 +4,6 @@ locals {
     "SKIP_PUBLISHING"             = "false"
     "NODE_ENV"                    = var.node_env
     "SQS_PUBLISHING_QUEUE_URL"    = var.shared_stack_sqs_multihashes_topic_url
-    "SQS_NOTIFICATIONS_QUEUE_URL" = aws_sqs_queue.notifications_topic.url
     "SNS_EVENTS_TOPIC"            = var.event_stack_sns_events_topic_arn
     "DYNAMO_BLOCKS_TABLE"         = var.dynamodb_blocks_table
     "DYNAMO_CARS_TABLE"           = var.dynamodb_cars_table
