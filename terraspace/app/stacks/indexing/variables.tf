@@ -56,6 +56,11 @@ variable "sqs_indexer_policy_send_name" {
   description = "Name for policy which allows sending messages to indexer sqs queue"
 }
 
+variable "event_stack_sns_events_topic_arn" {
+  type        = string
+  description = "SNS event topic"
+}
+
 variable "shared_stack_sqs_multihashes_topic_url" {
   type        = string
   description = "This queue is managed by the shared stack. Indexer lambda sends messages to it"
