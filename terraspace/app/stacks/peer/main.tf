@@ -103,7 +103,10 @@ module "eks" {
     }
   }
 
-  node_security_group_additional_rules = local.node_security_group_additional_rules
+  node_security_group_additional_rules = merge(
+    local.node_security_group_additional_rules["base_rules"],
+    local.node_security_group_additional_rules[var.enable_troubleshooting_sg_rules ? "troubleshooting_rules" : "base_rules"]
+  )
 
   fargate_profiles = {
     default = {
