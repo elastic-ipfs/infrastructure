@@ -26,7 +26,7 @@ variable "bitswap_load_balancer_hosted_zone" {
 }
 
 variable "zone_id" {
-  name = string
+  type = string
   description = "DNS Zone ID"
 }
 
