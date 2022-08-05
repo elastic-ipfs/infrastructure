@@ -14,11 +14,15 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+data "cloudflare_zone" "dotstorage_zone" {
+  name = var.zone_name
+}
+
 ## TODO: Export Cert (Maybe need to create cert as well if doesn't exist yet)
 ## Cert specific for that subdomain or *? Ideally generate a more specific one (And that might even be easier for managing and importing to AWS)
 
 resource "cloudflare_record" "bitswap_peer" {
-  zone_id  = var.zone_id
+  zone_id  = data.cloudflare_zone.dotstorage_zone.id
   name     = var.bitswap_peer_record.name
   value    = var.bitswap_peer_record.value
   proxied = true   
