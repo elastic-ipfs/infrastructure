@@ -1,16 +1,5 @@
 ## TODO: Delete route53 usage and current AWS domain to centralize DNS handling in CF
 ## This can be done once we start advertising new address through advertisement lambda
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.38"
-    }
-  }
-
-  required_version = ">= 1.0.0"
-}
-
 locals {
   bitswap_loadbalancer_domain = "${var.deprecated_route53_subdomains_bitwsap_loadbalancer}.${var.aws_domain_name}"
 }
