@@ -53,7 +53,7 @@ Description: If true, creates a managed hosted zone
 
 Type: `bool`
 
-### <a name="input_subdomains_bitwsap_loadbalancer"></a> [subdomains\_bitwsap\_loadbalancer](#input\_subdomains\_bitwsap\_loadbalancer)
+### <a name="input_deprecated_route53_subdomains_bitwsap_loadbalancer"></a> [subdomains\_bitwsap\_loadbalancer](#input\_subdomains\_bitwsap\_loadbalancer)
 
 Description: Subdomains that will be handled by peer svc loadbalancer
 

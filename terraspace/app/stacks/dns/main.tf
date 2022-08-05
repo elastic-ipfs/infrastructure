@@ -4,45 +4,24 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.38"
     }
+
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 3.0"
+    }
   }
 
   required_version = ">= 1.0.0"
 }
 
-locals {
-  bitswap_loadbalancer_domain = "${var.subdomains_bitwsap_loadbalancer}.${var.aws_domain_name}"
-}
+## TODO: Export Cert (Maybe need to create cert as well if doesn't exist yet)
+## Cert specific for that subdomain or *? Ideally generate a more specific one (And that might even be easier for managing and importing to AWS)
 
-data "aws_route53_zone" "hosted_zone" { # Existing zone
-  count = var.create_zone ? 0 : 1
-  name  = var.aws_domain_name
-}
-
-resource "aws_route53_zone" "hosted_zone" { # Non existing zone
-  count = var.create_zone ? 1 : 0
-  name  = var.aws_domain_name
-}
-
-resource "aws_route53_record" "peer_bitswap_load_balancer" {
-  zone_id = var.create_zone ? aws_route53_zone.hosted_zone[0].zone_id : data.aws_route53_zone.hosted_zone[0].zone_id
-  name    = local.bitswap_loadbalancer_domain
-  type    = "A"
-
-  alias {
-    name                   = var.bitswap_load_balancer_dns
-    zone_id                = var.bitswap_load_balancer_hosted_zone
-    evaluate_target_health = true
-  }
-}
-
-resource "aws_route53_record" "peer_bitswap_load_balancer_ipv6" {
-  zone_id = var.create_zone ? aws_route53_zone.hosted_zone[0].zone_id : data.aws_route53_zone.hosted_zone[0].zone_id
-  name    = local.bitswap_loadbalancer_domain
-  type    = "AAAA"
-
-  alias {
-    name                   = var.bitswap_load_balancer_dns
-    zone_id                = var.bitswap_load_balancer_hosted_zone
-    evaluate_target_health = true
-  }
+resource "cloudflare_record" "bitswap_peer" {
+  zone_id  = var.zone_id
+  name     = var.bitswap_peer_record.name
+  value    = var.bitswap_peer_record.value
+  proxied = true   
+  type = "CNAME"
+  ttl     = 1 # Proxied # TODO: Should I keep it as is? Maybe there are cost savings by increasing
 }
