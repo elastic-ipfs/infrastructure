@@ -1,5 +1,5 @@
 ## TODO: Delete route53 usage and current AWS domain to centralize DNS handling in CF
-## This can be done once we start advertising new address through advertisement lambda
+## This can be done after https://filecoinproject.slack.com/archives/C02BZPRS9HP/p1660156558258439?thread_ts=1660147647.860729&cid=C02BZPRS9HP
 locals {
   bitswap_loadbalancer_domain = "${var.deprecated_route53_subdomains_bitwsap_loadbalancer}.${var.aws_domain_name}"
 }
