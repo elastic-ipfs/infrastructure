@@ -1,1 +1,2 @@
+provider "tls" {}
 provider cloudflare {}
