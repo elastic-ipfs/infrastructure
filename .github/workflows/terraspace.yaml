@@ -172,7 +172,7 @@ jobs:
         run: tfsec . --exclude-downloaded-modules
 
   plan:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64, aws-management-github-runner]
     name: Plan
     steps:
       - name: Checkout
