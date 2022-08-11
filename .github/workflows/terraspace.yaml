@@ -234,6 +234,6 @@ jobs:
         run: terraspace all plan --out ":MOD_NAME.plan"
 
       - name: Terraspace - All Plan Logs
-        if: steps.ts_all_plan.conclusion != 'skipped'
+        # if: steps.ts_all_plan.conclusion != 'skipped'
         working-directory: terraspace
         run: terraspace logs plan -a --no-timestamps
