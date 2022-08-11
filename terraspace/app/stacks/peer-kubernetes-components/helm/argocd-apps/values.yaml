@@ -1,0 +1,19 @@
+# Some of these default values are replaced in Terraform
+bitswapPeer:
+  repoURL: "https://github.com/elastic-ipfs/bitswap-peer-deployment.git"
+  targetRevision: HEAD
+  releaseName: ipfs-elastic-provider-bitswap-peer
+  namespace: default
+  valueFileNames: 
+  - "values.yaml"
+fluentd:
+  repoURL: "https://github.com/elastic-ipfs/fluentd-containers-deployment.git"
+  targetRevision: HEAD
+  releaseName: fluentd
+  namespace: logging
+  valueFileNames: 
+  - "values.yaml"
+argo-cd:
+  installCRDs: false
+  dex:
+    enabled: false
