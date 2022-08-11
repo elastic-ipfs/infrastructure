@@ -20,7 +20,15 @@ resource "aws_acm_certificate" "cert" {
   private_key       = tls_private_key.private_key.private_key_pem
   certificate_body  = cloudflare_origin_ca_certificate.cert.certificate
   certificate_chain = data.http.cloudflare_certificate_chain.body
-  
+  tags = {
+    Team        = "NearForm"
+    Project     = "Elastic IPFS"
+    Repository  = "https://github.com/elastic-ipfs/infrastructure"
+    Environment = "<%= expansion(':ENV') %>"
+    Stack       = "<%= expansion(':MOD_NAME') %>"
+    ManagedBy   = "Terraform"
+  }
+
   lifecycle {
     create_before_destroy = true
   }
