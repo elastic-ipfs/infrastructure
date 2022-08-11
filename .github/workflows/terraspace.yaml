@@ -31,6 +31,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }} # Makes sure we get the latest commit from the PR
 
+      # TODO: All that should be installed directly in agent image
       - name: ASDF - Install
         uses: asdf-vm/actions/setup@v1
         with:
@@ -182,6 +183,7 @@ jobs:
 
       - name: ASDF - Install
         uses: asdf-vm/actions/setup@v1
+        continue-on-error: true
         with:
           asdf_branch: v0.9.0
 
