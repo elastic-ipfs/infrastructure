@@ -5,16 +5,6 @@ terraform {
       version = "~> 3.38"
     }
 
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.0.1"
-    }
-
-    http = {
-      source  = "hashicorp/http"
-      version = "~> 3.0"
-    }
-
     cloudflare = {
       source  = "cloudflare/cloudflare"
       version = "~> 3.0"
