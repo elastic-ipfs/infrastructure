@@ -22,10 +22,11 @@ spec:
       {{- range .Values.bitswapPeer.valueFileNames }}
       - {{ . }}
       {{- end }}
+      values: |
+      {{- toYaml .Values.bitswapPeer.values | nindent 8 }}
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.bitswapPeer.namespace }}
-
   syncPolicy:
     automated:
       selfHeal: true

@@ -49,6 +49,11 @@ resource "helm_release" "argocd_apps" {
     value = "{values.yaml,values-${local.env}.yaml}"
   }
 
+  set {
+    name  = "bitswapPeer.values.service.awsCertificateArn"
+    value = var.aws_certificate_arn
+  }
+
   ##fluentd export
   set {
     name  = "fluentd.namespace"
