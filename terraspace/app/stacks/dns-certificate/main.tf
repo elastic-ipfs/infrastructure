@@ -38,7 +38,7 @@ resource "tls_cert_request" "cert_request" {
 
 resource "cloudflare_origin_ca_certificate" "cert" {
   csr          = tls_cert_request.cert_request.cert_request_pem
-  hostnames    = ["${var.bitswap_peer_record.name}.${var.cf_domain_name}"]
+  hostnames    = ["${var.bitswap_peer_record_name}.${var.cf_domain_name}"]
   request_type = "origin-rsa"
 }
 

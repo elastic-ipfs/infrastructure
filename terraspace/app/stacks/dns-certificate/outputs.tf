@@ -1,5 +1,5 @@
-output "bitswap_peer_record" {
-  value = var.bitswap_peer_record
+output "bitswap_peer_record_name" {
+  value = var.bitswap_peer_record_name
 }
 
 output "cf_domain_name" {

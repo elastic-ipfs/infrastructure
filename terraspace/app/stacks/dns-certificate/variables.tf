@@ -3,10 +3,7 @@ variable "cf_domain_name" {
   description = "DNS Zone name"
 }
 
-variable "bitswap_peer_record" {
-  type = object({
-    name    = string
-    value   = string
-  })
-  description = "Bitswap Peer record information"
+variable "bitswap_peer_record_name" {
+  type = string
+  description = "Bitswap Peer record name"
 }
