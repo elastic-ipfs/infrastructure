@@ -2,7 +2,7 @@ bitswapPeer:
   repoURL: "https://github.com/elastic-ipfs/bitswap-peer-deployment.git"
   targetRevision: HEAD # Replaced in Terraform
   releaseName: elastic-ipfs-bitswap-peer # Replaced in Terraform
-  namespace: default # Replaced in Terraform
+  namespace: default
   valueFileNames: # Replaced in Terraform
   - "values.yaml"
   values:
@@ -10,7 +10,7 @@ fluentd:
   repoURL: "https://github.com/elastic-ipfs/fluentd-containers-deployment.git"
   targetRevision: HEAD
   releaseName: fluentd
-  namespace: logging # Replaced in Terraform
+  namespace: logging
   valueFileNames: # Replaced in Terraform
   - "values.yaml"
 argo-cd:

@@ -30,11 +30,6 @@ resource "helm_release" "argocd_apps" {
   create_namespace = true
 
   set {
-    name  = "bitswapPeer.namespace"
-    value = kubernetes_namespace.bitswap_peer_namespace.metadata[0].name
-  }
-
-  set {
     name  = "bitswapPeer.releaseName"
     value = kubernetes_namespace.bitswap_peer_namespace.metadata[0].name
   }
