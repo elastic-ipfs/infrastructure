@@ -20,7 +20,7 @@ resource "aws_route53_record" "peer_bitswap_load_balancer" {
   type    = "A"
 
   alias {
-    name                   = var.bitswap_load_balancer_dns
+    name                   = var.bitswap_peer_record_value
     zone_id                = var.bitswap_load_balancer_hosted_zone
     evaluate_target_health = true
   }
@@ -32,7 +32,7 @@ resource "aws_route53_record" "peer_bitswap_load_balancer_ipv6" {
   type    = "AAAA"
 
   alias {
-    name                   = var.bitswap_load_balancer_dns
+    name                   = var.bitswap_peer_record_value
     zone_id                = var.bitswap_load_balancer_hosted_zone
     evaluate_target_health = true
   }

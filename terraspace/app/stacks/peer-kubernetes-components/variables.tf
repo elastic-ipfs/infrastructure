@@ -70,4 +70,8 @@ variable "cluster_autoscaler_policy_name" {
   description = "Name for policy which allows cluster autoscaler operator to handle AWS node group"
 }
 
-
+variable "aws_certificate_arn" {
+  type        = string
+  description = "ACM Certificate which is hooked with Load Balancer SSL port"
+  sensitive = true
+}

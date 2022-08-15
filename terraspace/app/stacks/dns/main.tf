@@ -5,16 +5,6 @@ terraform {
       version = "~> 3.38"
     }
 
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.0.1"
-    }
-
-    http = {
-      source  = "hashicorp/http"
-      version = "~> 3.0"
-    }
-
     cloudflare = {
       source  = "cloudflare/cloudflare"
       version = "~> 3.0"
@@ -30,8 +20,8 @@ data "cloudflare_zone" "dns" {
 
 resource "cloudflare_record" "bitswap_peer" {
   zone_id = data.cloudflare_zone.dns.id
-  name    = var.bitswap_peer_record.name
-  value   = var.bitswap_peer_record.value
+  name    = var.bitswap_peer_record_name
+  value   = var.bitswap_peer_record_value
   type    = "CNAME"
   proxied = true 
   ttl     = 1

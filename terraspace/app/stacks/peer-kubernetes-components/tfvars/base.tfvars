@@ -26,3 +26,4 @@ eks_auth_sync_policy_name      = "<%= expansion(':ENV') %>-ep-eks-auth-sync"
 cluster_autoscaler_role_name   = "<%= expansion(':ENV') %>-ep-eks-cluster-autoscaler"
 cluster_autoscaler_policy_name = "<%= expansion(':ENV') %>-ep-eks-cluster-autoscaler"
 bitswap_peer_deployment_branch = "HEAD"
+aws_certificate_arn            = <%= output('dns-certificate.aws_certificate_arn', mock: "") %>
