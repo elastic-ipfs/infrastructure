@@ -12,6 +12,7 @@ service_account_roles = {
         <%= output('shared.dynamodb_v1_cars_policy', mock: {}) %>,
         <%= output('shared.dynamodb_v1_blocks_policy', mock: {}) %>,
         <%= output('shared.dynamodb_v1_link_policy', mock: {}) %>,
+        <%= output('indexing.sqs_indexer_policy_send', mock: {}) %>, # TODO: Remove that after recovery (v0 to v1 tables) is finished
       ]
     }
 }
