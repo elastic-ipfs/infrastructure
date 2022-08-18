@@ -26,3 +26,21 @@ resource "cloudflare_record" "bitswap_peer" {
   proxied = true 
   ttl     = 1
 }
+
+resource "cloudflare_record" "bitswap_peer_dnsaddr4" {
+  zone_id = data.cloudflare_zone.dns.id
+  name    = "_dnsaddr.${var.bitswap_peer_record_name}"
+  value   = "dnsaddr=/dns4/${local.multiaddr_dnsaddress_sufix}"
+  type    = "TXT"
+  proxied = true 
+  ttl     = 1
+}
+
+resource "cloudflare_record" "bitswap_peer_dnsaddr6" {
+  zone_id = data.cloudflare_zone.dns.id
+  name    = "_dnsaddr.${var.bitswap_peer_record_name}"
+  value   = "dnsaddr=/dns6/${local.multiaddr_dnsaddress_sufix}"
+  type    = "TXT"
+  proxied = true 
+  ttl     = 1
+}
