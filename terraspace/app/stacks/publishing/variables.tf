@@ -46,9 +46,9 @@ variable "ecr_repository_name" {
   description = "Name for ECR repo. We use this repo to store publishing lambda docker image"
 }
 
-variable "dns_stack_bitswap_loadbalancer_domain" {
-  type        = string
-  description = "Bitswap peer DNS. This is used for composing the multiaddress value for the BITSWAP_PEER_MULTIADDR environment variable. This value is notified to storetheindex"
+variable "bitswap_peer_multiaddr" {
+  type = string
+  description = "Bitswap peer multiaddr. This is used as value for the BITSWAP_PEER_MULTIADDR environment variable. This value is notified to storetheindex"
 }
 
 variable "shared_stack_s3_config_peer_bucket_policy_read" {

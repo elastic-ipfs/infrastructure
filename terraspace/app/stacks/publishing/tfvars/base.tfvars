@@ -10,7 +10,7 @@ ads_lambda = {
 }
 node_env                                        = "<%= expansion(':ENV') %>"
 ecr_repository_name                             = "<%= expansion(':ENV') %>-ep-publisher-lambda"
-dns_stack_bitswap_loadbalancer_domain           = <%= output('dns.bitswap_loadbalancer_domain', mock: "") %>
+bitswap_peer_multiaddr                          = "/dns4/<%= output('dns.bitswap_loadbalancer_domain', mock: "").to_ruby %>/tcp/443/wss"
 shared_stack_s3_config_peer_bucket_policy_read  = <%= output('shared.s3_config_peer_bucket_policy_read', mock: "") %>
 shared_stack_sqs_multihashes_policy_receive     = <%= output('shared.sqs_multihashes_policy_receive', mock: "") %>
 shared_stack_sqs_multihashes_policy_delete      = <%= output('shared.sqs_multihashes_policy_delete', mock: "") %>
