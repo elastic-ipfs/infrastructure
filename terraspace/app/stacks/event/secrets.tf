@@ -1,4 +1,5 @@
 resource "aws_kms_key" "event_stack" {
+  enable_key_rotation = true
   description = var.secrets_key.description
 }
 

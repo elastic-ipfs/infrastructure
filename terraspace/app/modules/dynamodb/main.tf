@@ -21,6 +21,11 @@ resource "aws_dynamodb_table" "blocks_table" {
   point_in_time_recovery {
     enabled = true
   }
+
+  server_side_encryption {
+    enabled     = true
+    kms_key_arn = var.target_key_arn
+  }
 }
 
 resource "aws_dynamodb_table" "cars_table" {
@@ -33,5 +38,10 @@ resource "aws_dynamodb_table" "cars_table" {
   }
   point_in_time_recovery {
     enabled = true
+  }
+
+  server_side_encryption {
+    enabled     = true
+    kms_key_arn = var.target_key_arn
   }
 }

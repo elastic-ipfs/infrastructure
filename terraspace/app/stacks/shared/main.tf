@@ -44,6 +44,16 @@ resource "aws_sqs_queue" "multihashes_topic_dlq" {
   visibility_timeout_seconds = 300
 }
 
+resource "aws_kms_key" "shared_stack_key" {
+  enable_key_rotation = true
+  description         = var.shared_stack_key.description
+}
+
+resource "aws_kms_alias" "shared_stack_key" {
+  name          = "alias/${var.shared_stack_key.name}"
+  target_key_id = aws_kms_key.shared_stack_key.key_id
+}
+
 resource "aws_dynamodb_table" "v1_cars_table" {
   name         = var.v1_cars_table.name
   billing_mode = "PAY_PER_REQUEST"
@@ -54,6 +64,11 @@ resource "aws_dynamodb_table" "v1_cars_table" {
   }
   point_in_time_recovery {
     enabled = true
+  }
+
+  server_side_encryption {
+    enabled     = true
+    kms_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
   }
 }
 
@@ -68,6 +83,11 @@ resource "aws_dynamodb_table" "v1_blocks_table" {
 
   point_in_time_recovery {
     enabled = true
+  }
+
+  server_side_encryption {
+    enabled     = true
+    kms_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
   }
 }
 
@@ -88,11 +108,17 @@ resource "aws_dynamodb_table" "v1_link_table" {
   point_in_time_recovery {
     enabled = true
   }
+
+  server_side_encryption {
+    enabled     = true
+    kms_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
+  }
 }
 
 ### Deprecated (v0 tables)
 module "dynamodb" {
   source = "../../modules/dynamodb"
+  target_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
   blocks_table = {
     name = var.blocks_table_name
   }
@@ -100,4 +126,5 @@ module "dynamodb" {
   cars_table = {
     name = var.cars_table_name
   }
+
 }
