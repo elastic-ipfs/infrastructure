@@ -65,6 +65,11 @@ variable "config_bucket_read_policy_name" {
   description = "Name for policy which allows reading action for configuration bucket"
 }
 
+variable "decrypt_key_policy_name" {
+  type        = string
+  description = "Name for policy which allows decrypting shared stack key"
+}
+
 variable "dotstorage_bucket_name" {
   type        = string
   description = "Name of existing 'dotstorage' bucket in 'us-east-2' region"

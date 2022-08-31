@@ -44,14 +44,14 @@ resource "aws_sqs_queue" "multihashes_topic_dlq" {
   visibility_timeout_seconds = 300
 }
 
-resource "aws_kms_key" "shared_stack_key" {
+resource "aws_kms_key" "shared_stack" {
   enable_key_rotation = true
-  description         = var.shared_stack_key.description
+  description         = var.shared_stack.description
 }
 
-resource "aws_kms_alias" "shared_stack_key" {
-  name          = "alias/${var.shared_stack_key.name}"
-  target_key_id = aws_kms_key.shared_stack_key.key_id
+resource "aws_kms_alias" "shared_stack" {
+  name          = "alias/${var.shared_stack.name}"
+  target_key_id = aws_kms_key.shared_stack.key_id
 }
 
 resource "aws_dynamodb_table" "v1_cars_table" {
@@ -68,7 +68,7 @@ resource "aws_dynamodb_table" "v1_cars_table" {
 
   server_side_encryption {
     enabled     = true
-    kms_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
+    kms_key_arn = aws_kms_alias.shared_stack.target_key_arn
   }
 }
 

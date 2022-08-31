@@ -227,3 +227,27 @@ EOF
     create_before_destroy = true
   }
 }
+
+resource "aws_iam_policy" "decrypt_shared_stack_key" {
+  name        = var.decrypt_key_policy_name
+  description = "Policy for allowing reading event target credential secret"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": [
+                "${aws_kms_key.shared_stack.arn}"
+            ]
+        }
+    ]
+}
+EOF
+  lifecycle {
+    create_before_destroy = true
+  }
+}

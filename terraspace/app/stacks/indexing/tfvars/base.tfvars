@@ -19,6 +19,7 @@ shared_stack_sqs_multihashes_policy_send      = <%= output('shared.sqs_multihash
 shared_stack_s3_dotstorage_policy_read        = <%= output('shared.s3_dotstorage_policy_read', mock: {}) %>
 event_stack_sns_events_topic_arn              = <%= output('event.sns_event_topic_arn', mock: '') %>
 event_stack_sns_topic_policy_send             = <%= output('event.sns_event_topic_policy_send', mock: {}) %>
+shared_stack_decrypt_key_policy               = <%= output('shared.decrypt_key_policy', mock: {}) %>,
 indexing_lambda_image_version                 = "latest"
 dynamodb_blocks_table                         = <%= output('shared.dynamodb_v1_blocks_table_name', mock: {}) %>
 dynamodb_cars_table                           = <%= output('shared.dynamodb_v1_cars_table_name', mock: {}) %>

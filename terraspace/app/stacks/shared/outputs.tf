@@ -111,3 +111,11 @@ output "s3_dotstorage_policy_read" {
   }
   description = "Policy for allowing reading files from existing bucket called 'dotstorage_prod_0'"
 }
+
+output "decrypt_key_policy" {
+  value = {
+    name = aws_iam_policy.decrypt_shared_stack_key.name,
+    arn  = aws_iam_policy.decrypt_shared_stack_key.arn,
+  }
+  description = "Policy which allows decrypting shared stack key'"
+}
