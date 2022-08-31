@@ -101,4 +101,3 @@ module "dynamodb" {
     name = var.cars_table_name
   }
 }
-###
