@@ -46,11 +46,11 @@ resource "aws_sqs_queue" "multihashes_topic_dlq" {
 
 resource "aws_kms_key" "shared_stack" {
   enable_key_rotation = true
-  description         = var.shared_stack.description
+  description         = var.key.description
 }
 
 resource "aws_kms_alias" "shared_stack" {
-  name          = "alias/${var.shared_stack.name}"
+  name          = "alias/${var.key.name}"
   target_key_id = aws_kms_key.shared_stack.key_id
 }
 
@@ -68,7 +68,8 @@ resource "aws_dynamodb_table" "v1_cars_table" {
 
   server_side_encryption {
     enabled     = true
-    kms_key_arn = aws_kms_alias.shared_stack.target_key_arn
+    # TODO: Enable after sharing decrypt permissions with required stacks
+    # kms_key_arn = aws_kms_alias.shared_stack.target_key_arn
   }
 }
 
@@ -87,7 +88,8 @@ resource "aws_dynamodb_table" "v1_blocks_table" {
 
   server_side_encryption {
     enabled     = true
-    kms_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
+    # TODO: Enable after sharing decrypt permissions with required stacks
+    # kms_key_arn = aws_kms_alias.shared_stack.target_key_arn
   }
 }
 
@@ -111,14 +113,15 @@ resource "aws_dynamodb_table" "v1_link_table" {
 
   server_side_encryption {
     enabled     = true
-    kms_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
+    # TODO: Enable after sharing decrypt permissions with required stacks
+    # kms_key_arn = aws_kms_alias.shared_stack.target_key_arn
   }
 }
 
 ### Deprecated (v0 tables)
 module "dynamodb" {
   source = "../../modules/dynamodb"
-  target_key_arn = aws_kms_alias.shared_stack_key.target_key_arn
+  target_key_arn = aws_kms_alias.shared_stack.target_key_arn
   blocks_table = {
     name = var.blocks_table_name
   }

@@ -24,7 +24,8 @@ resource "aws_dynamodb_table" "blocks_table" {
 
   server_side_encryption {
     enabled     = true
-    kms_key_arn = var.target_key_arn
+    # TODO: Enable after sharing decrypt permissions with required stacks
+    # kms_key_arn = var.target_key_arn
   }
 }
 
@@ -42,6 +43,7 @@ resource "aws_dynamodb_table" "cars_table" {
 
   server_side_encryption {
     enabled     = true
-    kms_key_arn = var.target_key_arn
+    # TODO: Enable after sharing decrypt permissions with required stacks
+    # kms_key_arn = var.target_key_arn
   }
 }

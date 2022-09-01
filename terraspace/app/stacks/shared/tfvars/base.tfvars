@@ -24,7 +24,7 @@ decrypt_key_policy_name            = "<%= expansion(':ENV') %>-ep-shared-stack-k
 dotstorage_bucket_read_policy_name = "<%= expansion(':ENV') %>-ep-s3-dotstorage-buckets-read"
 dotstorage_bucket_name             = "dotstorage-<%= expansion(':ENV') %>-0"
 dotstorage_bucket_1_name           = "dotstorage-<%= expansion(':ENV') %>-1"
-shared_stack_key = {
+key = {
   name        = "<%= expansion(':ENV') %>-ep-<%= expansion(':MOD_NAME') %>"
   description = "Key for Elastic IPFS <%= expansion(':MOD_NAME') %> stack in <%= expansion(':ENV') %> environment"
 }

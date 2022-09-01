@@ -85,7 +85,7 @@ variable "dotstorage_bucket_read_policy_name" {
   description = "Name for policy which allows reading messages from existing 'dotstorage' bucket "
 }
 
-variable "shared_stack_key" {
+variable "key" {
   type = object({
     name        = string,
     description = string,
