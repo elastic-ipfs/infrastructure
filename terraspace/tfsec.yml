@@ -3,3 +3,8 @@ exclude:
 - aws-sns-enable-topic-encryption
 - aws-sqs-enable-queue-encryption
 - aws-s3-enable-bucket-encryption
+- aws-s3-encryption-customer-key
+- aws-dynamodb-enable-at-rest-encryption
+- aws-dynamodb-table-customer-key
+- aws-cloudwatch-log-group-customer-key
+- aws-ecr-repository-customer-key
