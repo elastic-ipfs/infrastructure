@@ -1,0 +1,5 @@
+exclude:
+- aws-ec2-enable-at-rest-encryption
+- aws-sns-enable-topic-encryption
+- aws-sqs-enable-queue-encryption
+- aws-s3-enable-bucket-encryption
