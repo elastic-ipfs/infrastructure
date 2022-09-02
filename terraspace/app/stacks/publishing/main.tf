@@ -29,10 +29,14 @@ resource "aws_sqs_queue" "ads_topic_dlq" {
   visibility_timeout_seconds = 300
 }
 
+# This bucket must be public for integration with storetheindex
+#tfsec:ignore:aws-s3-block-public-acls 
+#tfsec:ignore:aws-s3-block-public-policy
 resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
 }
 
+#tfsec:ignore:aws-s3-no-public-access-with-acl
 resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
   bucket = aws_s3_bucket.ipfs_peer_ads.id
   acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
