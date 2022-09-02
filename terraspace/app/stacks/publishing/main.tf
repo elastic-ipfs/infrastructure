@@ -30,7 +30,7 @@ resource "aws_sqs_queue" "ads_topic_dlq" {
 }
 
 # This bucket must be public due to integration with storetheindex
-#tfsec:ignore:aws-s3-ignore-public-acls #tfsec:ignore:aws-s3-no-public-buckets tfsec:ignore:aws-s3-block-public-acls  tfsec:ignore:aws-s3-block-public-policy
+#tfsec:ignore:aws-s3-ignore-public-acls #tfsec:ignore:aws-s3-no-public-buckets tfsec:ignore:aws-s3-block-public-acls tfsec:ignore:aws-s3-block-public-policy
 resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
 }
