@@ -38,7 +38,14 @@ resource "aws_s3_bucket" "ipfs_peer_ads" {
 #tfsec:ignore:aws-s3-no-public-access-with-acl
 resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
   bucket = aws_s3_bucket.ipfs_peer_ads.id
-  acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
+  acl    = "public-read"
+}
+
+resource "aws_s3_bucket_versioning" "ipfs_peer_ads" {
+  bucket = aws_s3_bucket.ipfs_peer_ads.id
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 module "content_lambda_from_sqs" {
