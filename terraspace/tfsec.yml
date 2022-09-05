@@ -1,4 +1,5 @@
 # Encryption at rest rules are currently excluded (https://filecoinproject.slack.com/archives/C02BZPRS9HP/p1662043881772469)
+# Image immutability is disabled because there isn't a way of finding out the newest image tag from aws_ecr_repository neither to create an exception for "latest" tag (https://github.com/aws/containers-roadmap/issues/878)
 exclude:
 - aws-ec2-enable-at-rest-encryption
 - aws-sns-enable-topic-encryption
@@ -9,3 +10,4 @@ exclude:
 - aws-dynamodb-table-customer-key
 - aws-cloudwatch-log-group-customer-key
 - aws-ecr-repository-customer-key
+- aws-ecr-enforce-immutable-repository 
