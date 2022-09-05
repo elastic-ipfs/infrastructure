@@ -8,6 +8,9 @@ terraform {
 
   required_version = ">= 1.0.0"
 }
+
+#There is no interest in auditing access to this bucket
+#tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
   bucket = var.config_bucket_name
 }
