@@ -168,8 +168,8 @@ jobs:
         run: terraspace logs init -a --no-timestamps
 
       - name: TFSec
-        working-directory: terraspace/.terraspace-cache
-        run: tfsec . --exclude-downloaded-modules
+        working-directory: terraspace
+        run: tfsec .terraspace-cache --config-file tfsec.yml --exclude-downloaded-modules
 
   plan:
     runs-on: ubuntu-latest

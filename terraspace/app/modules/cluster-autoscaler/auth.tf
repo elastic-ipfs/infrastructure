@@ -1,4 +1,7 @@
-
+#Using minimal permissions would require disabling auto discovery feature.
+#https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#minimal-iam-permissions-policy
+#ec2:Describe* demands wildcard resource
+#tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_policy" "cluster_autoscaler" {
   name        = var.cluster_autoscaler_policy_name
   description = "Policy for allowing Kubernetes to autoscale nodes"

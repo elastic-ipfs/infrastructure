@@ -1,0 +1,11 @@
+# Encryption at rest rules are currently excluded (https://filecoinproject.slack.com/archives/C02BZPRS9HP/p1662043881772469)
+exclude:
+- aws-ec2-enable-at-rest-encryption
+- aws-sns-enable-topic-encryption
+- aws-sqs-enable-queue-encryption
+- aws-s3-enable-bucket-encryption
+- aws-s3-encryption-customer-key
+- aws-dynamodb-enable-at-rest-encryption
+- aws-dynamodb-table-customer-key
+- aws-cloudwatch-log-group-customer-key
+- aws-ecr-repository-customer-key
