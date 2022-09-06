@@ -71,4 +71,8 @@ resource "aws_instance" "bucket_mirror_runner" {
   volume_tags = {
     Name = "bucket-mirror"
   }
+
+  metadata_options {
+    http_tokens = "required"
+  }
 }
