@@ -73,7 +73,6 @@ resource "aws_instance" "bucket_mirror_runner" {
   }
 
   metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_endpoint = "disabled"
   }
 }
