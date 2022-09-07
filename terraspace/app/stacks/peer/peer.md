@@ -112,17 +112,9 @@ object({
 
 The following input variables are optional (have default values):
 
-### <a name="input_enable_http_egress_sg_rules"></a> [enable\_http\_egress\_sg\_rules](#input\_enable\_http\_egress\_sg\_rules)
+### <a name="input_enable_troubleshooting_sg_rules"></a> [enable\_troubleshooting\_sg\_rules](#input\_enable\_troubleshooting\_sg\_rules)
 
-Description: Defines if egress security group rules should be defined to allow unsecure HTTP requests to the internet
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_enable_tracerouting_sg_rules"></a> [enable\_tracerouting\_sg\_rules](#input\_enable\_tracerouting\_sg\_rules)
-
-Description: Defines if egress security group rules should be defined to allow tracerouting to the internet
+Description: Defines if egress security group rules should be defined to allow troubleshooting to the internet
 
 Type: `bool`
 

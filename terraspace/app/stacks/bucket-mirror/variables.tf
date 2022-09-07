@@ -40,7 +40,7 @@ variable "s3_prefix" {
 }
 
 variable "s3_suffix" {
-  type = string
+  type        = string
   description = "Only read objects with this suffix"
 }
 

@@ -1,5 +1,5 @@
 variable "sns_topic" {
-  type = string
+  type        = string
   description = "Name of SNS topic which lambda should subscribe to"
 }
 

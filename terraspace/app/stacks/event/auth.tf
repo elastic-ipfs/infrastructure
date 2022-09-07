@@ -44,7 +44,7 @@ EOF
 
 resource "aws_sqs_queue_policy" "event_delivery_queue_policy" {
   queue_url = aws_sqs_queue.event_delivery_queue.id
-  policy = <<EOF
+  policy    = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [

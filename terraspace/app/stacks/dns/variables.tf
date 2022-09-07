@@ -21,16 +21,16 @@ variable "bitswap_load_balancer_hosted_zone" {
 }
 
 variable "cf_domain_name" {
-  type = string
+  type        = string
   description = "DNS Zone name"
 }
 
 variable "bitswap_peer_record_name" {
-  type = string
+  type        = string
   description = "Bitswap Peer record name"
 }
 
 variable "bitswap_peer_record_value" {
-  type = string
+  type        = string
   description = "Bitswap Peer record value. This load balancer is created and managed by Kubernetes"
 }

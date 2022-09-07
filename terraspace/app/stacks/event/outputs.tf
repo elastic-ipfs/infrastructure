@@ -7,6 +7,6 @@ output "sns_event_topic_policy_send" {
 }
 
 output "sns_event_topic_arn" {
-  value = aws_sns_topic.event_topic.arn
+  value       = aws_sns_topic.event_topic.arn
   description = "SNS event topic"
 }

@@ -73,5 +73,5 @@ variable "cluster_autoscaler_policy_name" {
 variable "aws_certificate_arn" {
   type        = string
   description = "ACM Certificate which is hooked with Load Balancer SSL port"
-  sensitive = true
+  sensitive   = true
 }
