@@ -1,3 +1,5 @@
+#Auth Sync operator needs to be able to read tags from all users.
+#tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_policy" "eks_auth_sync_policy" {
   name        = var.eks_auth_sync_policy_name
   description = "Policy that enables reading of user/role tags"

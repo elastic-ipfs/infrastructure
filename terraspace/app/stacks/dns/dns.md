@@ -9,8 +9,6 @@ The following requirements are needed by this module:
 
 - <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) (~> 3.0)
 
-- <a name="requirement_tls"></a> [tls](#requirement\_tls) (4.0.1)
-
 ## Providers
 
 The following providers are used by this module:
@@ -18,10 +16,6 @@ The following providers are used by this module:
 - <a name="provider_aws"></a> [aws](#provider\_aws) (~> 3.38)
 
 - <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) (~> 3.0)
-
-- <a name="provider_http"></a> [http](#provider\_http)
-
-- <a name="provider_tls"></a> [tls](#provider\_tls) (4.0.1)
 
 ## Modules
 
@@ -31,17 +25,12 @@ No modules.
 
 The following resources are used by this module:
 
-- [aws_acm_certificate.cert](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate) (resource)
 - [aws_route53_record.peer_bitswap_load_balancer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) (resource)
 - [aws_route53_record.peer_bitswap_load_balancer_ipv6](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) (resource)
 - [aws_route53_zone.hosted_zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) (resource)
-- [cloudflare_origin_ca_certificate.cert](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/origin_ca_certificate) (resource)
 - [cloudflare_record.bitswap_peer](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) (resource)
-- [tls_cert_request.cert_request](https://registry.terraform.io/providers/hashicorp/tls/4.0.1/docs/resources/cert_request) (resource)
-- [tls_private_key.private_key](https://registry.terraform.io/providers/hashicorp/tls/4.0.1/docs/resources/private_key) (resource)
 - [aws_route53_zone.hosted_zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) (data source)
 - [cloudflare_zone.dns](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/zone) (data source)
-- [http_http.cloudflare_certificate_chain](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) (data source)
 
 ## Required Inputs
 
@@ -53,30 +42,23 @@ Description: The name of the hosted zone to either create or lookup
 
 Type: `string`
 
-### <a name="input_bitswap_load_balancer_dns"></a> [bitswap\_load\_balancer\_dns](#input\_bitswap\_load\_balancer\_dns)
-
-Description: Bitswap LoadBalancer DNS. This load balancer is created and managed by Kubernetes
-
-Type: `string`
-
 ### <a name="input_bitswap_load_balancer_hosted_zone"></a> [bitswap\_load\_balancer\_hosted\_zone](#input\_bitswap\_load\_balancer\_hosted\_zone)
 
 Description: Bitswap LoadBalancer Hosted Zone. This load balancer is created and managed by Kubernetes
 
 Type: `string`
 
-### <a name="input_bitswap_peer_record"></a> [bitswap\_peer\_record](#input\_bitswap\_peer\_record)
+### <a name="input_bitswap_peer_record_name"></a> [bitswap\_peer\_record\_name](#input\_bitswap\_peer\_record\_name)
 
-Description: Bitswap Peer record information
+Description: Bitswap Peer record name
 
-Type:
+Type: `string`
 
-```hcl
-object({
-    name    = string
-    value   = string
-  })
-```
+### <a name="input_bitswap_peer_record_value"></a> [bitswap\_peer\_record\_value](#input\_bitswap\_peer\_record\_value)
+
+Description: Bitswap Peer record value. This load balancer is created and managed by Kubernetes
+
+Type: `string`
 
 ### <a name="input_cf_domain_name"></a> [cf\_domain\_name](#input\_cf\_domain\_name)
 

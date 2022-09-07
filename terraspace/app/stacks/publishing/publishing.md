@@ -42,6 +42,7 @@ The following resources are used by this module:
 - [aws_s3_bucket.ipfs_peer_ads](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) (resource)
 - [aws_s3_bucket_acl.ipfs_peer_ads_public_readl_acl](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl) (resource)
 - [aws_s3_bucket_policy.allow_public_access_to_files](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) (resource)
+- [aws_s3_bucket_versioning.ipfs_peer_ads](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) (resource)
 - [aws_sqs_queue.ads_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
 - [aws_sqs_queue.ads_topic_dlq](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
 - [aws_iam_policy_document.s3_advertisment_files_public_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) (data source)
@@ -69,6 +70,12 @@ Description: Name for advertisment sqs queue. This queue is supposed to have eve
 
 Type: `string`
 
+### <a name="input_bitswap_peer_multiaddr"></a> [bitswap\_peer\_multiaddr](#input\_bitswap\_peer\_multiaddr)
+
+Description: Bitswap peer multiaddr. This is used as value for the BITSWAP\_PEER\_MULTIADDR environment variable. This value is notified to storetheindex
+
+Type: `string`
+
 ### <a name="input_content_lambda"></a> [content\_lambda](#input\_content\_lambda)
 
 Description: Publishing (content) lambda namming
@@ -82,17 +89,30 @@ object({
   })
 ```
 
-### <a name="input_dns_stack_bitswap_loadbalancer_domain"></a> [dns\_stack\_bitswap\_loadbalancer\_domain](#input\_dns\_stack\_bitswap\_loadbalancer\_domain)
-
-Description: Bitswap peer DNS. This is used for composing the multiaddress value for the BITSWAP\_PEER\_MULTIADDR environment variable. This value is notified to storetheindex
-
-Type: `string`
-
 ### <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name)
 
 Description: Name for ECR repo. We use this repo to store publishing lambda docker image
 
 Type: `string`
+
+### <a name="input_event_stack_sns_events_topic_arn"></a> [event\_stack\_sns\_events\_topic\_arn](#input\_event\_stack\_sns\_events\_topic\_arn)
+
+Description: SNS event topic
+
+Type: `string`
+
+### <a name="input_event_stack_sns_topic_policy_send"></a> [event\_stack\_sns\_topic\_policy\_send](#input\_event\_stack\_sns\_topic\_policy\_send)
+
+Description: This policy is managed by the event stack. Lambda requires policy for sending events through pub/sub messaging
+
+Type:
+
+```hcl
+object({
+    name = string
+    arn  = string
+  })
+```
 
 ### <a name="input_indexer_node_url"></a> [indexer\_node\_url](#input\_indexer\_node\_url)
 

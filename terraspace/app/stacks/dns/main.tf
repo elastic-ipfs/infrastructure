@@ -23,6 +23,6 @@ resource "cloudflare_record" "bitswap_peer" {
   name    = var.bitswap_peer_record_name
   value   = var.bitswap_peer_record_value
   type    = "CNAME"
-  proxied = true 
+  proxied = true
   ttl     = 1
 }

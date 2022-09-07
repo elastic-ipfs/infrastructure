@@ -29,8 +29,8 @@ resource "aws_sqs_queue" "ads_topic_dlq" {
   visibility_timeout_seconds = 300
 }
 
-# This bucket must be public due to integration with storetheindex
-#tfsec:ignore:aws-s3-ignore-public-acls #tfsec:ignore:aws-s3-no-public-buckets tfsec:ignore:aws-s3-block-public-acls tfsec:ignore:aws-s3-block-public-policy
+# This bucket must be public due to integration with storetheindex. Also, there isn't interest in auditing access to it.
+#tfsec:ignore:aws-s3-ignore-public-acls #tfsec:ignore:aws-s3-no-public-buckets tfsec:ignore:aws-s3-block-public-acls tfsec:ignore:aws-s3-block-public-policy tfsec:ignore:aws-s3-specify-public-access-block tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "ipfs_peer_ads" {
   bucket = var.provider_ads_bucket_name
 }
@@ -38,7 +38,14 @@ resource "aws_s3_bucket" "ipfs_peer_ads" {
 #tfsec:ignore:aws-s3-no-public-access-with-acl
 resource "aws_s3_bucket_acl" "ipfs_peer_ads_public_readl_acl" {
   bucket = aws_s3_bucket.ipfs_peer_ads.id
-  acl    = "public-read" # Must be public read so PL IPFS components are capable of reading
+  acl    = "public-read"
+}
+
+resource "aws_s3_bucket_versioning" "ipfs_peer_ads" {
+  bucket = aws_s3_bucket.ipfs_peer_ads.id
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 module "content_lambda_from_sqs" {

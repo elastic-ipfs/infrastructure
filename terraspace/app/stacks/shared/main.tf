@@ -8,6 +8,9 @@ terraform {
 
   required_version = ">= 1.0.0"
 }
+
+#There isn't interest in auditing access to this bucket
+#tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
   bucket = var.config_bucket_name
 }
@@ -15,6 +18,14 @@ resource "aws_s3_bucket" "ipfs_peer_bitswap_config" {
 resource "aws_s3_bucket_acl" "ipfs_peer_bitswap_config_private_acl" {
   bucket = aws_s3_bucket.ipfs_peer_bitswap_config.id
   acl    = "private"
+}
+
+resource "aws_s3_bucket_public_access_block" "ipfs_peer_bitswap_config" {
+  bucket                  = aws_s3_bucket.ipfs_peer_bitswap_config.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket_versioning" "ipfs_peer_bitswap_config_versioning" {

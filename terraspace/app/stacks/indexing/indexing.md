@@ -85,6 +85,12 @@ Description: Name for ECR repo. We use this repo to store indexer lambda docker 
 
 Type: `string`
 
+### <a name="input_event_stack_sns_events_topic_arn"></a> [event\_stack\_sns\_events\_topic\_arn](#input\_event\_stack\_sns\_events\_topic\_arn)
+
+Description: SNS event topic
+
+Type: `string`
+
 ### <a name="input_event_stack_sns_topic_policy_send"></a> [event\_stack\_sns\_topic\_policy\_send](#input\_event\_stack\_sns\_topic\_policy\_send)
 
 Description: This policy is managed by the event stack. Lambda requires policy for sending events through pub/sub messaging

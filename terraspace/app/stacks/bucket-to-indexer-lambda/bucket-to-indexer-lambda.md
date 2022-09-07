@@ -30,6 +30,7 @@ Version:
 The following resources are used by this module:
 
 - [aws_ecr_repository.ecr_repo_bucket_to_indexer_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) (resource)
+- [terraform_remote_state.event](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) (data source)
 - [terraform_remote_state.indexing](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) (data source)
 
 ## Required Inputs
@@ -39,6 +40,12 @@ The following input variables are required:
 ### <a name="input_ecr_repository_name"></a> [ecr\_repository\_name](#input\_ecr\_repository\_name)
 
 Description: Name for ECR repo. We use this repo to store bucket-to-indexer lambda docker image
+
+Type: `string`
+
+### <a name="input_event_stack_region"></a> [event\_stack\_region](#input\_event\_stack\_region)
+
+Description: Region which output event components are deployed to
 
 Type: `string`
 

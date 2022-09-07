@@ -55,6 +55,12 @@ The following resources are used by this module:
 
 The following input variables are required:
 
+### <a name="input_aws_certificate_arn"></a> [aws\_certificate\_arn](#input\_aws\_certificate\_arn)
+
+Description: ACM Certificate which is hooked with Load Balancer SSL port
+
+Type: `string`
+
 ### <a name="input_bitswap_peer_deployment_branch"></a> [bitswap\_peer\_deployment\_branch](#input\_bitswap\_peer\_deployment\_branch)
 
 Description: Branch which argocd should be looking at for syncing bitswap peer

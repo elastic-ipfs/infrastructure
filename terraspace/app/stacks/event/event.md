@@ -28,13 +28,17 @@ Version:
 The following resources are used by this module:
 
 - [aws_ecr_repository.ecr_repo_event_delivery_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) (resource)
+- [aws_iam_policy.read_event_target_credentials_param](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sns_event_topic_send](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_iam_policy.sqs_event_delivery_queue_receive](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
+- [aws_kms_alias.event_stack](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) (resource)
+- [aws_kms_key.event_stack](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) (resource)
 - [aws_sns_topic.event_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) (resource)
 - [aws_sns_topic_subscription.events_subscription](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) (resource)
 - [aws_sqs_queue.event_delivery_queue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
 - [aws_sqs_queue.event_delivery_queue_dlq](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) (resource)
 - [aws_sqs_queue_policy.event_delivery_queue_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue_policy) (resource)
+- [aws_ssm_parameter.event_target_credentials](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) (resource)
 
 ## Required Inputs
 
@@ -65,11 +69,43 @@ object({
   })
 ```
 
+### <a name="input_event_target_credentials_secret"></a> [event\_target\_credentials\_secret](#input\_event\_target\_credentials\_secret)
+
+Description: Secret which contains credentials for events target
+
+Type:
+
+```hcl
+object({
+    name        = string,
+    description = string,
+  })
+```
+
 ### <a name="input_node_env"></a> [node\_env](#input\_node\_env)
 
 Description: NODE\_ENV environment variable value for event delivery lambda
 
 Type: `string`
+
+### <a name="input_read_event_target_credentials_param_policy_name"></a> [read\_event\_target\_credentials\_param\_policy\_name](#input\_read\_event\_target\_credentials\_param\_policy\_name)
+
+Description: Name for policy which allows reading credentials for event target
+
+Type: `string`
+
+### <a name="input_secrets_key"></a> [secrets\_key](#input\_secrets\_key)
+
+Description: KMS key for this stack
+
+Type:
+
+```hcl
+object({
+    name        = string,
+    description = string,
+  })
+```
 
 ### <a name="input_sns_event_topic_name"></a> [sns\_event\_topic\_name](#input\_sns\_event\_topic\_name)
 
@@ -95,12 +131,6 @@ Description: Name for policy which allows receiving messages from event delivery
 
 Type: `string`
 
-### <a name="input_sqs_event_delivery_queue_policy_send_name"></a> [sqs\_event\_delivery\_queue\_policy\_send\_name](#input\_sqs\_event\_delivery\_queue\_policy\_send\_name)
-
-Description: Name for policy which allows sending messages to event delivery sqs queue
-
-Type: `string`
-
 ## Optional Inputs
 
 The following input variables are optional (have default values):
@@ -113,9 +143,21 @@ Type: `string`
 
 Default: `"latest"`
 
+### <a name="input_event_target"></a> [event\_target](#input\_event\_target)
+
+Description: EVENT\_TARGET environment variable value for event delivery lambda
+
+Type: `string`
+
+Default: `null`
+
 ## Outputs
 
 The following outputs are exported:
+
+### <a name="output_sns_event_topic_arn"></a> [sns\_event\_topic\_arn](#output\_sns\_event\_topic\_arn)
+
+Description: SNS event topic
 
 ### <a name="output_sns_event_topic_policy_send"></a> [sns\_event\_topic\_policy\_send](#output\_sns\_event\_topic\_policy\_send)
 

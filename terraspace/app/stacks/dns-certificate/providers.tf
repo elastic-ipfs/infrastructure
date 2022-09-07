@@ -1,2 +1,2 @@
 provider "tls" {}
-provider cloudflare {}
+provider "cloudflare" {}

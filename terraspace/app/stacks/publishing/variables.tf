@@ -47,7 +47,7 @@ variable "ecr_repository_name" {
 }
 
 variable "bitswap_peer_multiaddr" {
-  type = string
+  type        = string
   description = "Bitswap peer multiaddr. This is used as value for the BITSWAP_PEER_MULTIADDR environment variable. This value is notified to storetheindex"
 }
 
