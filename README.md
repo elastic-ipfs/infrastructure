@@ -21,3 +21,8 @@
 ### Stacks and Shared Modules
 
 This project is divided into live stacks and shared modules, according to the [Terraspace project structure](https://terraspace.cloud/docs/intro/structure/). Stacks are organized based on the subsystem components defined [here](https://github.com/elastic-ipfs/elastic-ipfs#components). Check [stacks](terraspace/app/stacks) and [modules](terraspace/app/modules) folders.
+
+## Issues
+
+Please report issues in the [elastic-ipfs/elastic-ipfs repo](https://github.com/elastic-ipfs/elastic-ipfs/issues).
+
