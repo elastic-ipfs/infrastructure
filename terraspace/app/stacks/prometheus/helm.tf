@@ -17,43 +17,18 @@ resource "helm_release" "prometheus" {
   repository       = "https://prometheus-community.github.io/helm-charts"
   version          = "15.13.0"
   create_namespace = true
+  values = [
+    "${file("amp_ingest_override_values.yaml")}"
+  ]
 
   set {
     name = "serviceAccounts.server.name"
     value = var.service_account_name
   }
 
-  #set {
-  #  name = "serviceAccounts.server.annotations.\"eks.amazonaws.com/role-arn\""
-  #  value = var.role_arn
-  #}
-
   set {
-    name = "serviceAccounts.server.annotations"
-    value = yamlencode({
-      eks.amazonaws.com/role-arn: var.role_arn
-    })
-  }
-
-  set {
-    name = "serviceAccounts.alertmanager.create"
-    value = false
-  }
-
-  set {
-    name = "serviceAccounts.pushgateway.create"
-    value = false
-  }
-
-  set {
-    name = "server.remoteWrite"
-    value = yamlencode({
-      queue_config = {
-        max_samples_per_send: 1000
-        max_shards: 200
-        capacity: 2500
-      }
-    })
+    name = "serviceAccounts.server.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = var.role_arn
   }
 
   set {
@@ -64,25 +39,5 @@ resource "helm_release" "prometheus" {
   set {
     name = "server.remoteWrite[0].sigv4.region"
     value = var.region
-  }
-
-  set {
-    name = "server.statefulSet.enabled"
-    value = true
-  }
-  
-  set {
-    name = "server.retention"
-    value = "1h"
-  }
-
-  set {
-    name = "alertmanager.enabled"
-    value = false
-  }
-
-  set {
-    name = "pushgateway.enabled"
-    value = false
   }
 }
