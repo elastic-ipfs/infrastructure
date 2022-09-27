@@ -1,0 +1,2 @@
+remotewrite_url = "https://aps-workspaces.us-west-2.amazonaws.com/workspaces/ws-8d5b3ff8-330a-405a-8ba7-95e306743cba/api/v1/remote_write"
+role_arn = "arn:aws:iam::505595374361:role/amp-iamproxy-ingest-role"
