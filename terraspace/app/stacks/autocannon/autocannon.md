@@ -24,26 +24,25 @@ No modules.
 The following resources are used by this module:
 
 - [aws_iam_instance_profile.ec2_profile](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) (resource)
-- [aws_iam_role.ec2_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) (resource)
+- [aws_iam_role.ec2_role_atc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) (resource)
 - [aws_iam_role_policy_attachment.policy_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) (resource)
-- [aws_instance.bucket_mirror_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) (resource)
-- [aws_ami.bucker_mirror](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) (data source)
+- [aws_instance.autocannon_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) (resource)
+- [aws_ami.autocannon](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) (data source)
 - [aws_availability_zones.azs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) (data source)
-- [template_file.runner_server](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) (data source)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_bucket_mirror_ami_name"></a> [bucket\_mirror\_ami\_name](#input\_bucket\_mirror\_ami\_name)
+### <a name="input_autocannon_ami_name"></a> [autocannon\_ami\_name](#input\_autocannon\_ami\_name)
 
-Description: Name of image (AMI) which contains 'bucket-mirror' prepared to run
+Description: Name of image (AMI) which contains 'autocannon' prepared to run
 
 Type: `string`
 
 ### <a name="input_ec2_instance_name"></a> [ec2\_instance\_name](#input\_ec2\_instance\_name)
 
-Description: Name for the EC2 which will run bucket mirror
+Description: Name for the EC2 which will run autocannon
 
 Type: `string`
 
@@ -86,79 +85,16 @@ Type: `string`
 
 ### <a name="input_security_group_id"></a> [security\_group\_id](#input\_security\_group\_id)
 
-Description: ID of security group where bucket-mirror should run
+Description: ID of security group where autocannon should run
 
 Type: `string`
 
-### <a name="input_source_bucket_name"></a> [source\_bucket\_name](#input\_source\_bucket\_name)
-
-Description: Name of bucket to read objects from
-
-Type: `string`
-
-### <a name="input_sqs_queue_url"></a> [sqs\_queue\_url](#input\_sqs\_queue\_url)
-
-Description: indexer SQS queue URL
-
-Type: `string`
 
 ### <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id)
 
-Description: ID of subnet where bucket-mirror should run
+Description: ID of subnet where autocannon should run
 
 Type: `string`
-
-## Optional Inputs
-
-The following input variables are optional (have default values):
-
-### <a name="input_file_await"></a> [file\_await](#input\_file\_await)
-
-Description: How long to await between files. Useful for avoiding DB throttling
-
-Type: `number`
-
-Default: `0`
-
-### <a name="input_log_level"></a> [log\_level](#input\_log\_level)
-
-Description: which level of logs should be outputted
-
-Type: `string`
-
-Default: `"info"`
-
-### <a name="input_next_page_await"></a> [next\_page\_await](#input\_next\_page\_await)
-
-Description: How long to await after fetching 1000 files. Useful for avoiding DB throttling
-
-Type: `number`
-
-Default: `0`
-
-### <a name="input_node_env"></a> [node\_env](#input\_node\_env)
-
-Description: node\_env environment variable value. Has effect on logs
-
-Type: `string`
-
-Default: `"production"`
-
-### <a name="input_read_only_mode"></a> [read\_only\_mode](#input\_read\_only\_mode)
-
-Description: Should be 'disable' for sending messages to SQS queue. Otherwise it will just read existing files from bucket
-
-Type: `string`
-
-Default: `"enabled"`
-
-### <a name="input_s3_prefix"></a> [s3\_prefix](#input\_s3\_prefix)
-
-Description: Only read objects with this prefix
-
-Type: `string`
-
-Default: `""`
 
 ## Outputs
 
