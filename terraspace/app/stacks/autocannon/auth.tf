@@ -21,9 +21,3 @@ resource "aws_iam_instance_profile" "ec2_profile" {
   name = "${var.ec2_instance_name}_profile"
   role = aws_iam_role.ec2_role_atc.name
 }
-
-resource "aws_iam_role_policy_attachment" "policy_attach" {
-  for_each   = { for policy in var.policies_list : policy.name => policy }
-  role       = aws_iam_role.ec2_role_atc.id
-  policy_arn = each.value.arn
-}
