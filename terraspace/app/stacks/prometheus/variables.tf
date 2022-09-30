@@ -15,11 +15,6 @@ variable "cluster_id" {
   description = "This ID is managed by the peer stack. The same as EKS cluster name"
 }
 
-variable "cluster_oidc_issuer_url" {
-  type = string
-  description = "Used for allowing Kubernetes to manage AWS resources"
-}
-
 variable "oidc_provider" {
   type = string
   description = "The OpenID Connect identity provider (issuer URL without leading https://)"
