@@ -13,12 +13,12 @@ data "aws_availability_zones" "azs" {
   state = "available"
 }
 
-data "aws_ami" "peer-e2e-testing" {
+data "aws_ami" "peer_e2e_testing" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = [var.peer-e2e-testing_ami_name]
+    values = [var.peer_e2e_testing_ami_name]
   }
 
   filter {
@@ -29,8 +29,8 @@ data "aws_ami" "peer-e2e-testing" {
   owners = [local.aws_account_id] # PLNITRO
 }
 
-resource "aws_instance" "peer-e2e-testing_runner" {
-  ami                    = data.aws_ami.peer-e2e-testing.id
+resource "aws_instance" "peer_e2e_testing_runner" {
+  ami                    = data.aws_ami.peer_e2e_testing.id
   instance_type          = "t2.medium"
   subnet_id              = var.subnet_id
   availability_zone      = data.aws_availability_zones.azs.names[0]
@@ -43,7 +43,7 @@ resource "aws_instance" "peer-e2e-testing_runner" {
   }
 
   volume_tags = {
-    Name = "peer-e2e-testing"
+    Name = "peer_e2e_testing"
   }
 
   metadata_options {

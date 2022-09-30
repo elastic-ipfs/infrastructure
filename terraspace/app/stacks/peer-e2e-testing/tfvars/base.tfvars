@@ -3,5 +3,5 @@ subnet_id         = "subnet-06ff59acbc0a34548" # management-ipfs-elastic public 
 security_group_id = "sg-0da8ec52f04fcca8d"
 key_name          = "management-ipfs-elastic"
 ##
-peer-e2e-testing_ami_name = "peer-e2e-testing"
-ec2_instance_name      = "<%= expansion(':ENV') %>-ep-peer-e2e-testing"
+peer_e2e_testing_ami_name = "peer_e2e_testing"
+ec2_instance_name      = "<%= expansion(':ENV') %>-ep-peer_e2e_testing"
