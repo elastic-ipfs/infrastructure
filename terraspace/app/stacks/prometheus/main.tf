@@ -9,6 +9,11 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.4.1"
     }
+
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.12"
+    }
   }
   required_version = ">= 1.0.0"
 }
