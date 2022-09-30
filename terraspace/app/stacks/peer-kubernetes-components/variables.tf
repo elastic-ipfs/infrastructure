@@ -8,11 +8,6 @@ variable "cluster_oidc_issuer_url" {
   description = "This URL is managed by the peer stack. Used for allowing Kubernetes to manage AWS resources"
 }
 
-variable "region" {
-  type        = string
-  description = "Resources that manage AWS resources require the region"
-}
-
 variable "host" {
   type        = string
   description = "This URL is managed by the peer stack. EKS control plane API server endpoint"
