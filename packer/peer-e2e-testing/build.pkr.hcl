@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "autocannon"
+  ami_name      = "peer-e2e-testing"
   instance_type = "t3.micro"
   region        = "us-west-2"
   source_ami_filter {
@@ -22,7 +22,7 @@ source "amazon-ebs" "ubuntu" {
   }
   ssh_username = "ubuntu"
   tags = {
-    Name       = "Autocannon"
+    Name       = "peer-e2e-testing"
     Team       = "NearForm"
     Project    = "Elastic IPFS"
     Repository = "https://github.com/elastic-ipfs/infrastructure"

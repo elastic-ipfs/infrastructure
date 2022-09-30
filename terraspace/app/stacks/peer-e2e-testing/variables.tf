@@ -1,11 +1,11 @@
 variable "subnet_id" {
   type        = string
-  description = "ID of subnet where autocannon should run"
+  description = "ID of subnet where peer-e2e-testing should run"
 }
 
 variable "security_group_id" {
   type        = string
-  description = "ID of security group where autocannon should run"
+  description = "ID of security group where peer-e2e-testing should run"
 }
 
 variable "key_name" {
@@ -18,9 +18,9 @@ variable "ec2_instance_name" {
   description = "Name for the EC2 which will run bucket mirror"
 }
 
-variable "autocannon_ami_name" {
+variable "peer-e2e-testing_ami_name" {
   type        = string
-  description = "Name of image (AMI) which contains 'autocannon' prepared to run"
+  description = "Name of image (AMI) which contains 'peer-e2e-testing' prepared to run"
 }
 
 variable "node_env" {

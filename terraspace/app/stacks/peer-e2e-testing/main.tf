@@ -13,12 +13,12 @@ data "aws_availability_zones" "azs" {
   state = "available"
 }
 
-data "aws_ami" "autocannon" {
+data "aws_ami" "peer-e2e-testing" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = [var.autocannon_ami_name]
+    values = [var.peer-e2e-testing_ami_name]
   }
 
   filter {
@@ -29,8 +29,8 @@ data "aws_ami" "autocannon" {
   owners = [local.aws_account_id] # PLNITRO
 }
 
-resource "aws_instance" "autocannon_runner" {
-  ami                    = data.aws_ami.autocannon.id
+resource "aws_instance" "peer-e2e-testing_runner" {
+  ami                    = data.aws_ami.peer-e2e-testing.id
   instance_type          = "t2.medium"
   subnet_id              = var.subnet_id
   availability_zone      = data.aws_availability_zones.azs.names[0]
@@ -42,14 +42,8 @@ resource "aws_instance" "autocannon_runner" {
     Name = var.ec2_instance_name
   }
 
-  root_block_device {
-    delete_on_termination = false
-    # If this instance is terminated, it will still be possible to get the latest 'NextContinuationToken' from persistent EBS.
-    # It needs to be attached and mounted into a new instance for acessing its content.
-  }
-
   volume_tags = {
-    Name = "autocannon"
+    Name = "peer-e2e-testing"
   }
 
   metadata_options {

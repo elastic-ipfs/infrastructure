@@ -26,23 +26,23 @@ The following resources are used by this module:
 - [aws_iam_instance_profile.ec2_profile](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) (resource)
 - [aws_iam_role.ec2_role_atc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) (resource)
 - [aws_iam_role_policy_attachment.policy_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) (resource)
-- [aws_instance.autocannon_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) (resource)
-- [aws_ami.autocannon](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) (data source)
+- [aws_instance.peer-e2e-testing_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) (resource)
+- [aws_ami.peer-e2e-testing](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) (data source)
 - [aws_availability_zones.azs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) (data source)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_autocannon_ami_name"></a> [autocannon\_ami\_name](#input\_autocannon\_ami\_name)
+### <a name="input_peer-e2e-testing_ami_name"></a> [peer-e2e-testing\_ami\_name](#input\_peer-e2e-testing\_ami\_name)
 
-Description: Name of image (AMI) which contains 'autocannon' prepared to run
+Description: Name of image (AMI) which contains 'peer-e2e-testing' prepared to run
 
 Type: `string`
 
 ### <a name="input_ec2_instance_name"></a> [ec2\_instance\_name](#input\_ec2\_instance\_name)
 
-Description: Name for the EC2 which will run autocannon
+Description: Name for the EC2 which will run peer-e2e-testing
 
 Type: `string`
 
@@ -85,14 +85,14 @@ Type: `string`
 
 ### <a name="input_security_group_id"></a> [security\_group\_id](#input\_security\_group\_id)
 
-Description: ID of security group where autocannon should run
+Description: ID of security group where peer-e2e-testing should run
 
 Type: `string`
 
 
 ### <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id)
 
-Description: ID of subnet where autocannon should run
+Description: ID of subnet where peer-e2e-testing should run
 
 Type: `string`
 
