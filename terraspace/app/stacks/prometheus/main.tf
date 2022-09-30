@@ -54,7 +54,7 @@ resource "aws_iam_policy" "write_policy" {
               "aps:GetLabels",
               "aps:GetMetricMetadata"
           ],
-          "Resource":"*"
+          "Resource":"${aws_prometheus_workspace.ipfs_elastic_provider.arn}"
         }
     ]
   })
