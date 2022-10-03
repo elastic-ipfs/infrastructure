@@ -15,7 +15,7 @@ variable "key_name" {
 
 variable "ec2_instance_name" {
   type        = string
-  description = "Name for the EC2 which will run bucket mirror"
+  description = "Name for the EC2 which will run peer_e2e_testing"
 }
 
 variable "peer_e2e_testing_ami_name" {

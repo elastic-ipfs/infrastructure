@@ -31,7 +31,7 @@ data "aws_ami" "peer_e2e_testing" {
 
 resource "aws_instance" "peer_e2e_testing_runner" {
   ami                    = data.aws_ami.peer_e2e_testing.id
-  instance_type          = "t2.medium"
+  instance_type          = "t3.medium"
   subnet_id              = var.subnet_id
   availability_zone      = data.aws_availability_zones.azs.names[0]
   vpc_security_group_ids = [var.security_group_id]

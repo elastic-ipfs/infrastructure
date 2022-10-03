@@ -26,15 +26,15 @@ The following resources are used by this module:
 - [aws_iam_instance_profile.ec2_profile](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) (resource)
 - [aws_iam_role.ec2_role_atc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) (resource)
 - [aws_iam_role_policy_attachment.policy_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) (resource)
-- [aws_instance.peer-e2e-testing_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) (resource)
-- [aws_ami.peer-e2e-testing](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) (data source)
+- [aws_instance.peer_e2e_testing_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) (resource)
+- [aws_ami.peer_e2e_testing](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) (data source)
 - [aws_availability_zones.azs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) (data source)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_peer-e2e-testing_ami_name"></a> [peer-e2e-testing\_ami\_name](#input\_peer-e2e-testing\_ami\_name)
+### <a name="input_peer_e2e_testing_ami_name"></a> [peer_e2e_testing\_ami\_name](#input\_peer_e2e_testing\_ami\_name)
 
 Description: Name of image (AMI) which contains 'peer-e2e-testing' prepared to run
 
