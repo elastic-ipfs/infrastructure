@@ -23,7 +23,7 @@ The following Modules are called:
 
 Source: terraform-aws-modules/eks/aws
 
-Version: ~> 18.2.0
+Version: ~> 18.29.1
 
 ### <a name="module_gateway_endpoint_to_dynamodb"></a> [gateway\_endpoint\_to\_dynamodb](#module\_gateway\_endpoint\_to\_dynamodb)
 
@@ -84,12 +84,6 @@ object({
   })
 ```
 
-### <a name="input_region"></a> [region](#input\_region)
-
-Description: VPC Gateways service names are composed using this region
-
-Type: `string`
-
 ### <a name="input_vpc"></a> [vpc](#input\_vpc)
 
 Description: VPC for EKS worker nodes
@@ -136,7 +130,15 @@ Description: EKS cluster name
 
 Description: Used for allowing Kubernetes to manage AWS resources
 
+### <a name="output_eks_oidc_provider_arn"></a> [eks\_oidc\_provider\_arn](#output\_eks\_oidc\_provider\_arn)
+
+Description: The ARN of the OIDC Provider if enable\_irsa = true
+
 ### <a name="output_host"></a> [host](#output\_host)
 
 Description: EKS control plane API server endpoint
+
+### <a name="output_oidc_provider"></a> [oidc\_provider](#output\_oidc\_provider)
+
+Description: The OpenID Connect identity provider (issuer URL without leading https://)
 <!-- END_TF_DOCS -->
