@@ -47,14 +47,14 @@ module "vpc" {
 module "gateway_endpoint_to_dynamodb" {
   source         = "../../modules/gateway-endpoint-to-dynamodb"
   vpc_id         = module.vpc.vpc_id
-  region         = var.region
+  region         = local.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
 module "gateway_endpoint_to_s3" {
   source         = "../../modules/gateway-endpoint-to-s3"
   vpc_id         = module.vpc.vpc_id
-  region         = var.region
+  region         = local.region
   route_table_id = module.vpc.private_route_table_ids[0]
 }
 
@@ -62,7 +62,7 @@ module "gateway_endpoint_to_s3" {
 
 module "eks" {
   source                             = "terraform-aws-modules/eks/aws"
-  version                            = "~> 18.2.0"
+  version                            = "~> 18.29.1"
   cluster_name                       = var.eks.name
   cluster_version                    = var.eks.version
   cluster_endpoint_private_access    = true

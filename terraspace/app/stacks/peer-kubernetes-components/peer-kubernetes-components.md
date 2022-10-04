@@ -127,12 +127,6 @@ Description: Namespace where fluentd will be deployed to
 
 Type: `string`
 
-### <a name="input_region"></a> [region](#input\_region)
-
-Description: Resources that manage AWS resources require the region
-
-Type: `string`
-
 ### <a name="input_service_account_roles"></a> [service\_account\_roles](#input\_service\_account\_roles)
 
 Description: Manages Kubernetes serviceaccounts (sa) that should assume roles. Also manages the roles themselves and their polices associations. Those irsa services can later be associated with kubernetes deployments

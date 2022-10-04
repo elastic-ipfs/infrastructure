@@ -26,11 +26,6 @@ variable "eks" {
   description = "EKS cluster"
 }
 
-variable "region" {
-  type        = string
-  description = "VPC Gateways service names are composed using this region"
-}
-
 variable "account_id" {
   type        = string
   description = "AWS account ID"

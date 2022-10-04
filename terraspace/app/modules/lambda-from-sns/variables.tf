@@ -24,4 +24,5 @@ variable "custom_metrics" {
 
 variable "region" {
   type = string
+  description = "Region where the resources will be deployed"
 }

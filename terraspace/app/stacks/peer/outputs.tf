@@ -17,3 +17,15 @@ output "cluster_ca_certificate" {
   value       = data.aws_eks_cluster.eks.certificate_authority[0].data
   description = "Base64 encoded Certificate Authority PEM for EKS"
 }
+
+output "eks_oidc_provider_arn" {
+  value       = module.eks.oidc_provider_arn
+  sensitive   = true
+  description = "The ARN of the OIDC Provider if enable_irsa = true"
+}
+
+output "oidc_provider" {
+  value       = module.eks.oidc_provider
+  sensitive   = true
+  description = "The OpenID Connect identity provider (issuer URL without leading https://)"
+}
