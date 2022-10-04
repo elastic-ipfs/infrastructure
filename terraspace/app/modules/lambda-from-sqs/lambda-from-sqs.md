@@ -85,6 +85,14 @@ Type: `list(string)`
 
 Default: `[]`
 
+### <a name="input_sqs_trigger_function_response_types"></a> [sqs\_trigger\_function\_response\_types](#input\_sqs\_trigger\_function\_response\_types)
+
+Description: n/a
+
+Type: `list(string)`
+
+Default: `null`
+
 ## Outputs
 
 No outputs.

@@ -60,7 +60,7 @@ object({
 
 ### <a name="input_region"></a> [region](#input\_region)
 
-Description: n/a
+Description: Region where the resources will be deployed
 
 Type: `string`
 
