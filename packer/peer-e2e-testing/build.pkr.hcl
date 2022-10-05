@@ -40,7 +40,7 @@ build {
       "curl -sL https://deb.nodesource.com/setup_${var.node_version}.x | sudo bash -",
       "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
       "sudo apt-get update",
-      "sudo apt-get -y install nodejs git"
+      "sudo apt-get -y install nodejs git",
       "sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service"
     ]
   }
