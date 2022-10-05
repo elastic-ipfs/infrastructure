@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "peer_e2e_testing"
+  ami_name      = "peer-e2e-testing"
   instance_type = "t3.micro"
   region        = "us-west-2"
   source_ami_filter {
