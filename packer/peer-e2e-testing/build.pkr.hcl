@@ -41,6 +41,7 @@ build {
       "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
       "sudo apt-get update",
       "sudo apt-get -y install nodejs git",
+      "git clone https://github.com/elastic-ipfs/e2e-tests",
       "sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service"
     ]
   }

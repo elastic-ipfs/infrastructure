@@ -1,0 +1,8 @@
+#!/bin/bash
+# preparing env
+export TARGET_ENV=dev
+cd /e2e-tests
+git checkout feat/init
+git pull
+# run tests
+npm run test:load
