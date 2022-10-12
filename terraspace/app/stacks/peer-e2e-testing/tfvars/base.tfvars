@@ -3,3 +3,4 @@ subnet_id         = "subnet-05491bc6e8cd74e1e" # management-ipfs-elastic private
 ##
 peer_e2e_testing_ami_name = "peer-e2e-testing"
 ec2_instance_name      = "<%= expansion(':ENV') %>-ep-peer-e2e-testing"
+s3_e2e_policy_write_name = "peer-e2e-testing-s3-policy"
