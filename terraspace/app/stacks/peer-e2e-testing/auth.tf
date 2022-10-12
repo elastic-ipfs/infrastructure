@@ -7,7 +7,8 @@ resource "aws_iam_role" "ec2_role_atc" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "Service": "ec2.amazonaws.com",
+        "Service": "s3.amazonaws.com"
       },
       "Effect": "Allow"
     }  
@@ -40,7 +41,7 @@ resource "aws_iam_policy" "s3_e2e_policy_write" {
         },
         {
             "Effect": "Allow",
-            "Action": "s3:PutObjects",
+            "Action": "s3:PutObject",
             "Resource": "${aws_s3_bucket.peer_e2e_tests.arn}/*"
         },
         {
