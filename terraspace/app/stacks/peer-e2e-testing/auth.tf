@@ -8,7 +8,8 @@ resource "aws_iam_role" "ec2_role_atc" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "Service": "ec2.amazonaws.com",
+        "Service": "s3.amazonaws.com"
       },
       "Effect": "Allow"
     }
