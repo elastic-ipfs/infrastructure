@@ -44,3 +44,17 @@ resource "aws_instance" "peer_e2e_testing_runner" {
     http_tokens   = "required"
   }
 }
+
+resource "aws_s3_bucket" "peer_e2e_tests" {
+  bucket = "peer-e2e-tests"
+
+  tags = {
+    Name        = "Peer e2e tests"
+    Environment = "Dev"
+  }
+}
+
+resource "aws_s3_bucket_acl" "priv_acl" {
+  bucket = aws_s3_bucket.peer_e2e_tests.id
+  acl    = "private"
+}

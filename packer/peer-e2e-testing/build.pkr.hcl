@@ -45,8 +45,9 @@ build {
       "curl -sL https://deb.nodesource.com/setup_${var.node_version}.x | sudo bash -",
       "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
       "sudo apt-get update",
-      "sudo apt-get -y install nodejs git",
+      "sudo apt-get -y install nodejs git awscli",
       "git clone https://github.com/elastic-ipfs/e2e-tests",
+      "sudo mv /home/ubuntu/e2e-tests /",
       "sudo mv /tmp/e2eload /usr/bin/e2eload",
       "sudo chmod +x /usr/bin/e2eload",
       "sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service"

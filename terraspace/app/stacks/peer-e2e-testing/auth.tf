@@ -8,11 +8,28 @@ resource "aws_iam_role" "ec2_role_atc" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "ec2.amazonaws.com",
-        "Service": "s3.amazonaws.com"
+        "Service": "ec2.amazonaws.com"
       },
       "Effect": "Allow"
-    }
+    },
+    {
+      "Action": [
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListMultipartUploadParts",
+          "s3:AbortMultipartUpload"
+      ],
+      "Resource": "arn:aws:s3:::/peer-e2e-tests",
+      "Effect": "Allow"
+    }    
   ]
 }
 EOF
