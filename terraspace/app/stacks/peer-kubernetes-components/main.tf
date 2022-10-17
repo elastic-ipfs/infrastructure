@@ -33,6 +33,7 @@ module "eks_auth_sync" {
   region                    = local.region
   cluster_name              = var.cluster_id
   cluster_oidc_issuer_url   = var.cluster_oidc_issuer_url
+  eks_auth_sync_version     = var.eks_auth_sync_version
   eks_auth_sync_role_name   = var.eks_auth_sync_role_name
   eks_auth_sync_policy_name = var.eks_auth_sync_policy_name
 }
@@ -42,6 +43,7 @@ module "cluster_autoscaler" {
   region                         = local.region
   cluster_name                   = var.cluster_id
   cluster_oidc_issuer_url        = var.cluster_oidc_issuer_url
+  cluster_autoscaler_version     = var.cluster_autoscaler_version
   cluster_autoscaler_role_name   = var.cluster_autoscaler_role_name
   cluster_autoscaler_policy_name = var.cluster_autoscaler_policy_name
 }

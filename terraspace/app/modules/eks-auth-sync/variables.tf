@@ -38,3 +38,7 @@ variable "cronjob_schedule" {
   type    = string
   default = "*/15 * * * *"
 }
+
+variable "eks_auth_sync_version" {
+  type = string
+}

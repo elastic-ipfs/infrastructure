@@ -44,7 +44,7 @@ resource "kubernetes_cron_job" "eksauth" {
           spec {
             container {
               name              = "eks-auth-sync"
-              image             = "registry.gitlab.com/polarsquad/eks-auth-sync:0.0.7"
+              image             = "registry.gitlab.com/polarsquad/eks-auth-sync:${var.eks_auth_sync_version}"
               image_pull_policy = "Always"
               args              = ["-config", "/etc/eks-auth-sync/config.yaml", "-commit"]
               env {

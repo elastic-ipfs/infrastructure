@@ -13,13 +13,18 @@ variable "cluster_name" {
 }
 
 variable "cluster_oidc_issuer_url" {
-  type = string
+  type        = string
   description = "Used for allowing Kubernetes to manage AWS resources"
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "Region where the resources will be deployed"
+}
+
+variable "cluster_autoscaler_version" {
+  type        = string
+  description = "Version for cluster autoscaler operator"
 }
 
 variable "cluster_autoscaler_role_name" {

@@ -50,9 +50,19 @@ variable "eks_auth_sync_role_name" {
   description = "Name for EKS auth sync role"
 }
 
+variable "eks_auth_sync_version" {
+  type        = string
+  description = "Version for EKS auth sync operator"
+}
+
 variable "eks_auth_sync_policy_name" {
   type        = string
   description = "Name for policy which allows eks auth sync to read tags from IAM"
+}
+
+variable "cluster_autoscaler_version" {
+  type        = string
+  description = "Version for cluster autoscaler operator"
 }
 
 variable "cluster_autoscaler_role_name" {
