@@ -65,6 +65,11 @@ variable "cluster_autoscaler_version" {
   description = "Version for cluster autoscaler operator"
 }
 
+variable "metrics_server_version" {
+  type        = string
+  description = "Version for cluster metrics server"
+}
+
 variable "cluster_autoscaler_role_name" {
   type        = string
   description = "Name for cluster autoscaler role"

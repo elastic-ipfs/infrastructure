@@ -139,6 +139,12 @@ Description: Namespace where fluentd will be deployed to
 
 Type: `string`
 
+### <a name="input_metrics_server_version"></a> [metrics\_server\_version](#input\_metrics\_server\_version)
+
+Description: Version for cluster metrics server
+
+Type: `string`
+
 ### <a name="input_service_account_roles"></a> [service\_account\_roles](#input\_service\_account\_roles)
 
 Description: Manages Kubernetes serviceaccounts (sa) that should assume roles. Also manages the roles themselves and their polices associations. Those irsa services can later be associated with kubernetes deployments
