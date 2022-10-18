@@ -21,7 +21,8 @@ server:
         max_samples_per_send: 1000
         max_shards: 200
         capacity: 2500
-
+  persistentVolume:
+    enabled: false
   ## Use a statefulset instead of a deployment for resiliency
   ##
   statefulSet:
