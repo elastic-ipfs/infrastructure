@@ -69,6 +69,12 @@ Description: Name for EKS auth sync role
 
 Type: `string`
 
+### <a name="input_eks_auth_sync_version"></a> [eks\_auth\_sync\_version](#input\_eks\_auth\_sync\_version)
+
+Description: n/a
+
+Type: `string`
+
 ### <a name="input_region"></a> [region](#input\_region)
 
 Description: Region where the resources will be deployed

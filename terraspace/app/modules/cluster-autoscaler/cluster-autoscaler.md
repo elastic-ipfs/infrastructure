@@ -53,6 +53,12 @@ Description: Name for cluster autoscaler role
 
 Type: `string`
 
+### <a name="input_cluster_autoscaler_version"></a> [cluster\_autoscaler\_version](#input\_cluster\_autoscaler\_version)
+
+Description: Version for cluster autoscaler operator
+
+Type: `string`
+
 ### <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name)
 
 Description: n/a

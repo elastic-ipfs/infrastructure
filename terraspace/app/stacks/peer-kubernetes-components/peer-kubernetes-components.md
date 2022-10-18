@@ -85,6 +85,12 @@ Description: Name for cluster autoscaler role
 
 Type: `string`
 
+### <a name="input_cluster_autoscaler_version"></a> [cluster\_autoscaler\_version](#input\_cluster\_autoscaler\_version)
+
+Description: Version for cluster autoscaler operator
+
+Type: `string`
+
 ### <a name="input_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#input\_cluster\_ca\_certificate)
 
 Description: This certificate is managed by the peer stack. Base64 encoded Certificate Authority PEM for EKS
@@ -112,6 +118,12 @@ Type: `string`
 ### <a name="input_eks_auth_sync_role_name"></a> [eks\_auth\_sync\_role\_name](#input\_eks\_auth\_sync\_role\_name)
 
 Description: Name for EKS auth sync role
+
+Type: `string`
+
+### <a name="input_eks_auth_sync_version"></a> [eks\_auth\_sync\_version](#input\_eks\_auth\_sync\_version)
+
+Description: Version for EKS auth sync operator
 
 Type: `string`
 
