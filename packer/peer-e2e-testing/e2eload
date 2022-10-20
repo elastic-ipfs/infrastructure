@@ -1,8 +1,14 @@
 #!/bin/bash
 # preparing env
+var=`date +"%FORMAT_STRING"`
+now=`date +"%m_%d_%Y_%H:%M"`
+now=`date +"%Y-%m-%d-%H:%M"`
 export TARGET_ENV=dev
 cd /e2e-tests
-git checkout feat/init
+git checkout main
 git pull
+npm install
 # run tests
-npm run test:load
+npm run test:load > /tmp/test-${now}.txt
+# save on s3 bucket
+aws s3 cp /tmp/test-${now}.txt s3://peer-e2e-tests
