@@ -1554,8 +1554,8 @@
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
-          "sort": "none"
+          "mode": "multi",
+          "sort": "desc"
         }
       },
       "targets": [
@@ -1582,6 +1582,18 @@
           "legendFormat": "Found",
           "range": true,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "EgboSQqnz"
+          },
+          "editorMode": "code",
+          "expr": "rate(nftcheckup_bitswap_requests_total{responded=\"true\",found=\"true\", peer!=\"bafzbeibhqavlasjc7dvbiopygwncnrtvjd2xmryk5laib7zyjor6kf3avm\"}[1h]) / ignoring(responded,found) rate(nftcheckup_samples_total[1h])",
+          "hide": true,
+          "legendFormat": "{{peer}}",
+          "range": true,
+          "refId": "C"
         }
       ],
       "title": "NFT Peer: bafzbeibhqavlasjc7dvbiopygwncnrtvjd2xmryk5laib7zyjor6kf3avm",
@@ -1624,7 +1636,7 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -1637,10 +1649,11 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0.5
               }
             ]
-          }
+          },
+          "unit": "percentunit"
         },
         "overrides": []
       },
@@ -2074,7 +2087,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2138,13 +2152,13 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Nearform Alerts",
   "uid": "Dj5OLmC7z",
-  "version": 34,
+  "version": 37,
   "weekStart": ""
 }
