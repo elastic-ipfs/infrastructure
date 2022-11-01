@@ -85,6 +85,12 @@ Description: Name for cluster autoscaler role
 
 Type: `string`
 
+### <a name="input_cluster_autoscaler_version"></a> [cluster\_autoscaler\_version](#input\_cluster\_autoscaler\_version)
+
+Description: Version for cluster autoscaler operator
+
+Type: `string`
+
 ### <a name="input_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#input\_cluster\_ca\_certificate)
 
 Description: This certificate is managed by the peer stack. Base64 encoded Certificate Authority PEM for EKS
@@ -115,6 +121,12 @@ Description: Name for EKS auth sync role
 
 Type: `string`
 
+### <a name="input_eks_auth_sync_version"></a> [eks\_auth\_sync\_version](#input\_eks\_auth\_sync\_version)
+
+Description: Version for EKS auth sync operator
+
+Type: `string`
+
 ### <a name="input_host"></a> [host](#input\_host)
 
 Description: This URL is managed by the peer stack. EKS control plane API server endpoint
@@ -124,6 +136,12 @@ Type: `string`
 ### <a name="input_logging_namespace"></a> [logging\_namespace](#input\_logging\_namespace)
 
 Description: Namespace where fluentd will be deployed to
+
+Type: `string`
+
+### <a name="input_metrics_server_version"></a> [metrics\_server\_version](#input\_metrics\_server\_version)
+
+Description: Version for cluster metrics server
 
 Type: `string`
 
