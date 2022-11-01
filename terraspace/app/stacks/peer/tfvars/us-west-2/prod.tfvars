@@ -9,7 +9,7 @@ vpc = {
 }
 eks = {
   name    = "test-ipfs-peer-subsys"
-  version = 1.21
+  version = 1.23
   eks_managed_node_groups = {
     name           = "test-ipfs-peer-subsys"
     desired_size   = 2
