@@ -123,7 +123,48 @@ resource "kubernetes_manifest" "application_bitswap_peer" {
       }
       "destination" = {
         "server"    = "https://kubernetes.default.svc"
-        "namespace" = "default"
+        "namespace" = kubernetes_namespace.bitswap_peer_namespace.metadata[0].name
+      }
+      "syncPolicy" = {
+        "automated" = {
+          "selfHeal" = "true"
+          "prune"    = "true"
+        }
+      }
+    }
+  }
+
+  depends_on = [
+    helm_release.argocd
+  ]
+}
+
+
+resource "kubernetes_manifest" "application_fluentd" {
+  manifest = {
+    "apiVersion" = "argoproj.io/v1alpha1"
+    "kind"       = "Application"
+    "metadata" = {
+      "name"      = "fluentd"
+      "namespace" = "argocd"
+    }
+    "spec" = {
+      "project" = "default"
+      "source" = {
+        "repoURL"        = "https://github.com/elastic-ipfs/fluentd-containers-deployment.git"
+        "targetRevision" = "HEAD" # TODO: Variable
+        "path"           = "helm"
+        "helm" = {
+          "releaseName" = kubernetes_namespace.logging_namespace.metadata[0].name
+          "valueFiles" = [
+            "values.yaml",
+            "values-${local.env}.yaml"
+          ]
+        }
+      }
+      "destination" = {
+        "server"    = "https://kubernetes.default.svc"
+        "namespace" = kubernetes_namespace.logging_namespace.metadata[0].name
       }
       "syncPolicy" = {
         "automated" = {
