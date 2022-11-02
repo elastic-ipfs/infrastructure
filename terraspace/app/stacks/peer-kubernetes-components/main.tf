@@ -59,3 +59,82 @@ resource "kubernetes_namespace" "logging_namespace" {
     name = var.logging_namespace
   }
 }
+
+resource "kubernetes_manifest" "application_test" {
+  manifest = {
+    "apiVersion" = "argoproj.io/v1alpha1"
+    "kind"       = "Application"
+    "metadata" = {
+      "name"      = "guestbook"
+      "namespace" = "argocd"
+    }
+    "spec" = {
+      "project" = "default"
+      "source" = {
+        "repoURL"        = "https://github.com/argoproj/argocd-example-apps.git"
+        "targetRevision" = "HEAD"
+        "path"           = "guestbook"
+      }
+      "destination" = {
+        "server"    = "https://kubernetes.default.svc"
+        "namespace" = "guestbook"
+      }
+    }
+  }
+
+  depends_on = [
+    helm_release.argocd
+  ]
+}
+
+
+resource "kubernetes_manifest" "application_bitswap_peer" {
+  manifest = {
+    "apiVersion" = "argoproj.io/v1alpha1"
+    "kind"       = "Application"
+    "metadata" = {
+      "name"      = "bitswap-peer"
+      "namespace" = "argocd"
+      "annotations" = {
+        "notifications.argoproj.io/subscribe.on-sync-succeeded.slack" : "protocol-labs-internal-notifications"
+        "notifications.argoproj.io/subscribe.on-deployed.slack" : "protocol-labs-internal-notifications"
+        "notifications.argoproj.io/subscribe.on-health-degraded.slack" : "protocol-labs-internal-notifications"
+        "notifications.argoproj.io/subscribe.on-sync-failed.slack" : "protocol-labs-internal-notifications"
+        "notifications.argoproj.io/subscribe.on-sync-running.slack" : "protocol-labs-internal-notifications"
+        "notifications.argoproj.io/subscribe.on-sync-status-unknown.slack" : "protocol-labs-internal-notifications"
+      }
+    }
+    "spec" = {
+      "project" = "default"
+      "source" = {
+        "repoURL"        = "https://github.com/elastic-ipfs/bitswap-peer-deployment.git"
+        "targetRevision" = var.bitswap_peer_deployment_branch
+        "path"           = "helm"
+        "helm" = {
+          "releaseName" = kubernetes_namespace.bitswap_peer_namespace.metadata[0].name
+          "valueFiles" = [
+            "values.yaml",
+            "values-${local.env}.yaml"
+          ]
+          "values" = {
+            "service.awsCertificateArn" = var.aws_certificate_arn
+          }
+        }
+      }
+      "destination" = {
+        "server"    = "https://kubernetes.default.svc"
+        "namespace" = "default"
+      }
+      "syncPolicy" = {
+        "automated" = {
+          "selfHeal" = "true"
+          "prune"    = "true"
+        }
+      }
+    }
+  }
+
+  depends_on = [
+    helm_release.argocd
+  ]
+}
