@@ -1,6 +1,6 @@
-variable "sns_topic" {
-  type        = string
-  description = "Name of SNS topic which lambda should subscribe to"
+variable "sns_topic_trigger_names" {
+  type        = list(string)
+  description = "List of SNS topic names which lambda should subscribe to"
 }
 
 variable "lambda" {

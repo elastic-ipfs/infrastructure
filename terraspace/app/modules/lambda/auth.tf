@@ -18,11 +18,12 @@ EOF
 }
 
 resource "aws_lambda_permission" "with_sns" {
+  for_each      = { for topic in var.sns_topic_trigger_arns : topic => topic }
   statement_id  = "AllowExecutionFromSNS"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_function.arn
   principal     = "sns.amazonaws.com"
-  source_arn    = data.aws_sns_topic.source_sns_topic.arn
+  source_arn    = each.value
 }
 
 resource "aws_iam_role_policy_attachment" "policies_attach" {

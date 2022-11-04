@@ -1,3 +1,6 @@
+# Deprecated. TODO: Move SQS triggers logic to 'lambda' module.
+# Treat them with a 'for_each' logic
+# Goal: Reduce code duplication.
 resource "aws_lambda_event_source_mapping" "event_triggers" {
   event_source_arn                   = var.sqs_trigger.arn
   enabled                            = true
