@@ -77,9 +77,9 @@ Default: `[]`
 
 ### <a name="input_sns_topic_trigger_arns"></a> [sns\_topic\_trigger\_arns](#input\_sns\_topic\_trigger\_arns)
 
-Description: List of SNS topics arns which lambda should subscribe to
+Description: Set of SNS topics arns which lambda should subscribe to
 
-Type: `list(string)`
+Type: `set(string)`
 
 Default: `[]`
 
