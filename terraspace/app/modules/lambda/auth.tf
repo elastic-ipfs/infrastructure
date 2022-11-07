@@ -18,7 +18,7 @@ EOF
 }
 
 resource "aws_lambda_permission" "with_sns" {
-  for_each      = { for topic in var.sns_topic_trigger_arns : topic => topic }
+  for_each      = var.sns_topic_trigger_arns
   statement_id  = "AllowExecutionFromSNS"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_function.arn
