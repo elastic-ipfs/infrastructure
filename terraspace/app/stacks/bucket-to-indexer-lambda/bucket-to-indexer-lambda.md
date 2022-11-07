@@ -77,9 +77,9 @@ Type: `string`
 
 ### <a name="input_sns_topic_trigger_names"></a> [sns\_topic\_trigger\_names](#input\_sns\_topic\_trigger\_names)
 
-Description: List of SNS topic names which lambda should subscribe to
+Description: Set of SNS topic names which lambda should subscribe to
 
-Type: `list(string)`
+Type: `set(string)`
 
 ## Optional Inputs
 
