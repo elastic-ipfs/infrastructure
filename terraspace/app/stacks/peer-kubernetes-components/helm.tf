@@ -60,3 +60,17 @@ resource "helm_release" "argocd_apps" {
     value = "{values.yaml,values-${local.env}.yaml}"
   }
 }
+
+resource "helm_release" "argocd_rollouts" {
+  name             = "argo-rollouts"
+  chart            = "argo-rollouts"
+  version          = "~> ${var.argocd_rollouts_version}"
+  repository       = "https://argoproj.github.io/argo-helm"
+  namespace        = "argocd-rollouts"
+  create_namespace = true
+
+  set {
+    name  = "dashboard.enabled"
+    value = true
+  }
+}

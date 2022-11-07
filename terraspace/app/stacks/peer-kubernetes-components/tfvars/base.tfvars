@@ -29,5 +29,6 @@ cluster_autoscaler_version     = "9.9.2"
 cluster_autoscaler_role_name   = "<%= expansion(':ENV') %>-ep-eks-cluster-autoscaler"
 cluster_autoscaler_policy_name = "<%= expansion(':ENV') %>-ep-eks-cluster-autoscaler"
 metrics_server_version         = "6.2"
+argocd_rollouts_version        = "2.21.1"
 bitswap_peer_deployment_branch = "HEAD"
 aws_certificate_arn            = <%= output('dns-certificate.aws_certificate_arn', mock: "") %>

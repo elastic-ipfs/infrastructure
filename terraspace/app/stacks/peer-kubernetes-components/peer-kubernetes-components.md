@@ -46,6 +46,7 @@ Version: ~> 4.0
 The following resources are used by this module:
 
 - [helm_release.argocd_apps](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
+- [helm_release.argocd_rollouts](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
 - [helm_release.metric_server](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) (resource)
 - [kubernetes_namespace.bitswap_peer_namespace](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) (resource)
 - [kubernetes_namespace.logging_namespace](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace) (resource)
@@ -54,6 +55,12 @@ The following resources are used by this module:
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_argocd_rollouts_version"></a> [argocd\_rollouts\_version](#input\_argocd\_rollouts\_version)
+
+Description: Version for argocd rollouts operator
+
+Type: `string`
 
 ### <a name="input_aws_certificate_arn"></a> [aws\_certificate\_arn](#input\_aws\_certificate\_arn)
 

@@ -70,6 +70,11 @@ variable "metrics_server_version" {
   description = "Version for cluster metrics server"
 }
 
+variable "argocd_rollouts_version" {
+  type        = string
+  description = "Version for argocd rollouts operator"
+}
+
 variable "cluster_autoscaler_role_name" {
   type        = string
   description = "Name for cluster autoscaler role"
