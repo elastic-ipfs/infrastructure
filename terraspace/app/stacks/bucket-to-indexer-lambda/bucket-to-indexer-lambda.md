@@ -21,7 +21,7 @@ The following Modules are called:
 
 ### <a name="module_lambda_from_sns"></a> [lambda\_from\_sns](#module\_lambda\_from\_sns)
 
-Source: ../../modules/lambda-from-sns
+Source: ../../modules/lambda
 
 Version:
 
@@ -75,11 +75,11 @@ Description: NODE\_ENV environment variable value for bucket\_to\_indexer lambda
 
 Type: `string`
 
-### <a name="input_sns_topic"></a> [sns\_topic](#input\_sns\_topic)
+### <a name="input_sns_topic_trigger_names"></a> [sns\_topic\_trigger\_names](#input\_sns\_topic\_trigger\_names)
 
-Description: Name of SNS topic which lambda should subscribe to
+Description: Set of SNS topic names which lambda should subscribe to
 
-Type: `string`
+Type: `set(string)`
 
 ## Optional Inputs
 

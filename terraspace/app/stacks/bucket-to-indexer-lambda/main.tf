@@ -27,10 +27,11 @@ data "terraform_remote_state" "event" {
   }
 }
 
+# TODO: Rename to 'lambda'. Migrate state
 module "lambda_from_sns" {
-  source    = "../../modules/lambda-from-sns"
-  sns_topic = var.sns_topic
-  region    = local.region
+  source                 = "../../modules/lambda"
+  sns_topic_trigger_arns = formatlist("arn:aws:sns:${local.region}:${local.aws_account_id}:%s", var.sns_topic_trigger_names)
+  region                 = local.region
   lambda = {
     image_uri             = local.bucket_to_indexer_image_url
     name                  = var.lambda.name

@@ -32,7 +32,6 @@ The following resources are used by this module:
 - [aws_lambda_function.lambda_function](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function) (resource)
 - [aws_lambda_permission.with_sns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission) (resource)
 - [aws_sns_topic_subscription.topic_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) (resource)
-- [aws_sns_topic.source_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/sns_topic) (data source)
 
 ## Required Inputs
 
@@ -64,12 +63,6 @@ Description: Region where the resources will be deployed
 
 Type: `string`
 
-### <a name="input_sns_topic"></a> [sns\_topic](#input\_sns\_topic)
-
-Description: Name of SNS topic which lambda should subscribe to
-
-Type: `string`
-
 ## Optional Inputs
 
 The following input variables are optional (have default values):
@@ -79,6 +72,14 @@ The following input variables are optional (have default values):
 Description: n/a
 
 Type: `list(string)`
+
+Default: `[]`
+
+### <a name="input_sns_topic_trigger_arns"></a> [sns\_topic\_trigger\_arns](#input\_sns\_topic\_trigger\_arns)
+
+Description: Set of SNS topics arns which lambda should subscribe to
+
+Type: `set(string)`
 
 Default: `[]`
 

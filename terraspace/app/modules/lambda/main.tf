@@ -9,10 +9,6 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-data "aws_sns_topic" "source_sns_topic" {
-  name = var.sns_topic
-}
-
 resource "aws_lambda_function" "lambda_function" {
   function_name = var.lambda.name
   package_type  = "Image"
@@ -36,7 +32,8 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_sns_topic_subscription" "topic_lambda" {
-  topic_arn = data.aws_sns_topic.source_sns_topic.arn
+  for_each  = var.sns_topic_trigger_arns
+  topic_arn = each.value
   protocol  = "lambda"
   endpoint  = aws_lambda_function.lambda_function.arn
 }

@@ -12,9 +12,10 @@ variable "lambda" {
   })
 }
 
-variable "sns_topic" {
-  type        = string
-  description = "Name of SNS topic which lambda should subscribe to"
+variable "sns_topic_trigger_arns" {
+  type        = set(string)
+  description = "Set of SNS topics arns which lambda should subscribe to"
+  default     = []
 }
 
 variable "custom_metrics" {
@@ -23,6 +24,6 @@ variable "custom_metrics" {
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "Region where the resources will be deployed"
 }
