@@ -32,7 +32,7 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_sns_topic_subscription" "topic_lambda" {
-  for_each  = { for topic in var.sns_topic_trigger_arns : topic => topic }
+  for_each  = var.sns_topic_trigger_arns
   topic_arn = each.value
   protocol  = "lambda"
   endpoint  = aws_lambda_function.lambda_function.arn

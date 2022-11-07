@@ -13,8 +13,8 @@ variable "lambda" {
 }
 
 variable "sns_topic_trigger_arns" {
-  type        = list(string)
-  description = "List of SNS topics arns which lambda should subscribe to"
+  type        = set(string)
+  description = "Set of SNS topics arns which lambda should subscribe to"
   default     = []
 }
 
