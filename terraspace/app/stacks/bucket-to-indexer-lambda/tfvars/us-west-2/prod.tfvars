@@ -4,5 +4,5 @@ lambda = {
   memory_size = 1024
   timeout     = 900
 }
-ecr_repository_name = "bucket-to-indexer-lambda"
-sns_topic_triggers  = ["ep-s3-put"]
+ecr_repository_name     = "bucket-to-indexer-lambda"
+sns_topic_trigger_names = ["ep-s3-put"]
