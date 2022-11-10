@@ -75,6 +75,23 @@ variable "argocd_rollouts_version" {
   description = "Version for argocd rollouts operator"
 }
 
+variable "argocd_rollouts_dashboard_service_type" {
+  type        = string
+  description = "`LoadBalancer` if you wish to expose the dashboard publicly, `ClusterIP` otherwise"
+  default     = "ClusterIP"
+
+  validation {
+    condition     = can(regex("^ClusterIP|^LoadBalancer$", var.argocd_rollouts_dashboard_service_type))
+    error_message = "Err: invalid service type."
+  }
+}
+
+variable "argocd_rollouts_dashboard_allowed_ips" {
+  type = list(string)
+  description = "List of Client CIDRs to permit access to the dashboard"
+  default = []
+}
+
 variable "cluster_autoscaler_role_name" {
   type        = string
   description = "Name for cluster autoscaler role"

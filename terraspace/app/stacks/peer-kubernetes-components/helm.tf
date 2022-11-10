@@ -73,4 +73,14 @@ resource "helm_release" "argocd_rollouts" {
     name  = "dashboard.enabled"
     value = true
   }
+
+  set {
+    name = "dashboard.service.type"
+    value = var.argocd_rollouts_dashboard_service_type
+  }
+
+  set {
+    name  = "dashboard.service.loadBalancerSourceRanges"
+    value = "{${join(",", var.argocd_rollouts_dashboard_allowed_ips)}}"
+  }
 }
