@@ -1,3 +1,4 @@
+# This demands using CLOUDFLARE_API_USER_SERVICE_KEY for auth
 terraform {
   required_providers {
     aws = {
