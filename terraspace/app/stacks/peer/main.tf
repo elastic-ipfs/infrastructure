@@ -78,7 +78,7 @@ module "eks" {
     "168.227.34.17/32",
     "81.111.55.128/32",
     "201.33.204.216/32",
-    "145.224.104.31/32",
+    "145.224.104.107/32",
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
