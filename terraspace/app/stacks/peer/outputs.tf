@@ -29,3 +29,11 @@ output "oidc_provider" {
   sensitive   = true
   description = "The OpenID Connect identity provider (issuer URL without leading https://)"
 }
+
+output "dynamodb_config_policy" {
+  value = {
+    name = aws_iam_policy.dynamodb_config_policy.name
+    arn  = aws_iam_policy.dynamodb_config_policy.arn
+  }
+  description = "Policy for allowing all Dynamodb Actions for config table"
+}

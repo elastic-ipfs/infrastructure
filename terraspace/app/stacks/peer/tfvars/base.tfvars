@@ -12,3 +12,7 @@ eks = {
     instance_types = ["t2.medium"]
   }
 }
+config_table = {
+  name     = "<%= expansion(':ENV') %>-ep-bitswap-config"
+  hash_key = "key"
+}

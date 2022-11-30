@@ -36,3 +36,11 @@ variable "enable_troubleshooting_sg_rules" {
   default     = false
   description = "Defines if egress security group rules should be defined to allow troubleshooting to the internet"
 }
+
+variable "config_table" {
+  type = object({
+    name     = string
+    hash_key = string
+  })
+  description = "This table is supposed to contain configuration key/value pairs"
+}

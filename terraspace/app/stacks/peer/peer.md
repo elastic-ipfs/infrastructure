@@ -47,6 +47,8 @@ Version: ~> 3.0
 
 The following resources are used by this module:
 
+- [aws_dynamodb_table.config_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) (resource)
+- [aws_iam_policy.dynamodb_config_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) (resource)
 - [aws_security_group_rule.dns_ingress_tcp](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) (resource)
 - [aws_security_group_rule.dns_ingress_udp](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) (resource)
 - [aws_security_group_rule.fargate_egress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) (resource)
@@ -63,6 +65,19 @@ The following input variables are required:
 Description: AWS account ID
 
 Type: `string`
+
+### <a name="input_config_table"></a> [config\_table](#input\_config\_table)
+
+Description: config\_table table. This table is supposed to contain configuration key/value pairs
+
+Type:
+
+```hcl
+object({
+    name     = string
+    hash_key = string
+  })
+```
 
 ### <a name="input_eks"></a> [eks](#input\_eks)
 
@@ -129,6 +144,10 @@ Description: EKS cluster name
 ### <a name="output_cluster_oidc_issuer_url"></a> [cluster\_oidc\_issuer\_url](#output\_cluster\_oidc\_issuer\_url)
 
 Description: Used for allowing Kubernetes to manage AWS resources
+
+### <a name="output_dynamodb_config_policy"></a> [dynamodb\_config\_policy](#output\_dynamodb\_config\_policy)
+
+Description: Policy for allowing all Dynamodb Actions for config table
 
 ### <a name="output_eks_oidc_provider_arn"></a> [eks\_oidc\_provider\_arn](#output\_eks\_oidc\_provider\_arn)
 
