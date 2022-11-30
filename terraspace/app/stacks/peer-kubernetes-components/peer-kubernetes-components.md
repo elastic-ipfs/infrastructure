@@ -171,7 +171,23 @@ map(object({
 
 ## Optional Inputs
 
-No optional inputs.
+The following input variables are optional (have default values):
+
+### <a name="input_argocd_rollouts_dashboard_allowed_ips"></a> [argocd\_rollouts\_dashboard\_allowed\_ips](#input\_argocd\_rollouts\_dashboard\_allowed\_ips)
+
+Description: List of Client CIDRs to permit access to the dashboard
+
+Type: `list(string)`
+
+Default: `[]`
+
+### <a name="input_argocd_rollouts_dashboard_service_type"></a> [argocd\_rollouts\_dashboard\_service\_type](#input\_argocd\_rollouts\_dashboard\_service\_type)
+
+Description: `LoadBalancer` if you wish to expose the dashboard publicly, `ClusterIP` otherwise
+
+Type: `string`
+
+Default: `"ClusterIP"`
 
 ## Outputs
 
