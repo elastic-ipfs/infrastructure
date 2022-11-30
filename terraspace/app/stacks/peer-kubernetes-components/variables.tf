@@ -87,9 +87,9 @@ variable "argocd_rollouts_dashboard_service_type" {
 }
 
 variable "argocd_rollouts_dashboard_allowed_ips" {
-  type = list(string)
+  type        = list(string)
   description = "List of Client CIDRs to permit access to the dashboard"
-  default = []
+  default     = []
 }
 
 variable "cluster_autoscaler_role_name" {

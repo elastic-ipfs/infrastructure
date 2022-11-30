@@ -75,7 +75,7 @@ resource "helm_release" "argocd_rollouts" {
   }
 
   set {
-    name = "dashboard.service.type"
+    name  = "dashboard.service.type"
     value = var.argocd_rollouts_dashboard_service_type
   }
 

@@ -173,3 +173,17 @@ resource "aws_security_group_rule" "dns_ingress_udp" {
   source_security_group_id = module.eks.cluster_primary_security_group_id
   security_group_id        = module.eks.node_security_group_id
 }
+
+resource "aws_dynamodb_table" "config_table" {
+  name         = var.config_table.name
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = var.config_table.hash_key
+  attribute {
+    name = var.config_table.hash_key
+    type = "S"
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+}
