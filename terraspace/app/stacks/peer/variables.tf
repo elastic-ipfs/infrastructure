@@ -42,5 +42,5 @@ variable "config_table" {
     name     = string
     hash_key = string
   })
-  description = "config_table table. This table is supposed to contain configuration key/value pairs"
+  description = "This table is supposed to contain configuration key/value pairs"
 }
