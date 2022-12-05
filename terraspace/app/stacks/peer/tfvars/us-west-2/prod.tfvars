@@ -14,7 +14,7 @@ eks = {
     name           = "test-ipfs-peer-subsys"
     desired_size   = 2
     min_size       = 2
-    max_size       = 20
+    max_size       = 50
     instance_types = ["c6i.2xlarge"]
   }
 }
