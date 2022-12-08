@@ -79,3 +79,9 @@ variable "dotstorage_bucket_read_policy_name" {
   type        = string
   description = "Name for policy which allows reading messages from existing 'dotstorage' bucket "
 }
+
+variable "storage_bucket_names" {
+  type        = list(string)
+  description = "List of bucket names that e-ipfs subsystems will interact with"
+  default     = []
+}

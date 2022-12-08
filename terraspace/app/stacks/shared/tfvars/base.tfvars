@@ -23,3 +23,7 @@ config_bucket_read_policy_name     = "<%= expansion(':ENV') %>-ep-s3-config-peer
 dotstorage_bucket_read_policy_name = "<%= expansion(':ENV') %>-ep-s3-dotstorage-buckets-read"
 dotstorage_bucket_name             = "dotstorage-<%= expansion(':ENV') %>-0"
 dotstorage_bucket_1_name           = "dotstorage-<%= expansion(':ENV') %>-1"
+storage_bucket_names               = [
+  "dotstorage-<%= expansion(':ENV') %>-0",
+  "dotstorage-<%= expansion(':ENV') %>-1"
+]
