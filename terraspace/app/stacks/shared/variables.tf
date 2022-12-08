@@ -65,16 +65,6 @@ variable "config_bucket_read_policy_name" {
   description = "Name for policy which allows reading action for configuration bucket"
 }
 
-variable "dotstorage_bucket_name" {
-  type        = string
-  description = "Name of existing 'dotstorage' bucket in 'us-east-2' region"
-}
-
-variable "dotstorage_bucket_1_name" {
-  type        = string
-  description = "Name of existing 'dotstorage' bucket in 'us-west-2' region"
-}
-
 variable "dotstorage_bucket_read_policy_name" {
   type        = string
   description = "Name for policy which allows reading messages from existing 'dotstorage' bucket "
