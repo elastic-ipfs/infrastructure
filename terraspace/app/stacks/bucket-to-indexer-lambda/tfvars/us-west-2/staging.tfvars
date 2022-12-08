@@ -1,4 +1,4 @@
 node_env                = "staging"
-sns_topic_trigger_names = [ # TODO: The first one should include product name.
+sns_topic_trigger_names = [
   "staging-pickup-S3Events"
 ]
