@@ -98,46 +98,29 @@ EOF
 resource "aws_iam_policy" "s3_dotstorage_policy_read" {
   name        = var.dotstorage_bucket_read_policy_name
   description = "Policy for allowing reading objects from S3"
-  policy      = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "s3:ListBucket",
-            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_name}"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_name}/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:ListObjects",
-            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_name}/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:ListBucket",
-            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_1_name}"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_1_name}/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:ListObjects",
-            "Resource": "arn:aws:s3:::${var.dotstorage_bucket_1_name}/*"
-        }
-    ]
-}
-EOF
+  policy = data.aws_iam_policy_document.s3_dotstorage_policy_read.json
 
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+data "aws_iam_policy_document" "s3_dotstorage_policy_read" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:ListBucket",
+    ]
+    resources = [ for bucket in var.storage_bucket_names : "arn:aws:s3:::${bucket}"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:ListObjects",
+    ]
+    resources = [ for bucket in var.storage_bucket_names : "arn:aws:s3:::${bucket}/*"]
   }
 }
 
@@ -146,7 +129,7 @@ resource "aws_iam_policy" "dynamodb_v1_blocks_policy" {
   name        = "dynamodb-${var.v1_blocks_table.name}-policy"
   description = "Policy for allowing all Dynamodb Actions for blocks table"
   policy      = <<EOF
-{  
+{
   "Version": "2012-10-17",
   "Statement":[{
     "Effect": "Allow",
@@ -175,7 +158,7 @@ resource "aws_iam_policy" "dynamodb_v1_cars_policy" {
   name        = "dynamodb-${var.v1_cars_table.name}-policy"
   description = "Policy for allowing all Dynamodb Actions for CAR table"
   policy      = <<EOF
-{  
+{
   "Version": "2012-10-17",
   "Statement":[{
     "Effect": "Allow",
@@ -204,7 +187,7 @@ resource "aws_iam_policy" "dynamodb_v1_link_policy" {
   name        = "dynamodb-${var.v1_link_table.name}-policy"
   description = "Policy for allowing all Dynamodb Actions for CAR table"
   policy      = <<EOF
-{  
+{
   "Version": "2012-10-17",
   "Statement":[{
     "Effect": "Allow",
