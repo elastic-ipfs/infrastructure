@@ -20,6 +20,9 @@ data "aws_eks_cluster" "eks" {
 data "aws_availability_zones" "available" {
 }
 
+data "aws_default_tags" "current" {}
+
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 3.0"
@@ -87,7 +90,6 @@ module "eks" {
       desired_size = var.eks.eks_managed_node_groups.desired_size
       min_size     = var.eks.eks_managed_node_groups.min_size
       max_size     = var.eks.eks_managed_node_groups.max_size
-
       instance_types = var.eks.eks_managed_node_groups.instance_types
       k8s_labels = {
         workerType = "managed_ec2_node_groups"
@@ -95,11 +97,13 @@ module "eks" {
       update_config = {
         max_unavailable_percentage = 50
       }
-
-      tags = { # This is also applied to IAM role.
-        "eks/${var.account_id}/${var.eks.name}/type" : "node"
+      launch_template_tags = merge(
+        data.aws_default_tags.current.tags, {
         "k8s.io/cluster-autoscaler/${var.eks.name}" : "owned"
         "k8s.io/cluster-autoscaler/enabled" : "TRUE"
+      })
+      iam_role_tags = {
+        "eks/${var.account_id}/${var.eks.name}/type" : "node"
       }
     }
   }
