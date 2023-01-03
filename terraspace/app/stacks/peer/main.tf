@@ -22,7 +22,6 @@ data "aws_availability_zones" "available" {
 
 data "aws_default_tags" "current" {}
 
-
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 3.0"
