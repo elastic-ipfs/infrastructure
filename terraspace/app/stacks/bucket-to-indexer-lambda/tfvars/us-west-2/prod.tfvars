@@ -5,4 +5,7 @@ lambda = {
   timeout     = 900
 }
 ecr_repository_name     = "bucket-to-indexer-lambda"
-sns_topic_trigger_names = ["ep-s3-put"]
+sns_topic_trigger_names = [
+  "ep-s3-put",
+  "prod-pickup-S3Events"
+]
