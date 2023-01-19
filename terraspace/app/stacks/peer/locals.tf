@@ -5,8 +5,8 @@ locals {
       open_all_eg = {
         description = "Open egress to all internet. Required for connecting with other Kubo/IPFS nodes, which can be running on any port"
         protocol    = "TCP"
-        from_port   = -1
-        to_port     = -1
+        from_port   = 0
+        to_port     = 65535
         type        = "egress"
         cidr_blocks = ["0.0.0.0/0"]
       }
