@@ -41,7 +41,6 @@ module "indexer_lambda_from_sqs" {
     "dynamo-creates-count",
     "dynamo-updates-count",
     "dynamo-deletes-count",
-    "dynamo-reads-count",
     "sqs-publishes-count"
   ]
 }
