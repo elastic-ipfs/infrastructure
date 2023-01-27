@@ -15,8 +15,6 @@ env:
 jobs:
   pre-reqs:
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
     outputs:
       result: ${{ steps.detector.outputs.result }}
       gitRef: ${{ steps.git_ref.outputs.result }}
