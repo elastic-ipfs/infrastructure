@@ -1,5 +1,8 @@
 name: Terraspace Comment
 
+permissions:
+  checks: write
+
 on:
   issue_comment:
     types:
