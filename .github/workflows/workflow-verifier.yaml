@@ -20,7 +20,7 @@ jobs:
         run: |
           SHELLCHECK_VERSION="v0.8.0"
           arch="$(uname -m)";
-          echo "arch is $arch";
+          echo "arch is "$arch"";
           if [ "${arch}" = 'armv7l' ]; then
             arch='armv6hf';
           fi;
