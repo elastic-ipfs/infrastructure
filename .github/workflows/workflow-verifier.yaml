@@ -29,7 +29,7 @@ jobs:
           wget "${url_base}${tar_file}" -q -O - | tar xJf -;
           cd "shellcheck-${SHELLCHECK_VERSION}"
           exe="$(pwd)/shellcheck"
-          echo "executable=${exe}" >> $GITHUB_OUTPUT
+          echo "executable=${exe}" >> "$GITHUB_OUTPUT"
 
       - name: Download actionlint
         id: get_actionlint
