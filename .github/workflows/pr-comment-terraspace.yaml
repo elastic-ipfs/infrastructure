@@ -2,6 +2,7 @@ name: Terraspace Comment
 
 permissions:
   checks: write
+  statuses: write
 
 on:
   issue_comment:
