@@ -132,7 +132,7 @@ jobs:
       - name: Get Approval Status
         id: get_approval_state
         run: |
-          res=${{ context.payload.pull_request.reviews.approved }}
+          res=${{ github.event.pull_request.reviews.approved  }}
           echo "Res: $res"
           echo "approval_state=$res" >> "$GITHUB_OUTPUT"
       - name: Display Approval Result
