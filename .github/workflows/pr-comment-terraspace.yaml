@@ -134,7 +134,8 @@ jobs:
         env:
           pr_number: ${{ fromJSON(needs.pre-reqs.outputs.result).prNumber }}
         run: |
-          echo "approval_state=$(echo $res | jq '.[] | select(.state=="APPROVED").state' | sed 's/"//g')" >> "$GITHUB_OUTPUT"
+          res="$(curl \"https://api.github.com/repos/${{ github.repository }}/pulls/${pr_number}/reviews?per_page=100\" -H \"Authorization: token ${{ secrets.GITHUB_TOKEN }}\" -H \"Content-Type: application/json\")"
+          echo "Res: $res"
 
       - name: Display Approval Result
         env:
