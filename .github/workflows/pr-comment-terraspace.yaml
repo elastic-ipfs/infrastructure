@@ -129,7 +129,6 @@ jobs:
         working-directory: terraspace
         run: terraspace logs plan -a --no-timestamps
 
-     
       - name: Get Approval Status
         id: get_approval_state
         env:
