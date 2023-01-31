@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Verify PR Title
-        uses: deepakputhraya/action-pr-title@v1.0.1
+        uses: deepakputhraya/action-pr-title@v1.0.2
         with:
           regex: '^\[(WIP|READY|REVIEW|WAIT)\]\ -\ \[[A-Z]+[0-9]?-\d+\]\ -\ .+'
         continue-on-error: false
