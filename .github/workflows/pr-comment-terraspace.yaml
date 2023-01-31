@@ -129,7 +129,7 @@ jobs:
         working-directory: terraspace
         run: terraspace logs plan -a --no-timestamps
 
-      # shellcheck disable=SC2086
+     
       - name: Get Approval Status
         id: get_approval_state
         env:
@@ -137,6 +137,7 @@ jobs:
         run: |
          res=$(curl "https://api.github.com/repos/${{ github.repository }}/pulls/${pr_number}/reviews?per_page=100" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H 'Content-Type: application/json')
          echo "Res: $res"
+         # shellcheck disable=SC2086
          echo "approval_state=$(echo $res | jq '.[] | select(.state=="APPROVED").state' | sed 's/"//g')" >> "$GITHUB_OUTPUT"
       - name: Display Approval Result
         env:
