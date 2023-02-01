@@ -33,6 +33,8 @@ jobs:
         continue-on-error: false
 
   add_comment:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
     - name: See existing comments dynamic
