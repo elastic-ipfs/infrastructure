@@ -132,8 +132,16 @@ jobs:
 
       - name: Get Approval Status
         id: get_approval_state
-        run: echo "approval_state={{ github.event.pull_request.reviews.approved }}" >> "$GITHUB_OUTPUT"
-    
+        run: |
+          approval_found=false
+          for review in "${{github.event.pull_request.reviews}}"; do
+            if [ "$review.state" == "APPROVED" ]; then
+              approval_found=true
+              break
+            fi
+          done
+          echo "approval_state=$approval_found" >> "$GITHUB_OUTPUT"
+
       - name: Display Approval Result
         env:
           APPROVAL_STATE: ${{ steps.get_approval_state.outputs.approval_state }}
