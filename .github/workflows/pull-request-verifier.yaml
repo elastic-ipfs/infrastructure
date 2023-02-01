@@ -32,20 +32,23 @@ jobs:
           regex: '^\[(WIP|READY|REVIEW|WAIT)\]\ -\ \[[A-Z]+[0-9]?-\d+\]\ -\ .+'
         continue-on-error: false
 
-      - name: Add comment with button options does not exist
-        uses: octokit/request-action@v2
-        with:
-          route: POST /repos/{OWNER}/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
-          owner: ${{ env.OWNER }}
-          repo: ${{ env.REPO }}
-          pull_request_number: ${{ env.PULL_REQUEST_NUMBER }}
-          body: |
-            This is an example comment with buttons.
-            Choose an action:
-            - [Action 1](/action/1)
-            - [Action 2](/action/2)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  add_comment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Add comment with button options does not exist
+      uses: octokit/request-action@v2
+      with:
+        route: POST /repos/{OWNER}/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
+        owner: ${{ env.OWNER }}
+        repo: ${{ env.REPO }}
+        pull_request_number: ${{ env.PULL_REQUEST_NUMBER }}
+        body: |
+          This is an example comment with buttons.
+          Choose an action:
+          - [Action 1](/action/1)
+          - [Action 2](/action/2)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   perform_action_1:
     runs-on: ubuntu-latest
