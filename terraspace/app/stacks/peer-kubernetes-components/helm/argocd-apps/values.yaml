@@ -6,13 +6,8 @@ bitswapPeer:
   valueFileNames: # Replaced in Terraform
   - "values.yaml"
   values:
-fluentd:
-  repoURL: "https://github.com/elastic-ipfs/fluentd-containers-deployment.git"
-  targetRevision: HEAD
-  releaseName: fluentd
+logging:
   namespace: logging
-  valueFileNames: # Replaced in Terraform
-  - "values.yaml"
 argo-cd:
   installCRDs: false
   dex:

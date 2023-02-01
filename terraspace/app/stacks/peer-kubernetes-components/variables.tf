@@ -42,7 +42,7 @@ variable "bitswap_peer_deployment_branch" {
 
 variable "logging_namespace" {
   type        = string
-  description = "Namespace where fluentd will be deployed to"
+  description = "Namespace where log exporter will be deployed to"
 }
 
 variable "eks_auth_sync_role_name" {

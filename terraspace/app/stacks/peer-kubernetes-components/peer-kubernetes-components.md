@@ -142,7 +142,7 @@ Type: `string`
 
 ### <a name="input_logging_namespace"></a> [logging\_namespace](#input\_logging\_namespace)
 
-Description: Namespace where fluentd will be deployed to
+Description: Namespace where log exporter will be deployed to
 
 Type: `string`
 

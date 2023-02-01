@@ -49,7 +49,7 @@ resource "helm_release" "prometheus" {
   chart            = "prometheus"
   namespace        = var.namespace
   repository       = "https://prometheus-community.github.io/helm-charts"
-  version          = "15.13.0"
+  version          = "15.18.0"
   create_namespace = true
   values = [
     "${file("helm/amp_ingest_override_values.yaml")}"
