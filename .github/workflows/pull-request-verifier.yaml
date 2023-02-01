@@ -31,32 +31,19 @@ jobs:
         with:
           regex: '^\[(WIP|READY|REVIEW|WAIT)\]\ -\ \[[A-Z]+[0-9]?-\d+\]\ -\ .+'
         continue-on-error: false
-      - name: Check if comment already exists
-        id: check_comment
-        uses: octokit/request-action@v2
-        with:
-          route: GET /repos/{OWNER}/{REPO}/issues/{ISSUE_NUMBER}/comments
-          parameters:          
-            owner: {OWNER}
-            repo: {REPO}
-            issue_number: {ISSUE_NUMBER}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Add comment if it does not exist
-        if: steps.check_comment.outputs.data.length == 0
+      - name: Add comment with button options does not exist
         uses: octokit/request-action@v2
         with:
-          route: POST /repos/{OWNER}/{REPO}/issues/{ISSUE_NUMBER}/comments
-          parameters:
-            owner: {OWNER}
-            repo: {REPO}
-            issue_number: {ISSUE_NUMBER}
-            body: |
-              This is an example comment with buttons.
-              Choose an action:
-              - [Action 1](/action/1)
-              - [Action 2](/action/2)
+          route: POST /repos/{OWNER}/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
+          owner: ${{ env.OWNER }}
+          repo: ${{ env.REPO }}
+          pull_request_number: ${{ env.PULL_REQUEST_NUMBER }}
+          body: |
+            This is an example comment with buttons.
+            Choose an action:
+            - [Action 1](/action/1)
+            - [Action 2](/action/2)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
