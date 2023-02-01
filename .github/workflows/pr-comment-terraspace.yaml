@@ -132,15 +132,12 @@ jobs:
 
       - name: Get Approval Status
         id: get_approval_state
+        env:
+          pr_number: ${{ fromJSON(needs.pre-reqs.outputs.result).prNumber }}
         run: |
-          approval_found=false
-          for review in "${{github.event.pull_request.reviews}}"; do
-            if [ "$review.state" == "APPROVED" ]; then
-              approval_found=true
-              break
-            fi
-          done
-          echo "approval_state=$approval_found" >> "$GITHUB_OUTPUT"
+          res=$(curl "https://api.github.com/repos/${{ github.repository }}/pulls/${pr_number}/reviews?per_page=100" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H 'Content-Type: application/json')
+          echo "Res: $res"
+          echo "approval_state=echo "$res" | jq '.[] | select(.state=="APPROVED").state' | sed 's/"//g'" >> "$GITHUB_OUTPUT"
 
       - name: Display Approval Result
         env:
