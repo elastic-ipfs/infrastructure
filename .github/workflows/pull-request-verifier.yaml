@@ -39,9 +39,9 @@ jobs:
       uses: octokit/request-action@v2.x
       with:
         route: POST /repos/{OWNER}/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
-        owner: ${{ env.OWNER }}
-        repo: ${{ env.REPO }}
-        pull_request_number: ${{ env.PULL_REQUEST_NUMBER }}
+        owner: ${{ github.repository_owner }}
+        repo: ${{ github.repository_name }}
+        pull_request_number: ${{ github.event.pull_request.number }}
         body: '{"body": "This is an example comment with buttons. Choose an action: - [Action 1](/action/1) - [Action 2](/action/2)"}'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
