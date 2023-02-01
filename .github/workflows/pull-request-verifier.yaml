@@ -32,10 +32,11 @@ jobs:
           approval_found=false
           for review in "${{github.event.pull_request.reviews}}"; do
             echo inside loop
+            echo should exist at least a commented one now
             echo "$review"
             echo "$review.id"
             echo "$review.state"
-            if [ "$review.state" == "APPROVED" ]; then
+            if [ "$review.state" == "APPROVED" ]; then # I could allow commented too just for testing
               approval_found=true
               break
             fi
