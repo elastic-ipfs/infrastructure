@@ -31,6 +31,7 @@ jobs:
         run: |
           approval_found=false
           for review in "${{github.event.pull_request.reviews}}"; do
+            echo inside loop
             echo "$review"
             echo "$review.id"
             echo "$review.state"
