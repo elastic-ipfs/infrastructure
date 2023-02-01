@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Add comment with button options does not exist
-      uses: octokit/request-action@v2
+      uses: octokit/request-action@v2.x
       with:
         route: POST /repos/{OWNER}/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
         owner: ${{ env.OWNER }}
