@@ -30,7 +30,8 @@ jobs:
         id: get_approval_state
         run: |
           approval_found=false
-          echo "${#github.event.pull_request.reviews[@]}"          # Number of elements
+          reviews_list = ${{github.event.pull_request.reviews}}
+          echo "${#reviews_list[@]}"          # Number of elements
           for review in "${{github.event.pull_request.reviews}}"; do
             echo inside loop
             echo should exist at least a commented one now
