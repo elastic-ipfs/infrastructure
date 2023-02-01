@@ -42,11 +42,7 @@ jobs:
         owner: ${{ env.OWNER }}
         repo: ${{ env.REPO }}
         pull_request_number: ${{ env.PULL_REQUEST_NUMBER }}
-        body: |
-          This is an example comment with buttons.
-          Choose an action:
-          - [Action 1](/action/1)
-          - [Action 2](/action/2)
+        body: '{"body": "This is an example comment with buttons. Choose an action: - [Action 1](/action/1) - [Action 2](/action/2)"}'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
