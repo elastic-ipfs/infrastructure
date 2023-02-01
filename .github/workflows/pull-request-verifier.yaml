@@ -31,3 +31,51 @@ jobs:
         with:
           regex: '^\[(WIP|READY|REVIEW|WAIT)\]\ -\ \[[A-Z]+[0-9]?-\d+\]\ -\ .+'
         continue-on-error: false
+      - name: Check if comment already exists
+        id: check_comment
+        uses: octokit/request-action@v2
+        with:
+          route: GET /repos/{OWNER}/{REPO}/issues/{ISSUE_NUMBER}/comments
+          parameters:          
+            owner: {OWNER}
+            repo: {REPO}
+            issue_number: {ISSUE_NUMBER}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add comment if it does not exist
+        if: steps.check_comment.outputs.data.length == 0
+        uses: octokit/request-action@v2
+        with:
+          route: POST /repos/{OWNER}/{REPO}/issues/{ISSUE_NUMBER}/comments
+          parameters:
+            owner: {OWNER}
+            repo: {REPO}
+            issue_number: {ISSUE_NUMBER}
+            body: |
+              This is an example comment with buttons.
+              Choose an action:
+              - [Action 1](/action/1)
+              - [Action 2](/action/2)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  perform_action_1:
+    runs-on: ubuntu-latest
+    needs: add_comment
+    if: contains(github.event.comment.body, '/action/1')
+    steps:
+      - name: Perform action 1
+        run: echo "Performing action 1..."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  perform_action_2:
+    runs-on: ubuntu-latest
+    needs: add_comment
+    if: contains(github.event.comment.body, '/action/2')
+    steps:
+      - name: Perform action 2
+        run: echo "Performing action 2..."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

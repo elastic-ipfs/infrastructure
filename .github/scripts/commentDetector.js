@@ -18,11 +18,11 @@ module.exports = async ({github, context}) => {
       const body = context.payload.comment.body.toLowerCase().trim()
       const commandArray = body.split(/\s+/)
       // Valid Commands:
-      // - terraspace all plan
-      // - terraspace all up
-      // - terraspace plan [stack]
-      // - terraspace up [stack]
-      if (commandArray[0] === "terraspace" && commandArray.length === 3) {
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace all plan
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace all up
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace plan [stack]
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace up [stack]
+      if (commandArray[2] === "terraspace" && commandArray.length === 5) {
         result.program = "terraspace"
         const createStatusChecks = async () => {
           const res = await github.rest.checks.create({
