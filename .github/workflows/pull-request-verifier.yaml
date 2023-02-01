@@ -35,10 +35,18 @@ jobs:
   add_comment:
     runs-on: ubuntu-latest
     steps:
-    - name: Add comment with button options does not exist
+    - name: See existing comments dynamic
       uses: octokit/request-action@v2.x
       with:
-        route: POST /repos/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
+        route: GET /repos/{repo}/pulls/{pull_request_number}/reviews
+        repo: ${{ github.repository }}
+        pull_request_number: ${{ github.event.pull_request.number }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Add comment with button options
+      uses: octokit/request-action@v2.x
+      with:
+        route: POST /repos/{repo}/pulls/{pull_request_number}/reviews
         repo: ${{ github.repository }}
         pull_request_number: ${{ github.event.pull_request.number }}
         body: '{"body": "This is an example comment with buttons. Choose an action: - [Action 1](/action/1) - [Action 2](/action/2)"}'
