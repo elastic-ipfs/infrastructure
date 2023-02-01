@@ -31,7 +31,8 @@ jobs:
         run: |
           approval_found=false
           for review in "${{github.event.pull_request.reviews}}"; do
-            echo $review
+            echo "$review"
+            echo "$review.state"
             if [ "$review.state" == "APPROVED" ]; then
               approval_found=true
               break
