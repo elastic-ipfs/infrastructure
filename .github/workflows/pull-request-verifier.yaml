@@ -52,7 +52,7 @@ jobs:
         repo: ${{ github.repository }}
         pull_request_number: ${{ github.event.pull_request.number }}
         # body: '{"body": "This is an example comment with buttons. Choose an action: - [Action 1](/action/1) - [Action 2](/action/2)", "event": "COMMENT"}'
-        body: "This is an example comment with buttons. Choose an action:" 
+        body: "This is an example comment with buttons. Choose an action"
         event: "COMMENT"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
