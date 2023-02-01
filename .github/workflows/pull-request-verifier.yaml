@@ -26,30 +26,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Approval Status
-        id: get_approval_state
-        run: |
-          approval_found=false
-          reviews_list=${{github.event.pull_request.reviews}}
-          echo "${#reviews_list[@]}"          # Number of elements
-          for review in "${{github.event.pull_request.reviews}}"; do
-            echo inside loop
-            echo should exist at least a commented one now
-            echo "$review"
-            echo "$review.id"
-            echo "$review.state"
-            if [ "$review.state" == "APPROVED" ]; then # I could allow commented too just for testing
-              approval_found=true
-              break
-            fi
-          done
-          echo "approval_state=$approval_found" >> "$GITHUB_OUTPUT"
-
-      - name: Display Approval Result
-        env:
-          APPROVAL_STATE: ${{ steps.get_approval_state.outputs.approval_state }}
-        run: echo "approval_state=${APPROVAL_STATE}"
-
       - name: Verify PR Title
         uses: deepakputhraya/action-pr-title@v1.0.1
         with:
