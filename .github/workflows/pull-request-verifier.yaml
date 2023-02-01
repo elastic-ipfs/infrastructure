@@ -26,6 +26,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get Approval Status
+        id: get_approval_state
+        run: echo "approval_state={{ github.event.pull_request.reviews.approved }}" >> "$GITHUB_OUTPUT"
+    
+      - name: Display Approval Result
+        env:
+          APPROVAL_STATE: ${{ steps.get_approval_state.outputs.approval_state }}
+        run: echo "approval_state=${APPROVAL_STATE}"
+        
       - name: Verify PR Title
         uses: deepakputhraya/action-pr-title@v1.0.1
         with:
