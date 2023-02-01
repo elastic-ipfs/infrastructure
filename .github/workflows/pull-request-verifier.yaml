@@ -38,8 +38,7 @@ jobs:
     - name: Add comment with button options does not exist
       uses: octokit/request-action@v2.x
       with:
-        route: POST /repos/{OWNER}/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
-        owner: ${{ github.repository_owner }}
+        route: POST /repos/{REPO}/pulls/{PULL_REQUEST_NUMBER}/reviews
         repo: ${{ github.repository }}
         pull_request_number: ${{ github.event.pull_request.number }}
         body: '{"body": "This is an example comment with buttons. Choose an action: - [Action 1](/action/1) - [Action 2](/action/2)"}'
