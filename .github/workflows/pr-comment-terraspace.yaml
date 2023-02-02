@@ -3,6 +3,7 @@ name: Terraspace Comment
 permissions:
   checks: write
   statuses: write
+  pull-requests: write
 
 on:
   issue_comment:
@@ -10,7 +11,7 @@ on:
       - created
 
 env:
-  AWS_REGION: us-east-1 # This is just the default value, and it will be overwritten by AWS_REGION command value
+  AWS_REGION: us-west-2 # This is just the default value, and it will be overwritten by AWS_REGION command value
   TF_IN_AUTOMATION: 1
 
 jobs:
