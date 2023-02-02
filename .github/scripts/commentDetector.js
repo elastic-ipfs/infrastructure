@@ -33,15 +33,6 @@ module.exports = async ({ github, context }) => {
       // - AWS_REGION=<value> TS_ENV=<value> terraspace plan [stack]
       // - AWS_REGION=<value> TS_ENV=<value> terraspace up [stack]
       if (commandArray[2] === "terraspace" && commandArray.length === 5) {
-        //// debugging
-        console.log('****** dirty commandArray ******')
-        console.log("0" + commandArray[0])
-        console.log("1" + commandArray[2])
-        console.log("2" + commandArray[1])
-        console.log("3" + commandArray[3])
-        console.log("4" + commandArray[4])
-        ////
-
         result.aws_region = cleanAndValidateUserInput(commandArray[0], validRegions)
         result.ts_env = cleanAndValidateUserInput(commandArray[1], validEnvs)
         result.program = commandArray[2]
