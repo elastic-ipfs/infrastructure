@@ -50,8 +50,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REQUEST_BODY: |
-          Multi-line string with *special* characters:
-          - "'`
+          This is an example comment with buttons. Choose an action:
+          - [Action 1](/action/1)
+          - [Action 2](/action/2)
 
   perform_action_1:
     runs-on: ubuntu-latest
