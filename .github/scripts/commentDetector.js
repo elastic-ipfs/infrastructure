@@ -1,6 +1,6 @@
-module.exports = async ({github, context}) => {
+module.exports = async ({ github, context }) => {
   const ref = process.env.GIT_REF
-  const {owner, repo} = context.repo
+  const { owner, repo } = context.repo
   const result = {
     proceed: "true",
     isPrComment: "false",
@@ -18,12 +18,14 @@ module.exports = async ({github, context}) => {
       const body = context.payload.comment.body.toLowerCase().trim()
       const commandArray = body.split(/\s+/)
       // Valid Commands:
-      // - terraspace all plan
-      // - terraspace all up
-      // - terraspace plan [stack]
-      // - terraspace up [stack]
-      if (commandArray[0] === "terraspace" && commandArray.length === 3) {
-        result.program = "terraspace"
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace all plan
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace all up
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace plan [stack]
+      // - AWS_REGION=<value> TS_ENV=<value> terraspace up [stack]
+      if (commandArray[2] === "terraspace" && commandArray.length === 5) {
+        result.aws_region = cleanUserInput(commandArray[0])
+        result.ts_env = cleanUserInput(commandArray[1])
+        result.program = commandArray[2]
         const createStatusChecks = async () => {
           const res = await github.rest.checks.create({
             owner,
@@ -55,21 +57,21 @@ module.exports = async ({github, context}) => {
           result.commitStatusId = commitStatusRes.data.id
           // console.log(`commitStatusRes = ${JSON.stringify(commitStatusRes)}`)
         }
-        if (commandArray[1] === "all" && ["plan", "up"].includes(commandArray[2])) {
+        if (commandArray[4] === "all" && ["plan", "up"].includes(commandArray[5])) {
           await createStatusChecks()
 
           result.proceed = "true"
           result.cmd = "all"
-          result.subCmd = commandArray[2]
+          result.subCmd = commandArray[5]
 
           result.requestAllUp = result.subCmd === "up" ? "true" : "false"
           result.requestAllPlan = result.subCmd === "plan" ? "true" : "false"
-        } else if (["plan", "up"].includes(commandArray[1])) {
+        } else if (["plan", "up"].includes(commandArray[4])) {
           await createStatusChecks()
 
           result.proceed = "true"
-          result.cmd = commandArray[1]
-          result.subCmd = commandArray[2]
+          result.cmd = commandArray[4]
+          result.subCmd = commandArray[5]
 
           result.requestUp = result.cmd === "up" ? "true" : "false"
           result.requestPlan = result.cmd === "plan" ? "true" : "false"
@@ -79,4 +81,12 @@ module.exports = async ({github, context}) => {
     }
   }
   return result
+}
+
+/** 
+ * Gets value after '=' 
+ * Don't allow spaces, and escape special characters, to avoid injections 
+ */
+function cleanUserInput(input) {
+  return input.substring(commandArray[0].indexOf("=") + 1, commandArray[0].indexOf(" ")).replace(/[^\w\s]/gi, '\\$&')
 }

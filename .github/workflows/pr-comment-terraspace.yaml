@@ -10,7 +10,7 @@ on:
       - created
 
 env:
-  AWS_REGION: us-east-1 # TODO this should be dynamic
+  AWS_REGION: us-east-1 # This is just the default value, and it will be overwritten by AWS_REGION command value
   TF_IN_AUTOMATION: 1
 
 jobs:
@@ -113,22 +113,32 @@ jobs:
         working-directory: terraspace
         continue-on-error: true
         env:
+          AWS_REGION: ${{ fromJSON(needs.pre-reqs.outputs.result).aws_region }}
+          TS_ENV: ${{ fromJSON(needs.pre-reqs.outputs.result).ts_env }}
           STACK: ${{ fromJSON(needs.pre-reqs.outputs.result).subCmd }}
         run: |
+          echo "AWS_REGION=${AWS_REGION}"
+          echo "TS_ENV=${TS_ENV}"          
           echo "STACK=${STACK}"
-          terraspace plan "${STACK}" --auto
+          AWS_REGION=${AWS_REGION} TS_ENV=${TS_ENV} terraspace plan "${STACK}" --auto
 
       - name: Terraspace - All Plan
         id: ts_all_plan
         if: fromJSON(needs.pre-reqs.outputs.result).requestAllPlan == 'true'
         working-directory: terraspace
         continue-on-error: true
-        run: terraspace all plan --out ":MOD_NAME.plan"
+        env:
+          AWS_REGION: ${{ fromJSON(needs.pre-reqs.outputs.result).aws_region }}
+          TS_ENV: ${{ fromJSON(needs.pre-reqs.outputs.result).ts_env }}
+        run: AWS_REGION=${AWS_REGION} TS_ENV=${TS_ENV} terraspace all plan --out ":MOD_NAME.plan"
 
       - name: Terraspace - All Plan Logs
         if: steps.ts_all_plan.conclusion != 'skipped'
+        env:
+          AWS_REGION: ${{ fromJSON(needs.pre-reqs.outputs.result).aws_region }}
+          TS_ENV: ${{ fromJSON(needs.pre-reqs.outputs.result).ts_env }}
         working-directory: terraspace
-        run: terraspace logs plan -a --no-timestamps
+        run: AWS_REGION=${AWS_REGION} TS_ENV=${TS_ENV} terraspace logs plan -a --no-timestamps
 
       - name: Get Approval Status
         id: get_approval_state
@@ -153,8 +163,10 @@ jobs:
         working-directory: terraspace
         continue-on-error: true
         env:
+          AWS_REGION: ${{ fromJSON(needs.pre-reqs.outputs.result).aws_region }}
+          TS_ENV: ${{ fromJSON(needs.pre-reqs.outputs.result).ts_env }}
           STACK: ${{ fromJSON(needs.pre-reqs.outputs.result).subCmd }}
-        run: terraspace up "${STACK}" --auto --yes
+        run: AWS_REGION=${AWS_REGION} TS_ENV=${TS_ENV} terraspace up "${STACK}" --auto --yes
 
       - name: Terraspace - All Up
         id: ts_all_up
@@ -163,12 +175,18 @@ jobs:
           steps.get_approval_state.outputs.approval_state  == 'APPROVED'
         working-directory: terraspace
         continue-on-error: true
-        run: terraspace all up --yes --plan ":MOD_NAME.plan"
+        env:
+          AWS_REGION: ${{ fromJSON(needs.pre-reqs.outputs.result).aws_region }}
+          TS_ENV: ${{ fromJSON(needs.pre-reqs.outputs.result).ts_env }}
+        run: AWS_REGION=${AWS_REGION} TS_ENV=${TS_ENV} terraspace all up --yes --plan ":MOD_NAME.plan"
 
       - name: Terraspace - All Up Logs
         if: steps.ts_all_up.conclusion != 'skipped'
         working-directory: terraspace
-        run: terraspace logs up -a --no-timestamps
+        env:
+          AWS_REGION: ${{ fromJSON(needs.pre-reqs.outputs.result).aws_region }}
+          TS_ENV: ${{ fromJSON(needs.pre-reqs.outputs.result).ts_env }}
+        run: AWS_REGION=${AWS_REGION} TS_ENV=${TS_ENV} terraspace logs up -a --no-timestamps
 
       - name: Report Check Run Conclusion
         id: check_run_conclusion
