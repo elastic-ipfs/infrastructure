@@ -51,7 +51,15 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REQUEST_BODY: |
           This is an example comment with buttons. Choose an action:
-          - [Action 1](/action/1)
+          - [Action 1](javascript:fetch('https://api.github.com/repos/${{ github.repository }}/dispatches', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({event_type: 'action1'})
+          }).then(() => console.log('Action 1 triggered!')))
           - [Action 2](/action/2)
 
   perform_action_1:
