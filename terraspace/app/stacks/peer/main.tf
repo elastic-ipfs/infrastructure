@@ -75,12 +75,9 @@ module "eks" {
   cluster_security_group_description = "EKS cluster security group - Control Plane"
 
   cluster_endpoint_public_access_cidrs = [
-    "177.33.141.81/32",
-    "185.152.47.29/32",
-    "168.227.34.17/32",
-    "81.111.55.128/32",
-    "201.33.204.216/32",
-    "145.224.104.107/32",
+    "62.232.226.28/32", # alan
+    "86.183.170.43/32", # alan
+    "86.56.31.53/32", # vasco
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
