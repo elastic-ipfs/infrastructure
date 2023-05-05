@@ -9,7 +9,7 @@ eks = {
     desired_size   = 2
     min_size       = 2
     max_size       = 5
-    instance_types = ["c6i.2xlarge"]
+    instance_types = ["c6g.2xlarge"]
   }
 }
 config_table = {
