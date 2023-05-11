@@ -15,7 +15,7 @@ eks = {
     desired_size   = 2
     min_size       = 2
     max_size       = 50
-    instance_types = ["c6i.2xlarge"]
+    instance_types = ["c6g.2xlarge"]
   }
 }
 account_id = "<%= expansion(':ACCOUNT') %>"
