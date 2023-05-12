@@ -19,7 +19,7 @@ resource "aws_dynamodb_table" "blocks_table" {
   }
 
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }
 
@@ -32,6 +32,6 @@ resource "aws_dynamodb_table" "cars_table" {
     type = "S"
   }
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }

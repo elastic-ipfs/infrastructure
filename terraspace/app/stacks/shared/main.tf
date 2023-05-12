@@ -64,7 +64,7 @@ resource "aws_dynamodb_table" "v1_cars_table" {
     type = "S"
   }
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }
 
@@ -78,7 +78,7 @@ resource "aws_dynamodb_table" "v1_blocks_table" {
   }
 
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }
 
@@ -97,7 +97,7 @@ resource "aws_dynamodb_table" "v1_link_table" {
   }
 
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }
 
