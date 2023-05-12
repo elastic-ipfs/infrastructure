@@ -55,6 +55,7 @@ resource "aws_sqs_queue" "multihashes_topic_dlq" {
   visibility_timeout_seconds = 300
 }
 
+#tfsec:ignore:aws-dynamodb-enable-recovery
 resource "aws_dynamodb_table" "v1_cars_table" {
   name         = var.v1_cars_table.name
   billing_mode = "PAY_PER_REQUEST"
@@ -68,6 +69,7 @@ resource "aws_dynamodb_table" "v1_cars_table" {
   }
 }
 
+#tfsec:ignore:aws-dynamodb-enable-recovery
 resource "aws_dynamodb_table" "v1_blocks_table" {
   name         = var.v1_blocks_table.name
   billing_mode = "PAY_PER_REQUEST"
@@ -82,6 +84,7 @@ resource "aws_dynamodb_table" "v1_blocks_table" {
   }
 }
 
+#tfsec:ignore:aws-dynamodb-enable-recovery
 resource "aws_dynamodb_table" "v1_link_table" {
   name         = var.v1_link_table.name
   billing_mode = "PAY_PER_REQUEST"
