@@ -9,6 +9,7 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+#tfsec:ignore:aws-dynamodb-enable-recovery
 resource "aws_dynamodb_table" "blocks_table" {
   name         = var.blocks_table.name
   billing_mode = "PAY_PER_REQUEST"
@@ -19,10 +20,11 @@ resource "aws_dynamodb_table" "blocks_table" {
   }
 
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }
 
+#tfsec:ignore:aws-dynamodb-enable-recovery
 resource "aws_dynamodb_table" "cars_table" {
   name         = var.cars_table.name
   billing_mode = "PAY_PER_REQUEST"
@@ -32,6 +34,6 @@ resource "aws_dynamodb_table" "cars_table" {
     type = "S"
   }
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }

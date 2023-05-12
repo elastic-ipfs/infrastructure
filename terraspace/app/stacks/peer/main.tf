@@ -174,6 +174,7 @@ resource "aws_security_group_rule" "dns_ingress_udp" {
   security_group_id        = module.eks.node_security_group_id
 }
 
+#tfsec:ignore:aws-dynamodb-enable-recovery
 resource "aws_dynamodb_table" "config_table" {
   name         = var.config_table.name
   billing_mode = "PAY_PER_REQUEST"
@@ -184,6 +185,6 @@ resource "aws_dynamodb_table" "config_table" {
   }
 
   point_in_time_recovery {
-    enabled = true
+    enabled = false
   }
 }
