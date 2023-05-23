@@ -87,6 +87,7 @@ module "eks" {
       min_size     = var.eks.eks_managed_node_groups.min_size
       max_size     = var.eks.eks_managed_node_groups.max_size
       instance_types = var.eks.eks_managed_node_groups.instance_types
+      ami_type     = var.eks.eks_managed_node_groups.ami_type
       k8s_labels = {
         workerType = "managed_ec2_node_groups"
       }

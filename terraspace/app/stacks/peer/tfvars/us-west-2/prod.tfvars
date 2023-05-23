@@ -16,6 +16,7 @@ eks = {
     min_size       = 2
     max_size       = 50
     instance_types = ["c6g.2xlarge"]
+    ami_type       = "AL2_ARM_64"
   }
 }
 account_id = "<%= expansion(':ACCOUNT') %>"

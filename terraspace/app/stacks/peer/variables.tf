@@ -21,6 +21,7 @@ variable "eks" {
       min_size       = number
       max_size       = number
       instance_types = list(string)
+      ami_type       = string
     })
   })
   description = "EKS cluster"

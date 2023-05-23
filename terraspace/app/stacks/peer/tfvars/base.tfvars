@@ -10,6 +10,7 @@ eks = {
     min_size       = 2
     max_size       = 5
     instance_types = ["c6g.2xlarge"]
+    ami_type       = "AL2_ARM_64"
   }
 }
 config_table = {
