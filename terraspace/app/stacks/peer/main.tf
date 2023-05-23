@@ -77,7 +77,8 @@ module "eks" {
   cluster_endpoint_public_access_cidrs = [
     "62.232.226.28/32", # alan
     "86.183.170.43/32", # alan
-    "86.56.31.53/32", # vasco
+    "86.56.31.53/32",   # vasco
+    "91.135.10.211/32"  # oli
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
