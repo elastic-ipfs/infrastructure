@@ -70,14 +70,15 @@ module "eks" {
   cluster_endpoint_private_access    = true
   cluster_endpoint_public_access     = true
   vpc_id                             = module.vpc.vpc_id
-  subnet_ids                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
+  subnet_ids                         = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
   enable_irsa                        = true # To be able to access AWS services from PODs  
   cluster_security_group_description = "EKS cluster security group - Control Plane"
 
   cluster_endpoint_public_access_cidrs = [
     "62.232.226.28/32", # alan
     "86.183.170.43/32", # alan
-    "86.56.31.53/32", # vasco
+    "86.56.31.53/32",   # vasco
+    "91.135.10.211/32"  # oli
   ]
 
   eks_managed_node_groups = { # Needed for CoreDNS (https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html)
