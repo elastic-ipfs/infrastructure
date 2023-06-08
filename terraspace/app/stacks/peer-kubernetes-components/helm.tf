@@ -26,6 +26,7 @@ resource "helm_release" "metric_server" {
 resource "helm_release" "argocd_apps" {
   name             = "argocd-apps"
   chart            = "./helm/argocd-apps"
+  version          = "0.2.0"
   namespace        = "argocd"
   create_namespace = true
 
