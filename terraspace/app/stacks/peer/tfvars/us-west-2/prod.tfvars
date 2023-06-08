@@ -12,10 +12,11 @@ eks = {
   version = 1.23
   eks_managed_node_groups = {
     name           = "test-ipfs-peer-subsys"
-    desired_size   = 20
+    desired_size   = 12
     min_size       = 2
-    max_size       = 22
-    instance_types = ["c6i.2xlarge"]
+    max_size       = 18
+    instance_types = ["c6g.2xlarge"]
+    ami_type       = "AL2_ARM_64"
   }
 }
 account_id = "<%= expansion(':ACCOUNT') %>"
