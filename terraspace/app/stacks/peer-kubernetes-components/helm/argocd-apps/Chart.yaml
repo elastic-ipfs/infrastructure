@@ -2,9 +2,9 @@ apiVersion: v2
 name: argocd-apps
 description: A Helm chart for installing ArgoCD and a set of applications
 type: application
-version: 0.1.0
-appVersion: "0.1.0"
+version: 0.2.0
+appVersion: "0.2.0"
 dependencies:
 - name: argo-cd
-  version: "~> 2.2.5"
+  version: "~> 5.7"
   repository: "https://argoproj.github.io/argo-helm"
