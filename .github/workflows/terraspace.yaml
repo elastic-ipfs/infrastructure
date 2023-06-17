@@ -37,7 +37,7 @@ jobs:
           asdf_branch: v0.9.0
 
       - name: ASDF - Cache Tools
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-asdf-tools
         with:
@@ -53,7 +53,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: TFLint - Cache Plugins
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.tflint.d/plugins
           key: ${{ runner.os }}-tflint-${{ hashFiles('**/.tflint.hcl') }}
@@ -118,7 +118,7 @@ jobs:
           asdf_branch: v0.9.0
 
       - name: ASDF - Cache Tools
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-asdf-tools
         with:
@@ -186,7 +186,7 @@ jobs:
           asdf_branch: v0.9.0
 
       - name: ASDF - Cache Tools
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-asdf-tools
         with:
