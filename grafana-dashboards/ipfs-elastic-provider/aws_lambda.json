@@ -1,0 +1,4437 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Visualize AWS Lambda metrics",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": 593,
+  "graphTooltip": 0,
+  "id": 41,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 16,
+      "panels": [],
+      "title": "Bitswap peer",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 12,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.2-83956baf",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Errors",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average"
+        }
+      ],
+      "title": "Execution Errors",
+      "type": "timeseries"
+    },
+    {
+      "aliasColors": {
+        "Maximum": "#e24d42"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "decimals": 3,
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 1,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Duration Maximum",
+          "bars": false,
+          "fill": 0,
+          "lines": true,
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "Duration",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "A",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Average"
+        },
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "hide": false,
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "Duration",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "B",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Maximum"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Duration",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "ms",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "ms",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "decimals": 0,
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "label": "${PROP('MetricName')} ${PROP('Stat')}",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Invocations",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "$region",
+          "returnData": false,
+          "sqlExpression": "",
+          "statistic": "Sum"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Invocations",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Errors Sum": "#e24d42",
+        "Errors_Average": "#BF1B00",
+        "Errors_Sum": "#BF1B00"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "Errors",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "A",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Sum"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Errors",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Dead Letter Error Sum",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "Throttles",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "A",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Sum"
+        },
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "FunctionName": "$functionname"
+          },
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "Dead Letter Error",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "B",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Sum"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Throttles",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {},
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "ConcurrentExecutions",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "A",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Average"
+        },
+        {
+          "alias": "{{metric}} {{stat}}",
+          "application": {
+            "filter": ""
+          },
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "dimensions": {},
+          "expression": "",
+          "functions": [],
+          "group": {
+            "filter": ""
+          },
+          "highResolution": false,
+          "host": {
+            "filter": ""
+          },
+          "id": "",
+          "item": {
+            "filter": ""
+          },
+          "metricEditorMode": 0,
+          "metricName": "UnreservedConcurrentExecutions",
+          "metricQueryType": 0,
+          "mode": 0,
+          "namespace": "AWS/Lambda",
+          "options": {
+            "showDisabledItems": false
+          },
+          "period": "$agg",
+          "refId": "B",
+          "region": "$region",
+          "returnData": false,
+          "statistic": "Average"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Global Concurrent Executions",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "editable": true,
+      "error": false,
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 43
+      },
+      "id": 2,
+      "links": [],
+      "options": {
+        "content": "<a style=\"float: right\" href=\"http://www.monitoringartist.com\" target=\"_blank\" title=\"Dashboard maintained by Monitoring Artist - DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring\"><img src=\"https://monitoringartist.github.io/monitoring-artist-logo-grafana.png\" height=\"30px\" /></a>\n<a style=\"float: left\"  target=\"_blank\" href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/lam-metricscollected.html\">AWS CloudWatch Lambda documentation</a><br/>\n<a style=\"float: left\"  target=\"_blank\" href=\"https://grafana.net/dashboards/593\">Installed from Grafana.net dashboards</a>\n<div style=\"clear:both; width:100%;height:0;font-size:0;\"></div>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.1.6-10b38e80",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Documentation",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 18,
+      "panels": [],
+      "title": "Lambda - Indexer",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 47
+      },
+      "hiddenSeries": false,
+      "id": 13,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Indexing CAR complete\" \n | stats avg(duration) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Indexing CAR complete (duration)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "ms",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 47
+      },
+      "hiddenSeries": false,
+      "id": 14,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Indexing CAR complete\" \n | stats avg(source.contentLength) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Indexing CAR complete (ContentLength)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "hiddenSeries": false,
+      "id": 19,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Indexing CAR complete\" \n | stats avg(blocks) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Indexing CAR complete (Blocks)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 61
+      },
+      "hiddenSeries": false,
+      "id": 20,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats avg(`metrics.dynamo-batch-inserts-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats avg(`metrics.dynamo-creates-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "E",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Dynamo metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 61
+      },
+      "hiddenSeries": false,
+      "id": 21,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.dynamo-batch-inserts-count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.dynamo-creates-count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "C",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.dynamo-creates-count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "D",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.dynamo-creates-durations.sum`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "F",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Dynamo metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 71
+      },
+      "hiddenSeries": false,
+      "id": 22,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats avg(`metrics.s3-fetchs-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "S3 metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 71
+      },
+      "hiddenSeries": false,
+      "id": 23,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.s3-fetchs-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "S3 metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 81
+      },
+      "hiddenSeries": false,
+      "id": 24,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats avg(`metrics.sqs-publishes-batch-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats avg(`metrics.sqs-publishes-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "SQS metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 81
+      },
+      "hiddenSeries": false,
+      "id": 25,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.sqs-publishes-batch-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"indexer-lambda\" \n | stats sum(`metrics.sqs-publishes-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "D",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "SQS metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 91
+      },
+      "hiddenSeries": false,
+      "id": 27,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Cannot index the CAR file\"\n| stats count(*) as `Cannot index the CAR file` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Cannot write batch items to DynamoDB table\"\n| stats count(*) as `Cannot write batch items to DynamoDB table` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Error writing blocks\"\n| stats count(*) as `Error writing blocks` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "C",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Cannot send command to DynamoDB after 3 attempts\"\n| stats count(*) as `Cannot send command to DynamoDB after 3 attempts` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "D",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Error queuing block tasks\"\n| stats count(*) as `Error queuing block tasks` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "E",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Cannot insert item into DynamoDB\"\n| stats count(*) as `Cannot insert item into DynamoDB` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "F",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Cannot update item in DynamoDB table cars\"\n| stats count(*) as `Cannot update item in DynamoDB table cars` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "H",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Cannot insert item into DynamoDB table blocks\"\n| stats count(*) as `Cannot insert item into DynamoDB table blocks` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "I",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg like \"Cannot open file S3 URL s3:\"\n| stats count(*) as `Cannot open file S3 URL s3:` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "J",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "fields error, msg, @message\n| filter msg !=\t\"Cannot send command to DynamoDB after 3 attempts\" and \nmsg !=\t\"Cannot index the CAR file\"and\nmsg !=\t\"Cannot write batch items to DynamoDB table\" and\nmsg !=\t\"Error writing blocks\" and\nmsg !=\t\"Error queuing block tasks\" and\nmsg !=\t\"Cannot insert item into DynamoDB\" and\n@type != \"END\" and @type != \"START\" and @type != \"REPORT\" and msg != \"Dumping metrics ...\" and msg != \"Indexing CAR complete\"",
+          "hide": true,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "G",
+          "region": "$region",
+          "statsGroups": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Errors",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 162
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "@message"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 3047
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 91
+      },
+      "id": 42,
+      "links": [],
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.1.6-10b38e80",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "fields @message\n| filter @type != \"END\" and @type != \"START\" and @type != \"REPORT\" and msg != \"Dumping metrics ...\"\nand ipfs_provider_component != \"indexer-lambda\"\nand (@message like \"ERROR\" or @message like \"error\" or @message like \"Error\") and @message not like \"Indexing CAR complete\" and @message not like \"sent sns message on topic\"",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/indexer"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "G",
+          "region": "$region",
+          "statsGroups": []
+        }
+      ],
+      "title": "Errors Logs",
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 102
+      },
+      "id": 31,
+      "panels": [],
+      "title": "Lambda - Publishing Advertisement",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 103
+      },
+      "hiddenSeries": false,
+      "id": 35,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\" \n | stats avg(`metrics.http-indexer-announcements-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\" \n | stats avg(`metrics.http-head-cid-fetchs-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "HTTP metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 103
+      },
+      "hiddenSeries": false,
+      "id": 36,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\"\n | stats sum(`metrics.http-indexer-announcements-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\"\n | stats sum(`metrics.http-head-cid-fetchs-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "HTTP metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 113
+      },
+      "hiddenSeries": false,
+      "id": 37,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\" \n | stats avg(`metrics.s3-uploads-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\" \n | stats avg(`metrics.s3-fetchs-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "S3 metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 113
+      },
+      "hiddenSeries": false,
+      "id": 38,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\"\n | stats sum(`metrics.s3-uploads-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-advertisement-lambda\"\n | stats sum(`metrics.s3-fetchs-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "S3 metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 123
+      },
+      "hiddenSeries": false,
+      "id": 40,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"notifyIndexer at https://cid.contact/ingest/announce\"\n| stats count(*) as `notifyIndexer at https://cid.contact/ingest/announce` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter msg = \"Downloading PeerId from s3://ipfs-peer-bitswap-config/peerId.json\"\n| stats count(*) as `Downloading PeerId from s3://ipfs-peer-bitswap-config/peerId.json` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "General metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 205
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 123
+      },
+      "id": 41,
+      "links": [],
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.1.6-10b38e80",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "fields @message\n| filter @type != \"END\" and @type != \"START\" and @type != \"REPORT\"\nand ipfs_provider_component != \"publisher-advertisement-lambda\"\nand (@message like \"ERROR\" or @message like \"error\" or @message like \"Error\" or @message like \"failed\" or @message like \"Failed\")\n",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "G",
+          "region": "$region",
+          "statsGroups": []
+        }
+      ],
+      "title": "Errors Logs",
+      "type": "table"
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 133
+      },
+      "hiddenSeries": false,
+      "id": 34,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter @type != \"END\" and @type != \"START\" and @type != \"REPORT\"\nand ipfs_provider_component != \"publisher-advertisement-lambda\"\nand (@message like \"ERROR\" or @message like \"error\" or @message like \"Error\" or @message like \"Failed\"  or @message like \"failed\") and @message not like \"Announcing to the indexer node failed\"\n| stats count(*) as `Other errors` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter @message like \"Announcing to the indexer node failed\"\n| stats count(*) as `Announcing to the indexer node failed` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "fields error, msg\n| filter msg !=\t\"Cannot send command to DynamoDB after 3 attempts\" and \nmsg !=\t\"Cannot index the CAR file\"and\nmsg !=\t\"Cannot write batch items to DynamoDB table\" and\nmsg !=\t\"Error writing blocks\" and\nmsg !=\t\"Error queuing block tasks\" and\nmsg !=\t\"Cannot insert item into DynamoDB\"",
+          "hide": true,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-advertisement"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "G",
+          "region": "$region",
+          "statsGroups": []
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Errors",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 144
+      },
+      "id": 29,
+      "panels": [],
+      "title": "Lambda - Publishing Content",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 145
+      },
+      "hiddenSeries": false,
+      "id": 43,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-content-lambda\" \n | stats avg(`metrics.s3-uploads-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "S3 metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 145
+      },
+      "hiddenSeries": false,
+      "id": 44,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-content-lambda\"\n | stats sum(`metrics.s3-uploads-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-content-lambda\"\n | stats sum(`metrics.s3-uploads-count`) by bin(1m)",
+          "hide": true,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "S3 metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 155
+      },
+      "hiddenSeries": false,
+      "id": 45,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-content-lambda\" \n | stats avg(`metrics.sqs-publishes-durations.mean`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "SQS metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 155
+      },
+      "hiddenSeries": false,
+      "id": 46,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "filter ipfs_provider_component = \"publisher-content-lambda\"\n | stats sum(`metrics.sqs-publishes-durations.count`) by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "SQS metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Throttles Sum": "#e24d42",
+        "Throttles_Average": "#EAB839",
+        "Throttles_Sum": "#EAB839"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 165
+      },
+      "hiddenSeries": false,
+      "id": 48,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.1.6-10b38e80",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "UnreservedConcurrentExecutions Average",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "stats sum(records) as `Published records` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "B",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        },
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "stats sum(elapsed) as `Elapsed` by bin(1m)",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "$region",
+          "statsGroups": [
+            "bin(1m)"
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "General metrics",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": 0,
+          "show": true
+        },
+        {
+          "format": "none",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 205
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 165
+      },
+      "id": 47,
+      "links": [],
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.1.6-10b38e80",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "expression": "fields @message\n| filter @type != \"END\" and @type != \"START\" and @type != \"REPORT\"\nand ipfs_provider_component != \"publisher-content-lambda\"\nand (@message like \"ERROR\" or @message like \"error\" or @message like \"Error\")\n",
+          "hide": false,
+          "id": "",
+          "logGroupNames": [
+            "/aws/lambda/publishing-content"
+          ],
+          "namespace": "AWS/Lambda",
+          "queryMode": "Logs",
+          "refId": "G",
+          "region": "$region",
+          "statsGroups": []
+        }
+      ],
+      "title": "Errors Logs",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [
+    "monitoringartist",
+    "cloudwatch"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "CloudWatch",
+          "value": "CloudWatch"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "cloudwatch",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "auto": true,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "auto",
+          "value": "$__auto_interval_agg"
+        },
+        "hide": 0,
+        "label": "Aggregation",
+        "name": "agg",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_agg"
+          },
+          {
+            "selected": false,
+            "text": "1s",
+            "value": "1s"
+          },
+          {
+            "selected": false,
+            "text": "5s",
+            "value": "5s"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "1s,5s,10s,30s,1m,5m,15m,1h,6h,1d,7d,30d",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "default",
+          "value": "default"
+        },
+        "datasource": {
+          "uid": "$datasource"
+        },
+        "definition": "regions()",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Region",
+        "multi": false,
+        "name": "region",
+        "options": [],
+        "query": "regions()",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "indexer",
+          "value": "indexer"
+        },
+        "datasource": {
+          "uid": "$datasource"
+        },
+        "definition": "dimension_values($region,AWS/Lambda,Duration,FunctionName)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "FunctionName",
+        "multi": false,
+        "name": "functionname",
+        "options": [],
+        "query": "dimension_values($region,AWS/Lambda,Duration,FunctionName)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "AWS Lambda",
+  "uid": "AWSLambda",
+  "version": 6,
+  "weekStart": ""
+}
