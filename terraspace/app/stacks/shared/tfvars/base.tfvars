@@ -24,5 +24,6 @@ dotstorage_bucket_read_policy_name = "<%= expansion(':ENV') %>-ep-s3-dotstorage-
 storage_bucket_names               = [
   "dotstorage-<%= expansion(':ENV') %>-0",
   "dotstorage-<%= expansion(':ENV') %>-1",
-  "carpark-<%= expansion(':ENV') %>-0"
+  "carpark-<%= expansion(':ENV') %>-0",
+  "nearform-runbook-theorical-<%= expansion(':ENV') %>"
 ]

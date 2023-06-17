@@ -11,5 +11,6 @@ storage_bucket_names = [
   "dotstorage-<%= expansion(':ENV') %>-0",
   "dotstorage-<%= expansion(':ENV') %>-1",
   "prod-pickup-basicapistack-carbucket*",
-  "carpark-<%= expansion(':ENV') %>-0"
+  "carpark-<%= expansion(':ENV') %>-0",
+  "nearform-runbook-theorical-prod"
 ]
