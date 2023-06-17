@@ -55,6 +55,12 @@ resource "helm_release" "argocd_apps" {
     name  = "logging.namespace"
     value = kubernetes_namespace.logging_namespace.metadata[0].name
   }
+
+  # TODO: Delete after applying
+  set {
+    name  = "deleteme"
+    value = "justfortriggeryamlchange"
+  }
 }
 
 resource "helm_release" "argocd_rollouts" {
